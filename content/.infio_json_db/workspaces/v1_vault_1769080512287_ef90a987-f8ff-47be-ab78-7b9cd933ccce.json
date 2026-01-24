@@ -1,0 +1,39 @@
+{
+  "id": "ef90a987-f8ff-47be-ab78-7b9cd933ccce",
+  "name": "vault",
+  "content": [
+    {
+      "type": "folder",
+      "content": "/"
+    }
+  ],
+  "chatHistory": [
+    {
+      "id": "cfbbf65f-4271-47b2-9470-b12f8c391d54",
+      "title": "总结全文内容"
+    },
+    {
+      "id": "df8a63ef-efed-4da9-81df-d867ed66aaa6",
+      "title": "请精确识别这张图片中的内容。如果是正文，请保持 Markdown 格式；如果是数学公式，请务必转换为"
+    },
+    {
+      "id": "a5b904a0-5ed3-4152-bae8-1095ef9ce366",
+      "title": "MSG(monosodium glutamate) staple food怎么翻译"
+    },
+    {
+      "id": "a40d615d-05a9-4061-801a-264a9eb8908d",
+      "title": "invariable and constant Dao是什么意思"
+    },
+    {
+      "id": "5d78fa56-a9cc-41b6-aab3-5c586f07731a",
+      "title": "根据语义 帮我重新排版这个md文件 不要修改其中的具体内容 只修改格式"
+    }
+  ],
+  "metadata": {
+    "isDefault": true,
+    "description": "all vault as workspace"
+  },
+  "createdAt": 1768463732123,
+  "updatedAt": 1769080512287,
+  "schemaVersion": 1
+}
