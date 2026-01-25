@@ -80,11 +80,15 @@ You will also be passed an array containing a header and a body font (where the 
 
 An example of a component using the header font could look like this:
 
+{% raw %}
+
 ```tsx title="socialImage.tsx"
 export const myImage: SocialImageOptions["imageStructure"] = (...) => {
   return <p style={{ fontFamily: fonts[0].name }}>Cool Header!</p>
 }
 ```
+
+{% endraw %}
 
 > [!example]- Local fonts
 >
