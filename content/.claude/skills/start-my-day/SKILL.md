@@ -22,6 +22,13 @@ Help the user start their day by reviewing yesterday's progress, creating today'
 1. **Get Today's Date**
    - Determine current date (YYYY-MM-DD format)
 
+1.5. **Time Check - Calculate Remaining Time** (MANDATORY)
+
+- Execute bash command: `date "+%H:%M"` to get current time
+- Calculate remaining hours until 23:00 (熄灯时间 from 核心配置/助手记忆.md)
+- Formula: `remaining_hours = (23 - current_hour) - (current_minute / 60)`
+- Example: If current time is 14:30, remaining = 23:00 - 14:30 = 8.5 hours
+
 2. **Read Yesterday's Daily Note**
    - If exists, read `每日规划/[yesterday].md`
    - Extract incomplete tasks (unchecked `- [ ]` items)
@@ -58,6 +65,19 @@ Help the user start their day by reviewing yesterday's progress, creating today'
    - Find projects not touched in 3+ days (stale)
    - Determine logical next steps for each active project
    - Identify workout priorities based on muscle group rotation and recovery
+   - **Apply time-aware task selection** based on remaining hours calculated in Step 1.5:
+     - **<2 hours**: Focus on 1 high-priority task only (skip fitness, defer to tomorrow)
+     - **2-4 hours**: 2-3 tasks max (fitness optional, choose 1-2 core tasks)
+     - **4-6 hours**: 3-4 tasks (fitness recommended, 2-3 core tasks)
+     - **6-8 hours**: Full capacity (fitness + 3-4 core tasks)
+     - **>8 hours**: Stretch mode (add review/reading tasks)
+   - **Prioritization order when time-constrained**:
+     1. Overdue/critical deadline tasks
+     2. Yesterday's carryover tasks
+     3. User's stated focus for today
+     4. Fitness (if >4 hours remaining, otherwise optional)
+     5. Project next actions
+     6. AI content review (lowest priority)
 
 ## Step 2: Ask User Input (Interactive)
 
@@ -105,10 +125,15 @@ Use the AskUserQuestion tool to gather:
    - If not: create today's note.
 
 2. **Populate the daily note:**
+   - **⏰ 时间概览**: Add at the top of daily note with current time and remaining hours
    - **待办事项**: Carryover incomplete tasks from yesterday, then user's focus, then project next actions
+     - **Adjust task count based on remaining hours** (from Step 1.5)
+     - Mark critical vs optional tasks
    - **💪 今日训练计划** (AI Coach Generated): See FITNESS COACH section below
+     - **Skip or mark optional** if <2 hours remaining
+     - **Include full plan** if >4 hours remaining
    - **日志**: Leave empty for user
-   - **备注**: Add recommendations (time-sensitive items, stale projects, inbox count)
+   - **备注**: Add recommendations (time-sensitive items, stale projects, inbox count, time constraints)
    - **AI 摘要**: Add summary section with top content from newsletters and product launches
      - Include top 3-5 content opportunities from AI newsletters
      - Include top 3-5 product launch opportunities
@@ -204,6 +229,89 @@ Use the AskUserQuestion tool to gather:
 **明日预告**: [下一肌群]
 ```
 
+### TIME MANAGEMENT - 时间感知计划生成
+
+**基于以下输入动态调整任务安排:**
+
+1. **熄灯时间** (from 核心配置/助手记忆.md):
+   - 硬性规则: 23:00 强制熄灯
+   - 不可协商，不因任务未完成而延迟
+
+2. **当前时间** (from Step 1.5 bash command):
+   - 格式: HH:MM
+   - 示例: 14:30 = 下午2:30
+
+3. **剩余时间计算**:
+   ```
+   剩余小时 = 23 - current_hour - (current_minute / 60)
+   示例: 14:30 → 23:00 - 14:30 = 8.5小时
+   ```
+
+**任务容量矩阵:**
+
+| 剩余时间 | 建议任务数 | 健身    | 任务类型    | 备注     |
+| -------- | ---------- | ------- | ----------- | -------- |
+| <2小时   | 1个        | ⛔ 跳过 | 1个高优先级 | 明天再做 |
+| 2-4小时  | 2-3个      | ⚪ 可选 | 核心任务    | 快速完成 |
+| 4-6小时  | 3-4个      | ✅ 建议 | 核心+1项    | 均衡安排 |
+| 6-8小时  | 4-5个      | ✅ 完成 | 核心+项目   | 正常节奏 |
+| >8小时   | 5-6个      | ✅ 完成 | 完整清单    | 努力日   |
+
+**优先级排序 (时间不足时):**
+
+```
+1. 逾期/紧急截止任务 (必须完成)
+2. 昨日遗留任务 (顺延优先级)
+3. 用户今日指定重点 (用户Q1回答)
+4. 健身 (仅当>4小时剩余)
+5. 项目推进 (进行中项目)
+6. AI内容/ Newsletter (最低优先级)
+```
+
+**任务标记规范:**
+
+```markdown
+**待办事项:**
+
+- [ ] **核心任务1** (必做 - 逾期/紧急)
+- [ ] 核心任务2 (必做 - 昨日遗留)
+- [ ] 用户重点任务
+- [ ] 健身训练 (时间允许时)
+- [ ] 项目推进 (如时间充裕)
+- [ ] AI内容浏览 (有时间再看)
+```
+
+**时间紧迫时的处理策略:**
+
+```
+<2小时:
+- 只选1个最最重要的任务
+- 问用户: "今天只能做一件事，做哪个？"
+- 其他全部顺延到明天
+
+2-4小时:
+- 选2-3个核心任务
+- 健身改为可选
+- 不安排新项目启动
+
+4-6小时:
+- 正常安排3-4个任务
+- 包含1个健身环节
+- 不安排高耗时的任务(大项目/深度研究)
+
+>6小时:
+- 完整任务清单
+- 包含健身和项目推进
+- 可加入学习/复盘任务
+```
+
+**晚间特别处理 (20:00后):**
+
+- 20:00-21:00: 建议"收尾模式"，只做快速任务
+- 21:00-22:00: 建议"明日预热"，不做新任务
+- 22:00-23:00: 建议"熄灯倒计时"，仅回顾今日
+- > 23:00: 尊重熄灯规则，明天请早
+
 ## Step 4: Process New Ideas (from Q2)
 
 For each new idea/task mentioned in Q2:
@@ -228,14 +336,20 @@ Output a concise summary in Chinese:
 
 **今日笔记:** [[YYYY-MM-DD]]
 
+**⏰ 时间概览:**
+- 当前时间: HH:MM
+- 剩余时间: X.5小时 (截至23:00)
+- 建议任务数: N个 (基于剩余时间)
+
 **待办事项:**
-- [ ] 待办事项1
+- [ ] 待办事项1 (高优先级/必做)
 - [ ] 待办事项2
 - [ ] 待办事项3
+- [ ] 待办事项4 (如时间允许)
 
 **💪 今日训练 (AI Coach):**
 - 目标肌群: [肌群]
-- 强度: [正常/降低/恢复]
+- 强度: [正常/降低/恢复/可选]
 - 预计时长: 45-60分钟
 - 要点: [1-2个关键提示]
 
@@ -287,6 +401,17 @@ Output a concise summary in Chinese:
 - **Capture new ideas immediately** - Create inbox items from Q2 answers
 - **Keep it fast** - Minimize back-and-forth, get user started quickly
 
+## TIME MANAGEMENT RULES
+
+- **Always calculate remaining time first** - Start every session by checking current time against 23:00 cutoff
+- **Cutoff is non-negotiable** - 23:00熄灯 is a hard rule from 核心配置/助手记忆.md
+- **Adjust expectations, not cutoff** - If time is low, reduce task count, don't stay up late
+- **Critical task prioritization** - When <4 hours, focus on overdue/critical tasks only
+- **Fitness is optional when time-constrained** - If <4 hours remaining, mark fitness as optional
+- **No guilt-tripping** - If time is low, acknowledge it and suggest picking 1 thing to accomplish
+- **Prefer completion over coverage** - 3 tasks done well > 6 tasks half-done
+- **End-of-day check-in** - If called after 21:00, suggest wrapping up, not starting new tasks
+
 ## FITNESS COACH RULES
 
 - **Always check yesterday's workout data** - Track which muscle groups were trained and completion status
@@ -318,6 +443,19 @@ Output a concise summary in Chinese:
 - **Equipment unavailable:** Provide bodyweight alternatives for all exercises
 - **User reports pain (not soreness):** Advise rest and medical consultation if persists
 - **Multiple consecutive rest days:** Gentle reminder to resume training when ready
+
+## TIME EDGE CASES
+
+- **Called before 08:00:** Full day ahead, suggest ambitious but realistic task list
+- **Called 08:00-12:00:** Morning session, full day available, proceed normally
+- **Called 12:00-14:00:** Afternoon, still 9+ hours remaining, full planning mode
+- **Called 14:00-18:00:** Late afternoon, 5-9 hours remaining, standard planning
+- **Called 18:00-20:00:** Evening, 3-5 hours remaining, suggest focused session (2-3 tasks max)
+- **Called 20:00-21:00:** Late evening, 2-3 hours remaining, suggest 1-2 high-priority tasks only
+- **Called 21:00-22:00:** Very late, 1-2 hours remaining, suggest single most important task
+- **Called 22:00-23:00:** Almost熄灯 time, suggest wrapping up, maybe just log review
+- **Called after 23:00:** Acknowledge it's past熄灯, suggest tomorrow's early start, no new tasks
+- **Negative remaining time (past 23:00):** Respect the rule, no planning, suggest rest for tomorrow
 
 # TEMPLATES
 
