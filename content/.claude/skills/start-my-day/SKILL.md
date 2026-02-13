@@ -14,7 +14,7 @@ Help the user start their day by reviewing yesterday's progress, creating today'
 ## Step 0: Load Memory (Mandatory)
 
 1. **Read Core Identity**
-   - Read `核心配置/助手记忆.md`
+   - Read `../../核心配置/助手记忆.md`
    - Load persona, physical stats (height/weight), and high-level 2026 Winter Break goals.
 
 ## Step 1: Gather Context (Silent)
@@ -42,13 +42,7 @@ Help the user start their day by reviewing yesterday's progress, creating today'
      - Last update date (to identify stale projects 3+ days)
      - Any due dates or time-sensitive items
 
-4. **Fetch AI Content** (run in parallel)
-   - Run `/ai-newsletters` workflow to get today's AI newsletter digest
-   - Run `/ai-products` workflow to get today's AI product launches
-   - Both skills will return condensed summaries for /start-my-day context
-   - Store top 5 content opportunities and top 5 product launches
-
-5. **Analyze Fitness Readiness** (AI Coach)
+4. **Analyze Fitness Readiness** (AI Coach)
    - From yesterday's note, check:
      - Which muscle groups were trained
      - Completion status of each exercise (sets/reps done)
@@ -56,7 +50,7 @@ Help the user start their day by reviewing yesterday's progress, creating today'
    - Calculate muscle group recovery status (trained yesterday = needs rest today)
    - Load equipment inventory from 核心配置/助手记忆.md (哑铃\*2, 俯卧撑支架, 瑜伽垫)
 
-6. **Analyze & Prioritize**
+5. **Analyze & Prioritize**
    - Identify time-sensitive items (deadlines, events)
    - Find projects not touched in 3+ days (stale)
    - Determine logical next steps for each active project
@@ -91,7 +85,7 @@ Use the AskUserQuestion tool to gather:
 
 - Free text input
 
-**Question 4:** "🏋️ AI教练: 今日身体状态如何?" (Fitness Check-in)
+**Question 4:** "今日身体状态如何?" (Fitness Check-in)
 
 **Sub-questions:**
 
@@ -316,22 +310,8 @@ Use the AskUserQuestion tool to gather:
 - 22:00-23:00: 建议"熄灯倒计时"，仅回顾今日
 - > 23:00: 尊重熄灯规则，明天请早
 
-## Step 4: Process New Ideas (from Q2)
 
-For each new idea/task mentioned in Q2:
-
-1. Check if it exists in projects or inbox
-2. If new, create `00_收件箱/[Brief-Title].md`:
-   ```yaml
-   ---
-   created: YYYY-MM-DD
-   status: pending
-   source: start-my-day
-   ---
-   [User's description]
-   ```
-
-## Step 5: Present Summary
+## Step 4: Present Summary
 
 Output a concise summary in Chinese:
 
@@ -364,19 +344,11 @@ Output a concise summary in Chinese:
 **已记录新想法 ([N]):**
 - [[Idea1]]
 - [[Idea2]]
-
-
----
-
-准备开始! 快捷操作:
-- `/kickoff` - 将收件箱条目转为项目
-- `/research` - 深入研究某个主题
-- 完成健身后更新日志: 记录实际完成组数/次数和感受
 ```
 
 # IMPORTANT RULES
 
-- **Always read "核心配置/助手记忆.md" first** - This is your core identity.
+- **Always read "../../核心配置/助手记忆.md" first** - This is your core identity.
 - **Always read yesterday's note** - Don't assume it's empty.
 - **Be specific in priorities** - "为 [[Project]] 画线框图" not "处理项目".
 - **Time-sensitive items first** - Deadlines and events get top priority
