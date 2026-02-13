@@ -42,17 +42,13 @@ Help the user start their day by reviewing yesterday's progress, creating today'
      - Last update date (to identify stale projects 3+ days)
      - Any due dates or time-sensitive items
 
-4. **Check Inbox**
-   - List files in `00_收件箱/` with `status: pending`
-   - Count items waiting to be processed
-
-5. **Fetch AI Content** (run in parallel)
+4. **Fetch AI Content** (run in parallel)
    - Run `/ai-newsletters` workflow to get today's AI newsletter digest
    - Run `/ai-products` workflow to get today's AI product launches
    - Both skills will return condensed summaries for /start-my-day context
    - Store top 5 content opportunities and top 5 product launches
 
-6. **Analyze Fitness Readiness** (AI Coach)
+5. **Analyze Fitness Readiness** (AI Coach)
    - From yesterday's note, check:
      - Which muscle groups were trained
      - Completion status of each exercise (sets/reps done)
@@ -60,7 +56,7 @@ Help the user start their day by reviewing yesterday's progress, creating today'
    - Calculate muscle group recovery status (trained yesterday = needs rest today)
    - Load equipment inventory from 核心配置/助手记忆.md (哑铃\*2, 俯卧撑支架, 瑜伽垫)
 
-7. **Analyze & Prioritize**
+6. **Analyze & Prioritize**
    - Identify time-sensitive items (deadlines, events)
    - Find projects not touched in 3+ days (stale)
    - Determine logical next steps for each active project
@@ -134,11 +130,6 @@ Use the AskUserQuestion tool to gather:
      - **Include full plan** if >4 hours remaining
    - **日志**: Leave empty for user
    - **备注**: Add recommendations (time-sensitive items, stale projects, inbox count, time constraints)
-   - **AI 摘要**: Add summary section with top content from newsletters and product launches
-     - Include top 3-5 content opportunities from AI newsletters
-     - Include top 3-5 product launch opportunities
-     - Each item MUST include a markdown link to the original source: `[Title](url)`
-     - Add clear links to full digests in respective folders: `[[50_资源/Newsletters/YYYY-MM-DD-Digest]]` and `[[50_资源/产品发布/YYYY-MM-DD-Digest]]`
    - **相关项目**: List active projects with current status
 
 ### FITNESS COACH - 智能训练计划生成
@@ -361,23 +352,6 @@ Output a concise summary in Chinese:
 - [[Idea1]]
 - [[Idea2]]
 
-**收件箱:** [N] 条待处理
-
----
-
-**AI 摘要:**
-
-*内容机会:*
-- [标题](原文链接) - [角度]
-- [标题](原文链接) - [角度]
-- [标题](原文链接) - [角度]
-→ 完整摘要: [[50_资源/Newsletters/YYYY-MM-DD-Digest|今日Newsletter摘要]]
-
-*产品发布:*
-- [产品](原文链接) - [角度] - [指标]
-- [产品](原文链接) - [角度] - [指标]
-- [产品](原文链接) - [角度] - [指标]
-→ 完整摘要: [[50_资源/产品发布/YYYY-MM-DD-Digest|今日产品发布摘要]]
 
 ---
 
@@ -459,5 +433,4 @@ Output a concise summary in Chinese:
 
 # TEMPLATES
 
-- **Daily Note**: Use `99_系统/模板/Daily_Note.md` as the base format for daily notes.
 - **Fitness Plan**: Refer to `TEMPLATE_Fitness.md` for AI Coach workout generation logic, exercise library, and progression tracking.
