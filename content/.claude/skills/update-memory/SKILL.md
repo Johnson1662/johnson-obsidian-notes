@@ -13,7 +13,7 @@ Maintain an accurate, up-to-date `核心配置/助手记忆.md` that reflects th
 
 ## Step 1: Read Current Memory
 
-1. Read `核心配置/助手记忆.md`
+1. Read `../../核心配置/助手记忆.md`
 2. Parse all sections:
    - 个人档案 (Identity)
    - 身体状态与健身 (Physical & Fitness)
