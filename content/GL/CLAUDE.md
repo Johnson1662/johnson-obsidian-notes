@@ -108,3 +108,6 @@ look_at(file_path="PDF路径", goal="提取XXX内容")
 开始生成内容前，先确认：我已经完整阅读了用户上一次的所有反馈，并据此规划本篇的深度和方向。
 
 现在可以开始写下一篇文章了。
+
+## 编写md文件
+使用/obsidian-markdown 这个skill
