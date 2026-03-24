@@ -24,21 +24,24 @@
 
 当用户提出一个新课题的学习请求时，在生成任何内容之前，必须先通过 `question` 工具询问以下五个问题：
 
-1. **基础**：用户的学科基础如何？（零基础 / 有基础但忘了 / 有一定基础）
-2. **目标**：学习的主要目的是什么？（应对考试/考证 / 工作需要 / 纯粹兴趣 / 为转码深造打基础）
-3. **深度**：希望学到什么深度？（理解核心概念 / 掌握解题技巧 / 深入原理）
-4. **节奏**：prefer什么节奏的学习？（轻松入门 / 稳步推进 / 高强度训练）
-5. **资料**：你是否有相关的学习资料？（PDF教材、网页链接、书籍、课程笔记等）
+1. **资料**：你是否有相关的学习资料？（PDF教材、网页链接、书籍、课程笔记等）
+2. **基础**：用户的学科基础如何？（零基础 / 有基础但忘了 / 有一定基础）
+3. **目标**：学习的主要目的是什么？（应试 / 工作需要 / 纯粹兴趣 / 打牢学科基础）
+4. **深度**：希望学到什么深度？（理解核心概念 / 掌握解题技巧 / 深入原理）
+5. **节奏**：prefer什么节奏的学习？（轻松入门 / 稳步推进 / 高强度训练）
+
 
 **关键规则**：
 
-- 一旦用户提供知识来源（尤其是本地文件），必须先用 `look_at` 工具读取并分析教材内容、结构、章节重点
+- 一旦用户提供知识来源（尤其是本地文件），必须先用Python + pypdf读取PDF内容，分析教材结构、章节重点
 - 知识来源是生成内容的核心依据，用户偏好只是辅助调整
 - 将收集到的信息记录在课题文件夹的 `学习需求.md` 中
 
 ### 第二步：生成内容
 
 根据用户需求和教材内容，生成第一篇文章。命名规则：`序号-标题.md`（如 `01-命题逻辑.md`），序号补零方便排序。
+
+**注意：生成完内容后，必须重新核实内容的正确性！**
 
 ### 第三步：获取反馈
 
@@ -113,14 +116,114 @@
 
 ## PDF教材处理
 
-当用户提供了 PDF 教材时：
+**如果是多模态大模型能直接读pdf文件，那就直接读；**
 
-1. 使用 `look_at` 工具（不是 Python 库）读取内容
-2. 提取教材的目录结构和各章重点
-3. 基于教材内容规划学习路径，而不是凭空编造
+**如果不能，就用以下方法解析pdf文件：**
+
+**当前已安装**：pypdf、PyMuPDF (fitz)、Tesseract（OCR扫描型PDF）
+
+**已安装Python包**：pypdf, pymupdf (fitz), pdf2image, pillow, pytesseract
+
+**Tesseract路径**：D:/tesseracr-ocr/tesseract.exe
+
+### PDF读取优先级（推荐顺序）
+
+遇到PDF时，按以下优先级选择读取方式：
+
+1. **先判断是否是arXiv论文**
+   - 如果是arXiv论文，优先用ar5iv HTML版本，公式渲染最完美
+   - 方法：把arXiv ID（如2501.13484）拼接到 `https://ar5iv.org/html/{论文ID}`
+   - 用 `webfetch` 工具获取markdown格式
+
+2. **通用PDF → 首选PyMuPDF (fitz)**
+   - 公式识别效果比pypdf好很多
+   - 速度快，免费通用
+
+3. **pypdf** - 备选方案，公式识别较差
+
+4. **Tesseract OCR** - 仅用于扫描型PDF（无文字层）
+
+### 工具对比
+
+| 工具           | 公式效果   | 速度 | 适用场景           |
+| -------------- | ---------- | ---- | ------------------ |
+| ar5iv HTML     | ⭐⭐⭐⭐⭐ | 快   | arXiv论文          |
+| PyMuPDF (fitz) | ⭐⭐⭐     | 快   | 通用PDF            |
+| pypdf          | ⭐         | 快   | 简单文本           |
+| Tesseract OCR  | ⭐⭐       | 慢   | 扫描版PDF          |
+| Marker         | ⭐⭐⭐⭐   | 慢   | 复杂公式（需安装） |
+
+### PyMuPDF读取（推荐）
+
+```python
+import sys
+sys.stdout.reconfigure(encoding='utf-8')
+import fitz  # PyMuPDF
+
+doc = fitz.open("文件路径.pdf")
+print(f"总页数: {len(doc)}")
+
+# 读取所有页面
+for i in range(len(doc)):
+    page = doc[i]
+    text = page.get_text()
+    print(f"--- 第{i+1}页 ---")
+    print(text)
+```
+
+### arXiv论文读取（公式最准确）
+
+```python
+# 用webfetch直接获取ar5iv HTML版本
+# URL格式: https://ar5iv.org/html/{论文ID}
+# 例如: https://ar5iv.org/html/2501.13484
+```
+
+或者手动拼接URL后用webfetch获取markdown格式。
+
+### 文本型PDF读取（pypdf，备选）
+
+```python
+import sys
+sys.stdout.reconfigure(encoding='utf-8')
+from pypdf import PdfReader
+
+reader = PdfReader("文件路径.pdf")
+print(f"总页数: {len(reader.pages)}")
+
+# 读取所有页面
+for i, page in enumerate(reader.pages):
+    text = page.extract_text()
+    print(f"--- 第{i+1}页 ---")
+    print(text)
+```
+
+### 扫描型PDF
+
+**配置Python**：
+
+```python
+import pytesseract
+pytesseract.pytesseract.tesseract_cmd = r'D:/tesseracr-ocr/tesseract.exe'
+```
+
+**OCR读取**：
+
+```python
+from pdf2image import convert_from_path
+import pytesseract
+
+images = convert_from_path("文件路径.pdf")
+text = ""
+for i, img in enumerate(images):
+    page_text = pytesseract.image_to_string(img, lang='chi_sim+eng')
+    text += f"=== 第{i+1}页 ===\n{page_text}\n"
+print(text)
+```
 
 ---
 
 ## 文件编写
 
-使用 `obsidian-markdown` skill 来创建和编辑 md 文件。
+使用 `obsidian-markdown` skill 来创建和编辑 md 文件
+使用 `json-canvas` skill来创建和编辑canvas
