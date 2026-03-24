@@ -31,7 +31,7 @@ custom_instructions: |
 # 🚀 AI Sophomore Digital Garden
 
 > [!important] 核心记忆
-> 本系统的灵魂存储在 [[核心配置/助手记忆]] 中，已配置**自动加载**。
+> 本系统的灵魂存储在 [[助手记忆]] 中，已配置**自动加载**。
 
 > [!tip] 记忆管理
 >
