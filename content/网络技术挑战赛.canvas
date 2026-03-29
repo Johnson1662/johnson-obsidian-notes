@@ -1,0 +1,42 @@
+{
+	"nodes":[
+		{"id":"f000000000000003","type":"group","x":160,"y":750,"width":620,"height":640,"color":"6","label":"3. 控制平面"},
+		{"id":"f000000000000004","type":"group","x":1000,"y":890,"width":300,"height":360,"color":"4","label":"4. 知识与模型"},
+		{"id":"f000000000000005","type":"group","x":-520,"y":960,"width":310,"height":340,"color":"2","label":"5. 执行与展示"},
+		{"id":"f000000000000001","type":"group","x":460,"y":150,"width":300,"height":320,"color":"5","label":"1. 数据平面"},
+		{"id":"f000000000000002","type":"group","x":460,"y":520,"width":300,"height":190,"color":"5","label":"2. 采集层"},
+		{"id":"0000000000000001","type":"text","text":"**流量源**\n(校园/攻击)","x":500,"y":0,"width":220,"height":90,"color":"1"},
+		{"id":"0000000000000002","type":"text","text":"**P4 Switch**\n(BMv2 / Tofino / SONiC)","x":500,"y":200,"width":220,"height":90},
+		{"id":"0000000000000003","type":"text","text":"**INT 采集**\n(In-band Network Telemetry)","x":500,"y":340,"width":220,"height":90},
+		{"id":"0000000000000004","type":"text","text":"**Collector Agent**\n(特征提取 + 物理解析)","x":500,"y":570,"width":220,"height":90},
+		{"id":"0000000000000006","type":"text","text":"**Detector Agent**\n(轻量初筛)","x":500,"y":800,"width":220,"height":90},
+		{"id":"0000000000000007","type":"text","text":"**Classifier Agent**\n(SecGPT 分类)","x":500,"y":950,"width":220,"height":90},
+		{"id":"0000000000000008","type":"text","text":"**Explainer Agent**\n(物理解释 + 攻击链)","x":500,"y":1100,"width":220,"height":90},
+		{"id":"0000000000000009","type":"text","text":"**Defender Agent**\n(防御决策)","x":500,"y":1250,"width":220,"height":90},
+		{"id":"000000000000000c","type":"text","text":"**Web 仪表盘**\n(实时热力图 + 报告)","x":-470,"y":1010,"width":220,"height":90},
+		{"id":"000000000000000d","type":"text","text":"**ONOS 控制器**\n(动态下发流表)","x":-470,"y":1160,"width":220,"height":90},
+		{"id":"000000000000000a","type":"text","text":"**SecGPT**\n(网络安全大模型)","x":1040,"y":960,"width":220,"height":90},
+		{"id":"000000000000000b","type":"text","text":"**RAG 知识库**\n(ATT&CK + 拓扑)","x":1040,"y":1110,"width":220,"height":90},
+		{"id":"0000000000000005","type":"text","text":"**Supervisor Agent**\n(协调与日志)","x":200,"y":890,"width":220,"height":90,"color":"3"}
+	],
+	"edges":[
+		{"id":"e000000000000001","fromNode":"0000000000000001","fromSide":"bottom","toNode":"0000000000000002","toSide":"top"},
+		{"id":"e000000000000002","fromNode":"0000000000000002","fromSide":"bottom","toNode":"0000000000000003","toSide":"top","label":"提取特征"},
+		{"id":"e000000000000003","fromNode":"0000000000000003","fromSide":"bottom","toNode":"0000000000000004","toSide":"top"},
+		{"id":"e000000000000004","fromNode":"0000000000000004","fromSide":"bottom","toNode":"0000000000000006","toSide":"top"},
+		{"id":"e000000000000005","fromNode":"0000000000000006","fromSide":"bottom","toNode":"0000000000000007","toSide":"top"},
+		{"id":"e000000000000006","fromNode":"0000000000000007","fromSide":"bottom","toNode":"0000000000000008","toSide":"top"},
+		{"id":"e000000000000007","fromNode":"0000000000000008","fromSide":"bottom","toNode":"0000000000000009","toSide":"top"},
+		{"id":"e000000000000008","fromNode":"0000000000000007","fromSide":"right","toNode":"000000000000000a","toSide":"left","label":"推理"},
+		{"id":"e000000000000009","fromNode":"0000000000000008","fromSide":"right","toNode":"000000000000000a","toSide":"left","label":"推理"},
+		{"id":"e00000000000000a","fromNode":"0000000000000008","fromSide":"right","toNode":"000000000000000b","toSide":"left","label":"检索"},
+		{"id":"e00000000000000b","fromNode":"0000000000000005","fromSide":"top","toNode":"0000000000000006","toSide":"left"},
+		{"id":"e00000000000000c","fromNode":"0000000000000005","fromSide":"right","toNode":"0000000000000007","toSide":"left"},
+		{"id":"e00000000000000d","fromNode":"0000000000000005","fromSide":"bottom","toNode":"0000000000000008","toSide":"left"},
+		{"id":"e00000000000000e","fromNode":"0000000000000009","fromSide":"left","toNode":"000000000000000d","toSide":"right","label":"下发策略"},
+		{"id":"e00000000000000f","fromNode":"000000000000000d","fromSide":"top","toNode":"0000000000000002","toSide":"left","color":"2","label":"更新流表"},
+		{"id":"e000000000000010","fromNode":"0000000000000008","fromSide":"left","toNode":"000000000000000c","toSide":"right","label":"告警/报告"},
+		{"id":"e000000000000011","fromNode":"0000000000000009","fromSide":"left","toNode":"000000000000000c","toSide":"bottom","label":"决策日志"},
+		{"id":"e000000000000012","fromNode":"000000000000000c","fromSide":"top","toNode":"0000000000000001","toSide":"left","color":"3","label":"实时反馈与监控"}
+	]
+}
