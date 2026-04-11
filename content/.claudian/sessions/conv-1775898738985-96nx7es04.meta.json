@@ -4,15 +4,15 @@
   "title": "Summarize note contents",
   "titleGenerationStatus": "success",
   "createdAt": 1775898738986,
-  "updatedAt": 1775899005396,
-  "lastResponseAt": 1775899005396,
+  "updatedAt": 1775899423870,
+  "lastResponseAt": 1775899423870,
   "sessionId": "9e31567c-9fb2-4474-97d7-7c87ce981ad9",
   "providerState": {
     "providerSessionId": "9e31567c-9fb2-4474-97d7-7c87ce981ad9"
   },
   "currentNote": "知识库/知识工程/第一讲 知识工程与知识图谱.md",
   "usage": {
-    "model": "opus",
+    "model": "haiku",
     "inputTokens": 0,
     "cacheCreationInputTokens": 0,
     "cacheReadInputTokens": 0,
