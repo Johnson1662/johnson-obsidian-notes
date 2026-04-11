@@ -1,14 +1,14 @@
 {
-  "id": "conv-1775898452724-ubjafmizm",
+  "id": "conv-1775898738985-96nx7es04",
   "providerId": "claude",
-  "title": "Enhance and consolidate note content",
+  "title": "Summarize note contents",
   "titleGenerationStatus": "success",
-  "createdAt": 1775898452725,
-  "updatedAt": 1775898728881,
-  "lastResponseAt": 1775898621356,
-  "sessionId": "18281664-abfd-4e03-8a8e-695fa8a50a47",
+  "createdAt": 1775898738986,
+  "updatedAt": 1775899005396,
+  "lastResponseAt": 1775899005396,
+  "sessionId": "9e31567c-9fb2-4474-97d7-7c87ce981ad9",
   "providerState": {
-    "providerSessionId": "18281664-abfd-4e03-8a8e-695fa8a50a47"
+    "providerSessionId": "9e31567c-9fb2-4474-97d7-7c87ce981ad9"
   },
   "currentNote": "知识库/知识工程/第一讲 知识工程与知识图谱.md",
   "usage": {
