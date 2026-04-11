@@ -1,0 +1,23 @@
+{
+  "id": "conv-1775898204496-msu7aiqao",
+  "providerId": "claude",
+  "title": "Greet user",
+  "titleGenerationStatus": "success",
+  "createdAt": 1775898204499,
+  "updatedAt": 1775898576844,
+  "lastResponseAt": 1775898298618,
+  "sessionId": "a06af65d-e2c9-48ab-bb86-3782f44661db",
+  "providerState": {
+    "providerSessionId": "a06af65d-e2c9-48ab-bb86-3782f44661db"
+  },
+  "usage": {
+    "model": "opus",
+    "inputTokens": 0,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 0,
+    "contextWindow": 200000,
+    "contextTokens": 0,
+    "percentage": 0,
+    "contextWindowIsAuthoritative": true
+  }
+}
