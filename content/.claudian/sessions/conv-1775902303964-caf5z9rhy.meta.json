@@ -1,14 +1,14 @@
 {
-  "id": "conv-1775898738985-96nx7es04",
+  "id": "conv-1775902303964-caf5z9rhy",
   "providerId": "claude",
-  "title": "Summarize note contents",
+  "title": "Respond to Chinese Greeting",
   "titleGenerationStatus": "success",
-  "createdAt": 1775898738986,
-  "updatedAt": 1775902121781,
-  "lastResponseAt": 1775899856559,
-  "sessionId": "9e31567c-9fb2-4474-97d7-7c87ce981ad9",
+  "createdAt": 1775902303964,
+  "updatedAt": 1775968849568,
+  "lastResponseAt": 1775968849568,
+  "sessionId": "6d318aa1-d821-45e8-8b61-1ff7b048d022",
   "providerState": {
-    "providerSessionId": "9e31567c-9fb2-4474-97d7-7c87ce981ad9"
+    "providerSessionId": "6d318aa1-d821-45e8-8b61-1ff7b048d022"
   },
   "usage": {
     "model": "haiku",

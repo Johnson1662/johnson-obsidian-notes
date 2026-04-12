@@ -1,0 +1,22 @@
+{
+  "id": "conv-1775902129825-p761poh4c",
+  "providerId": "claude",
+  "title": "Interpret this graph",
+  "titleGenerationStatus": "success",
+  "createdAt": 1775902129825,
+  "updatedAt": 1775902300805,
+  "lastResponseAt": 1775902137371,
+  "sessionId": "fb4e0ad4-8c6e-437f-b812-2002051e6988",
+  "providerState": {
+    "providerSessionId": "fb4e0ad4-8c6e-437f-b812-2002051e6988"
+  },
+  "usage": {
+    "model": "haiku",
+    "inputTokens": 0,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 0,
+    "contextWindow": 200000,
+    "contextTokens": 0,
+    "percentage": 0
+  }
+}
