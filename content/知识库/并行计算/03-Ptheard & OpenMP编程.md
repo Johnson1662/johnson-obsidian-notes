@@ -389,15 +389,15 @@ g++ -pthread -o test.o test.cpp
 
 ### 9.2 Pthread基本API
 
-| 函数 | 说明 |
-|------|------|
-| `pthread_create()` | 创建线程 |
-| `pthread_join()` | 等待线程结束 |
-| `pthread_exit()` | 退出线程 |
-| `pthread_mutex_init()` | 初始化互斥锁 |
-| `pthread_mutex_lock()` | 加锁 |
-| `pthread_mutex_unlock()` | 解锁 |
-| `pthread_mutex_destroy()` | 销毁互斥锁 |
+| 函数                        | 说明     |
+| ------------------------- | ------ |
+| `pthread_create()`        | 创建线程   |
+| `pthread_join()`          | 等待线程结束 |
+| `pthread_exit()`          | 退出线程   |
+| `pthread_mutex_init()`    | 初始化互斥锁 |
+| `pthread_mutex_lock()`    | 加锁     |
+| `pthread_mutex_unlock()`  | 解锁     |
+| `pthread_mutex_destroy()` | 销毁互斥锁  |
 
 ### 9.3 Pthread示例
 
