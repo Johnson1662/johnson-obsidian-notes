@@ -476,4 +476,116 @@ MPI_Type_commit(&mpi_particle_type);
 
 ---
 
-*整理自：06 MPI基础.pdf (76页)、07+MPI进阶.pdf (57页)、09 MPI多级混合编程.pdf (45页)*
+## 九、MPI实验实践（2026年实验三）
+
+### 9.1 实验三：MPI多进程求解稀疏线性方程组
+
+**实验目标**：使用MPI实现共轭梯度法（CG）的并行计算
+
+**并行策略**：
+- **行分块**：将矩阵A的n行均匀划分给p个进程
+- 每个进程存储本地行块（CSR格式）、右端项片段b_local
+- 向量p和r采用**冗余存储**（所有进程保持完整副本）
+- 点积使用 **MPI_Allreduce** 全局规约
+
+**数据分布**：
+```
+进程0: 矩阵行0~n/p-1, b[0~n/p-1]
+进程1: 矩阵行n/p~2n/p-1, b[n/p~2n/p-1]
+...
+进程p-1: 矩阵行最后部分, b最后部分
+
+向量p, r: 所有进程都有完整副本（冗余存储）
+```
+
+### 9.2 MPI环境配置
+
+**加载MPI模块**：
+```bash
+module load mpi
+```
+
+**编译命令**：
+```bash
+mpic++ -i_dynamic -o sparse.o sparse.cpp
+```
+
+**运行命令**：
+```bash
+mpirun -np 4 ./sparse.o matrix.txt vector.txt
+```
+
+### 9.3 MPI CG算法要点
+
+```c
+// 1. 初始化
+MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+MPI_Comm_size(MPI_COMM_WORLD, &size);
+
+// 2. 分发矩阵数据
+// 每个进程读取自己的行块
+int rows_per_proc = n / size;
+int start_row = rank * rows_per_proc;
+int end_row = (rank == size-1) ? n : (rank+1) * rows_per_proc;
+
+// 3. SpMV本地计算（矩阵行分块，向量完整）
+void local_spmv(int start, int end, ...) {
+    for (int i = start; i < end; i++) {
+        y[i] = 0.0;
+        for (int j = row_ptr[i]; j < row_ptr[i+1]; j++) {
+            y[i] += values[j] * x[col_idx[j]];
+        }
+    }
+}
+
+// 4. 全局点积规约
+double local_pAp = 0.0;
+for (int i = start_row; i < end_row; i++) {
+    local_pAp += p[i] * Ap[i];
+}
+double global_pAp;
+MPI_Allreduce(&local_pAp, &global_pAp, 1, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD);
+
+// 5. 向量更新（冗余存储，无通信）
+for (int i = 0; i < n; i++) {
+    x[i] += alpha * p[i];
+    r[i] -= alpha * Ap[i];
+}
+```
+
+### 9.4 PBS作业脚本
+
+```bash
+#!/bin/bash
+#PBS -N sparse_mpi
+#PBS -l nodes=2:ppn=2
+#PBS -j oe
+
+module load mpi
+cd $PBS_O_WORKDIR
+procs=$(cat $PBS_NODEFILE | wc -l)
+
+mpirun -np $procs -machinefile $PBS_NODEFILE ./sparse.o \
+    matrix.txt vector.txt &> run.log
+```
+
+**提交任务**：
+```bash
+qsub sparse_mpi.pbs
+```
+
+### 9.5 混合编程：MPI+OpenMP
+
+**编译命令**：
+```bash
+mpic++ -i_dynamic -fopenmp -o hybrid.o hybrid.cpp
+```
+
+**应用场景**：
+- MPI负责进程间通信
+- OpenMP负责节点内多线程并行
+- 适合大规模集群环境
+
+---
+
+*整理自：06 MPI基础.pdf (76页)、07+MPI进阶.pdf (57页)、09 MPI多级混合编程.pdf (45页)、2026年实验指导书*

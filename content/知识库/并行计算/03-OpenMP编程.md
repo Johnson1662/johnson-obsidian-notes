@@ -373,4 +373,126 @@ for (i = 0; i < N; i++) {
 
 ---
 
-*整理自：03 多线程并行程序设计.pdf (79页)、05 OpenMP.pdf (69页)*
+## 九、Pthread编程（2026年实验重点！）
+
+### 9.1 Pthread概述
+
+**POSIX Threads（Pthread）**：
+- POSIX标准定义的线程API
+- C语言实现的多线程编程接口
+- 需要 `#include <pthread.h>`
+
+**编译命令**：
+```bash
+g++ -pthread -o test.o test.cpp
+```
+
+### 9.2 Pthread基本API
+
+| 函数 | 说明 |
+|------|------|
+| `pthread_create()` | 创建线程 |
+| `pthread_join()` | 等待线程结束 |
+| `pthread_exit()` | 退出线程 |
+| `pthread_mutex_init()` | 初始化互斥锁 |
+| `pthread_mutex_lock()` | 加锁 |
+| `pthread_mutex_unlock()` | 解锁 |
+| `pthread_mutex_destroy()` | 销毁互斥锁 |
+
+### 9.3 Pthread示例
+
+```c
+#include <pthread.h>
+#include <stdio.h>
+
+#define NUM_THREADS 4
+
+void* thread_func(void* arg) {
+    int tid = *(int*)arg;
+    printf("Thread %d is running\n", tid);
+    return NULL;
+}
+
+int main() {
+    pthread_t threads[NUM_THREADS];
+    int thread_ids[NUM_THREADS];
+    
+    // 创建线程
+    for (int i = 0; i < NUM_THREADS; i++) {
+        thread_ids[i] = i;
+        pthread_create(&threads[i], NULL, thread_func, &thread_ids[i]);
+    }
+    
+    // 等待所有线程完成
+    for (int i = 0; i < NUM_THREADS; i++) {
+        pthread_join(threads[i], NULL);
+    }
+    
+    return 0;
+}
+```
+
+### 9.4 互斥锁示例
+
+```c
+pthread_mutex_t mutex;
+int shared_counter = 0;
+
+void* increment(void* arg) {
+    for (int i = 0; i < 1000; i++) {
+        pthread_mutex_lock(&mutex);
+        shared_counter++;  // 临界区
+        pthread_mutex_unlock(&mutex);
+    }
+    return NULL;
+}
+
+int main() {
+    pthread_mutex_init(&mutex, NULL);
+    
+    // 创建线程...
+    
+    pthread_mutex_destroy(&mutex);
+    return 0;
+}
+```
+
+### 9.5 实验一：多线程计算正弦值（2026年）
+
+**泰勒级数展开**：
+$$\sin(x) = \sum_{n=0}^{\infty} \frac{(-1)^n x^{2n+1}}{(2n+1)!} = x - \frac{x^3}{3!} + \frac{x^5}{5!} - ...$$
+
+**并行策略**：
+- 将展开式各项分配给不同线程
+- 每个线程计算部分和
+- 最后合并得到最终结果
+
+**编译运行**：
+```bash
+g++ -pthread -o cal_sin.o cal_sin.cpp
+./cal_sin.o 1.57 10000 4  # 弧度=1.57, 项数=10000, 线程数=4
+```
+
+### 9.6 实验二：多线程求解稀疏线性方程组（2026年）
+
+**共轭梯度法（CG）**：
+- 求解对称正定稀疏线性方程组 $Ax=b$
+- 核心计算：SpMV、向量点积、向量更新
+
+**CSR稀疏矩阵格式**：
+```c
+// 3x3矩阵 A = [3 1 0; 1 4 1; 0 1 5]
+values[] = {3.0, 1.0, 1.0, 4.0, 1.0, 1.0, 5.0};  // 非零元素
+row_ptr[] = {0, 2, 5, 7};                          // 行偏移
+col_idx[] = {0, 1, 0, 1, 2, 1, 2};                 // 列索引
+```
+
+**并行策略**：
+- 将矩阵行分配给不同线程
+- 每个线程计算连续若干行的SpMV
+- 点积需要全局规约（使用互斥锁）
+- 注意避免假共享
+
+---
+
+*整理自：03 多线程并行程序设计.pdf (79页)、05 OpenMP.pdf (69页)、2026年实验指导书*
