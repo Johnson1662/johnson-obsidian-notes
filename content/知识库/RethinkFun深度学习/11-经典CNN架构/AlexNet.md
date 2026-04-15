@@ -2,7 +2,7 @@
 title: AlexNet
 source: https://www.rethink.fun/chapter11/AlexNet.html
 chapter: 11-经典CNN架构
-tags: [深度学习, RethinkFun, 11-经典CNN架构]
+tags: [深度学习, RethinkFun]
 ---
 
 # AlexNet

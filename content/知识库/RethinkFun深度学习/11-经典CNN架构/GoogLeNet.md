@@ -2,7 +2,7 @@
 title: GoogLeNet
 source: https://www.rethink.fun/chapter11/GoogLeNet.html
 chapter: 11-经典CNN架构
-tags: [深度学习, RethinkFun, 11-经典CNN架构]
+tags: [深度学习, RethinkFun]
 ---
 
 # GoogLeNet

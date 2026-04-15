@@ -2,7 +2,7 @@
 title: ResNet实现
 source: https://www.rethink.fun/chapter11/ResNet实现.html
 chapter: 11-经典CNN架构
-tags: [深度学习, RethinkFun, 11-经典CNN架构]
+tags: [深度学习, RethinkFun]
 ---
 
 # ResNet实现
