@@ -2,7 +2,7 @@
 title: DeepSeekMOE
 source: https://www.rethink.fun/chapter18/DeepSeekMOE.html
 chapter: 18-混合专家模型
-tags: [深度学习, RethinkFun, 18-混合专家模型]
+tags: [深度学习, RethinkFun]
 ---
 
 # DeepSeekMOE

@@ -2,7 +2,7 @@
 title: Llama3
 source: https://www.rethink.fun/chapter17/Llama3.html
 chapter: 17-大语言模型
-tags: [深度学习, RethinkFun, 17-大语言模型]
+tags: [深度学习, RethinkFun]
 ---
 
 # Llama3

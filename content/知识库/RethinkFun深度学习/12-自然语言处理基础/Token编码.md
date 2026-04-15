@@ -1,8 +1,8 @@
 ---
 title: Token编码
-source: https://www.rethink.fun/chapter12/Token编码.html
+source: https://www.rethink.fun/chapter12/Token%E7%BC%96%E7%A0%81.html
 chapter: 12-自然语言处理基础
-tags: [深度学习, RethinkFun, 12-自然语言处理基础]
+tags: [深度学习, RethinkFun]
 ---
 
 # Token编码

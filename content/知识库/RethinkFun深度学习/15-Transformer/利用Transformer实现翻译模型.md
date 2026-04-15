@@ -1,8 +1,8 @@
 ---
 title: 利用Transformer实现翻译模型
-source: https://www.rethink.fun/chapter15/利用Transformer实现翻译模型.html
+source: https://www.rethink.fun/chapter15/%E5%88%A9%E7%94%A8Transformer%E5%AE%9E%E7%8E%B0%E7%BF%BB%E8%AF%91%E6%A8%A1%E5%9E%8B.html
 chapter: 15-Transformer
-tags: [深度学习, RethinkFun, 15-Transformer]
+tags: [深度学习, RethinkFun]
 ---
 
 # 利用Transformer实现翻译模型

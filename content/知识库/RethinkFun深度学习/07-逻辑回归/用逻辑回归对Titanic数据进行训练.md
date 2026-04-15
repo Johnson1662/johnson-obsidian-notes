@@ -1,8 +1,8 @@
 ---
 title: 用逻辑回归对Titanic数据进行训练
-source: https://www.rethink.fun/chapter7/用逻辑回归对Titanic数据进行训练.html
+source: https://www.rethink.fun/chapter7/%E7%94%A8%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E5%AF%B9Titanic%E6%95%B0%E6%8D%AE%E8%BF%9B%E8%A1%8C%E8%AE%AD%E7%BB%83.html
 chapter: 07-逻辑回归
-tags: [深度学习, RethinkFun, 07-逻辑回归]
+tags: [深度学习, RethinkFun]
 ---
 
 # 用逻辑回归对Titanic数据进行训练

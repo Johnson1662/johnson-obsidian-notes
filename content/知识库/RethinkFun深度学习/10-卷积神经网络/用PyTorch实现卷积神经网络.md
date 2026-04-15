@@ -1,6 +1,6 @@
 ---
 title: 用PyTorch实现卷积神经网络
-source: https://www.rethink.fun/chapter10/用PyTorch实现卷积神经网络.html
+source: https://www.rethink.fun/chapter10/%E7%94%A8PyTorch%E5%AE%9E%E7%8E%B0%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C.html
 chapter: 10-卷积神经网络
 tags: [深度学习, RethinkFun]
 ---

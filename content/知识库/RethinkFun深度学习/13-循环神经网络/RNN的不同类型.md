@@ -1,8 +1,8 @@
 ---
 title: RNN的不同类型
-source: https://www.rethink.fun/chapter13/RNN的不同类型.html
+source: https://www.rethink.fun/chapter13/RNN%E7%9A%84%E4%B8%8D%E5%90%8C%E7%B1%BB%E5%9E%8B.html
 chapter: 13-循环神经网络
-tags: [深度学习, RethinkFun, 13-循环神经网络]
+tags: [深度学习, RethinkFun]
 ---
 
 # RNN的不同类型
@@ -26,7 +26,7 @@ RNN处理流程为：
 
 ![1309.png](http://rethink.fun/imgs/1309.png)
 
-上图可以看到，第一个时间步，输入xxx，RNN输出第一个token:y1y_1y1​，然后将y1y_1y1​作为第二个时间步的输入token，继续生成y2y_2y2​，以此类推，直到模型生成了结束符`<EOS>`。
+上图可以看到，第一个时间步，输入$x$x，RNN输出第一个token:$y_1$y1​，然后将$y_1$y1​作为第二个时间步的输入token，继续生成$y_2$y2​，以此类推，直到模型生成了结束符`<EOS>`。
 
 ### 13.2.3 多对多
 

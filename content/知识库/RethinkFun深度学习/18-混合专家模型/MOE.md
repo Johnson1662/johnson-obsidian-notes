@@ -2,7 +2,7 @@
 title: MOE
 source: https://www.rethink.fun/chapter18/MOE.html
 chapter: 18-混合专家模型
-tags: [深度学习, RethinkFun, 18-混合专家模型]
+tags: [深度学习, RethinkFun]
 ---
 
 # MOE
@@ -46,23 +46,23 @@ MOE模型的训练难度比稠密模型要大，因为可能存在专家负载�
 ### 18.1.4 负载均衡损失
 
 负载均衡损失的目的就是希望每个专家被调用的频率是相等时损失最小。
-第i个专家被调用的频率fif_ifi​就等于该专家被调用的次数除以所有专家被调用的次数。
+第i个专家被调用的频率$f_i$fi​就等于该专家被调用的次数除以所有专家被调用的次数。
 loss函数定义为：
 
-Lossbalance=∑i=1N(fi)2Loss_{balance}=\sum_{i=1}^N(f_i)^2Lossbalance​=∑i=1N​(fi​)2
+$Loss_{balance}=\sum_{i=1}^N(f_i)^2$Lossbalance​=∑i=1N​(fi​)2
 
 我们通过一个例子来理解这个loss函数。
 假设有两个专家，如果是最极端的情况，分配最不平衡的情况，每个token都调用第一个专家。
 
-f1=1;f2=0;lossbalance=12+02=1f_1=1;f_2=0; \qquad loss_{balance}=1^2+0^2=1f1​=1;f2​=0;lossbalance​=12+02=1
+$f_1=1;f_2=0; \qquad loss_{balance}=1^2+0^2=1$f1​=1;f2​=0;lossbalance​=12+02=1
 
 稍微平衡一点的情况，第一个专家有0.8的概率被调用，第二个专家有0.2的概率被调用。
 
-f1=0.8;f2=0.2;lossbalance=0.82+0.22=0.68f_1=0.8;f_2=0.2; \qquad loss_{balance}=0.8^2+0.2^2=0.68f1​=0.8;f2​=0.2;lossbalance​=0.82+0.22=0.68
+$f_1=0.8;f_2=0.2; \qquad loss_{balance}=0.8^2+0.2^2=0.68$f1​=0.8;f2​=0.2;lossbalance​=0.82+0.22=0.68
 
 绝对平衡的情况，两个专家都各有0.5的概率被调用到：
 
-f1=0.5;f2=0.5;lossbalance=0.52+0.52=0.5f_1=0.5;f_2=0.5; \qquad loss_{balance}=0.5^2+0.5^2=0.5f1​=0.5;f2​=0.5;lossbalance​=0.52+0.52=0.5
+$f_1=0.5;f_2=0.5; \qquad loss_{balance}=0.5^2+0.5^2=0.5$f1​=0.5;f2​=0.5;lossbalance​=0.52+0.52=0.5
 
 如果要严格证明为这么只有负载均衡时，这个loss最小，可以通过柯西不等式来证明。我们这里就不做证明了。
 
@@ -70,6 +70,6 @@ f1=0.5;f2=0.5;lossbalance=0.52+0.52=0.5f_1=0.5;f_2=0.5; \qquad loss_{balance}=0.
 
 作为改进，我们定义负载均衡的损失函数为:
 
-lossbalance=∑i=1Nfipiloss_{balance}=\sum_{i=1}^N{f_ip_i}lossbalance​=∑i=1N​fi​pi​
+$loss_{balance}=\sum_{i=1}^N{f_ip_i}$lossbalance​=∑i=1N​fi​pi​
 
-可以看到上式中将一个频率值fif_ifi​替换为概率值pip_ipi​。pip_ipi​的值是一个批次中所有token对该专家的路由概率的平均值。理论上这里的概率平均值当token无穷大时就等于这个专家被选择的频率值。这样做有个好处，这个概率值是通过softmax数据计算得来的，是可以微分的，可以通过梯度下降来进行优化改进让所有专家负载均衡。
+可以看到上式中将一个频率值$f_i$fi​替换为概率值$p_i$pi​。$p_i$pi​的值是一个批次中所有token对该专家的路由概率的平均值。理论上这里的概率平均值当token无穷大时就等于这个专家被选择的频率值。这样做有个好处，这个概率值是通过softmax数据计算得来的，是可以微分的，可以通过梯度下降来进行优化改进让所有专家负载均衡。

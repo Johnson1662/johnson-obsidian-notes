@@ -1,8 +1,8 @@
 ---
 title: CPU环境下的PyTorch安装
-source: https://www.rethink.fun/chapter6/CPU环境下的PyTorch安装.html
+source: https://www.rethink.fun/chapter6/CPU%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%9A%84PyTorch%E5%AE%89%E8%A3%85.html
 chapter: 06-初识PyTorch
-tags: [深度学习, RethinkFun, 06-初识PyTorch]
+tags: [深度学习, RethinkFun]
 ---
 
 # CPU环境下的PyTorch安装

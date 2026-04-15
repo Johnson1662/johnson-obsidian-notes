@@ -1,8 +1,8 @@
 ---
 title: 用PyTorch实现线性回归
-source: https://www.rethink.fun/chapter6/用PyTorch实现线性回归.html
+source: https://www.rethink.fun/chapter6/%E7%94%A8PyTorch%E5%AE%9E%E7%8E%B0%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92.html
 chapter: 06-初识PyTorch
-tags: [深度学习, RethinkFun, 06-初识PyTorch]
+tags: [深度学习, RethinkFun]
 ---
 
 # 用PyTorch实现线性回归

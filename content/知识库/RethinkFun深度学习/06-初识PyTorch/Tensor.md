@@ -2,7 +2,7 @@
 title: Tensor
 source: https://www.rethink.fun/chapter6/Tensor.html
 chapter: 06-初识PyTorch
-tags: [深度学习, RethinkFun, 06-初识PyTorch]
+tags: [深度学习, RethinkFun]
 ---
 
 # Tensor
@@ -240,45 +240,49 @@ Tensor对整体所有元素进行统计，比如求均值没有什么问题，�
 
 对于下边这个tensor，t1，它的shape为(3,2)。
 
-t1=[131313]
+$$
 t1=\begin{bmatrix}
  1 & 3\\
  1 & 3\\
  1 & 3
 \end{bmatrix}
-t1=⎣⎢⎡​111​333​⎦⎥⎤​
+$$
+⎣⎢⎡​111​333​⎦⎥⎤​
 
 我们调用`t1.mean(dim=0)`，就是针对第0个维度求均值，第0个维度是行，第1个维度是列，那么你认为结果是什么呢？
 
 你可能认为是每行求一个均值，最终结果为：
 
-mean=[222]
+$$
 mean=\begin{bmatrix}
  2\\
  2\\
  2
 \end{bmatrix}
-mean=⎣⎢⎡​222​⎦⎥⎤​
+$$
+⎣⎢⎡​222​⎦⎥⎤​
 
 但实际结果是：
 
-mean=[13]
+$$
 mean=\begin{bmatrix}
  1&3
 \end{bmatrix}
-mean=[1​3​]
+$$
+[1​3​]
 
 原因是Tensor指定统计的维度，意味着要“消灭”这个维度。比如指定`dim=0`意味着，统计结果要“消灭”行这个维度，各个列的值在不同行上进行统计。
 
 同理，对于`t1.mean(dim=1)`，意味着要对不同的行，在列上进行统计，最终“消灭”列这个维度。结果为：
 
-mean=[222]
+$$
 mean=\begin{bmatrix}
  2\\
  2\\
  2
 \end{bmatrix}
-mean=⎣⎢⎡​222​⎦⎥⎤​
+$$
+⎣⎢⎡​222​⎦⎥⎤​
 
 另外，对于上边t1这个tensor而言，本来shape为(3,2)，`t1.mean(dim=0)`结果的shape为(2,)，也就是有本来的2维tensor，“消灭”了行的维度，变为1维tensor，这个维度为列的维度数:2。`t1.mean(dim=1)`结果的shape为(3,)，原本2维tensor，“消灭”了列的维度，变为1维tensor，这个维度为行的维度数:3。
 

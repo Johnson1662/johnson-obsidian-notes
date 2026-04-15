@@ -2,7 +2,7 @@
 title: Llama1
 source: https://www.rethink.fun/chapter17/Llama1.html
 chapter: 17-大语言模型
-tags: [深度学习, RethinkFun, 17-大语言模型]
+tags: [深度学习, RethinkFun]
 ---
 
 # Llama1
@@ -55,15 +55,17 @@ RMSNorm 是对传统 LayerNorm 的一种优化，其关键在于去除归一化�
 
 - **LayerNorm** 的公式如下：
 
-LayerNorm=x−E[x]Var[x]+ϵ⋅γ+β
-  \text{LayerNorm} = \frac{x - \mathbb{E}[x]}{\sqrt{\text{Var}[x] + \epsilon}} \cdot \gamma + \beta
-  LayerNorm=Var[x]+ϵ​x−E[x]​⋅γ+β
+$$
+\text{LayerNorm} = \frac{x - \mathbb{E}[x]}{\sqrt{\text{Var}[x] + \epsilon}} \cdot \gamma + \beta
+$$
+=Var[x]+ϵ​x−E[x]​⋅γ+β
 
 - **RMSNorm** 的公式如下：
 
-RMSNorm=xMean(x2)+ϵ⋅γ
-  \text{RMSNorm} = \frac{x}{\sqrt{\text{Mean}(x^2) + \epsilon}} \cdot \gamma
-  RMSNorm=Mean(x2)+ϵ​x​⋅γ
+$$
+\text{RMSNorm} = \frac{x}{\sqrt{\text{Mean}(x^2) + \epsilon}} \cdot \gamma
+$$
+=Mean(x2)+ϵ​x​⋅γ
 
 这种归一化方式减少了冗余操作，提高了训练效率。
 
@@ -71,9 +73,10 @@ RMSNorm=xMean(x2)+ϵ⋅γ
 
 SiLU（Sigmoid Linear Unit），也称 Swish，定义如下：
 
-SiLU(x)=x⋅sigmoid(x)=x1+e−x
+$$
 \text{SiLU}(x) = x \cdot \text{sigmoid}(x) = \frac{x}{1 + e^{-x}}
-SiLU(x)=x⋅sigmoid(x)=1+e−xx​
+$$
+(x)=x⋅sigmoid(x)=1+e−xx​
 
 ![1702.png](http://rethink.fun/imgs/1702.png)
 

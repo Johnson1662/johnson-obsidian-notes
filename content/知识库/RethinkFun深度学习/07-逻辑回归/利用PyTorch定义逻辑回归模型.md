@@ -1,8 +1,8 @@
 ---
 title: 利用PyTorch定义逻辑回归模型
-source: https://www.rethink.fun/chapter7/利用PyTorch定义逻辑回归模型.html
+source: https://www.rethink.fun/chapter7/%E5%88%A9%E7%94%A8PyTorch%E5%AE%9A%E4%B9%89%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E6%A8%A1%E5%9E%8B.html
 chapter: 07-逻辑回归
-tags: [深度学习, RethinkFun, 07-逻辑回归]
+tags: [深度学习, RethinkFun]
 ---
 
 # 利用PyTorch定义逻辑回归模型

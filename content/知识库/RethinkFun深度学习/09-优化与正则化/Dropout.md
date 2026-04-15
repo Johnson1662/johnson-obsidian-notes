@@ -2,7 +2,7 @@
 title: Dropout
 source: https://www.rethink.fun/chapter9/Dropout.html
 chapter: 09-优化与正则化
-tags: [深度学习, RethinkFun, 09-优化与正则化]
+tags: [深度学习, RethinkFun]
 ---
 
 # Dropout

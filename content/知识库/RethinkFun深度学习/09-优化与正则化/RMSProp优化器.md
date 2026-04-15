@@ -1,8 +1,8 @@
 ---
 title: RMSProp优化器
-source: https://www.rethink.fun/chapter9/RMSProp优化器.html
+source: https://www.rethink.fun/chapter9/RMSProp%E4%BC%98%E5%8C%96%E5%99%A8.html
 chapter: 09-优化与正则化
-tags: [深度学习, RethinkFun, 09-优化与正则化]
+tags: [深度学习, RethinkFun]
 ---
 
 # RMSProp优化器
@@ -20,20 +20,20 @@ RMSProp（Root Mean Square Propagation optimizer）均方根传播优化器，�
 RMSProp就是让每个参数有自适应的学习率。让梯度值大的参数的学习率相对小一些，让梯度值小的参数的学习率相对大一些。这样训练过程就会稳定且快速。
 RMSProp的思想是让一个参数更新的梯度值都除以一个数，如果历史上这个梯度值一直都很大，那就除一个大的数，相当于减小了学习率。如果这个梯度值一直很小，那就除一个小的数。相当于增大了学习率。
 
-那接下来的问题就是如何针对每个参数，确定这个除数。RMSProp的做法是记录每个参数梯度平方的指数加权平均值S，更新参数时的梯度除以S\sqrt SS​。
+那接下来的问题就是如何针对每个参数，确定这个除数。RMSProp的做法是记录每个参数梯度平方的指数加权平均值S，更新参数时的梯度除以$\sqrt S$S​。
 
 ### 9.4.3 RMSProp计算过程
 
 以参数w为例，首先计算梯度值：
 
-gw=∂loss∂wg_w=\frac{\partial loss}{\partial w}gw​=∂w∂loss​
+$g_w=\frac{\partial loss}{\partial w}$gw​=∂w∂loss​
 
-计算gw2{g_w}^2gw​2指数加权平均值：
+计算${g_w}^2$gw​2指数加权平均值：
 
-Sw=βSw+(1−β)gw2S_w=\beta S_w+(1-\beta){g_w}^2Sw​=βSw​+(1−β)gw​2
+$S_w=\beta S_w+(1-\beta){g_w}^2$Sw​=βSw​+(1−β)gw​2
 
-更新参数, lrlrlr是学习率：
+更新参数, $lr$lr是学习率：
 
-w=w−lrSw+εgww=w-\frac{lr}{\sqrt{S_w}+\varepsilon}g_ww=w−Sw​​+εlr​gw​
+$w=w-\frac{lr}{\sqrt{S_w}+\varepsilon}g_w$w=w−Sw​​+εlr​gw​
 
-其中β\betaβ一般取0.9。ε\varepsilonε是为了防止除0，加的一个很小的数，一般是1e-8。
+其中$\beta$β一般取0.9。$\varepsilon$ε是为了防止除0，加的一个很小的数，一般是1e-8。

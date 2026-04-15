@@ -1,8 +1,8 @@
 ---
 title: BLEU评价指标
-source: https://www.rethink.fun/chapter14/BLEU评价指标.html
+source: https://www.rethink.fun/chapter14/BLEU%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87.html
 chapter: 14-Seq2Seq模型
-tags: [深度学习, RethinkFun, 14-Seq2Seq模型]
+tags: [深度学习, RethinkFun]
 ---
 
 # BLEU评价指标
@@ -37,13 +37,13 @@ BLEU的大致原理是：
 
 - 将模型翻译句子和参考译文都转化成token序列。
 
-- 计算每个模型翻译的token在参考译文的token序列中出现率p1p_1p1​。
+- 计算每个模型翻译的token在参考译文的token序列中出现率$p_1$p1​。
 
-- 计算每两个连续翻译token序列在参考token序列中的出现率p2p_2p2​。
+- 计算每两个连续翻译token序列在参考token序列中的出现率$p_2$p2​。
 
-- 计算每三个，每四个连续翻译token序列在参考token序列中的出现率p3,p4p_3,p_4p3​,p4​。
+- 计算每三个，每四个连续翻译token序列在参考token序列中的出现率$p_3,p_4$p3​,p4​。
 
-- 综合p1,p2,p3,p4p_1,p_2,p_3,p_4p1​,p2​,p3​,p4​，并惩罚模型输出翻译太短的情况，得到BLEU最终得分。
+- 综合$p_1,p_2,p_3,p_4$p1​,p2​,p3​,p4​，并惩罚模型输出翻译太短的情况，得到BLEU最终得分。
 
 ### 14.2.2 调用BLEU
 
@@ -90,16 +90,16 @@ print(f"BLEU score: {bleu.score:.2f}")`
 
 接下来我们就来详细了解BLEU的计算过程。
 
-#### 14.2.3.1 p1p_1p1​
+#### 14.2.3.1 $p_1$p1​
 
-准确率p1p_1p1​衡量的是模型翻译的单个token参照参考翻译的准确率。
+准确率$p_1$p1​衡量的是模型翻译的单个token参照参考翻译的准确率。
 
-假设参考翻译TrT_rTr​为“今天天气很好”，模型翻译TmT_mTm​为：“今天今天今天”
-都按照单个字为一个token来拆解，则TmT_mTm​里有两个不同的token：“今”、“天”。这两个token也都出现在TrT_rTr​的token序列里。我们是否就可以定义p1=1p_1=1p1​=1呢？当然不行，这个翻译明显是个很差的翻译。BLEU的具体做法如下：
+假设参考翻译$T_r$Tr​为“今天天气很好”，模型翻译$T_m$Tm​为：“今天今天今天”
+都按照单个字为一个token来拆解，则$T_m$Tm​里有两个不同的token：“今”、“天”。这两个token也都出现在$T_r$Tr​的token序列里。我们是否就可以定义$p_1=1$p1​=1呢？当然不行，这个翻译明显是个很差的翻译。BLEU的具体做法如下：
 
  token 
- count(Tm,token)count(T_m,token)count(Tm​,token) 
- min(count(Tm,token),count(Tr,token))min(count(T_m,token),count(T_r,token))min(count(Tm​,token),count(Tr​,token)) 
+ $count(T_m,token)$count(Tm​,token) 
+ $min(count(T_m,token),count(T_r,token))$min(count(Tm​,token),count(Tr​,token)) 
 
  今 
  3 
@@ -108,25 +108,26 @@ print(f"BLEU score: {bleu.score:.2f}")`
  3 
  2
 
-上表中第二列统计了对于某个token在TmT_mTm​中出现的个数，把这个值叫做countcountcount。上表中第三列统计了对于某个token在Tm,TrT_m,T_rTm​,Tr​中出现较小的那个count值，把这个值叫做clip_countclip\_countclip_count。
+上表中第二列统计了对于某个token在$T_m$Tm​中出现的个数，把这个值叫做$count$count。上表中第三列统计了对于某个token在$T_m,T_r$Tm​,Tr​中出现较小的那个count值，把这个值叫做$clip\_count$clip_count。
 
 则有：
 
-p1=∑clip_count∑count=3/6=0.5
+$$
 p_1 = \frac{\sum clip\_count}{\sum count}=3/6 =0.5
-p1​=∑count∑clip_count​=3/6=0.5
+$$
+​=∑count∑clip_count​=3/6=0.5
 
-#### 14.2.3.2 p2p_2p2​
+#### 14.2.3.2 $p_2$p2​
 
-准确率p2p_2p2​衡量的是模型翻译token序列中两个连续token参照参考翻译的准确率。
+准确率$p_2$p2​衡量的是模型翻译token序列中两个连续token参照参考翻译的准确率。
 
-假设参考翻译TrT_rTr​为“今天天气不错”，模型翻译TmT_mTm​为：“今天今天不错”。
+假设参考翻译$T_r$Tr​为“今天天气不错”，模型翻译$T_m$Tm​为：“今天今天不错”。
 
-则TmT_mTm​中2个不同的连续token序列为“今天”、“天今”、“天不”、“不错”
+则$T_m$Tm​中2个不同的连续token序列为“今天”、“天今”、“天不”、“不错”
 
  token 
- count(Tm,token)count(T_m,token)count(Tm​,token) 
- min(count(Tm,token),count(Tr,token))min(count(T_m,token),count(T_r,token))min(count(Tm​,token),count(Tr​,token)) 
+ $count(T_m,token)$count(Tm​,token) 
+ $min(count(T_m,token),count(T_r,token))$min(count(Tm​,token),count(Tr​,token)) 
 
  今天 
  2 
@@ -141,63 +142,69 @@ p1​=∑count∑clip_count​=3/6=0.5
  1 
  1
 
-p1=∑clip_count∑count=2/5=0.4
+$$
 p_1 = \frac{\sum clip\_count}{\sum count}=2/5 =0.4
-p1​=∑count∑clip_count​=2/5=0.4
+$$
+​=∑count∑clip_count​=2/5=0.4
 
-同理你可以求出p3,p4p_3,p_4p3​,p4​
+同理你可以求出$p_3,p_4$p3​,p4​
 
 #### 14.2.3.3 对p值求平均
 
-我们求得了p1,p2,p3,p4p_1,p_2,p_3,p_4p1​,p2​,p3​,p4​之后，如何综合考虑对不同长度序列的翻译精度呢？最简单的方式是求算数平均值，但是算数平均数有个问题，它不能突出这一组数中的小值。有可能p1,p2,p3p_1,p_2,p_3p1​,p2​,p3​很大，p4p_4p4​为0，这样均值还是一个不错的值。但这不是我们希望的结果，我们希望这个均值对每个小的p值都会很敏感。这时就需要用到几何平均数。这里我们考虑p1,p2,p3,p4p_1,p_2,p_3,p_4p1​,p2​,p3​,p4​对结果的权重都是相同的，都为1/4。则它的几何平均数为：
+我们求得了$p_1,p_2,p_3,p_4$p1​,p2​,p3​,p4​之后，如何综合考虑对不同长度序列的翻译精度呢？最简单的方式是求算数平均值，但是算数平均数有个问题，它不能突出这一组数中的小值。有可能$p_1,p_2,p_3$p1​,p2​,p3​很大，$p_4$p4​为0，这样均值还是一个不错的值。但这不是我们希望的结果，我们希望这个均值对每个小的p值都会很敏感。这时就需要用到几何平均数。这里我们考虑$p_1,p_2,p_3,p_4$p1​,p2​,p3​,p4​对结果的权重都是相同的，都为1/4。则它的几何平均数为：
 
-∏n=14Pn14
+$$
 \prod_{n=1}^{4}P_n^{\frac{1}{4}}
-n=1∏4​Pn41​​
+$$
+∏4​Pn41​​
 
 我们举个例子：
 
-p1=0.9p_1=0.9p1​=0.9
+$p_1=0.9$p1​=0.9
 
-p2=0.7p_2=0.7p2​=0.7
+$p_2=0.7$p2​=0.7
 
-p3=0.4p_3=0.4p3​=0.4
+$p_3=0.4$p3​=0.4
 
-p4=0.0p_4=0.0p4​=0.0
+$p_4=0.0$p4​=0.0
 
-算数平均：(0.9+0.7+0.4+0.0)/4=0.5(0.9+0.7+0.4+0.0)/4=0.5(0.9+0.7+0.4+0.0)/4=0.5
+算数平均：$(0.9+0.7+0.4+0.0)/4=0.5$(0.9+0.7+0.4+0.0)/4=0.5
 
-几何平均：0.9⋅0.7⋅0.4⋅0.04=0\sqrt[4]{0.9\cdot 0.7\cdot 0.4 \cdot 0.0} =040.9⋅0.7⋅0.4⋅0.0​=0
+几何平均：$\sqrt[4]{0.9\cdot 0.7\cdot 0.4 \cdot 0.0} =0$40.9⋅0.7⋅0.4⋅0.0​=0
 
 另外直接用几何平均数的连乘形式，有可能多个很小的数连乘，造成float无法表示。所以一般用它的另一种等价表示方式：
 
-∏n=14Pn14=exp(∑n=1414log⁡pn)
+$$
 \prod_{n=1}^{4}P_n^{\frac{1}{4}}=exp(\sum_{n=1}^{4} {\frac{1}{4}\log{p_n}})
-n=1∏4​Pn41​​=exp(n=1∑4​41​logpn​)
+$$
+∏4​Pn41​​=exp(n=1∑4​41​logpn​)
 
 #### 14.2.3.4 短句惩罚
 
-假设参考翻译TrT_rTr​为“今天天气很好”，模型翻译TmT_mTm​为：“今天天气”。可以看到如果模型输出短句的话，它的准确率会很高，但是实际效果却很差。所以需要对短句进行惩罚。做法就是在上边的p值几何平均数的结果上乘一个值。
+假设参考翻译$T_r$Tr​为“今天天气很好”，模型翻译$T_m$Tm​为：“今天天气”。可以看到如果模型输出短句的话，它的准确率会很高，但是实际效果却很差。所以需要对短句进行惩罚。做法就是在上边的p值几何平均数的结果上乘一个值。
 
-BP={1 if m>rexp(1−rm) if m≤r
+$$
 BP=\begin{cases}
  1 & \text{ if } m>r  \\
  exp(1-\frac{r}{m}) & \text{ if } m\le r
 \end{cases}
-BP={1exp(1−mr​)​ if m>r if m≤r​
+$$
+{1exp(1−mr​)​ if m>r if m≤r​
 
 其中r表示参考翻译的长度，m表示模型翻译的长度。
 
 #### 14.2.3.5 最终公式
 
-BLEU=BP⋅exp(∑n=1414log⁡pn)
+$$
 BLEU=BP\cdot exp(\sum_{n=1}^{4} {\frac{1}{4}\log{p_n}})
-BLEU=BP⋅exp(n=1∑4​41​logpn​)
+$$
+BP⋅exp(n=1∑4​41​logpn​)
 
-上边我们默认p1,p2,p3,p4p_1,p_2,p_3,p_4p1​,p2​,p3​,p4​的权重都是1/4。你也可以单独对每个p值设置不同的权重。wnw_nwn​为pnp_npn​对应的权重，公式就变为：
+上边我们默认$p_1,p_2,p_3,p_4$p1​,p2​,p3​,p4​的权重都是1/4。你也可以单独对每个p值设置不同的权重。$w_n$wn​为$p_n$pn​对应的权重，公式就变为：
 
-BLEU=BP⋅exp(∑n=14wnlog⁡pn)
+$$
 BLEU=BP\cdot exp(\sum_{n=1}^{4} {w_n\log{p_n}})
-BLEU=BP⋅exp(n=1∑4​wn​logpn​)
+$$
+BP⋅exp(n=1∑4​wn​logpn​)
 
 你只要理解BLEU的原理就行，实际中不需要自己动手实现。

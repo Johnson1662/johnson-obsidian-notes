@@ -2,7 +2,7 @@
 title: DeepSeekV3
 source: https://www.rethink.fun/chapter18/DeepSeekV3.html
 chapter: 18-混合专家模型
-tags: [深度学习, RethinkFun, 18-混合专家模型]
+tags: [深度学习, RethinkFun]
 ---
 
 # DeepSeekV3
@@ -87,9 +87,10 @@ SeepSeekMTP就是给每个头传入了额外的信息。帮助多token预测的�
 
 这里有两个MTP头，它的交叉熵loss最终也是会加入到模型最终的loss里的。比如在DeepSeekV3里先对所有MTP头的loss取平均，然后乘以权重𝜆，在训练前10Ttoken时，𝜆的值为0.3，在训练最后4.8Ttoken时，𝜆的值为0.1。
 
-LossMTP=λD∑k=1DLossMTPk
+$$
 Loss_{MTP}=\frac{\lambda}{D}\sum_{k=1}^DLoss_{MTP}^k
-LossMTP​=Dλ​k=1∑D​LossMTPk​
+$$
+​=Dλ​k=1∑D​LossMTPk​
 
 ![1830.png](http://rethink.fun/imgs/1830.png)
 

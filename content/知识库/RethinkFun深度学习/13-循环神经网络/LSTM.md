@@ -2,7 +2,7 @@
 title: LSTM
 source: https://www.rethink.fun/chapter13/LSTM.html
 chapter: 13-循环神经网络
-tags: [深度学习, RethinkFun, 13-循环神经网络]
+tags: [深度学习, RethinkFun]
 ---
 
 # LSTM
@@ -37,7 +37,7 @@ LSTM（Long Short-Term Memory）长短期记忆网络就是被用来解决RNN没
 
 ![1320.png](http://rethink.fun/imgs/1320.png)
 
-如上图所示，假如我们来了一个新的信息，它是一个神经网络的输出logits，用ZZZ表示，它是一个向量，里边有多个维度。经过激活函数`tanh`后为将要写入记忆细胞的记忆。这里它不能直接写入，要不然它就完全覆盖了老的记忆，达不到长期记忆的效果。解决办法就是我们通过一个门函数来控制当前新信息里的哪些维度可以写入到长期记忆里，这里的门函数是`sigmoid`，它输出的也是一个向量，取值是0到1，对新信息里的每个维度进行独立控制。因为sigmoid在大部分定义域都接近0或者1，所以它可以看做是允许某些维度的新信息进入长期记忆，某些维度的新信息不能进入长期记忆。如果是在0到1之间的值，就代表部分可以进入长期记忆，我们把这个门叫做输入门。
+如上图所示，假如我们来了一个新的信息，它是一个神经网络的输出logits，用$Z$Z表示，它是一个向量，里边有多个维度。经过激活函数`tanh`后为将要写入记忆细胞的记忆。这里它不能直接写入，要不然它就完全覆盖了老的记忆，达不到长期记忆的效果。解决办法就是我们通过一个门函数来控制当前新信息里的哪些维度可以写入到长期记忆里，这里的门函数是`sigmoid`，它输出的也是一个向量，取值是0到1，对新信息里的每个维度进行独立控制。因为sigmoid在大部分定义域都接近0或者1，所以它可以看做是允许某些维度的新信息进入长期记忆，某些维度的新信息不能进入长期记忆。如果是在0到1之间的值，就代表部分可以进入长期记忆，我们把这个门叫做输入门。
 
 接下来我们看经过输入门筛选的新信息如何进入长期记忆。首先要取出记忆细胞内的长期记忆，取出长期记忆时，需要通过一个sigmoid的遗忘门，来遗忘长期记忆里某些维度的信息，如下图所示：
 
@@ -53,11 +53,11 @@ LSTM（Long Short-Term Memory）长短期记忆网络就是被用来解决RNN没
 
 LSTM通过输入门、遗忘门来控制对长期记忆的更新，通过输出门来控制隐状态的输出。上边描述的都是循环层，如果每个时间步需要输出，则对隐状态的输出增加普通层即可。
 
-那记忆细胞的状态如何在多个时间步进行传递呢？原来的RNN在多个时间步之间传递一个隐状态hhh，现在就再多传递一个记忆细胞状态ccc。
+那记忆细胞的状态如何在多个时间步进行传递呢？原来的RNN在多个时间步之间传递一个隐状态$h$h，现在就再多传递一个记忆细胞状态$c$c。
 
 ![1325.png](http://rethink.fun/imgs/1325.png)
 
-之前我们还没有说上图中下边的四个向量Z,Zi,Zf,ZoZ,Z_i,Z_f,Z_oZ,Zi​,Zf​,Zo​是怎么来的，它们实际上都是上一个状态的ht−1h_{t-1}ht−1​和当前时刻的xtx_txt​拼接后作为输入，分别做4个线性回归得到的logits值。这4个线性回归对应的权重分别为wh,wi,wf,wow_h,w_i,w_f,w_owh​,wi​,wf​,wo​。如下图所示：
+之前我们还没有说上图中下边的四个向量$Z,Z_i,Z_f,Z_o$Z,Zi​,Zf​,Zo​是怎么来的，它们实际上都是上一个状态的$h_{t-1}$ht−1​和当前时刻的$x_t$xt​拼接后作为输入，分别做4个线性回归得到的logits值。这4个线性回归对应的权重分别为$w_h,w_i,w_f,w_o$wh​,wi​,wf​,wo​。如下图所示：
 
 ![1326.png](http://rethink.fun/imgs/1326.png)
 
@@ -73,33 +73,33 @@ LSTM通过输入门、遗忘门来控制对长期记忆的更新，通过输出�
 
 新信息的logits：
 
-Z=[ht−1∣xt]wh+bhZ = [h_{t-1}|x_t]w_h+b_hZ=[ht−1​∣xt​]wh​+bh​
+$Z = [h_{t-1}|x_t]w_h+b_h$Z=[ht−1​∣xt​]wh​+bh​
 
 输入门：
 
-Zi=[ht−1∣xt]wi+biZ_i = [h_{t-1}|x_t]w_i+b_iZi​=[ht−1​∣xt​]wi​+bi​
+$Z_i = [h_{t-1}|x_t]w_i+b_i$Zi​=[ht−1​∣xt​]wi​+bi​
 
-Gi=sigmoid(Zi)G_i = sigmoid(Z_i)Gi​=sigmoid(Zi​)
+$G_i = sigmoid(Z_i)$Gi​=sigmoid(Zi​)
 
 遗忘门：
 
-Zf=[ht−1∣xt]wf+bfZ_f = [h_{t-1}|x_t]w_f+b_fZf​=[ht−1​∣xt​]wf​+bf​
+$Z_f = [h_{t-1}|x_t]w_f+b_f$Zf​=[ht−1​∣xt​]wf​+bf​
 
-Gf=sigmoid(Zf)G_f = sigmoid(Z_f)Gf​=sigmoid(Zf​)
+$G_f = sigmoid(Z_f)$Gf​=sigmoid(Zf​)
 
 输出门：
 
-Zo=[ht−1∣xt]wo+boZ_o = [h_{t-1}|x_t]w_o+b_oZo​=[ht−1​∣xt​]wo​+bo​
+$Z_o = [h_{t-1}|x_t]w_o+b_o$Zo​=[ht−1​∣xt​]wo​+bo​
 
-Go=sigmoid(Zo)G_o = sigmoid(Z_o)Go​=sigmoid(Zo​)
+$G_o = sigmoid(Z_o)$Go​=sigmoid(Zo​)
 
 记忆细胞状态：
 
-ct=ct−1⊙Gf+tanh(Z)⊙Gic_t = c_{t-1}\odot G_f+ tanh(Z)\odot G_ict​=ct−1​⊙Gf​+tanh(Z)⊙Gi​
+$c_t = c_{t-1}\odot G_f+ tanh(Z)\odot G_i$ct​=ct−1​⊙Gf​+tanh(Z)⊙Gi​
 
 隐状态：
 
-ht=tanh(ct)⊙Goh_t = tanh(c_t)\odot G_oht​=tanh(ct​)⊙Go​
+$h_t = tanh(c_t)\odot G_o$ht​=tanh(ct​)⊙Go​
 
 ### 13.3.4 我的看法
 

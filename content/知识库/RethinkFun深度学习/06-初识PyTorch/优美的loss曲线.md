@@ -1,8 +1,8 @@
 ---
 title: 优美的loss曲线
-source: https://www.rethink.fun/chapter6/优美的loss曲线.html
+source: https://www.rethink.fun/chapter6/%E4%BC%98%E7%BE%8E%E7%9A%84loss%E6%9B%B2%E7%BA%BF.html
 chapter: 06-初识PyTorch
-tags: [深度学习, RethinkFun, 06-初识PyTorch]
+tags: [深度学习, RethinkFun]
 ---
 
 # 优美的loss曲线

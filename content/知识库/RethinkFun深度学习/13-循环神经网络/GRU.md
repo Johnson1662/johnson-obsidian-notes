@@ -2,7 +2,7 @@
 title: GRU
 source: https://www.rethink.fun/chapter13/GRU.html
 chapter: 13-循环神经网络
-tags: [深度学习, RethinkFun, 13-循环神经网络]
+tags: [深度学习, RethinkFun]
 ---
 
 # GRU
@@ -13,25 +13,25 @@ tags: [深度学习, RethinkFun, 13-循环神经网络]
 
 ### 13.3.1 GRU的网络结构
 
-GRU去掉了LSTM中的记忆细胞状态ctc_tct​，仅用隐状态hth_tht​就解决了长期记忆和梯度消失的问题。我们来一步步看一下GRU循环层的设计逻辑。
+GRU去掉了LSTM中的记忆细胞状态$c_t$ct​，仅用隐状态$h_t$ht​就解决了长期记忆和梯度消失的问题。我们来一步步看一下GRU循环层的设计逻辑。
 
 ![1328.png](http://rethink.fun/imgs/1328.png)
 
-首先我们看如何从隐状态中读取信息，GRU里也通过一个遗忘门来决定从长期记忆里去掉一些信息。不过GRU里叫做重置门，GrG_rGr​。重置门也是用`simgoid`函数，它的输入是上一时刻的记忆ht−1h_{t-1}ht−1​和当前时刻的输入xtx_txt​进行拼接，然后经过一个线性层得到的。线性层的权重为wrw_rwr​。
+首先我们看如何从隐状态中读取信息，GRU里也通过一个遗忘门来决定从长期记忆里去掉一些信息。不过GRU里叫做重置门，$G_r$Gr​。重置门也是用`simgoid`函数，它的输入是上一时刻的记忆$h_{t-1}$ht−1​和当前时刻的输入$x_t$xt​进行拼接，然后经过一个线性层得到的。线性层的权重为$w_r$wr​。
 
-Gr=sigmoid([ht−1∣xt]wr+br)G_r=sigmoid([h_{t-1}|x_t]w_r+b_r)Gr​=sigmoid([ht−1​∣xt​]wr​+br​)
+$G_r=sigmoid([h_{t-1}|x_t]w_r+b_r)$Gr​=sigmoid([ht−1​∣xt​]wr​+br​)
 
-于是ht−1⊙Grh_{t-1}\odot G_rht−1​⊙Gr​就是经过重置后的长期记忆。
+于是$h_{t-1}\odot G_r$ht−1​⊙Gr​就是经过重置后的长期记忆。
 
 ![1329.png](http://rethink.fun/imgs/1329.png)
 
-重置后的长期记忆和当前输入xtx_txt​合并，然后经过一个线性层（权重为whw_hwh​），加`tanh`激活，就得到当前层的备用输出ht~\tilde{h_t}ht​~​。
+重置后的长期记忆和当前输入$x_t$xt​合并，然后经过一个线性层（权重为$w_h$wh​），加`tanh`激活，就得到当前层的备用输出$\tilde{h_t}$ht​~​。
 
 此时，备用输出还是不能直接输出，因为GRU就只能靠隐状态来传递长期记忆，这里将需要长期保留的记忆加进来再作为当前时间步的隐状态作为输出。怎么决定哪些维度保留长期记忆，哪些维度更新为备用输出的隐状态呢？答案还是用一个门函数来控制。不过这个门函数同时决定保留多少长期记忆，更新多少当前步产生的记忆。
 
 ![1330.png](http://rethink.fun/imgs/1330.png)
 
-首先用一个`sigmoid`更新门，生成一个更新向量，它和备用输出按位相乘，获得要更新到长期记忆里的信息。然后用1减去更新向量里的每一维，这样就得到了对长期记忆的保留向量。用保留向量与长期记忆按位点乘，就得到了保留的长期记忆，在和更新信息相加，就得到了这一步输出的长期记忆，hth_tht​。
+首先用一个`sigmoid`更新门，生成一个更新向量，它和备用输出按位相乘，获得要更新到长期记忆里的信息。然后用1减去更新向量里的每一维，这样就得到了对长期记忆的保留向量。用保留向量与长期记忆按位点乘，就得到了保留的长期记忆，在和更新信息相加，就得到了这一步输出的长期记忆，$h_t$ht​。
 
 ![1331.png](http://rethink.fun/imgs/1331.png)
 
@@ -45,19 +45,19 @@ Gr=sigmoid([ht−1∣xt]wr+br)G_r=sigmoid([h_{t-1}|x_t]w_r+b_r)Gr​=sigmoid([ht
 
 重置门：
 
-Gr=sigmoid([ht−1∣xt]wr+br]G_r=sigmoid([h_{t-1}|x_t]w_r+b_r]Gr​=sigmoid([ht−1​∣xt​]wr​+br​]
+$G_r=sigmoid([h_{t-1}|x_t]w_r+b_r]$Gr​=sigmoid([ht−1​∣xt​]wr​+br​]
 
 更新门：
 
-Gu=sigmoid([ht−1∣xt]wu+bu]G_u=sigmoid([h_{t-1}|x_t]w_u+b_u]Gu​=sigmoid([ht−1​∣xt​]wu​+bu​]
+$G_u=sigmoid([h_{t-1}|x_t]w_u+b_u]$Gu​=sigmoid([ht−1​∣xt​]wu​+bu​]
 
 备用输出：
 
-ht~=tanh([ht−1⊙Gr∣xt]wh+bh)\tilde{h_t}=tanh([h_{t-1} \odot G_r | x_t]w_h+b_h)ht​~​=tanh([ht−1​⊙Gr​∣xt​]wh​+bh​)
+$\tilde{h_t}=tanh([h_{t-1} \odot G_r | x_t]w_h+b_h)$ht​~​=tanh([ht−1​⊙Gr​∣xt​]wh​+bh​)
 
 隐状态：
 
-ht=Gu⊙ht~+(1−Gu)⊙ht−1h_t=G_u \odot \tilde{h_t} + (1-G_u) \odot h_{t-1}ht​=Gu​⊙ht​~​+(1−Gu​)⊙ht−1​
+$h_t=G_u \odot \tilde{h_t} + (1-G_u) \odot h_{t-1}$ht​=Gu​⊙ht​~​+(1−Gu​)⊙ht−1​
 
 ### 13.3.3 用GRU和LSTM
 

@@ -1,8 +1,8 @@
 ---
 title: PyTorch简介
-source: https://www.rethink.fun/chapter6/PyTorch简介.html
+source: https://www.rethink.fun/chapter6/PyTorch%E7%AE%80%E4%BB%8B.html
 chapter: 06-初识PyTorch
-tags: [深度学习, RethinkFun, 06-初识PyTorch]
+tags: [深度学习, RethinkFun]
 ---
 
 # PyTorch简介

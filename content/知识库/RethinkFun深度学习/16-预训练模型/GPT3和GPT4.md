@@ -1,8 +1,8 @@
 ---
 title: GPT3和GPT4
-source: https://www.rethink.fun/chapter16/GPT3和GPT4.html
+source: https://www.rethink.fun/chapter16/GPT3%E5%92%8CGPT4.html
 chapter: 16-预训练模型
-tags: [深度学习, RethinkFun, 16-预训练模型]
+tags: [深度学习, RethinkFun]
 ---
 
 # GPT3和GPT4

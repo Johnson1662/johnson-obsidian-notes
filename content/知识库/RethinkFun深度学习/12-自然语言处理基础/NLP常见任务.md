@@ -1,8 +1,8 @@
 ---
 title: NLP常见任务
-source: https://www.rethink.fun/chapter12/NLP常见任务.html
+source: https://www.rethink.fun/chapter12/NLP%E5%B8%B8%E8%A7%81%E4%BB%BB%E5%8A%A1.html
 chapter: 12-自然语言处理基础
-tags: [深度学习, RethinkFun, 12-自然语言处理基础]
+tags: [深度学习, RethinkFun]
 ---
 
 # NLP常见任务
@@ -62,13 +62,14 @@ O：不属于任何实体
 
 早期的语言模型是通过统计大量文本来构建。
 
-P(w1,w2,...,wn)=P(w1)⋅P(w2∣w1)⋅P(w3∣w1,w2)⋅…⋅P(wn∣w1,...,wn−1)
+$$
 P(w_1, w_2, ..., w_n) = P(w_1) \cdot P(w_2|w_1) \cdot P(w_3|w_1,w_2) \cdot \ldots \cdot P(w_n|w_1,...,w_{n-1})
-P(w1​,w2​,...,wn​)=P(w1​)⋅P(w2​∣w1​)⋅P(w3​∣w1​,w2​)⋅…⋅P(wn​∣w1​,...,wn−1​)
+$$
+​,w2​,...,wn​)=P(w1​)⋅P(w2​∣w1​)⋅P(w3​∣w1​,w2​)⋅…⋅P(wn​∣w1​,...,wn−1​)
 
-上式表达的含义为对于一句话，它由n个单词构成，分别为w1,w2,...,wnw_1, w_2, ..., w_nw1​,w2​,...,wn​，这一句话出现的概率就等于w1w_1w1​出现的概率，乘以在w1w_1w1​出现时，后边出现w2w_2w2​的概率。再乘以w1,w2w_1,w_2w1​,w2​出现时，后边出现w3w_3w3​的概率。以此类推，直到乘以w1,...,wn−1w_1,...,w_{n-1}w1​,...,wn−1​出现的情况下，wnw_nwn​出现的概率。
+上式表达的含义为对于一句话，它由n个单词构成，分别为$w_1, w_2, ..., w_n$w1​,w2​,...,wn​，这一句话出现的概率就等于$w_1$w1​出现的概率，乘以在$w_1$w1​出现时，后边出现$w_2$w2​的概率。再乘以$w_1,w_2$w1​,w2​出现时，后边出现$w_3$w3​的概率。以此类推，直到乘以$w_1,...,w_{n-1}$w1​,...,wn−1​出现的情况下，$w_n$wn​出现的概率。
 
-在实际应用中，直接计算上述公式中的完整条件概率P(wn∣w1,...,wn−1)P(w_n|w_1,...,w_{n-1})P(wn​∣w1​,...,wn−1​)是非常困难的。这是因为自然语言的上下文非常丰富，词汇表庞大，训练语料中很多词序列可能根本没有出现过，导致数据稀疏问题严重。为了降低计算复杂度，同时缓解数据稀疏的问题，通常采用一种近似方法，n-gram 语言模型。n-gram 模型的基本思想是：假设当前单词的出现只依赖于前面的 (n-1) 个单词，而不是整句之前的所有单词。
+在实际应用中，直接计算上述公式中的完整条件概率$P(w_n|w_1,...,w_{n-1})$P(wn​∣w1​,...,wn−1​)是非常困难的。这是因为自然语言的上下文非常丰富，词汇表庞大，训练语料中很多词序列可能根本没有出现过，导致数据稀疏问题严重。为了降低计算复杂度，同时缓解数据稀疏的问题，通常采用一种近似方法，n-gram 语言模型。n-gram 模型的基本思想是：假设当前单词的出现只依赖于前面的 (n-1) 个单词，而不是整句之前的所有单词。
 
 其中，n 是窗口大小，常见的取值有：
 
@@ -85,9 +86,10 @@ trigram (3-gram)：当前词依赖于前两个词。
 
 使用bigram模型，整句话的概率近似为：
 
-P(I)⋅P(love∣I)⋅P(natural∣love)⋅P(language∣natural)⋅P(processing∣language)
+$$
 P(I) \cdot P(love \mid I) \cdot P(natural \mid love) \cdot P(language \mid natural) \cdot P(processing \mid language)
-P(I)⋅P(love∣I)⋅P(natural∣love)⋅P(language∣natural)⋅P(processing∣language)
+$$
+P(love∣I)⋅P(natural∣love)⋅P(language∣natural)⋅P(processing∣language)
 
 通过统计大量文本中的词对共现频率，便可以估计出这些条件概率。构建一个基于概率的语言模型。
 

@@ -2,7 +2,7 @@
 title: GPT1
 source: https://www.rethink.fun/chapter16/GPT1.html
 chapter: 16-预训练模型
-tags: [深度学习, RethinkFun, 16-预训练模型]
+tags: [深度学习, RethinkFun]
 ---
 
 # GPT1

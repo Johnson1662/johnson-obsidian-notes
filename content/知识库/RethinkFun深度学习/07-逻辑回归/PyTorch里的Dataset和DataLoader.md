@@ -1,8 +1,8 @@
 ---
 title: PyTorch里的Dataset和DataLoader
-source: https://www.rethink.fun/chapter7/PyTorch里的Dataset和DataLoader.html
+source: https://www.rethink.fun/chapter7/PyTorch%E9%87%8C%E7%9A%84Dataset%E5%92%8CDataLoader.html
 chapter: 07-逻辑回归
-tags: [深度学习, RethinkFun, 07-逻辑回归]
+tags: [深度学习, RethinkFun]
 ---
 
 # PyTorch里的Dataset和DataLoader
