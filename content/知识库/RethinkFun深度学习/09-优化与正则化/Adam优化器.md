@@ -14,24 +14,24 @@ Adam优化器同时利用动量来给梯度更新增加惯性和震荡阻尼，�
 
 首先计算参数w的梯度：
 
-$g_w=\frac{\partial loss}{\partial w}$gw​=∂w∂loss​
+$g_w=\frac{\partial loss}{\partial w}$
 
-然以后计算并更新一阶矩指数加权平均值$V_w$Vw​，和二阶矩指数加权平均值$S_w$Sw​。
+然以后计算并更新一阶矩指数加权平均值$V_w$，和二阶矩指数加权平均值$S_w$。
 
-$V_w=\beta_1V_w+(1-\beta_1)g_w$Vw​=β1​Vw​+(1−β1​)gw​
+$V_w=\beta_1V_w+(1-\beta_1)g_w$
 
-$S_w=\beta_2S_w+(1-\beta_2){g_w}^2$Sw​=β2​Sw​+(1−β2​)gw​2
+$S_w=\beta_2S_w+(1-\beta_2){g_w}^2$
 
-$\beta_1=0.9;\beta_2=0.999$β1​=0.9;β2​=0.999
+$\beta_1=0.9;\beta_2=0.999$
 
 接着对这两个值进行校正：
 
-$V_w^{correct}=\frac{V_w}{1-{\beta_1}^t}$Vwcorrect​=1−β1​tVw​​
+$V_w^{correct}=\frac{V_w}{1-{\beta_1}^t}$
 
-$S_w^{correct}=\frac{S_w}{1-{\beta_2}^t}$Swcorrect​=1−β2​tSw​​
+$S_w^{correct}=\frac{S_w}{1-{\beta_2}^t}$
 
 最后更新参数：
 
-$w=w-lr\frac{V_w^{correct}}{\sqrt{S_w^{correct}}+\varepsilon}$w=w−lrSwcorrect​​+εVwcorrect​​
+$w=w-lr\frac{V_w^{correct}}{\sqrt{S_w^{correct}}+\varepsilon}$
 
 Adam优化器可以稳定且迅速的训练深度神经网络，但是它需要为每个参数额外在显存里保存两个值：V和S，来记录梯度的一阶和二阶指数加权平均值。这占据了大量宝贵的显存空间。

@@ -18,7 +18,7 @@ tags: [深度学习, RethinkFun]
 两个连续的3×3的卷积核产生的特征图上的每个特征的感受野是5×5，它和单独使用一个5×5卷积核是一样的。但是两个连续的3×3卷积核额外有两个好处：
 
 - 
-参数量更少，假如输入通道数为$C_{in}$Cin​,输出通道数为$C_{out}$Cout​，则两个3×3卷积核的参数量为$2\times3\times3\times C_{in}\times C_{out}$2×3×3×Cin​×Cout​，等于$18C_{in}C_{out}$18Cin​Cout​。一个5×5卷积核的参数量为$5\times 5 \times C_{in} \times C_{out}$5×5×Cin​×Cout​，等于$25C_{in}C_{out}$25Cin​Cout​。
+参数量更少，假如输入通道数为$C_{in}$,输出通道数为$C_{out}$，则两个3×3卷积核的参数量为$2\times3\times3\times C_{in}\times C_{out}$，等于$18C_{in}C_{out}$。一个5×5卷积核的参数量为$5\times 5 \times C_{in} \times C_{out}$，等于$25C_{in}C_{out}$。
 
 - 
 网络层数更深，更容易提取高级特征。之前我们说过深度神经网络通过多层网络，可以逐层在之前层提取的特征基础上组合出更高级的特征，来提升网络表现，这一点也适用于卷积神经网络。

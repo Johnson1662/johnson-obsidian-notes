@@ -55,17 +55,11 @@ RMSNorm 是对传统 LayerNorm 的一种优化，其关键在于去除归一化�
 
 - **LayerNorm** 的公式如下：
 
-$$
-\text{LayerNorm} = \frac{x - \mathbb{E}[x]}{\sqrt{\text{Var}[x] + \epsilon}} \cdot \gamma + \beta
-$$
-=Var[x]+ϵ​x−E[x]​⋅γ+β
+$\text{LayerNorm} = \frac{x - \mathbb{E}[x]}{\sqrt{\text{Var}[x] + \epsilon}} \cdot \gamma + \beta$
 
 - **RMSNorm** 的公式如下：
 
-$$
-\text{RMSNorm} = \frac{x}{\sqrt{\text{Mean}(x^2) + \epsilon}} \cdot \gamma
-$$
-=Mean(x2)+ϵ​x​⋅γ
+$\text{RMSNorm} = \frac{x}{\sqrt{\text{Mean}(x^2) + \epsilon}} \cdot \gamma$
 
 这种归一化方式减少了冗余操作，提高了训练效率。
 
@@ -73,10 +67,7 @@ $$
 
 SiLU（Sigmoid Linear Unit），也称 Swish，定义如下：
 
-$$
-\text{SiLU}(x) = x \cdot \text{sigmoid}(x) = \frac{x}{1 + e^{-x}}
-$$
-(x)=x⋅sigmoid(x)=1+e−xx​
+$\text{SiLU}(x) = x \cdot \text{sigmoid}(x) = \frac{x}{1 + e^{-x}}$
 
 ![1702.png](http://rethink.fun/imgs/1702.png)
 

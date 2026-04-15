@@ -87,10 +87,7 @@ SeepSeekMTP就是给每个头传入了额外的信息。帮助多token预测的�
 
 这里有两个MTP头，它的交叉熵loss最终也是会加入到模型最终的loss里的。比如在DeepSeekV3里先对所有MTP头的loss取平均，然后乘以权重𝜆，在训练前10Ttoken时，𝜆的值为0.3，在训练最后4.8Ttoken时，𝜆的值为0.1。
 
-$$
-Loss_{MTP}=\frac{\lambda}{D}\sum_{k=1}^DLoss_{MTP}^k
-$$
-​=Dλ​k=1∑D​LossMTPk​
+$Loss_{MTP}=\frac{\lambda}{D}\sum_{k=1}^DLoss_{MTP}^k$
 
 ![1830.png](http://rethink.fun/imgs/1830.png)
 
