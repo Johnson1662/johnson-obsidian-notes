@@ -3,172 +3,302 @@ title: Dashboard
 cssclass: dashboard
 ---
 
-<div class="dashboard-hero">
+<div class="db-root">
 
-# ⚡ Johnson 的知识花园
-
-<p class="subtitle">天津大学 · 计算机科学与技术 · 持续进化中</p>
-
-<div class="stats-row">
-<div class="stat-item">
-<span class="stat-number">195</span>
-<span class="stat-label">笔记总数</span>
+<!-- ════════════════════════════════════
+     HEADER
+     ════════════════════════════════════ -->
+<div class="db-header">
+<span class="db-title">Dashboard</span>
+<span class="db-subtitle">天津大学 · 计算机科学与技术 · 知识花园</span>
+<div class="db-stats-row">
+<div class="db-stat-pill">
+<div class="db-stat-num">195</div>
+<div class="db-stat-lbl">notes</div>
 </div>
-<div class="stat-item">
-<span class="stat-number">9</span>
-<span class="stat-label">知识领域</span>
+<div class="db-stat-pill">
+<div class="db-stat-num">9</div>
+<div class="db-stat-lbl">courses</div>
 </div>
-<div class="stat-item">
-<span class="stat-number">12</span>
-<span class="stat-label">每日规划</span>
+<div class="db-stat-pill">
+<div class="db-stat-num">3</div>
+<div class="db-stat-lbl">projects</div>
 </div>
-<div class="stat-item">
-<span class="stat-number">3</span>
-<span class="stat-label">进行中项目</span>
+<div class="db-stat-pill">
+<div class="db-stat-num">12</div>
+<div class="db-stat-lbl">plans</div>
 </div>
 </div>
-
-</div>
-
-<div class="dashboard-columns">
-<div>
-
-## 📚 专业课程
-
-<div class="course-grid">
-
-<div class="course-card">
-<span class="card-icon">⚡</span>
-<div class="card-title">并行计算</div>
-<div class="card-desc">MPI · OpenMP · Pthread · 异构计算 · MapReduce</div>
-<a class="card-link" href="知识库/并行计算/README.md">进入课程 →</a>
-<div class="progress-bar"><div class="progress-fill progress-blue" style="width: 80%"></div></div>
 </div>
 
-<div class="course-card">
-<span class="card-icon">🗄️</span>
-<div class="card-title">数据库系统</div>
-<div class="card-desc">关系模型 · SQL · ER模型 · 事务 · 并发控制</div>
-<a class="card-link" href="知识库/数据库系统/第1讲-关系数据模型.md">进入课程 →</a>
-<div class="progress-bar"><div class="progress-fill progress-green" style="width: 100%"></div></div>
+<!-- ════════════════════════════════════
+     BENTO GRID — Row 1
+     ════════════════════════════════════ -->
+<div class="db-grid">
+
+<!-- ── Focus Card ── -->
+<div class="db-card db-span-8">
+<div class="db-card-label">⚡ today's focus</div>
+<div class="db-focus">
+持续学习并行计算与深度学习，每周完成课程笔记。<br>
+<span style="opacity:0.5;font-size:0.75em;">trust the process.</span>
+</div>
 </div>
 
-<div class="course-card">
-<span class="card-icon">🏗️</span>
-<div class="card-title">深入理解计算机系统</div>
-<div class="card-desc">信息表示 · 异常控制流 · 虚拟内存 · 并发编程</div>
-<a class="card-link" href="知识库/深入理解计算机系统/第二章 信息的表示和处理.md">进入课程 →</a>
-<div class="progress-bar"><div class="progress-fill progress-orange" style="width: 50%"></div></div>
+<!-- ── Quick Actions ── -->
+<div class="db-card db-span-4">
+<div class="db-card-label">⌘ system</div>
+<div class="db-actions">
+<a class="db-action-btn" href="每日规划/"><span class="db-action-icon">📋</span><span class="db-action-lbl">规划</span></a>
+<a class="db-action-btn" href="项目/Agent开发学习路线.md"><span class="db-action-icon">🚀</span><span class="db-action-lbl">项目</span></a>
+<a class="db-action-btn" href="资源/课程安排.md"><span class="db-action-icon">📅</span><span class="db-action-lbl">课表</span></a>
+<a class="db-action-btn" href="助手记忆.md"><span class="db-action-icon">🧠</span><span class="db-action-lbl">记忆</span></a>
+<a class="db-action-btn" href="知识库/Triton.md"><span class="db-action-icon">⚡</span><span class="db-action-lbl">Triton</span></a>
+<a class="db-action-btn" href="GL/"><span class="db-action-icon">📐</span><span class="db-action-lbl">GL</span></a>
 </div>
-
-<div class="course-card">
-<span class="card-icon">🧠</span>
-<div class="card-title">知识工程</div>
-<div class="card-desc">知识图谱 · 知识表示 · 知识数据管理</div>
-<a class="card-link" href="知识库/知识工程/第一讲 知识工程与知识图谱.md">进入课程 →</a>
-<div class="progress-bar"><div class="progress-fill progress-purple" style="width: 38%"></div></div>
-</div>
-
-<div class="course-card">
-<span class="card-icon">🔬</span>
-<div class="card-title">数理基础</div>
-<div class="card-desc">线性代数 · 概率论与数理统计 · 大物2A</div>
-<a class="card-link" href="知识库/数理基础课程/线性代数.md">进入课程 →</a>
-<div class="progress-bar"><div class="progress-fill progress-teal" style="width: 60%"></div></div>
-</div>
-
-<div class="course-card">
-<span class="card-icon">💻</span>
-<div class="card-title">数据结构</div>
-<div class="card-desc">图 · 查找 · 内部排序</div>
-<a class="card-link" href="知识库/数据结构/第7章 图.md">进入课程 →</a>
-<div class="progress-bar"><div class="progress-fill progress-green" style="width: 40%"></div></div>
 </div>
 
 </div>
 
----
+<!-- ════════════════════════════════════
+     BENTO GRID — Row 2: Courses
+     ════════════════════════════════════ -->
+<div class="db-grid">
 
-## 🤖 AI 与深度学习
-
-<div class="course-grid">
-
-<div class="course-card">
-<span class="card-icon">🧠</span>
-<div class="card-title">RethinkFun 深度学习</div>
-<div class="card-desc">18 章系统课程 · 从线性代数到 Transformer · 含代码实现</div>
-<a class="card-link" href="知识库/RethinkFun深度学习/README.md">进入课程 →</a>
-<div class="progress-bar"><div class="progress-fill progress-blue" style="width: 100%"></div></div>
+<!-- ── Professional Courses ── -->
+<div class="db-card db-span-6">
+<div class="db-card-label">📚 专业课程</div>
+<div class="db-course-list">
+<a class="db-course-item" href="知识库/并行计算/README.md">
+<span class="db-course-icon">⚡</span>
+<div class="db-course-info">
+<p class="db-course-name">并行计算</p>
+<p class="db-course-desc">MPI · OpenMP · Pthread · 异构计算</p>
+<div class="db-progress"><div class="db-progress-fill" style="width:80%;background:var(--db-accent);"></div></div>
 </div>
-
-<div class="course-card">
-<span class="card-icon">🤖</span>
-<div class="card-title">Agent 开发</div>
-<div class="card-desc">Transformer · LLM推理 · 工具调用 · LangChain</div>
-<a class="card-link" href="知识库/Agent/1 Transformer架构.md">进入课程 →</a>
-<div class="progress-bar"><div class="progress-fill progress-purple" style="width: 100%"></div></div>
+<span class="db-course-arrow">→</span>
+</a>
+<a class="db-course-item" href="知识库/数据库系统/第1讲-关系数据模型.md">
+<span class="db-course-icon">🗄️</span>
+<div class="db-course-info">
+<p class="db-course-name">数据库系统</p>
+<p class="db-course-desc">关系模型 · SQL · 事务 · 并发控制</p>
+<div class="db-progress"><div class="db-progress-fill" style="width:100%;background:var(--db-green);"></div></div>
 </div>
-
-<div class="course-card">
-<span class="card-icon">📐</span>
-<div class="card-title">GL 系列课程</div>
-<div class="card-desc">离散数学 · 机器学习 · Mamba 模型量化</div>
-<a class="card-link" href="GL/离散数学/01-命题逻辑入门.md">进入课程 →</a>
-<div class="progress-bar"><div class="progress-fill progress-orange" style="width: 30%"></div></div>
+<span class="db-course-arrow">→</span>
+</a>
+<a class="db-course-item" href="知识库/深入理解计算机系统/第二章 信息的表示和处理.md">
+<span class="db-course-icon">🏗️</span>
+<div class="db-course-info">
+<p class="db-course-name">深入理解计算机系统</p>
+<p class="db-course-desc">信息表示 · 异常控制流 · 虚拟内存</p>
+<div class="db-progress"><div class="db-progress-fill" style="width:50%;background:var(--db-orange);"></div></div>
 </div>
-
+<span class="db-course-arrow">→</span>
+</a>
+<a class="db-course-item" href="知识库/知识工程/第一讲 知识工程与知识图谱.md">
+<span class="db-course-icon">🧠</span>
+<div class="db-course-info">
+<p class="db-course-name">知识工程</p>
+<p class="db-course-desc">知识图谱 · 知识表示 · 数据管理</p>
+<div class="db-progress"><div class="db-progress-fill" style="width:38%;background:var(--db-purple);"></div></div>
 </div>
-
+<span class="db-course-arrow">→</span>
+</a>
+<a class="db-course-item" href="知识库/数据结构/第7章 图.md">
+<span class="db-course-icon">💻</span>
+<div class="db-course-info">
+<p class="db-course-name">数据结构</p>
+<p class="db-course-desc">图 · 查找 · 内部排序</p>
+<div class="db-progress"><div class="db-progress-fill" style="width:40%;background:var(--db-green);"></div></div>
 </div>
-<div>
-
-## ⚡ 快速导航
-
-<div class="quick-links">
-<a class="quick-link" href="每日规划/">📋 每日规划</a>
-<a class="quick-link" href="项目/Agent开发学习路线.md">🚀 项目进度</a>
-<a class="quick-link" href="资源/课程安排.md">📅 课程表</a>
-<a class="quick-link" href="助手记忆.md">🧠 助手记忆</a>
-<a class="quick-link" href="知识库/Triton.md">⚡ Triton</a>
-</div>
-
----
-
-## 📅 近期规划
-
-- [[每日规划/2026-03-01|2026-03-01]]
-- [[每日规划/2026-02-22|2026-02-22]]
-- [[每日规划/2026-02-19|2026-02-19]]
-- [[每日规划/2026-02-15|2026-02-15]]
-
----
-
-## 🚀 进行中项目
-
-> [!info] Agent 开发
-> 12 周硬核执行清单 · 3 个月冲刺计划
-> → [[项目/Agent开发学习路线]]
-
-> [!tip] 深度学习
-> 系统学习 RethinkFun 课程 · 从基础到 LLM
-> → [[知识库/RethinkFun深度学习/README]]
-
----
-
-## 🔥 Hot Notes
-
-> [!example] 最常访问
-> - [[知识库/并行计算/04-OpenMP编程|OpenMP 编程]]
-> - [[知识库/深入理解计算机系统/第十二章 并发编程|并发编程]]
-> - [[知识库/RethinkFun深度学习/15-Transformer/注意力机制|注意力机制]]
-
+<span class="db-course-arrow">→</span>
+</a>
 </div>
 </div>
 
----
+<!-- ── AI Courses ── -->
+<div class="db-card db-span-6">
+<div class="db-card-label">🤖 AI & 深度学习</div>
+<div class="db-course-list">
+<a class="db-course-item" href="知识库/RethinkFun深度学习/README.md">
+<span class="db-course-icon">🔥</span>
+<div class="db-course-info">
+<p class="db-course-name">RethinkFun 深度学习</p>
+<p class="db-course-desc">18 章 · 线性代数 → Transformer → LLM</p>
+<div class="db-progress"><div class="db-progress-fill" style="width:100%;background:var(--db-accent);"></div></div>
+</div>
+<span class="db-course-arrow">→</span>
+</a>
+<a class="db-course-item" href="知识库/Agent/1 Transformer架构.md">
+<span class="db-course-icon">🤖</span>
+<div class="db-course-info">
+<p class="db-course-name">Agent 开发</p>
+<p class="db-course-desc">Transformer · LLM推理 · 工具调用</p>
+<div class="db-progress"><div class="db-progress-fill" style="width:100%;background:var(--db-purple);"></div></div>
+</div>
+<span class="db-course-arrow">→</span>
+</a>
+<a class="db-course-item" href="GL/离散数学/01-命题逻辑入门.md">
+<span class="db-course-icon">📐</span>
+<div class="db-course-info">
+<p class="db-course-name">GL 系列课程</p>
+<p class="db-course-desc">离散数学 · 机器学习 · Mamba 量化</p>
+<div class="db-progress"><div class="db-progress-fill" style="width:30%;background:var(--db-orange);"></div></div>
+</div>
+<span class="db-course-arrow">→</span>
+</a>
+<a class="db-course-item" href="知识库/数理基础课程/线性代数.md">
+<span class="db-course-icon">🔬</span>
+<div class="db-course-info">
+<p class="db-course-name">数理基础</p>
+<p class="db-course-desc">线性代数 · 概率论 · 大物2A</p>
+<div class="db-progress"><div class="db-progress-fill" style="width:60%;background:var(--db-yellow);"></div></div>
+</div>
+<span class="db-course-arrow">→</span>
+</a>
+<a class="db-course-item" href="知识库/程序设计综合实践/递归.md">
+<span class="db-course-icon">🧩</span>
+<div class="db-course-info">
+<p class="db-course-name">程序设计综合实践</p>
+<p class="db-course-desc">递归 · DFS · 单调队列</p>
+<div class="db-progress"><div class="db-progress-fill" style="width:30%;background:var(--db-green);"></div></div>
+</div>
+<span class="db-course-arrow">→</span>
+</a>
+</div>
+</div>
 
-<div style="text-align: center; color: #4C566A; font-size: 0.8em; margin-top: 20px;">
+</div>
 
-_⚡ Powered by Quartz · Obsidian · Border Theme_
+<!-- ════════════════════════════════════
+     BENTO GRID — Row 3
+     ════════════════════════════════════ -->
+<div class="db-grid">
+
+<!-- ── Habit Tracker ── -->
+<div class="db-card db-span-4">
+<div class="db-card-label">🔥 本周习惯</div>
+<div class="db-habit-row">
+<span class="db-habit-name">📖 阅读笔记</span>
+<div class="db-habit-dots">
+<div class="db-habit-dot active"></div>
+<div class="db-habit-dot active"></div>
+<div class="db-habit-dot active"></div>
+<div class="db-habit-dot active"></div>
+<div class="db-habit-dot active"></div>
+<div class="db-habit-dot"></div>
+<div class="db-habit-dot"></div>
+</div>
+</div>
+<div class="db-habit-row">
+<span class="db-habit-name">💻 代码练习</span>
+<div class="db-habit-dots">
+<div class="db-habit-dot active"></div>
+<div class="db-habit-dot active"></div>
+<div class="db-habit-dot active"></div>
+<div class="db-habit-dot"></div>
+<div class="db-habit-dot"></div>
+<div class="db-habit-dot"></div>
+<div class="db-habit-dot"></div>
+</div>
+</div>
+<div class="db-habit-row">
+<span class="db-habit-name">🧠 深度学习</span>
+<div class="db-habit-dots">
+<div class="db-habit-dot active"></div>
+<div class="db-habit-dot active"></div>
+<div class="db-habit-dot active"></div>
+<div class="db-habit-dot active"></div>
+<div class="db-habit-dot"></div>
+<div class="db-habit-dot"></div>
+<div class="db-habit-dot"></div>
+</div>
+</div>
+<div class="db-habit-row">
+<span class="db-habit-name">📝 每日规划</span>
+<div class="db-habit-dots">
+<div class="db-habit-dot active"></div>
+<div class="db-habit-dot active"></div>
+<div class="db-habit-dot active"></div>
+<div class="db-habit-dot active"></div>
+<div class="db-habit-dot active"></div>
+<div class="db-habit-dot active"></div>
+<div class="db-habit-dot"></div>
+</div>
+</div>
+</div>
+
+<!-- ── Recent Plans ── -->
+<div class="db-card db-span-4">
+<div class="db-card-label">📅 近期规划</div>
+<div class="db-recent-list">
+<div class="db-recent-item">
+<div class="db-recent-dot" style="background:var(--db-accent);"></div>
+<span class="db-recent-title">[[每日规划/2026-03-01]]</span>
+<span class="db-recent-date">03-01</span>
+</div>
+<div class="db-recent-item">
+<div class="db-recent-dot" style="background:var(--db-green);"></div>
+<span class="db-recent-title">[[每日规划/2026-02-22]]</span>
+<span class="db-recent-date">02-22</span>
+</div>
+<div class="db-recent-item">
+<div class="db-recent-dot" style="background:var(--db-purple);"></div>
+<span class="db-recent-title">[[每日规划/2026-02-19]]</span>
+<span class="db-recent-date">02-19</span>
+</div>
+<div class="db-recent-item">
+<div class="db-recent-dot" style="background:var(--db-orange);"></div>
+<span class="db-recent-title">[[每日规划/2026-02-15]]</span>
+<span class="db-recent-date">02-15</span>
+</div>
+<div class="db-recent-item">
+<div class="db-recent-dot" style="background:var(--db-yellow);"></div>
+<span class="db-recent-title">[[每日规划/2026-02-13]]</span>
+<span class="db-recent-date">02-13</span>
+</div>
+</div>
+</div>
+
+<!-- ── Projects ── -->
+<div class="db-card db-span-4">
+<div class="db-card-label">🚀 进行中项目</div>
+<div class="db-course-list">
+<a class="db-course-item" href="项目/Agent开发学习路线.md">
+<span class="db-course-icon">🤖</span>
+<div class="db-course-info">
+<p class="db-course-name">Agent 开发</p>
+<p class="db-course-desc">12 周执行清单 · 3 个月冲刺</p>
+<div class="db-progress"><div class="db-progress-fill" style="width:45%;background:var(--db-accent);"></div></div>
+</div>
+<span class="db-course-arrow">→</span>
+</a>
+<a class="db-course-item" href="GL/机器学习与深度学习/学习需求.md">
+<span class="db-course-icon">📊</span>
+<div class="db-course-info">
+<p class="db-course-name">ML/DL 学习</p>
+<p class="db-course-desc">机器学习引论 · 系统化学习</p>
+<div class="db-progress"><div class="db-progress-fill" style="width:15%;background:var(--db-green);"></div></div>
+</div>
+<span class="db-course-arrow">→</span>
+</a>
+<a class="db-course-item" href="GL/Mamba模型量化/学习需求.md">
+<span class="db-course-icon">⚙️</span>
+<div class="db-course-info">
+<p class="db-course-name">Mamba 模型量化</p>
+<p class="db-course-desc">SSM · 量化挑战与方案</p>
+<div class="db-progress"><div class="db-progress-fill" style="width:50%;background:var(--db-purple);"></div></div>
+</div>
+<span class="db-course-arrow">→</span>
+</a>
+</div>
+</div>
+
+</div>
+
+<div class="db-footer">
+⚡ quartz · obsidian · border theme · v2
+</div>
 
 </div>
