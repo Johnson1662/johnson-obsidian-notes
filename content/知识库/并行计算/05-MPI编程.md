@@ -131,7 +131,7 @@ if (rank == 0) {
 **组通信特点**：
 - 涉及通信域中的所有进程
 - 由一个进程发起，所有进程参与
-- 自带同步功能
+- 自带同步功能（所有进程执行到组通信函数后才会继续）
 
 **分类**：
 
@@ -140,17 +140,20 @@ if (rank == 0) {
 | **一对多** | 一个进程向所有进程发送 | MPI_Bcast, MPI_Scatter |
 | **多对一** | 所有进程向一个进程发送 | MPI_Gather, MPI_Reduce |
 | **多对多** | 所有进程相互通信 | MPI_Allgather, MPI_Allreduce |
+| **同步** | 所有进程同步等待 | MPI_Barrier |
 
-### 3.2 广播（Broadcast）
+> 💡 **通俗解释**：组通信就像"集体活动"，所有人都要参与，不能有人偷懒。点对点通信是"私聊"，组通信是"群聊"或"集体行动"。
 
-**功能**：一个进程向所有进程发送相同数据
+### 3.2 广播（Broadcast）⭐
+
+**功能**：一个进程向所有进程发送相同数据（一对多）
 
 ```c
 MPI_Bcast(
-    void* buf,           // 缓冲区
+    void* buf,           // 缓冲区（发送/接收共用）
     int count,           // 数据个数
     MPI_Datatype dtype,  // 数据类型
-    int root,            // 根进程ID
+    int root,            // 根进程ID（发送者）
     MPI_Comm comm        // 通信域
 );
 ```
@@ -173,9 +176,11 @@ MPI_Bcast(&data, 1, MPI_INT, 0, MPI_COMM_WORLD);
       └──────────────┴────────┴────────┘
 ```
 
-### 3.3 散射（Scatter）
+> 💡 **通俗解释**：广播就像班主任在群里发通知，一个人发，所有人都能收到同样的消息。
 
-**功能**：将根进程的数据分发给所有进程（每人一部分）
+### 3.3 散射（Scatter）⭐
+
+**功能**：将根进程的数据分发给所有进程（每人一部分，一对多）
 
 ```c
 MPI_Scatter(
@@ -207,9 +212,11 @@ MPI_Scatter(data, 1, MPI_INT, &my_value, 1, MPI_INT, 0, MPI_COMM_WORLD);
                           进程3: [4]
 ```
 
-### 3.4 收集（Gather）
+> 💡 **通俗解释**：散射就像老师把一叠作业本分给每个同学，每人拿一本（或几本）。广播是所有人听同样的内容，散射是每人拿不同的部分。
 
-**功能**：将所有进程的数据收集到根进程
+### 3.4 收集（Gather）⭐
+
+**功能**：将所有进程的数据收集到根进程（多对一）
 
 ```c
 MPI_Gather(
@@ -241,9 +248,11 @@ MPI_Gather(&my_value, 1, MPI_INT, result, 1, MPI_INT, 0, MPI_COMM_WORLD);
     进程3: [4]          
 ```
 
+> 💡 **通俗解释**：收集就像收作业，每个同学交一本，老师收到全部作业。散射是"分发"，收集是"回收"。
+
 ### 3.5 归约（Reduce）⭐⭐⭐
 
-**功能**：对所有进程的数据进行归约运算，结果存入根进程
+**功能**：对所有进程的数据进行归约运算，结果存入根进程（多对一）
 
 ```c
 MPI_Reduce(
@@ -267,6 +276,10 @@ MPI_Reduce(
 | `MPI_MIN` | 求最小值 |
 | `MPI_MAXLOC` | 最大值及其位置 |
 | `MPI_MINLOC` | 最小值及其位置 |
+| `MPI_LAND` | 逻辑与 |
+| `MPI_LOR` | 逻辑或 |
+| `MPI_BAND` | 按位与 |
+| `MPI_BOR` | 按位或 |
 
 **示例**：
 ```c
@@ -285,19 +298,44 @@ MPI_Reduce(&local_sum, &total_sum, 1, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD);
     进程3: 4 ─┘
 ```
 
+> 💡 **通俗解释**：归约就像"汇总统计"，每个人报自己的成绩，最后算出总分、最高分或平均分。Reduce是"计算后汇总"，Gather是"直接汇总"。
+
 ### 3.6 全收集与全归约
 
-**MPI_Allgather**：所有进程收集到全部数据
+**MPI_Allgather**：所有进程收集到全部数据（多对多）
 ```c
 MPI_Allgather(&my_value, 1, MPI_INT, result, 1, MPI_INT, MPI_COMM_WORLD);
 // 所有进程的result都变为[1,2,3,4]
 ```
 
-**MPI_Allreduce**：所有进程获得归约结果
+**MPI_Allreduce**：所有进程获得归约结果（多对多）
 ```c
 MPI_Allreduce(&local_sum, &total_sum, 1, MPI_INT, MPI_SUM, MPI_COMM_WORLD);
 // 所有进程的total_sum都为10
 ```
+
+**MPI_Barrier**：同步屏障，所有进程都到达后才继续
+```c
+MPI_Barrier(MPI_COMM_WORLD);
+// 所有进程都执行到这里后才会继续
+```
+
+> 💡 **通俗解释**：
+> - **Allgather**：就像每个人都知道所有人的成绩
+> - **Allreduce**：就像每个人都知道全班的平均分
+> - **Barrier**：就像"等大家都到齐了再出发"
+
+### 3.7 组通信函数详细对比
+
+| 函数 | 方向 | 功能 | 记忆方法 | 类比 |
+|------|------|------|----------|------|
+| `MPI_Bcast` | 1→N | 广播 | 一人说，所有人听 | 班主任发通知 |
+| `MPI_Scatter` | 1→N | 散射 | 一人分，各得一份 | 老师发作业本 |
+| `MPI_Gather` | N→1 | 收集 | 各出一份，汇于一处 | 收作业 |
+| `MPI_Reduce` | N→1 | 归约 | 各出数据，算出结果 | 统计成绩 |
+| `MPI_Allgather` | N→N | 全收集 | 各出一份，人手全集 | 成绩公示 |
+| `MPI_Allreduce` | N→N | 全归约 | 各出数据，人手结果 | 每人知道平均分 |
+| `MPI_Barrier` | 同步 | 屏障 | 所有人到齐 | 集合点名 |
 
 > 🎯 **考试重点**：理解各种组通信函数的功能和区别
 
@@ -305,14 +343,23 @@ MPI_Allreduce(&local_sum, &total_sum, 1, MPI_INT, MPI_SUM, MPI_COMM_WORLD);
 
 ## 四、组通信函数总结
 
-| 函数 | 方向 | 功能 | 记忆方法 |
-|------|------|------|----------|
-| `MPI_Bcast` | 1→N | 广播 | 一人说，所有人听 |
-| `MPI_Scatter` | 1→N | 散射 | 一人分，各得一份 |
-| `MPI_Gather` | N→1 | 收集 | 各出一份，汇于一处 |
-| `MPI_Reduce` | N→1 | 归约 | 各出数据，算出结果 |
-| `MPI_Allgather` | N→N | 全收集 | 各出一份，人手全集 |
-| `MPI_Allreduce` | N→N | 全归约 | 各出数据，人手结果 |
+| 函数 | 方向 | 功能 | 记忆方法 | 通俗解释 |
+|------|------|------|----------|----------|
+| `MPI_Bcast` | 1→N | 广播 | 一人说，所有人听 | 班主任发通知 |
+| `MPI_Scatter` | 1→N | 散射 | 一人分，各得一份 | 发作业本 |
+| `MPI_Gather` | N→1 | 收集 | 各出一份，汇于一处 | 收作业 |
+| `MPI_Reduce` | N→1 | 归约 | 各出数据，算出结果 | 统计成绩 |
+| `MPI_Allgather` | N→N | 全收集 | 各出一份，人手全集 | 成绩公示 |
+| `MPI_Allreduce` | N→N | 全归约 | 各出数据，人手结果 | 每人知道平均分 |
+| `MPI_Barrier` | 同步 | 屏障 | 所有人到齐 | 集合点名 |
+
+**函数选择指南**：
+- 需要**相同数据**给所有人 → `MPI_Bcast`（广播）
+- 需要**不同数据**给每个人 → `MPI_Scatter`（散射）
+- 需要**收集所有数据**到一个进程 → `MPI_Gather`（收集）
+- 需要**计算汇总结果**（如求和、最大值） → `MPI_Reduce`（归约）
+- 需要**所有人都知道结果** → `MPI_Allreduce`（全归约）
+- 需要**同步等待** → `MPI_Barrier`（屏障）
 
 ---
 
@@ -403,6 +450,8 @@ MPI_Comm new_comm;
 MPI_Comm_split(MPI_COMM_WORLD, color, key, &new_comm);
 ```
 
+> 💡 **通俗解释**：通信域就像"微信群"，定义了哪些进程可以互相通信。MPI_COMM_WORLD是默认的"大群"，包含所有进程。
+
 ### 6.2 进程组（Process Group）
 
 ```c
@@ -435,22 +484,103 @@ MPI_Type_create_struct(2, blocklengths, displacements, types, &mpi_particle_type
 MPI_Type_commit(&mpi_particle_type);
 ```
 
+### 6.4 非阻塞通信
+
+**阻塞 vs 非阻塞**：
+- **阻塞**：发送/接收完成后才返回（MPI_Send/MPI_Recv）
+- **非阻塞**：立即返回，用Wait/Test完成（MPI_Isend/MPI_Irecv）
+
+**非阻塞通信函数**：
+```c
+// 非阻塞发送
+MPI_Isend(
+    void* buf,           // 发送缓冲区
+    int count,           // 数据个数
+    MPI_Datatype dtype,  // 数据类型
+    int dest,            // 目标进程ID
+    int tag,             // 消息标签
+    MPI_Comm comm,       // 通信域
+    MPI_Request* request // 请求对象（用于后续检查）
+);
+
+// 非阻塞接收
+MPI_Irecv(
+    void* buf,           // 接收缓冲区
+    int count,           // 最大接收个数
+    MPI_Datatype dtype,  // 数据类型
+    int source,          // 源进程ID
+    int tag,             // 消息标签
+    MPI_Comm comm,       // 通信域
+    MPI_Request* request // 请求对象
+);
+
+// 等待通信完成
+MPI_Wait(MPI_Request* request, MPI_Status* status);
+
+// 检查通信是否完成（非阻塞）
+MPI_Test(MPI_Request* request, int* flag, MPI_Status* status);
+```
+
+> 💡 **通俗解释**：非阻塞通信就像发快递，发完就继续干别的事，不用干等着。等需要结果时再查快递到没到。
+
+### 6.5 捆绑发送接收（MPI_Sendrecv）
+
+**功能**：在一条语句中同时发送和接收数据，避免死锁
+
+```c
+MPI_Sendrecv(
+    void* sendbuf,        // 发送缓冲区
+    int sendcount,        // 发送数据个数
+    MPI_Datatype sendtype, // 发送数据类型
+    int dest,             // 目标进程
+    int sendtag,          // 发送标签
+    void* recvbuf,        // 接收缓冲区
+    int recvcount,        // 接收数据个数
+    MPI_Datatype recvtype, // 接收数据类型
+    int source,           // 源进程
+    int recvtag,          // 接收标签
+    MPI_Comm comm,        // 通信域
+    MPI_Status* status    // 状态信息
+);
+```
+
+**应用场景**：
+- 循环数据交换（如Jacobi迭代中相邻进程交换边界数据）
+- 避免Send/Recv顺序不当导致的死锁
+
+> 💡 **通俗解释**：就像两个人互相递东西，一只手递出去，另一只手接过来，同时完成。
+
+### 6.6 虚进程（Virtual Process）
+
+**MPI_PROC_NULL**：特殊的"空进程"，用于Sendrecv中表示无操作
+
+```c
+// 示例：环形通信中，边界进程与虚进程通信
+MPI_Sendrecv(sendbuf, sendcount, MPI_FLOAT, right, tag,
+             recvbuf, recvcount, MPI_FLOAT, left, tag,
+             MPI_COMM_WORLD, &status);
+```
+
+> 💡 **通俗解释**：虚进程就像"空气"，跟它发消息等于没发，从它收消息等于收到空。用于简化边界处理代码。
+
 ---
 
 ## 七、名词解释汇总
 
-| 术语 | 英文 | 定义 |
-|------|------|------|
-| **MPI** | Message Passing Interface | 消息传递接口标准 |
-| **通信域** | Communicator | 定义一组可以相互通信的进程集合 |
-| **点对点通信** | Point-to-Point | 两个进程之间的通信 |
-| **组通信** | Collective Communication | 涉及通信域中所有进程的通信 |
-| **广播** | Broadcast | 一个进程向所有进程发送相同数据 |
-| **散射** | Scatter | 将数据分发给各进程（每人一部分） |
-| **收集** | Gather | 将各进程数据汇集成一个数组 |
-| **归约** | Reduce | 对各进程数据进行运算得到单一结果 |
-| **阻塞通信** | Blocking | 发送/接收完成后才返回 |
-| **非阻塞通信** | Non-blocking | 立即返回，用Wait/Test完成 |
+| 术语 | 英文 | 定义 | 通俗解释 |
+|------|------|------|----------|
+| **MPI** | Message Passing Interface | 消息传递接口标准 | 分布式内存并行编程的"通用语言" |
+| **通信域** | Communicator | 定义一组可以相互通信的进程集合 | "微信群"，定义谁能互相发消息 |
+| **点对点通信** | Point-to-Point | 两个进程之间的通信 | "私聊"，两个人之间发消息 |
+| **组通信** | Collective Communication | 涉及通信域中所有进程的通信 | "群聊"，所有人一起参与 |
+| **广播** | Broadcast | 一个进程向所有进程发送相同数据 | "班主任发通知" |
+| **散射** | Scatter | 将数据分发给各进程（每人一部分） | "发作业本" |
+| **收集** | Gather | 将各进程数据汇集成一个数组 | "收作业" |
+| **归约** | Reduce | 对各进程数据进行运算得到单一结果 | "统计成绩" |
+| **阻塞通信** | Blocking | 发送/接收完成后才返回 | "干等着，直到对方收到" |
+| **非阻塞通信** | Non-blocking | 立即返回，用Wait/Test完成 | "发完就干别的事，不用干等" |
+| **MPI_Sendrecv** | Send-Receive | 同时发送和接收数据 | "一手递出去，一手接过来" |
+| **虚进程** | Virtual Process | 特殊的"空进程"，用于Sendrecv中 | "空气"，跟它发消息等于没发 |
 
 ---
 
@@ -459,20 +589,25 @@ MPI_Type_commit(&mpi_particle_type);
 ### ✅ 必须掌握
 1. MPI程序的基本结构（Init/Finalize/Comm_rank/Comm_size）
 2. 点对点通信（MPI_Send/MPI_Recv）
-3. **组通信函数**（Bcast/Scatter/Gather/Reduce）
-4. 能写出简单的MPI并行程序
+3. **组通信函数**（Bcast/Scatter/Gather/Reduce/Allreduce）
+4. 非阻塞通信（MPI_Isend/MPI_Irecv/MPI_Wait）
+5. 捆绑发送接收（MPI_Sendrecv）
+6. 能写出简单的MPI并行程序
 
 ### ⚠️ 常见考题
 - 解释MPI编程模型（名词解释）
 - 列举3个以上MPI组通信接口（简答题）
 - 写出MPI并行求和/前缀和程序（编程题）
 - 画出Scatter/Gather/Reduce示意图
+- 解释阻塞与非阻塞通信的区别
+- 解释MPI_Sendrecv的用途
 
 ### 📖 参考图示
 - MPI程序结构 → **PPT 06 第17-20页**
 - 点对点通信 → **PPT 06 第25-40页**
 - 组通信示意 → **PPT 07 第10-30页**
 - Reduce操作 → **PPT 07 第25-30页**
+- 非阻塞通信 → **PPT 07 第31-50页**
 
 ---
 
@@ -585,6 +720,53 @@ mpic++ -i_dynamic -fopenmp -o hybrid.o hybrid.cpp
 - MPI负责进程间通信
 - OpenMP负责节点内多线程并行
 - 适合大规模集群环境
+
+### 9.6 混合编程：MPI+CUDA
+
+**应用场景**：
+- MPI负责节点间通信（跨节点）
+- CUDA负责节点内GPU并行计算
+- 适合GPU集群环境
+
+**数据传输模式**：
+```c
+// MPI进程间传输GPU数据（需要经过主机内存）
+if (rank == 0) {
+    // 1. 从GPU拷贝到主机内存
+    cudaMemcpy(host_buffer, device_buffer, size, cudaMemcpyDeviceToHost);
+    // 2. 通过MPI发送
+    MPI_Send(host_buffer, size, MPI_CHAR, 1, tag, MPI_COMM_WORLD);
+} else if (rank == 1) {
+    // 3. 接收数据到主机内存
+    MPI_Recv(host_buffer, size, MPI_CHAR, 0, tag, MPI_COMM_WORLD, &status);
+    // 4. 从主机内存拷贝到GPU
+    cudaMemcpy(device_buffer, host_buffer, size, cudaMemcpyHostToDevice);
+}
+```
+
+**GPUDirect RDMA**（高级优化）：
+- 允许GPU直接通过网络发送数据，绕过主机内存
+- 减少数据拷贝次数，提高性能
+- 需要特定硬件支持（如InfiniBand）
+
+**多级并行策略**：
+```
+┌─────────────────────────────────────┐
+│           集群层（MPI）              │
+│  ┌─────────┐  ┌─────────┐  ┌─────────┐
+│  │  节点0  │  │  节点1  │  │  节点2  │
+│  │ ┌─────┐ │  │ ┌─────┐ │  │ ┌─────┐ │
+│  │ │ GPU │ │  │ │ GPU │ │  │ │ GPU │ │
+│  │ │(CUDA)│ │  │ │(CUDA)│ │  │ │(CUDA)│ │
+│  │ └─────┘ │  │ └─────┘ │  │ └─────┘ │
+│  └─────────┘  └─────────┘  └─────────┘
+└─────────────────────────────────────┘
+```
+
+> 💡 **通俗解释**：就像公司组织结构：
+> - **MPI**：不同部门之间的沟通（跨部门协作）
+> - **CUDA**：部门内部员工的分工（部门内协作）
+> - **多级混合**：既有部门间协作，又有部门内分工
 
 ---
 
