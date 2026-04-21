@@ -94,13 +94,7 @@ tags: [并行计算, MPI, OpenMP, CUDA, 混合编程, GPU集群]
 **纯MPI**：每个MPI进程是一个独立执行单元
 
 **MPI+OpenMP**：每个MPI进程内有多个OpenMP线程，共享MPI对象
-
-![MPI-only vs MPI+OpenMP](/知识库/并行计算/assets/09_mpi_only_model.jpg)
-*MPI-only 编程模型*
-
-![MPI+OpenMP模型](/知识库/并行计算/assets/09_mpi_openmp_model.jpg)
-*MPI+OpenMP 编程模型*
-
+![](assets/09-MPI多级混合编程/file-20260421194006017.png)
 ### 2.3 MPI+OpenMP 基本步骤
 
 ```
