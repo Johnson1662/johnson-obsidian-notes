@@ -498,30 +498,39 @@ is: [Page2, Page3, Page4]
 | **MapReduce** | - | 分布式计算编程模型 |
 | **倒排索引** | Inverted Index | 单词到文档的映射关系 |
 | **负载均衡** | Load Balancing | 各处理器工作量尽量相等 |
-| **聚合** | Agglomeration | 合并小任务以减少开销 |
+| **聚合/组合** | Agglomeration | 合并小任务以减少开销 |
 | **映射** | Mapping | 将任务分配到处理器 |
+| **表面-容积效应** | Surface-to-Volume Effect | 通讯量与表面积成正比，计算量与体积成正比 |
+| **设计模式** | Design Pattern | 解决重复出现问题的有效方法 |
+| **静态映射** | Static Mapping | 编译时确定任务分配 |
+| **动态映射** | Dynamic Mapping | 运行时分配任务 |
 
 ---
 
-## 八、复习要点
+## 九、复习要点
 
 ### ✅ 必须掌握
-1. PCAM设计方法学的四个步骤及含义
+1. PCAM设计方法学的四个步骤及详细含义
 2. 域分解与功能分解的区别
 3. MapReduce编程模型的工作原理
 4. WordCount和Inverted Index算法
+5. 并行程序设计模式的四个层次
+6. 静态映射与动态映射的区别
 
 ### ⚠️ 常见考题
 - 解释PCAM设计方法学（简答题）
 - 比较域分解和功能分解（简答题）
 - 描述MapReduce的Inverted Index算法（编程题）
 - 画出MapReduce执行流程图
+- 解释表面-容积效应（名词解释）
+- 描述并行程序设计模式的四个层次（简答题）
 
 ### 📖 参考图示
 - PCAM流程图 → **PPT 12 第10-15页**
 - 域分解示例 → **PPT 11 第15-20页**
 - MapReduce流程 → **PPT 10 第10-20页**
 - Inverted Index示例 → **PPT 10 第25-35页**
+- 并行程序设计模式 → **PPT 12 第50-60页**
 
 ---
 
