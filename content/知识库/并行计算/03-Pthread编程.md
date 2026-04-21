@@ -2,7 +2,14 @@
 
 > 📚 本章涵盖：PPT 03 多线程并行程序设计（第40-63页）、2026年实验一二
 > 
-> 🎯 对应考点：线程与进程区别、互斥锁、条件变量、伪共享
+> 🎯 对应考点：线程与进程区别、互斥锁、条件变量、伪共享、线程池、忙等待
+
+**学习目标**：
+1. 理解多线程的基本概念和优势
+2. 掌握Pthread API的使用方法
+3. 学会使用互斥锁和条件变量实现同步
+4. 理解伪共享问题及其解决方法
+5. 能够编写简单的多线程并行程序
 
 ---
 
@@ -628,7 +635,81 @@ col_idx[] = {0, 1, 0, 1, 2, 1, 2};                 // 列索引
 
 ---
 
-## 八、名词解释汇总
+## 八、Java多线程对比（扩展了解）
+
+> 📝 **注意**：本节为扩展内容，考试重点在Pthread，但了解Java多线程有助于理解多线程概念。
+
+### 8.1 Java创建多线程的方法
+
+**方法1：继承Thread类**：
+```java
+class UserThread extends Thread {
+    int sleepTime;
+    
+    public UserThread(String id) {
+        super(id);
+        sleepTime = (int)(Math.random() * 1000);
+    }
+    
+    public void run() {
+        System.out.println("运行的线程是：" + getName());
+        try {
+            Thread.sleep(sleepTime);  // 模拟执行
+        } catch(InterruptedException e) {
+            System.err.println("运行异常:" + e.toString());
+        }
+    }
+}
+
+// 使用
+UserThread t1 = new UserThread("NO 1");
+t1.start();  // 启动线程
+```
+
+**方法2：实现Runnable接口**（推荐）：
+```java
+class UserMultThread implements Runnable {
+    public void run() {
+        System.out.println("运行线程：" + Thread.currentThread().getId());
+    }
+}
+
+// 使用
+Thread t1 = new Thread(new UserMultThread());
+t1.start();
+t1.join();  // 等待线程结束
+```
+
+### 8.2 Java同步机制
+
+**synchronized关键字**：
+```java
+// 同步方法
+synchronized void play(int n) {
+    // 临界区代码
+}
+
+// 同步代码块
+synchronized (object) {
+    // 临界区代码
+}
+```
+
+### 8.3 Pthread vs Java多线程对比
+
+| 特性 | Pthread | Java |
+|------|---------|------|
+| 创建方式 | `pthread_create()` | 继承Thread或实现Runnable |
+| 同步机制 | 互斥锁、条件变量 | synchronized、Lock |
+| 内存模型 | 共享内存 | JMM（Java内存模型） |
+| 跨平台性 | 依赖POSIX标准 | 跨平台（JVM） |
+| 学习曲线 | 较陡峭 | 相对平缓 |
+
+**通俗理解**：Pthread是C语言的"手动挡"，控制精确但复杂；Java是"自动挡"，简单易用但灵活性稍差。
+
+---
+
+## 九、名词解释汇总
 
 | 术语 | 英文 | 定义 |
 |------|------|------|
@@ -644,7 +725,7 @@ col_idx[] = {0, 1, 0, 1, 2, 1, 2};                 // 列索引
 
 ---
 
-## 九、复习要点
+## 十、复习要点
 
 ### ✅ 必须掌握
 1. 线程与进程的区别
@@ -679,4 +760,4 @@ col_idx[] = {0, 1, 0, 1, 2, 1, 2};                 // 列索引
 
 ---
 
-*整理自：03 多线程并行程序设计.pdf (79页)、2026年实验指导书*
+*整理自：03 多线程并行程序设计.pdf (79页)、2026年实验指导书、PPT内容补充*

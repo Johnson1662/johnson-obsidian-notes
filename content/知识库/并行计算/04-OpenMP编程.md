@@ -2,7 +2,14 @@
 
 > 📚 本章涵盖：PPT 05 OpenMP
 > 
-> 🎯 对应考点：名词解释（OpenMP、编译制导语句）
+> 🎯 对应考点：名词解释（OpenMP、编译制导语句）、Fork-Join模型、调度策略、数据共享子句
+
+**学习目标**：
+1. 理解OpenMP的基本概念和Fork-Join模型
+2. 掌握编译制导语句的使用方法
+3. 学会使用各种数据共享子句
+4. 理解不同的调度策略及其适用场景
+5. 能够使用OpenMP实现简单的并行程序
 
 ---
 
@@ -166,6 +173,23 @@ int main() {
 |----------|------|------|
 | `OMP_NUM_THREADS` | 设置默认线程数 | `export OMP_NUM_THREADS=4` |
 | `OMP_SCHEDULE` | 设置循环调度方式 | `OMP_SCHEDULE="dynamic,10"` |
+| `OMP_DYNAMIC` | 是否动态调整线程数 | `OMP_DYNAMIC=TRUE` |
+| `OMP_NESTED` | 是否允许嵌套并行 | `OMP_NESTED=TRUE` |
+| `OMP_PROC_BIND` | 线程绑定到处理器 | `OMP_PROC_BIND=true` |
+| `OMP_STACKSIZE` | 线程栈大小 | `OMP_STACKSIZE=10M` |
+
+**通俗解释**：环境变量就像程序启动前的"全局设置"，可以在命令行设置，影响整个程序的并行行为。
+
+**使用示例**：
+```bash
+# 设置4个线程，使用动态调度
+export OMP_NUM_THREADS=4
+export OMP_SCHEDULE="dynamic,10"
+./my_program
+
+# 或者在一行中设置
+OMP_NUM_THREADS=4 OMP_SCHEDULE="dynamic,10" ./my_program
+```
 
 ---
 
@@ -213,6 +237,55 @@ main() {
 #pragma omp parallel for [clause]
 for (int i = 0; i < n; i++) {
     // 循环体被分配到多个线程执行
+}
+```
+
+**调度策略（schedule子句）**：
+
+`schedule(type[, size])` 用于控制循环迭代在多个线程间的分配方式。
+
+| 调度类型 | 说明 | 适用场景 |
+|----------|------|----------|
+| **static** | 静态分配，编译时确定 | 迭代计算量均匀 |
+| **dynamic** | 动态分配，运行时按需领取 | 迭代计算量不均匀 |
+| **guided** | 启发式分配，先大后小 | 大量迭代且计算量递减 |
+| **runtime** | 运行时通过环境变量确定 | 需要灵活配置 |
+
+**详细解释**：
+
+1. **static调度**（默认）：
+   - 不指定size：将迭代平均分配给各线程（N/t个）
+   - 指定size：每次分配size个迭代给下一个线程
+   - **通俗理解**：就像老师提前把作业本平均分给学生
+
+2. **dynamic调度**：
+   - 不指定size：逐个分配迭代给空闲线程
+   - 指定size：每次分配size个迭代给空闲线程
+   - **通俗理解**：就像学生做完作业后自己去领新的
+
+3. **guided调度**：
+   - 开始分配大块迭代，逐渐减小到size
+   - 默认size=1，即一直减少到1
+   - **通俗理解**：就像先给学生大量作业，然后根据完成情况逐渐减少
+
+**示例**：
+```c
+// 静态调度，每个线程处理25个迭代
+#pragma omp parallel for schedule(static, 25)
+for (int i = 0; i < 100; i++) {
+    // 线程0: 0-24, 线程1: 25-49, 线程2: 50-74, 线程3: 75-99
+}
+
+// 动态调度，每次处理10个迭代
+#pragma omp parallel for schedule(dynamic, 10)
+for (int i = 0; i < 100; i++) {
+    // 空闲线程领取10个迭代，直到所有迭代完成
+}
+
+// 启发式调度
+#pragma omp parallel for schedule(guided, 5)
+for (int i = 0; i < 100; i++) {
+    // 开始分配大块，逐渐减小到5
 }
 ```
 
@@ -563,4 +636,4 @@ void main() {
 
 ---
 
-*整理自：05 OpenMP.pdf (69页)*
+*整理自：05 OpenMP.pdf (69页)、PPT内容补充、Web搜索补充*
