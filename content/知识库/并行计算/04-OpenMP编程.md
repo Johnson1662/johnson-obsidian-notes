@@ -24,14 +24,26 @@
 
 ### 1.2 OpenMP发展历程
 
-| 年份 | 版本 |
-|------|------|
-| 1997 | OpenMP Fortran 1.0 |
-| 2000 | OpenMP C/C++ 2.0 |
-| 2005 | OpenMP 2.5 |
-| 2008 | OpenMP 3.0 |
-| 2013 | OpenMP 4.0 |
-| 2018 | OpenMP 5.0 |
+| 年份 | 版本 | 主要特性 |
+|------|------|----------|
+| 1997 | OpenMP Fortran 1.0 | 首个标准，支持Fortran |
+| 2000 | OpenMP C/C++ 2.0 | 支持C/C++语言 |
+| 2005 | OpenMP 2.5 | 统一Fortran和C/C++标准 |
+| 2008 | OpenMP 3.0 | 引入任务（task）概念 |
+| 2013 | OpenMP 4.0 | 支持SIMD指令、设备卸载 |
+| 2018 | OpenMP 5.0 | 增强的任务依赖、错误处理 |
+
+**通俗解释**：OpenMP就像乐高积木，从最初只能拼简单模型（1997），到现在可以拼复杂结构（2018），功能越来越强大。
+
+### 1.3 OpenMP的特点
+
+**核心特点**：
+1. **共享内存模型**：所有线程共享同一内存空间
+2. **Fork-Join模型**：主线程派生（Fork）工作线程，完成后合并（Join）
+3. **编译制导**：通过特殊注释（`#pragma omp`）指导编译器并行化
+4. **增量并行化**：可以逐步将串行代码改为并行代码
+
+**通俗理解**：就像项目经理（主线程）分配任务给团队成员（工作线程），任务完成后团队成员汇报结果。
 
 ---
 
@@ -252,6 +264,65 @@ sum += local_sum;  // 原子加法
 #pragma omp barrier  // 所有线程在此等待
 ```
 
+### 4.5 高级数据共享概念
+
+**threadprivate指令**：
+- 使全局变量在并行域内变成每个线程私有
+- 与private的区别：threadprivate变量在多个并行域之间保持值
+
+```c
+int counter = 0;
+#pragma omp threadprivate(counter)
+
+void inc_counter() {
+    counter++;  // 每个线程有自己的counter副本
+}
+```
+
+**copyin子句**：
+- 用主线程的threadprivate变量值初始化所有线程的对应变量
+
+```c
+int global = 0;
+#pragma omp threadprivate(global)
+
+int main() {
+    global = 1000;  // 主线程设置值
+    #pragma omp parallel copyin(global)  // 所有线程的global都初始化为1000
+    {
+        printf("global=%d\n", global);  // 输出1000
+    }
+}
+```
+
+**copyprivate子句**：
+- 从一个线程广播私有变量值到其他线程
+- 通常与single指令配合使用
+
+```c
+int counter = 0;
+#pragma omp threadprivate(counter)
+
+#pragma omp parallel
+{
+    int count;
+    #pragma omp single copyprivate(counter)  // 一个线程设置counter，然后广播
+    {
+        counter = 50;  // 只有single线程执行
+    }
+    count = increment_counter();  // 所有线程使用广播后的counter值
+}
+```
+
+**private vs threadprivate对比**：
+
+| 特性 | private | threadprivate |
+|------|---------|---------------|
+| 作用域 | 单个并行域 | 整个程序 |
+| 持久性 | 否 | 是 |
+| 初始化 | firstprivate | copyin |
+| 适用范围 | 循环变量、临时变量 | 全局状态、计数器 |
+
 ---
 
 ## 五、经典示例
@@ -297,6 +368,148 @@ for (i = 0; i < N; i++) {
 }
 ```
 
+### 5.3 积分法求π（多种并行化方法）
+
+**串行代码**：
+```c
+static long num_steps = 100000;
+double step;
+void main() {
+    int i;
+    double x, pi, sum = 0.0;
+    step = 1.0/(double) num_steps;
+    for (i=0; i<num_steps; i++) {
+        x = (i+0.5)*step;
+        sum = sum + 4.0/(1.0+x*x);
+    }
+    pi = step * sum;
+}
+```
+
+**方法1：使用并行域和手动划分**：
+```c
+#include <omp.h>
+static long num_steps = 100000;
+double step;
+#define NUM_THREAD 4
+
+void main() {
+    int i;
+    double x, pi, sum[NUM_THREAD];
+    step = 1.0/(double) num_steps;
+    omp_set_num_threads(NUM_THREAD);
+    
+    #pragma omp parallel
+    {
+        double x;
+        int id = omp_get_thread_num();
+        sum[id] = 0.0;
+        
+        // 每个线程处理不同的迭代
+        for (i=id; i<num_steps; i=i+NUM_THREAD) {
+            x = (i+0.5)*step;
+            sum[id] += 4.0/(1.0+x*x);
+        }
+    }
+    
+    // 合并各线程结果
+    for (i=0, pi=0.0; i<NUM_THREAD; i++)
+        pi += sum[i] * step;
+}
+```
+
+**方法2：使用for指令**：
+```c
+#include <omp.h>
+static long num_steps = 100000;
+double step;
+#define NUM_THREAD 4
+
+void main() {
+    int i;
+    double x, pi, sum[NUM_THREAD];
+    step = 1.0/(double) num_steps;
+    omp_set_num_threads(NUM_THREAD);
+    
+    #pragma omp parallel
+    {
+        double x;
+        int id = omp_get_thread_num();
+        sum[id] = 0;
+        
+        #pragma omp for  // 自动划分循环迭代
+        for (i=0; i<num_steps; i++) {
+            x = (i+0.5)*step;
+            sum[id] += 4.0/(1.0+x*x);
+        }
+    }
+    
+    for (i=0, pi=0.0; i<NUM_THREAD; i++)
+        pi += sum[i] * step;
+}
+```
+
+**方法3：使用private和critical**：
+```c
+#include <omp.h>
+static long num_steps = 100000;
+double step;
+#define NUM_THREAD 4
+
+void main() {
+    int i;
+    double x, sum, pi = 0.0;
+    step = 1.0/(double) num_steps;
+    omp_set_num_threads(NUM_THREAD);
+    
+    #pragma omp parallel private(x, sum)  // x和sum是线程私有的
+    {
+        int id = omp_get_thread_num();
+        sum = 0.0;
+        
+        for (i=id; i<num_steps; i=i+NUM_THREAD) {
+            x = (i+0.5)*step;
+            sum += 4.0/(1.0+x*x);
+        }
+        
+        #pragma omp critical  // 临界区保护pi的更新
+        pi += sum;
+    }
+    pi = pi * step;
+}
+```
+
+**方法4：使用reduction（最简洁）**：
+```c
+#include <omp.h>
+static long num_steps = 100000;
+double step;
+#define NUM_THREADS 4
+
+void main() {
+    int i;
+    double x, pi, sum = 0.0;
+    step = 1.0/(double) num_steps;
+    omp_set_num_threads(NUM_THREADS);
+    
+    #pragma omp parallel for reduction(+:sum) private(x)
+    for (i=0; i<num_steps; i++) {
+        x = (i+0.5)*step;
+        sum = sum + 4.0/(1.0+x*x);
+    }
+    pi = step * sum;
+}
+```
+
+**四种方法对比**：
+
+| 方法 | 优点 | 缺点 | 适用场景 |
+|------|------|------|----------|
+| 并行域+手动划分 | 控制精确 | 代码复杂 | 需要精细控制 |
+| for指令 | 简单自动 | 灵活性低 | 规则循环 |
+| private+critical | 灵活安全 | 有锁开销 | 不规则计算 |
+| reduction | 最简洁 | 功能有限 | 简单归约操作 |
+
 ---
 
 ## 六、名词解释汇总
@@ -320,15 +533,33 @@ for (i = 0; i < N; i++) {
 2. Fork-Join模型的工作流程
 3. 编译制导语句的基本格式
 4. 常用指令和子句的用法
+5. threadprivate、copyin、copyprivate的区别
+6. 积分法求π的多种并行化方法
 
 ### ⚠️ 常见考题
 - 解释OpenMP的含义（名词解释）
 - 画出Fork-Join模型示意图（简答题）
 - 写出给定算法的OpenMP并行代码（编程题）
+- 比较private和threadprivate的区别（简答题）
+- 分析不同并行化方法的优缺点（分析题）
 
 ### 📖 参考图示
 - Fork-Join模型图 → **PPT 05 第6-7页**
 - 编译制导语句示例 → **PPT 05 第10-11页**
+- OpenMP发展历程 → **PPT 05 第34-36页**
+- 积分法求π示例 → **PPT 05 第795-921页**
+
+### 💡 学习建议
+1. **理解模型**：重点理解Fork-Join并行模型
+2. **掌握语法**：熟练使用`#pragma omp`指令和各种子句
+3. **实践编程**：多写OpenMP程序，从简单到复杂
+4. **性能分析**：学会分析并行程序的性能瓶颈
+
+### 🔍 考试重点
+1. **名词解释**：OpenMP、编译制导语句、Fork-Join模型
+2. **简答题**：比较不同数据共享子句的区别
+3. **编程题**：用OpenMP实现数组求和、矩阵乘法等
+4. **分析题**：分析并行程序的正确性和性能
 
 ---
 
