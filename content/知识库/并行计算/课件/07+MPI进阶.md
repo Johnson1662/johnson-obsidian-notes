@@ -10,17 +10,17 @@ http://cic.tju.edu.cn/faculty/tangshanjiang/
 
 # Outline
 
-非阻塞通信  
-- MPI_Sendrecv和虚进程  
-自定义数据类型  
-- 虚拟进程拓扑
+- 非阻塞通信
+  - MPI_Sendrecv和虚进程
+- 自定义数据类型
+  - 虚拟进程拓扑
 
 # Outline
 
-·非阻塞通信   
-- MPI_Sendrecv和虚进程  
-自定义数据类型  
-- 虚拟进程拓扑
+- 非阻塞通信
+  - MPI_Sendrecv和虚进程
+- 自定义数据类型
+  - 虚拟进程拓扑
 
 # 非阻塞通信
 
@@ -30,16 +30,19 @@ http://cic.tju.edu.cn/faculty/tangshanjiang/
 
 # 非阻塞操作
 
+```c
 Non-blocking send
 
 MPI_Isend(...)
 
 doing some other work
 
-MPI_Wait(…)
+MPI_Wait(...)
+```
 
 ![](images/7590087e76c4a4753fc708d4b78ab0d37034ccbbd9d5f02927b5cacfea27670b.jpg)
 
+```c
 Non-blocking receive
 
 MPI_Recv(...)
@@ -47,6 +50,7 @@ MPI_Recv(...)
 doing some other work
 
 MPI_Wait(...)
+```
 
 ![](images/ae5be0f2018ab7df0464577d8ea700c853710997f2d5679db2c9ac10733738fa.jpg)
 

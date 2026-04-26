@@ -14,20 +14,20 @@ http://cic.tju.edu.cn/faculty/tangshanjiang/
 
 # 集群分类（按用途）
 
-# • 高性能计算
+# - 高性能计算
 
-• 科学计算，并行计算  
-• 优先考虑计算性能
+- 科学计算，并行计算  
+- 优先考虑计算性能
 
-# • 大数据分析
+# - 大数据分析
 
-• 分布式并行数据处理  
-• 优先考虑IO与存储性能优化
+- 分布式并行数据处理  
+- 优先考虑IO与存储性能优化
 
-# • 高可用服务
+# - 高可用服务
 
-• 高可靠在线服务  
-• 最大程度减少对外服务中断
+- 高可靠在线服务  
+- 最大程度减少对外服务中断
 
 ![](images/cf0ee2e2516529887e645ce10d2d40ff2a6e0dfd3ac1505f321ba09ae9b1ef00.jpg)
 
@@ -54,50 +54,50 @@ Figure5-1 Labclusterconfiguration
 # 并行计算作业管理
 
 在大规模集群或者超级计算机平台上，一般不能随意地直接运行用户的并行计算程序，而必须通过其上提供的作业管理系统来提交计算任务。  
-• 集群作业管理系统的功能
+- 集群作业管理系统的功能
 
-• 统一管理和调度集群的软硬件资源  
-• 保证用户作业公平合理地共享集群资源  
-• 提高系统利用率和吞吐率。
+- 统一管理和调度集群的软硬件资源  
+- 保证用户作业公平合理地共享集群资源  
+- 提高系统利用率和吞吐率。
 
-• 常用的作业管理系统
+- 常用的作业管理系统
 
-• PBS   
-• Slurm   
-• LSF
+- PBS   
+- Slurm   
+- LSF
 
 # PBS
 
 PBS(Portable Batch System)最初由NASA的Ames研究中心开发，提供能满足异构计算网络需要的软件包，用于灵活的批处理，满足高性能计算的需要。  
-• PBS的主要特点有：
+- PBS的主要特点有：
 
-• 代码开放，免费获取；  
+- 代码开放，免费获取；  
 支持批处理、交互式作业和串行、多种并行作业，如MPI、PVM、HPF、MPL；  
-• PBS是功能最为齐全, 历史最悠久, 支持最广泛的本地集群调度器之一。
+- PBS是功能最为齐全, 历史最悠久, 支持最广泛的本地集群调度器之一。
 
-• PBS的目前包括openPBS, PBS Pro和Torque三个主要分支.
+- PBS的目前包括openPBS, PBS Pro和Torque三个主要分支.
 
-• OpenPBS是最早的PBS系统, 目前已经没有太多后续开发  
-• PBS pro是PBS的商业版本, 功能最为丰富  
+- OpenPBS是最早的PBS系统, 目前已经没有太多后续开发  
+- PBS pro是PBS的商业版本, 功能最为丰富  
 Torque是Clustering公司接管了OpenPBS, 并给与后续支持的一个开源版本
 
 # PBS 逻辑架构
 
 ![](images/26247d2b257e5bb2e83856d0c7135a829e040a2a27cf0b0022a00af01bf9e6e5.jpg)
 
-• pbs_mom：后台监控进程  
-• pbs_server：调度服务器  
-• pbs_sched：调度策略
+- pbs_mom：后台监控进程  
+- pbs_server：调度服务器  
+- pbs_sched：调度策略
 
 # Slurm
 
 SLURM （Simple Linux Utility for Resource Management）是一种可用于大型计算节点集群的高度可伸缩和容错的集群管理器和作业调度系统，主要功能包括：
 
-• 在一段时间内为用户分配资源（计算机节点）的独占和/或非独占访问权限，以便他们可以执行工作。  
-• 提供了一个框架，用于在一组分配的节点上启动，执行和监视工作（通常是并行作业，例如MPI）。  
-• 通过管理待处理作业队列来仲裁资源争用。
+- 在一段时间内为用户分配资源（计算机节点）的独占和/或非独占访问权限，以便他们可以执行工作。  
+- 提供了一个框架，用于在一组分配的节点上启动，执行和监视工作（通常是并行作业，例如MPI）。  
+- 通过管理待处理作业队列来仲裁资源争用。
 
-• Slurm是TOP500超级计算机中约60%的工作负载管理器，其中包括天河二号。  
+- Slurm是TOP500超级计算机中约60%的工作负载管理器，其中包括天河二号。  
 Slurm使用基于希尔伯特曲线调度或胖树网络拓扑的最佳拟合算法来优化并行计算机上任务分配的局部性。
 
 # Slurm逻辑架构
@@ -111,9 +111,9 @@ Compute node daemons
 
 # Slurm 资源分区
 
-• 节 点 的 特以节 性 不 帮 ， 同， 助 用特 ，点 的择 ， 最 适 合算。 己进 行 运   
-• 集有 中， 那么设置 部 部分机 器使在 得只有部 这 个分 区  
-• 分区(Partition)可看做一系列节点的集合。
+- 节 点 的 特以节 性 不 帮 ， 同， 助 用特 ，点 的择 ， 最 适 合算。 己进 行 运   
+- 集有 中， 那么设置 部 部分机 器使在 得只有部 这 个分 区  
+- 分区(Partition)可看做一系列节点的集合。
 
 ![](images/782a8cd3454ddfe4943f0b8929be071d4962b9657bf7c92f0b6d1e92eafdcb25.jpg)
 
@@ -127,16 +127,16 @@ Job X
 # Outline
 
 MPI概述  
-• 点到点通信  
-• 组通信  
-• 阻塞通信模式
+- 点到点通信  
+- 组通信  
+- 阻塞通信模式
 
 # Outline
 
-• MPI概述  
-• 点到点通信  
-• 组通信  
-• 阻塞通信模式
+- MPI概述  
+- 点到点通信  
+- 组通信  
+- 阻塞通信模式
 
 # MPI概述
 
@@ -154,7 +154,7 @@ MPI是一种标准或规范的代表，而不特指某一个对它的具体实�
 
 MPI的实现是一个库，而不是一门语言。
 
-• 可以把FORTRAN+MPI或 $C { + } M P$ 看作是一种在原来串行语言基础之上扩展后得到的并行语言。
+- 可以把FORTRAN+MPI或 $C { + } M P$ 看作是一种在原来串行语言基础之上扩展后得到的并行语言。
 
 # MPI程序示例: Hello World!
 
@@ -213,18 +213,18 @@ Program Ends
 
 开始与结束
 
-• MPI_INIT   
-• MPI_FINALIZE
+- MPI_INIT   
+- MPI_FINALIZE
 
 进程身份标识
 
-• MPI_COMM_SIZE   
-• MPI_COMM_RANK
+- MPI_COMM_SIZE   
+- MPI_COMM_RANK
 
 发送与接收消息
 
-• MPI_SEND   
-• MPI_RECV
+- MPI_SEND   
+- MPI_RECV
 
 # MPI 程序的开始与结束
 
@@ -232,13 +232,13 @@ MPI代码开始之前必须进行如下调用：
 
 MPI_Init(&argc, &argv);
 
-• MPI系统将通过argc,argv得到命令行参数
+- MPI系统将通过argc,argv得到命令行参数
 
 MPI代码的最后一行必须是：
 
 MPI_Finalize();
 
-• 如果没有此行，MPI程序将不会终止。
+- 如果没有此行，MPI程序将不会终止。
 
 # MPI进程身份标识
 
@@ -246,12 +246,12 @@ MPI_Finalize();
 
 通信域
 
-• 缺省的通信域为MPI_COMM_WORLD
+- 缺省的通信域为MPI_COMM_WORLD
 
 § MPI_Comm_size(MPI_COMM_WORLD, &size)   
 . 获得缺省通信域内所有进程数目，赋值给size  
 § MPI_Comm_rank(MPI_COMM_WORLD, &myrank)   
-• 获得进程在缺省通信域的编号，赋值给myrank
+- 获得进程在缺省通信域的编号，赋值给myrank
 
 ![](images/4ac8bf7520cbe93e09036b778c3905cf7c774f1eadd28bbccbb044bcc2ab31f5.jpg)
 
@@ -267,17 +267,17 @@ MPI_Finalize();
 
 # Outline
 
-• MPI概述  
-• 点到点通信  
-• 组通信  
-• 阻塞通信模式
+- MPI概述  
+- 点到点通信  
+- 组通信  
+- 阻塞通信模式
 
 # 点到点通信
 
 # § 对于某一消息
 
-• 唯一发送进程  
-• 唯一接收进程
+- 唯一发送进程  
+- 唯一接收进程
 
 ![](images/c2eb2eb25325b54736bbbac53646a020dc17333b8aeac7fd36667ac975b4ecae.jpg)
 
@@ -285,30 +285,30 @@ MPI_Finalize();
 
 # MPI_Send(buffer, count, datatype, destination, tag, communicator)
 
-• MPI_Send(&N, 1, MPI_INT, i, i , MPI_COMM_WORLD);  
-• 第一个参数指明消息缓存的起始地址，即存放要发送的数据信息。  
-• 第二个参数指明消息中给定的数据类型有多少项，数据类型由第三个参数给定。  
-• 数据类型要么是基本数据类型，要么是导出数据类型，后者由用户生成指定一个可能是由混合数据类型组成的非连续数据项。  
-• 第四个参数是目的进程的标识符(进程编号)。  
-• 第五个是消息标签。  
-• 第六个参数标识进程组和上下文，即通信域。通常，消息只在同组的进程间传送。但是MPI允许通过intercommunicators在组间通信。
+- MPI_Send(&N, 1, MPI_INT, i, i , MPI_COMM_WORLD);  
+- 第一个参数指明消息缓存的起始地址，即存放要发送的数据信息。  
+- 第二个参数指明消息中给定的数据类型有多少项，数据类型由第三个参数给定。  
+- 数据类型要么是基本数据类型，要么是导出数据类型，后者由用户生成指定一个可能是由混合数据类型组成的非连续数据项。  
+- 第四个参数是目的进程的标识符(进程编号)。  
+- 第五个是消息标签。  
+- 第六个参数标识进程组和上下文，即通信域。通常，消息只在同组的进程间传送。但是MPI允许通过intercommunicators在组间通信。
 
 # MPI Receive
 
 # MPI_Recv(address, count, datatype,source, tag, communicator, status)
 
 MPI_Recv(&tmp, 1, MPI_INT, i, i, PI_COMM_WORLD,&Status)   
-• 第一个参数指明接收消息缓冲的起始地址，即存放接收消息的内存地址。  
-• 第二个参数指明给定数据类型可以被接收的最大项数。  
-• 第三个参数指明接收的数据类型。  
-• 第四个参数是源进程标识符 (编号)。  
-• 第五个是消息标签。  
-• 第六个参数标识一个通信域。  
-• 第七个参数是一个指针, 指向一个结构：MPI_Status Status
+- 第一个参数指明接收消息缓冲的起始地址，即存放接收消息的内存地址。  
+- 第二个参数指明给定数据类型可以被接收的最大项数。  
+- 第三个参数指明接收的数据类型。  
+- 第四个参数是源进程标识符 (编号)。  
+- 第五个是消息标签。  
+- 第六个参数标识一个通信域。  
+- 第七个参数是一个指针, 指向一个结构：MPI_Status Status
 
-• 存放有关接收消息的各种信息。(Status.MPI_SOURCE, Status.MPI_TAG)
+- 存放有关接收消息的各种信息。(Status.MPI_SOURCE, Status.MPI_TAG)
 
-• MPI_Get_count(&Status, MPI_INT, &C)读出实际接收到的数据项数。
+- MPI_Get_count(&Status, MPI_INT, &C)读出实际接收到的数据项数。
 
 # 消息的接收（系统缓存）
 
@@ -383,10 +383,10 @@ while (true){ recv(received_request, 32, Any_Process, Any_Tag, Status); if (Stat
 
 # Outline
 
-• MPI概述  
-• 点到点通信  
+- MPI概述  
+- 点到点通信  
 组通信  
-• 阻塞通信模式
+- 阻塞通信模式
 
 # 组通信
 
@@ -399,7 +399,7 @@ while (true){ recv(received_request, 32, Any_Process, Any_Tag, Status); if (Stat
 
 MPI_Bcast(Address, Count, Datatype, Root, Comm)
 
-• 标号为Root的进程发送相同的消息给标记为Comm的通信子中的所有进程。  
+- 标号为Root的进程发送相同的消息给标记为Comm的通信子中的所有进程。  
 消息的内容如同点对点通信一样由三元组(Address, Count, Datatype)标识。对Root进程来说，这个三元组既定义了发送缓冲也定义了接收缓冲。对其它进程来说，这个三元组只定义了接收缓冲。
 
 ![](images/f1229d6b1c6b63cf5b3949e7153e20f67d33907bd18830569941260fdf36a7a6.jpg)
@@ -436,7 +436,7 @@ MPI_Scatter (SendAddress,SendCount,SendDatatype, RecvAddress,RecvCount,RecvDatat
 
 Root进程发送给所有n个进程各发送一个不同的消息，包括自已。  
 这n个消息在Root进程的发送缓冲区中按标号的顺序有序地存放。每个接收缓冲由三元组(RecvAddress, RecvCount, RecvDatatype)标识。非Root进程忽略发送缓冲。  
-• 对Root进程，发送缓冲由三元组(SendAddress, SendCount, SendDatatype)标识.
+- 对Root进程，发送缓冲由三元组(SendAddress, SendCount, SendDatatype)标识.
 
 ![](images/b4edaba99f368e1c9e368d51d81850d526177635feac2adab73a6cfd12703255.jpg)
 
@@ -490,7 +490,7 @@ int MPI_Scaterv(void*sendbuf,int *sendcounts, int *displs,MPI_Datatypesendtype v
 MPI_Gather (SendAddress,SendCount,SendDatatype, RecvAddress,RecvCount,RecvDatatype,Root,Comm)
 
 Root进程接收各个进程(包括它自已)的消息。这n个消息的连接按序号rank进行，存放在Root进程的接收缓冲中。  
-• 每个发送缓冲由三元组(SendAddress, SendCount, SendDatatype) 标识。  
+- 每个发送缓冲由三元组(SendAddress, SendCount, SendDatatype) 标识。  
 非Root进程忽略接收缓冲。对Root进程，发送缓冲由三元组(RecvAddress, RecvCount,RecvDatatype)标识。RecvCount是自每个进程接收数据个数。
 
 ![](images/cc47d5be80ffe060fbbf62920376ab07955ee63f7fa085872999aee133c63206.jpg)
@@ -562,7 +562,7 @@ MPI_Allgather(sendarray, 100, MPI_INT, rbuf, 100, MPI_INT, comm);
 接收进程对所有收到的消息进行归约处理。  
 归约操作：
 
-• MAX, MIN, SUM, PROD, LAND, BAND, LOR, BOR, LXOR, BXOR, MAXLOC, MINLOC
+- MAX, MIN, SUM, PROD, LAND, BAND, LOR, BOR, LXOR, BXOR, MAXLOC, MINLOC
 
 ![](images/145594c940468eb08f26394a8e15dcdfb5e80d0aee30bf8f5c15db3de50be862.jpg)
 
@@ -676,10 +676,10 @@ MPI_Alltoall(void* sendbuf, int sendcount, MPI_Datatype sendtype, void* recvbuf,
 
 # Outline
 
-• MPI概述  
-• 点到点通信  
-• 组通信  
-• 阻塞通信模式
+- MPI概述  
+- 点到点通信  
+- 组通信  
+- 阻塞通信模式
 
 # 阻塞通信模式
 

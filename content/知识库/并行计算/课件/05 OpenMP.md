@@ -10,19 +10,19 @@ http://cic.tju.edu.cn/faculty/tangshanjiang/
 
 # Outline
 
-§ OpenMP概述  
-编译制导语句   
-运行时库函数  
-环境变量  
-§实例
+- OpenMP概述
+- 编译制导语句
+- 运行时库函数
+- 环境变量
+- 实例
 
 # Outline
 
-§ OpenMP概述  
-编译制导语句   
-运行时库函数  
-环境变量  
-§ 实例
+- OpenMP概述
+- 编译制导语句
+- 运行时库函数
+- 环境变量
+- 实例
 
 # OpenMP概述
 

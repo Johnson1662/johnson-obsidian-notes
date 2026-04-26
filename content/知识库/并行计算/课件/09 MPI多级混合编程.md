@@ -10,25 +10,25 @@ http://cic.tju.edu.cn/faculty/tangshanjiang/
 
 # Outline
 
-• 多级混合编程概述  
-• MPI+OpenMP混合编程  
-• MPI+CUDA混合编程
+- 多级混合编程概述  
+- MPI+OpenMP混合编程  
+- MPI+CUDA混合编程
 
 # 计算机系统性能提升方法
 
-• Scale Up模式
+- Scale Up模式
 
-• 单个计算节点计算能力越来越强大
+- 单个计算节点计算能力越来越强大
 
 ![](images/747c5653fef08f3f296b334481be33b98abc2bc0410d2d30b49ca412e9c08707.jpg)
 
 # 计算机系统性能提升方法
 
-# • Scale Up模式
+# - Scale Up模式
 
-. 单个芯片和计算节点计算能力越来越强大
+- 单个芯片和计算节点计算能力越来越强大
 
-• CPU（单核-〉多核-〉众核），GPU，MIC
+- CPU（单核-〉多核-〉众核），GPU，MIC
 
 ![](images/a0d4fc4c129a45775e165974284c3a654c812422f451d4e7f46d60a0f2cd3452.jpg)  
 Dual cores
@@ -59,17 +59,17 @@ FPGA
 
 # 计算机系统性能模式
 
-# • Scale Out模式
+# - Scale Out模式
 
-• 可计算节点的规模越来越大
+- 可计算节点的规模越来越大
 
 ![](images/11d6f6470eaa5d6cd7b528bda90b113b590bc1e2ee94271c0e72bd1db1821dc5.jpg)
 
 # 计算系统的发展趋势
 
-• 多级化正成为大规模计算系统必然发展趋势
+- 多级化正成为大规模计算系统必然发展趋势
 
-• 多级化计算机发展趋势：Scale Up + Scale Out
+- 多级化计算机发展趋势：Scale Up + Scale Out
 
 例如天河二号：16000个运算节点，每节点配备两颗Xen E5 12核CPU，3个Xeon Phi 57协处理器（运算加速卡），共312万颗计算核心。
 
@@ -77,11 +77,11 @@ FPGA
 
 # 多级并行计算系统
 
-# • SMP节点构成的多核集群架构
+# - SMP节点构成的多核集群架构
 
-• 节点内多个处理器彼此共享内存(OpenMP)  
-• 节点间通过互联网络进行连接(MPI)  
-• 编程模型：MPI+OpenMP
+- 节点内多个处理器彼此共享内存(OpenMP)  
+- 节点间通过互联网络进行连接(MPI)  
+- 编程模型：MPI+OpenMP
 
 ![](images/ad222ab28bad5f16b4f0e72f05e49097b018eb94215cb8c29fd089b8af6a190e.jpg)
 
@@ -97,24 +97,24 @@ FPGA
 
 # . 多GPUs集群架构
 
-• 单个节点内包含多个GPUs (CUDA)   
-• 节点间通过互联网络进行连接 (MPI)  
-• 编程模型：MPI+CUDA
+- 单个节点内包含多个GPUs (CUDA)   
+- 节点间通过互联网络进行连接 (MPI)  
+- 编程模型：MPI+CUDA
 
 ![](images/7b58bd19b4251baed5171be94ecfc22c7e8a143f3a2cc1b106808af70f781882.jpg)
 
 # Outline
 
-• 多级混合编程概述  
-• MPI+OpenMP混合编程  
-• MPI+CUDA混合编程
+- 多级混合编程概述  
+- MPI+OpenMP混合编程  
+- MPI+CUDA混合编程
 
 # MPI VS Thread
 
 MPI 描述了多个进程间的并行化（独立的地址空间）  
-• 通常面向分布式网络计算环境，以消息发送接收的方式进行通信  
+- 通常面向分布式网络计算环境，以消息发送接收的方式进行通信  
 线程并行化提供了进程内部的共享内存模式  
-• OpenMP是一个常用的线程并行化模型。基于用户通过提供制导语句，线程的创建和管理由编译器负责。
+- OpenMP是一个常用的线程并行化模型。基于用户通过提供制导语句，线程的创建和管理由编译器负责。
 
 ![](images/e73fcbd48ebb49cbef47ee5c9c0482f01cc3a567d0d874eb213680b7292347fd.jpg)
 
@@ -122,38 +122,38 @@ MPI 描述了多个进程间的并行化（独立的地址空间）
 
 # MPI VS OpenMP
 
-# • 纯MPI优点：
+# - 纯MPI优点：
 
-• 高可扩展性  
-• 高可移植性  
+- 高可扩展性  
+- 高可移植性  
 节点间扩展
 
-# • 纯OpenMP优点：
+# - 纯OpenMP优点：
 
-• 容易部署  
-• 延迟低   
+- 容易部署  
+- 延迟低   
 . 隐式通信  
-• 粗粒度和细粒度划分  
+- 粗粒度和细粒度划分  
 . 动态负载平衡
 
-# • 纯MPI缺点：
+# - 纯MPI缺点：
 
-• 开发调试困难  
-• 显式通信  
-• 粗粒度划分  
-• 负载平衡困难
+- 开发调试困难  
+- 显式通信  
+- 粗粒度划分  
+- 负载平衡困难
 
-# • 纯OpenMP缺点：
+# - 纯OpenMP缺点：
 
-• 仅运行于共享内存机器  
-• 仅节点内可扩展  
-• 线程顺序未定义
+- 仅运行于共享内存机器  
+- 仅节点内可扩展  
+- 线程顺序未定义
 
 # MPI+OpenMP
 
-• 概念上简单和简洁，两级并发   
+- 概念上简单和简洁，两级并发   
 . 适合多核节点架构  
-• 缓解纯MPI的可扩展性问题，降低进程数和网络洪水。
+- 缓解纯MPI的可扩展性问题，降低进程数和网络洪水。
 
 # Pure SMP Node
 
@@ -189,14 +189,14 @@ Single MPl Process on Core
 
 # MPI+OpenMP混合编程模型
 
-• MPI-only编程
+- MPI-only编程
 
-• 每一个MPI进程只有一个执行单元
+- 每一个MPI进程只有一个执行单元
 
-• MPI+OpenMP编程
+- MPI+OpenMP编程
 
-• 单个进程内存在多个并发执行线程  
-• 所有线程共享所有MPI对象（通信域，请求对象）
+- 单个进程内存在多个并发执行线程  
+- 所有线程共享所有MPI对象（通信域，请求对象）
 
 ![](images/e6f520df2f9e095c01a438f3ad069573122eda3da6882815db1361e8aa120b25.jpg)  
 MPI-only 编程模型  
@@ -214,20 +214,20 @@ Rank 1
 
 # MPI+OpenMP混合编程模型
 
-• 每一个进程创建多个OpenMP线程
+- 每一个进程创建多个OpenMP线程
 
 ![](images/b91f0a2c48d3b232ebf741e0179b1b03c0ffee615615f0780c51f55fe7d3cb23.jpg)
 
 # MPI+OpenMP混合编程
 
-• Step1:初始化MPI   
-• Step2:在每一个MPI进程中创建一个OMP并行区域
+- Step1:初始化MPI   
+- Step2:在每一个MPI进程中创建一个OMP并行区域
 
-• 串行区域要么是主线程或MPI任务  
-• MPI rank对于所有线程而言是已知的。
+- 串行区域要么是主线程或MPI任务  
+- MPI rank对于所有线程而言是已知的。
 
-• Step3:在串行或并行区域调用MPI库  
-• Step4:结束MPI
+- Step3:在串行或并行区域调用MPI库  
+- Step4:结束MPI
 
 # Program
 
@@ -235,7 +235,7 @@ Rank 1
 
 # MPI+OpenMP混合编程
 
-# • 混合代码
+# - 混合代码
 
 # Fortran
 
@@ -261,30 +261,30 @@ C
 
 # MPI+OpenMP消息通信
 
-# • 单一线程进行通信
+# - 单一线程进行通信
 
 通信来自MPI并行区域的单一线程或者串行临界区的
 
 ![](images/f114506a8ffe87675ddc251edfda23df8e420ebdba30d6d3f71de6505e79c7e9.jpg)  
 rank to rank
 
-# • 多线程进行通信
+# - 多线程进行通信
 
-• 通信来自MPI并行区域的多个线程
+- 通信来自MPI并行区域的多个线程
 
 ![](images/0d6423d0ead8144b68099a8fb214e32d4780252ec231ac38161e09ddf671fb81.jpg)  
 rank-thread ID to any rank-thread ID
 
 # 线程中执行MPI调用
 
-• 用MPI_Init_thread来选择和决定MPI线程的支持级别  
+- 用MPI_Init_thread来选择和决定MPI线程的支持级别  
 . 替换MPI_Init
 
-• MPI2定义了线程调用MPI 4种情况：
+- MPI2定义了线程调用MPI 4种情况：
 
-• Single表示不支持多线程  
+- Single表示不支持多线程  
 Funneled表示只有主线程能够调用MPI  
-• Serialized表示多个线程可以调用MPI，但是一次只允许一个线程调用。  
+- Serialized表示多个线程可以调用MPI，但是一次只允许一个线程调用。  
 . Multiple表示任何线程都可以调用。
 
 # MPI2 MPI Init thread
@@ -301,9 +301,9 @@ Otherwise, the highest level of support wil be provided.
 
 # 通过主线程进行MPI调用
 
-• MPI _THREAD_FUNNELED   
+- MPI _THREAD_FUNNELED   
 由于在master workshare construct (OMP_MASTER)中没有隐式的barrier，需要显示调用OMP_BARRIER进行同步  
-• 所有其他线程都处于休眠当中。
+- 所有其他线程都处于休眠当中。
 
 ![](images/5770ef024750096f863d254cb56b608f94a185da940b3ec718d222320123d3ce.jpg)
 
@@ -329,9 +329,9 @@ include <mpi.h> int main(int argc, char \*\*argv){ int rank,size, ierr,i; #pragm
 
 # 在单个线程内进行MPI调用
 
-• MPI _THREAD_ SERIALIZED   
-• OMP_BARRIER只需要在开始的时候使用，主要是由于在SINGLEworkshare construct (OMP_SINGLE) 存在隐式的同步。  
-• 所有其他线程都处于休眠当中。
+- MPI _THREAD_ SERIALIZED   
+- OMP_BARRIER只需要在开始的时候使用，主要是由于在SINGLEworkshare construct (OMP_SINGLE) 存在隐式的同步。  
+- 所有其他线程都处于休眠当中。
 
 ![](images/ef8be5789840e62abfc5475367f7b9217f77bacb7c8b840d01aafc5de54fc565.jpg)
 
@@ -398,9 +398,9 @@ C
 
 # MPI_THREAD_MULTIPLE运行模式
 
-• 通常是最灵活的模式，也是最为复杂的  
-• 任何的线程可以进行MPI通信，而没有任何约束  
-• 各线程调用MPI操作顺序不确定，有潜在错误或死锁风险
+- 通常是最灵活的模式，也是最为复杂的  
+- 任何的线程可以进行MPI通信，而没有任何约束  
+- 各线程调用MPI操作顺序不确定，有潜在错误或死锁风险
 
 ![](images/a316606e7a27aa56b6b90ad70bb1cdf6481d8a1fe1388ddf49cdd70b9a8c190c.jpg)
 
@@ -411,14 +411,14 @@ int main(int argc, char ** argv)
 
 # 计算与通信重叠
 
-• 某个线程负责通信，通信过程中其余线程继续执行计算  
-• 可提升整体效率，但同步与负载均衡较复杂
+- 某个线程负责通信，通信过程中其余线程继续执行计算  
+- 可提升整体效率，但同步与负载均衡较复杂
 
 <table><tr><td>Fortran</td><td>C</td><td></td></tr><tr><td>include &#x27;mpif.h&#x27; program hybsing</td><td>#include &lt;mpi.h&gt; int main(int argc, char **argv) { int rank, size, ie, i; #pragma omp parallel { if (thread .eq. 0) then call MPI_Whatever&gt;(... ,ie) else &lt;work&gt;endif } $OMP end parallel end</td><td>#include &lt;mpi.h&gt; int main(int argc, char **argv) { int rank, size, ie, i; #pragma omp parallel { if (thread == 0) { ie= MPI_Whatever&gt;(...); } if (thread != 0) { &lt;work&gt; } } }</td></tr></table>
 
 # 举例1：MPI+OpenMP计算π
 
-• 每一个进程负责1/nproc范围的离散求和  
+- 每一个进程负责1/nproc范围的离散求和  
 在每一个MPI进程内，nthreads个OpenMP线程负责局部求和计算。
 
 $$
@@ -478,7 +478,7 @@ PI = 3.141593
 # 举例2：The Multi-Zone NAS Parallel Benchmarks
 
 Multi-zone versions of the NAS Parallel Benchmarks   
-• E.g. LU,SP, and BT
+- E.g. LU,SP, and BT
 
 ![](images/43fd3155a52a7ad4d331214201bd3521470c9bf7c0f92ab104be202528b0f72d.jpg)
 
@@ -596,48 +596,48 @@ isync(neigh) = 1
 
 # Outline
 
-• 多级混合编程概述  
-• MPI+OpenMP混合编程  
-• MPI+CUDA混合编程
+- 多级混合编程概述  
+- MPI+OpenMP混合编程  
+- MPI+CUDA混合编程
 
 # GPU集群
 
-# • 三级硬件并发
+# - 三级硬件并发
 
-• GPU层— —多处理器上运行的线程  
+- GPU层— —多处理器上运行的线程  
 节点层— 将CPU、GPU和网卡绑定在一起  
-• 集群层— 通过互联网络将不同节点连接在一起
+- 集群层— 通过互联网络将不同节点连接在一起
 
 ![](images/ce07f2759ddb8a4591231ae469f00c05771ecb461dd813531b7f1372b4f23ef8.jpg)
 
 # GPU集群
 
-# • 并发策略
+# - 并发策略
 
-• 节点内采用CUDA进行并发   
-• 节点间采用MPI
+- 节点内采用CUDA进行并发   
+- 节点间采用MPI
 
 ![](images/4b999a68ed8cd467fe00096d0d4c98bcf4183e0efd1b842fe10595d45061b5fe.jpg)
 
 # MPI+CUDA 并行模式
 
-# • CUDA和MPI分工合作
+# - CUDA和MPI分工合作
 
-• CUDA处理GPU层次的并发   
-• MPI负责处理节点间的并发  
-• 可以每一个GPU由一个MPI进程负责（不是必须）
+- CUDA处理GPU层次的并发   
+- MPI负责处理节点间的并发  
+- 可以每一个GPU由一个MPI进程负责（不是必须）
 
-# • 设备间的数据传输方式
+# - 设备间的数据传输方式
 
-• Sender：
+- Sender：
 
-• 将数据从设备内存拷贝到临时的host缓冲区  
-• 将host缓冲区数据进行网络发送
+- 将数据从设备内存拷贝到临时的host缓冲区  
+- 将host缓冲区数据进行网络发送
 
-# • Receiver
+# - Receiver
 
-• 接收数据，将其存入host缓冲区  
-• 将数据拷贝到设备内存
+- 接收数据，将其存入host缓冲区  
+- 将数据拷贝到设备内存
 
 # MPI+CUDA数据通信
 
@@ -682,10 +682,10 @@ GPUDirect P2P
 
 # Nvidia GPUDirect RDMA
 
-• 将数据从GPU内存直接推送到网卡，然后通过网络发送到另外一台机器。
+- 将数据从GPU内存直接推送到网卡，然后通过网络发送到另外一台机器。
 
-• 避免了CPU的参与，提高了性能。  
-• 同时不需要往系统主存写数据，避免了数据的额外存储与传输
+- 避免了CPU的参与，提高了性能。  
+- 同时不需要往系统主存写数据，避免了数据的额外存储与传输
 
 ![](images/a7999eb5f85c06906f6d697d2010335d97466215a2123583f104f0e90b241054.jpg)  
 No GPUDirect RDMA
