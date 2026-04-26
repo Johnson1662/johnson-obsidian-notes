@@ -1,13 +1,15 @@
 # Quartz / Git 忽略规则
 
 # 核心隐私数据（不发布到公网）
-核心配置/
 每日规划/
 项目/
-私密首页.md
+助手记忆.md
+AGENT.md
 
 # Obsidian 系统文件
 .obsidian/
+.claude/
+.claudian/
 
 # 操作系统文件
 .DS_Store
