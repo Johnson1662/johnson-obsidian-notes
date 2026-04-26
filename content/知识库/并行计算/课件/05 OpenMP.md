@@ -84,9 +84,11 @@ www.openmp.org
 # 编译制导语句（Compiler Directive）
 
 将循环拆分到多个线程执行  
+
 ```c
 void main() #include "omp.h" void main() double Res[1000]; for(int i=0;i<1000;i++) { do_huge_comp(Res[i]); } 串行代码 并行代码
 ```
+
 
 # 编译制导语句（Compiler Directive）
 
