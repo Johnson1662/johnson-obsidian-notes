@@ -1,0 +1,2406 @@
+# 第一讲：知识工程与知识图谱（handout）
+
+王 鑫
+
+wangx@tju.edu.cn
+
+天津大学 人工智能学院
+
+## 目录
+
+C O N T E N T S
+
+1 知识工程概述  
+2 语义Web   
+03 本体与推理  
+04 4 知识图谱
+
+![](assets/第一讲 知识工程与知识图谱-handout/ae5596d49337a3c2d7e3fa8f7c1c2f0e6408a26e077e7dd8453bf7881c8738fa.jpg)
+
+---
+## 01 知识工程概述
+### ■ 人工智能是第四次工业革命的重要推动力
+
+### 发
+展
+热
+度
+
+![](assets/第一讲 知识工程与知识图谱-handout/6bbbd43deea94836bae53e006ea0f1254f30f29c857d8c31e1c9f2ab5475860d.jpg)  
+达特茅斯会议
+
+### AI诞生
+
+逻辑推理
+
+![](assets/第一讲 知识工程与知识图谱-handout/6dd39b55397aca491f0d8d3b8d5ef5563c1062d7e55ffc7d5e5ac0eea2c677ab.jpg)  
+第一次浪潮
+
+符号主义
+
+逻辑运算、演绎推理
+
+Prolog语言
+
+专家系统
+
+![](assets/第一讲 知识工程与知识图谱-handout/39e0e766d118ff2689961a30f817ed57217306b81f995b6748436e86fd6e2eb2.jpg)  
+第二次浪潮  
+专家系统遍地开花人工智能转向实用
+
+### 第一次低谷
+
+算法仅能解决狭窄领域问题计算能力不足，未达AI预期
+
+机器学习/深度学习
+
+### 第三次浪潮
+
+大数据，大量学习训练数据云计算，计算能力大幅提升深度学习，深度神经网络发展
+
+2018 年图灵奖Yoshua Bengio、Geoffrey Hinton 和Yann LeCun
+
+### 第二次低谷
+
+专家系统应用领域有限
+
+AI资金投入减少
+
+神经网络出现， 但计算能力不足未达AI预期
+
+![](assets/第一讲 知识工程与知识图谱-handout/32cd932ee3b33a713a1fc2d63fb5c51d5a3d11f535d269846f1cb3c57c8b3858.jpg)
+
+![](assets/第一讲 知识工程与知识图谱-handout/b748535a56e6a7ff7e280c0d0b470e4fa0a02778efb9ee3efd890d782a9668e5.jpg)
+
+![](assets/第一讲 知识工程与知识图谱-handout/067ac195c931a8c8e6430a689564f9ed073badac3e92ebcbf26c2e9638cc6b9b.jpg)
+
+![](assets/第一讲 知识工程与知识图谱-handout/c31bc56fbd3dbeb02371416f6e78d2aa4e6ee3aece5830eba00bee915e5f1567.jpg)  
+大语言模型
+
+![](assets/第一讲 知识工程与知识图谱-handout/6b7a58a26c206c10487aa7d3ac2f223d3d82e2631c12d22d4fa06057e5d1b5e8.jpg)  
+2024诺贝尔物理学奖Hinton
+
+![](assets/第一讲 知识工程与知识图谱-handout/de6ba5eb74508ccc37e068f0c213f779cc5a5149ec7b77f275aae4f4bde66196.jpg)
+
+1956
+
+1974
+
+1980
+
+1987
+
+1993
+
+2010
+
+时间
+
+### 人工智能的学派
+
+### 符号主义学派
+
+### Symbolicism
+
+模拟心智
+
+### 联结主义学派
+
+### Connectionism
+
+模拟神经
+
+### 行为主义学派
+
+### Actionism
+
+模拟行为
+
+![](assets/第一讲 知识工程与知识图谱-handout/64308818c877ad77ae21e617914a5232150404dd543810200c799fa8d9178fcd.jpg)
+
+![](assets/第一讲 知识工程与知识图谱-handout/8628494160fc1d9840f581edc2c35b07ae1c51cd2fd8ee41b4669c61b9398d4f.jpg)
+
+![](assets/第一讲 知识工程与知识图谱-handout/1e4ce65698057a497c401d718fd02372dd351aa0be015befce94d42d8a2ab06e.jpg)
+
+![](assets/第一讲 知识工程与知识图谱-handout/bf4afd87a25eb184fc15b33f64183545f5d69f34fb8ec3008fadbc7a4c7e2c9d.jpg)
+
+![](assets/第一讲 知识工程与知识图谱-handout/98795e519a41e1b0ff774c5f6f37f47791727c09030283856982a8c4b38e04a5.jpg)  
+Connectionist
+
+### 知识 Knowledge
+
+### 辞海
+
+人类认识的成果或结晶。人的一切知识都是在社会实践中形成的，是对现实的能动反映
+
+### 百科
+
+知识是人类从各个途径中获得的经过提升 总结与凝练的系统的认识
+
+![](assets/第一讲 知识工程与知识图谱-handout/57c7f3ce3075b355c475951734181fd8287b5aa5ac454d9baff98e46c6f40d4f.jpg)
+
+![](assets/第一讲 知识工程与知识图谱-handout/7020b17bdf5fad319df03c26ce6a5699f4fc1c2680ae49726c585ebc45f12e2e.jpg)  
+Data   
+数据
+
+![](assets/第一讲 知识工程与知识图谱-handout/dfe8bd6742606b4ba05b18058a332e4b14f171a1ed01191ce510bf2681ddcc7d.jpg)  
+Information   
+信息
+
+![](assets/第一讲 知识工程与知识图谱-handout/969dd17317fd653eb5643910c92ded9796c6cba31185f49b1a7f7d6bd2d3190a.jpg)  
+Presentation   
+界面
+
+![](assets/第一讲 知识工程与知识图谱-handout/045129f9674330f6635d3fab7811448ff817a3bafa2a30d01e82a4f4d7b34028.jpg)  
+Knowledge   
+知识
+
+### 知识 Knowledge
+
+### 辞海
+
+人类认识的成果或结晶。人的一切知识都是在社会实践中形成的，是对现实的能动反映
+
+### 百科
+
+知识是人类从各个途径中获得的经过提升 总结与凝练的系统的认识
+
+![](assets/第一讲 知识工程与知识图谱-handout/e316cab8de565723e9b52a35cd9b7226274de65c894b158a3b734ca1bb006750.jpg)
+
+![](assets/第一讲 知识工程与知识图谱-handout/5a4869aee994a5fe46b708e9fbc200ea38eb88ad5ea591fc54e7d3693ed19af6.jpg)  
+Data   
+数据
+
+![](assets/第一讲 知识工程与知识图谱-handout/3837c3fb1ee24b56ece19e5c73025bd8b0fbafaa4b5fee605158cd5853542477.jpg)  
+Information   
+信息
+
+![](assets/第一讲 知识工程与知识图谱-handout/affdfac3eb493b8df9e2c0f598a89f9f1573d6138efaa0d4f91a47d6d93fe6dc.jpg)  
+Presentation   
+界面
+
+![](assets/第一讲 知识工程与知识图谱-handout/c39dd849003599b016d37c3b1f285a691c71abb2c4f8c7f2846a3b4aaf8a66d2.jpg)  
+Knowledge   
+知识
+
+### 知识 Knowledge 从哲学说起
+
+哲学 “认识论” （epistemology）
+
+研究关于知识的各种哲学本质问题
+
+### 古希腊哲学家柏拉图《泰阿泰德篇》
+
+![](assets/第一讲 知识工程与知识图谱-handout/256ccdcd6b471583b5ec92de37c6a3dda7fa35a1714a64d951b15dfe0cb9f7d1.jpg)
+
+公元前429年—前347年
+
+知识的定义 JTB理论
+
+“真理信念理论” （Justified True Belief）
+
+JTB 理论认为，一个人拥有知识必须满足三个条件：
+
+1. 真理（True）：知识必须基于真实的事实。如，“太阳是由氢和氦组成的”  
+2. 信念（Belief）：个体必须真正相信某个命题。如，即使所有科学证据都表明太阳主要由氢和氦构成，如果某人并不相信这一点，那么他就不具备这方面的知识  
+3. 正当理由（Justified）：信念必须有充分的理由或证据支持。如，科学家通过光谱分析等方法确定
+
+太阳的成分中有氢和氦
+
+葛梯尔问题（Gettier Problem） “空地上的奶牛”
+
+### 知识 Knowledge
+
+### 从哲学说起
+
+古希腊哲学家柏拉图《泰阿泰德篇》
+
+![](assets/第一讲 知识工程与知识图谱-handout/fb637d43162aad8a84f41bea7cc1f853e8f7ca6dc88db3d4a79e14e6e365bfc7.jpg)
+
+信念（Belief)
+
+真理
+
+(True belief)
+
+知识
+
+(Knowledge)
+
+正当理由
+
+(Justified belief)
+
+葛梯尔问题（Gettier Problem） “空地上的奶牛”
+
+“一位农民找不到自己的奶牛，一个送奶工说他看到农民的奶牛在附近的空地上。农民相信了送奶工，但他还是想亲自去看看。他看到了空地上有黑白相间的东西，于是就认为他的奶牛就在那。过了一会，农民走近到那片空地上看，他看到奶牛确实在那，但奶牛躲在树林中；他之前看到黑白相间的东西，是挂在树上的一大张黑白相间的纸。”
+
+### 先验与后验
+
+### 先验知识 （A Priori Knowledge）
+
+先验知识是指不依赖于特定经验的知识，可以仅通过理性或逻辑推理得到的知识
+
+先验知识的例子包括：
+
+数学命题：如 $^{66} 2 + 2 = 4 ^{\prime}$ ”   
+-  逻辑命题：如“如果A是真的并且A蕴含B，那么B是真的”   
+定义性真理：如“所有有子女的女性是母亲”
+
+### 后验知识（A Posteriori Knowledge）
+
+后验知识是指依赖于特定经验或感觉观察来验证的知识
+
+后验知识的例子包括：
+
+-  科学定律和理论：如“水的沸点是 $100 ^{\circ}$ C（在标准大气压下）”  
+-  历史事实：如“第二次世界大战于1939年开始”  
+-  个人的感觉经验：如“巧克力的味道很甜”
+
+### 声明性与过程性
+
+### 声明性知识（Declarative Knowledge）
+
+声明性知识，也称为陈述性知识，是关于世界的事实性陈述。它描述了事物的状态、存在的对象及其属性和之间的关系，即“知道如此” （knowing-that）。  
+声明性知识常用来构建知识库，使系统能够通过查询这些事实来回答问题或进行决策支持
+
+■ 例如，知道“北京是中国的首都”或者“水在标准大气压下的沸点是100°C”，都属于声明性知识。声明性知识的特点是可以被直接表述并且通常容易被共享和传递。
+
+### 过程性知识（Procedural Knowledge）
+
+过程性知识，也称为程序性知识，是执行任务或解决问题的具体步骤。它不是简单地知道事物是什么，而是知道如何做事，即“知道如何” （knowing-how）。  
+过程性知识则可以通过规则或算法来实现，其使系统能够自动执行复杂的操作。
+
+■ 例如，知道如何游泳、如何烹饪一道菜，或者如何在计算机上安装某个软件，这些都是过程性知识。过程性知识往往难以被完全表述，因为它包含了大量的隐性知识，即那些我们知道如何做但很难完全解释给他人的知识。
+
+有效的知识工程解决方案需要合理地结合和利用这两种知识，以提高系统的性能和适应性。
+
+### 知识、 智慧与智能
+
+智慧通常指的是使用知识的能力和效率，涉及判断力、洞察力以及根据情境选择和应用知识的能力  
+智能则是更为广泛的概念，描述的是理解、学习、推理、解决问题、思考、记忆和适应环境变化等能力
+
+![](assets/第一讲 知识工程与知识图谱-handout/4ceb9fc411862b83e3228230b288e912ce0009a0589c406441309ca7b2b9481e.jpg)  
+“数据-信息-知识-智慧”体系，即DIKW体系
+
+### 人工智能的核心任务之一是模拟人类的认知过程
+
+### “感知智能” （perceptual intelligence）
+
+感知智能关注于使机器能够通过传感器和数据输入模拟人类的感官，如视觉和听觉，以识别和处理周围环境的信息
+
+### “认知智能” （cognitive intelligence）
+
+认知智能涉及更高阶的思维功能，如语言理解、逻辑推理、规划、学习、问题解决与决策，这些能力都需要更加丰富和复杂的知识结构
+
+![](assets/第一讲 知识工程与知识图谱-handout/c037b357ec043b79b8034fb5dbec172f3ad45491317fe9d3a0b4bef7e2382697.jpg)
+
+### 领域案例
+
+### 自动驾驶汽车
+
+在感知层面，自动驾驶系统利用雷达、摄像头和传感器收集周围环境的数据，如其他车辆的位置、行人、交通标志等
+
+认知智能在此扮演关键角色，它使车辆能够通过预先加载的地图数据和实时交通信息，进行路径规划、预测潜在的危险，并作出复杂的决策，包括何时变道或减速以避免碰撞
+
+这些决策依赖于庞大的知识库和高级的算法来模拟人类司机的判断过程。 W
+
+![](assets/第一讲 知识工程与知识图谱-handout/1eb74848f71e66085b083e2235236bdcd94bbee797263078b9f5f1f402780805.jpg)
+
+### 健康诊断系统
+
+在医疗领域，知识密集型的认知智能系统，如健康诊断工具， 可以分析患者的临床数据，如症状、体检结果和医学影像，以辅助医生进行诊断。
+
+这些系统结合了医学知识库、病例研究和机器学习算法，不仅能识别疾病模式，还能推荐治疗方案。
+
+健康系统能够利用自然语言处理和认知计算技术，解析大量的医学文献和患者信息，提供个性化的治疗建议。
+
+![](assets/第一讲 知识工程与知识图谱-handout/17692ffd87597f2075c9681d9b25066f4a0b8114e010f39583c6bf957362174b.jpg)
+
+### 知识工程：人工智能的重要分支 Knowledge Engineering
+
+### 1. 知识获取
+
+如何从系统外部获得知识、充实知识库，包括对外部的数据进行知识化
+
+### 2. 知识表示
+
+怎样对知识进行形式化地描述，以便让计算机能合理地存储和使用知识
+
+### 3. 知识使用
+
+知识处理系统如何组织和利用知识，使用推理方法，达到所希望的目标
+
+![](assets/第一讲 知识工程与知识图谱-handout/2770bf671e71b07eed17c8938b829035c6731397b1479aa81c670221c8f97044.jpg)  
+语言推理思考
+
+![](assets/第一讲 知识工程与知识图谱-handout/dce77ba34744c8a17c55de3ed3fd92cb5e69fd74383cceaeae1166ccf2ca0d37.jpg)  
+人脑是如何进行知识获取、表示与使用的？
+
+### 亚里士多德 逻辑学《范畴篇》 2000+ 年前
+
+### Aristotle's Logic Categories: 2000+ years ago
+
+![](assets/第一讲 知识工程与知识图谱-handout/7b7b372e0923a4c8f30762f9f5dcb21399f239287c322e4f97d3339f44f2fe2f.jpg)
+
+亚里士多德（公元前384-前322）古希腊人世界古代史上伟大的哲学家、科学家和教育家之一
+
+![](assets/第一讲 知识工程与知识图谱-handout/212b7e46b500ffa40fe7cb603f0003cd9b941567febbded693bb52409183beee.jpg)
+
+### 波菲利之树
+
+Porphyrian tree
+
+![](assets/第一讲 知识工程与知识图谱-handout/a01b64faaa8104bddce394b6aba62118da6c9a4f2e3511ff6c4cb334fa6a97b6.jpg)
+
+波菲利（约234年－约305年）古罗马哲学家
+
+### 亚里士多德 逻辑学《前分析篇》 2000+ 年前
+
+### Aristotle's Logic Prior Analytics: 2000+ years ago
+
+![](assets/第一讲 知识工程与知识图谱-handout/f4c70f5b3c62bdec8285368ab40a5b506f2edfdb0950194cac1728835c2b8f52.jpg)
+
+### 三段论 Syllogism
+
+1. 所有人都会死
+
+（大前提）
+
+All human are mortal.
+
+2. 苏格拉底是人
+
+（小前提）
+
+Socrates is a human.
+
+3. 所以，苏格拉底是要死的
+
+（结论）Therefore, Socrates is mortal.
+
+### 一阶谓词逻辑 First-order Logic
+
+1. ∀x( Human(x) → Mortal(x) )
+
+（大前提）
+
+2. Human(Socrates)
+
+（小前提）
+
+3. Mortal(Socrates)
+
+（结论）
+
+### 莱布尼茨 质数编码 —— 350年前
+
+### Leibniz's Prime Number Encoding: 350 years ago
+
+![](assets/第一讲 知识工程与知识图谱-handout/c2823d42177944541b61d817fee2632ef6874a7ca1a1488687b4703b9314f09e.jpg)  
+莱布尼茨
+
+（1646-1716）
+
+德国哲学家、数学家是历史上少见的通才，被誉为十七世纪的亚里士多德
+
+Supreme genus:
+
+Differentiae:
+
+Subordinategenera:
+
+Differentiae:
+
+Subordinategenera:
+
+Differentiae:
+
+Proximate genera:
+
+Differentiae:
+
+Species:
+
+Individuals:
+
+![](assets/第一讲 知识工程与知识图谱-handout/519303f28ab723b589795e22d6ed68df2f6e1d73a3b031a02ce74aedf545e7e0.jpg)
+
+### 是否正确？
+
+Human是animate的吗？
+
+Every human is
+
+animate
+
+### 正确
+
+因为表示Human的数可
+
+以被表示animate的数
+
+### 乘除
+
+### “逻辑理论家”程序: 1956 达特茅斯会议（Dartmouth Workshop）
+
+![](assets/第一讲 知识工程与知识图谱-handout/2d565d7cfe9258c2fd1e2fa6d2d68e489603e250f594d9dbb6372875ae9cdbbf.jpg)  
+艾伦·纽厄尔
+
+赫伯特·西蒙
+
+（Allen Newell）（Herbert Simon） （Allen Newell)
+
+1916-2002
+
+1927-1992
+
+![](assets/第一讲 知识工程与知识图谱-handout/22da87e9e5cbc18e907c467a1dba934f30bdd222855d36ae48562d2b52f8bce5.jpg)  
+吴文俊（1919-2017）  
+中国数学家吴文俊提出了用机器自动证明几何定理的“吴方法”
+
+### “逻辑理论家”（Logic Theorist） “史上首款人工智能程序”自动推理计算机程序
+
+自动证明了《数学原理》（Principia Mathematica，怀特黑德和罗素所著）前38个定理纽厄尔和西蒙也因此获得了1975年的图灵奖 1978年西蒙获得诺贝尔经济学奖
+
+### “逻辑理论家”程序也是“计算机之父”图灵关于“机器可以具有智能”这一论断的第一个程序实现 En
+
+![](assets/第一讲 知识工程与知识图谱-handout/309fe89ffb656e6d402d4343639bd44a698cf5982904f4664673ba5328b8a0ac.jpg)
+
+西蒙的中文名字是司马贺，据说是中国朋友给起的，他70多岁开始学习中文，曾将中国称为“我的中国”，并曾在回忆录里写道：“我十次到访中国，在那里度过的时间比在任何其他外国都要多，总计大约有一年之长。” 1994年当选为中国科学院外籍院士。
+
+### GPS程序: 1957
+
+在“逻辑理论家”程序取得初步成功之后，西蒙、纽厄尔与约翰·肖(John Cliff Shaw)合作，于1957年开发了“通用问题求解系统”（General Problem Solver, 简称 GPS）
+
+■ GPS提供一个框架，用以表达和解决这些问题，其通过“手段-目的分析”（means–endsanalysis）方法，模拟人类的问题解决策略，进行“状态空间搜索”（state-space search），比较当前状态与目标状态之间的差异，并确定如何逐步减少这种差异来寻找问题的最终解。  
+■ GPS为后续知识工程领域的专家系统和智能决策支持系统的设计提供了重要的理论和技术基础
+
+启发式搜索” （heuristic search）
+
+■ GPS程序的问题求解策略实际上是通过“启发式搜索” 机制实现的  
+■ 启发式搜索通过使用预先定义的规则或经验判断来引导搜索过程，减小搜索空间，以更快地达到目标状态  
+■ 启发式搜索能够帮助系统在庞大且复杂的搜索空间中快速找到有效的解，避免盲目搜索带来的计算开销   
+著名的A*算法就是实现启发式搜索的一种通用框架。
+
+### 简约派和芜杂派
+
+在人工智能领域，“简约派”（the neats）和“芜杂派”（the scruffies）代表了两种截然不同的哲学观点和研究方法。
+
+![](assets/第一讲 知识工程与知识图谱-handout/52d4c772c0f972b0aeae08a47dd46ed6b29b34734f889ff3e7582429c78606f7.jpg)
+
+### “简约派” （the neats）
+
+追求采用一种形式化、理论化的方法来解决人工智能问题，认为通过基于数学和逻辑的方法可以构建出能够模拟人类智能的系统  
+约翰·麦卡锡（John McCarthy）认为机器不需要模拟人类思考的确切机制，而是可以使用逻辑方法找到问题求解和抽象推理的本质 E  
+麦卡锡创建的斯坦福大学智能实验室（SAIL）专注于使用形式逻辑解决各类问题，包括知识表示、规划和学习  
+将递归函数 （recursive function）用于符号表达式的计算，从而开发了著名的人工智能程序设计语言Lisp  
+两位法国学者柯尔迈伦（Alain Colmerauer）和罗塞尔（Philippe Roussel）在1972年开发了逻辑编程语言Prolog  
+麦卡锡获得1971年图灵奖
+
+### “芜杂派”（the scruffies）
+
+认为人工智能的发展需要模拟人类大脑的复杂性和不确定性，因此更倾向于使用模式识别和神经网络等技术以及由专家手工进行规则建立与参数优化  
+马文·明斯基（Marvin Minsky）尝试解决计算机视觉与自然语言处理中的AI难题。他们得出的结论是这些问题难以采用以逻辑为基础的单一方法来解决  
+其间，他们开发的人工智能程序ELIZA可与人类展开英语对话，尽管它根本没有任何正式的语言学知识  
+他们接受系统可能不完全可解释或不完全符合传统逻辑规则，但追求的是功能性和效能，即使系统的内部工作机制可能显得“杂乱无章”  
+明斯基获得1969年图灵奖
+
+### 符号主义人工智能 Symbolic AI
+
+在人工智能诞生之初的四五十年间，符号主义方法一直占据着AI领域的主导地位；符号主义人工智能主要采用逻辑符号和规则来表达知识。 W
+
+### 符号主义人工智能的典型方法
+
+逻辑程序设计（logic programming）  
+产生式系统（production rules）  
+语义网络（semantic network）  
+框架（frame）
+
+### 符号主义人工智能的典型应用
+
+专家系统（expert system）  
+符号计算系统（symbolic mathematics）  
+自动定理证明器（automated theorem provers）  
+自动规划与调度系统（automated planning and scheduling）
+
+符号主义人工智能在早期取得了显著成就，但它面临一个主要问题是缺乏学习能力，符号系统通常需要人工设定和更新，不易适应新的数据或变化的环境
+
+### 专家系统 Expert Systems: 1970s - 1980s
+
+![](assets/第一讲 知识工程与知识图谱-handout/dc389be3324800b419051921c5077a1b24ad39900d554a2df4806cfb1ef5eee4.jpg)  
+费根鲍姆
+
+（1936年生, 89岁）
+
+专家系统之父
+
+1994年图灵奖得主
+
+内部含有大量的某个领域专家水平的知识与经验  
+专家系统 知识库 + 推理机
+
+![](assets/第一讲 知识工程与知识图谱-handout/23d06491ee6b60c1fd4502cdb963ee6456769984ea57766bb70d73cb81e8af69.jpg)
+
+![](assets/第一讲 知识工程与知识图谱-handout/4d9aac97437288de5e2336690b9ff2225fcc24aceed3ec046c26110c6a82bdf1.jpg)
+
+### 医疗诊断专家系统 MYCIN
+
+帮助医生对血液感染患者进行诊断
+
+### RULE 047
+
+如果：（1）病原体的鉴别名不确定，且  
+（2）病原体来自血液，且  
+（3）病原体的染色是革兰氏阴性，且  
+（4）病原体的形态是杆状的，且  
+（5）病原体呈赭色
+
+那么：该病原体的鉴别名是假单胞细菌，可信度为0.4
+
+### Cyc项目: 1984
+
+![](assets/第一讲 知识工程与知识图谱-handout/b82a3f005f9bc7c8232bf311e7edb23afd872172fca95fefda93fce1e76b2f34.jpg)  
+道格拉斯·莱纳特  
+（Douglas Lenat）  
+1950-2023
+
+目的是创建一个包含人类的广泛常识性知识（common-sense knowledge）的庞大知识库  
+■ 以解决当时的AI系统无法理解人类日常生活中理所当然的事实的问题，即缺乏常识推理（common-sense reasoning）能力
+
+### 常识推理
+
+是指机器能够像人类一样，使用日常生活中普遍的、通常未被明确表达的知识来解决问题和做出决策的能力
+
+对于人类来说，这种能力是无意识且自然发生的，例如，当你看到外面天空变得阴暗并且风也开始增强，你会推断很快会下雨，因此决定出门带伞。
+
+常识推理在知识工程中占有重要地位，因为它允许系统在面对不完整或未明确说明的信息时，能够做出合理的判断和推理。
+
+Cyc项目团队开发了一种新的知识表示语言CycL，这是一种形式逻辑语言，专门设计用于编码复杂的、层次化的知识。CycL能够表达各种知识，从基本的事实如“树木生长需要水分”到更复杂的概念如社会行为和心理状态等。
+
+### 双系统理论 Dual process theory: 2011
+
+### 认知心理学
+
+THINKING,
+
+FASTASLOW
+
+![](assets/第一讲 知识工程与知识图谱-handout/73d0b6275b28516b9e8b5b4a8798d33f62424b03d74a9c848e1b130da4df482d.jpg)
+
+DANIEL
+
+KAHNEMAN
+
+WINNTROTHEOELPRIZEINECONOMIC
+
+### 系统1
+
+-  Fast   
+Automatic   
+-  Intuitive   
+-  Unconscious
+
+### 系统2
+
+-  Slower   
+-  Deliberative   
+-  Logical   
+Step-by-step
+
+![](assets/第一讲 知识工程与知识图谱-handout/7fd7aa2868d79a80326cf59f28d06f04b06d0e71907d36652980f9349fedb51f.jpg)  
+Daniel Kahneman (1934—2024)
+
+Thinking, Fast and Slow is a 2011 book by
+
+psychologist Daniel Kahneman 2002年诺贝尔经济学奖获得者
+
+### 大模型时代的知识工程
+
+在当今的大语言模型时代，一种说法是知识工程领域的主要工作包括知识获取、知识表示和知识推理等方面均可以由大语言模型完成。  
+在当今的大语言模型时代，知识工程已经被大语言模型取代，这种说法是否正确？你认为在大语言模型时代知识工程的必要性有哪些？
+
+### Retrieval-Augmented Generation （RAG）
+
+RAG允许LLM检索外部数据  
+2. RAG提升LLM性能，帮助LLM基于事实，降低 幻觉   
+3. RAG降低LLM重新训练的需求
+
+Meta发表的NeurIPS 2020论文，提出RAG概念，基于PLM   
+![](assets/第一讲 知识工程与知识图谱-handout/104d1d26375326f761368fb139b16b2acb21c64d8c347cbcb09622de5c7c7345.jpg)  
+Figure l: Overview of our approach. We combine a pre-trained retriever (Query Encoder + Document Index) with a pre-trained seq2seq model (Generator) and fine-tune end-to-end. For query $_ x$ , we use Maximum Inner Product Search (MIPS) to find the top-K documents $z _{i}$ . For final prediction $y$ , we treat $z$ as a latent variable and marginalize over seq2seq predictions given different documents.
+
+![](assets/第一讲 知识工程与知识图谱-handout/23a92640b82ab59a283b09c0180a44c6c3214d713f6749061ab8830ec9c767c0.jpg)  
+LLM使用RAG的流程
+
+### Graph RAG的提出
+
+![](assets/第一讲 知识工程与知识图谱-handout/05becf30da03627aef1dc98e18f38ea7902b5162ce0c1e9be5115487ab6fb852.jpg)  
+Constructed $^ +$ Existing Knowledge Graphs
+
+---
+## 02 语义Web
+### ■万维网 （World Wide Web）
+
+![](assets/第一讲 知识工程与知识图谱-handout/f5df016c209155da4b17021870da19496d4bcb5c2a97aad3465700f26b5a629c.jpg)
+
+Web of documents
+
+machine-processable, human-readable documents
+
+Problems
+
+machine cannot understand the meaning (semantics) of documents
+
+### ■ 万维网（Web）➔ 语义万维网（Semantic Web)
+
+- A “Web of Data”
+
+– enables machines to understand the semantics, or meaning, of information on the World Wide Web
+
+Tim Berners-Lee. The Semantic Web. eb.e In Scientific American, 284(5):34-43, 2001
+
+![](assets/第一讲 知识工程与知识图谱-handout/dafe5466de0507aae379f72aaa725020d2a40dbdb4e8e5a8d3465c7e845f775c.jpg)
+
+### ■Data Web vs. Document Web
+
+Machine-readable data   
+Linked Data   
+Agents?
+
+![](assets/第一讲 知识工程与知识图谱-handout/53b2f46d4da01cc5ef4ec45f47bedc62d90b4ccdc9206cbd90714c2a546cacfb.jpg)
+
+### ■Basic Idea of the Semantic Web
+
+![](assets/第一讲 知识工程与知识图谱-handout/e47922fcf5545f2c68d7902807810c17cfda17f58a0723b17e56c07b021d1a9c.jpg)
+
+User Interface & Applications
+
+![](assets/第一讲 知识工程与知识图谱-handout/a175334cfda755dc9243c87b9b4232754ad7b7e510d57dd2925abf54f4490629.jpg)  
+SEMANTIC WEB STANDARD STACK
+
+![](assets/第一讲 知识工程与知识图谱-handout/2beb39f729ed1dff720b5b44385d061a3ee47d61616892b439ad3cd506835372.jpg)  
+User Interface & Applications
+
+### RDF Terms
+
+URIs   
+– for referencing resources   
+- Literals   
+– data values   
+Blank nodes   
+– talking about something which doesn’t have a name (or the name of which isn’t known)
+
+### RDF Triple
+
+### Definition (RDF Triple)
+
+An RDF triple is a tuple of the form
+
+$$
+(s, p, o) \in U B \times U \times U B L
+$$
+
+In this tuple,s is caled the subject,pthe predicate, and o the object.
+
+The predicate is also known as property of the triple.
+
+### RDF Triple
+
+An RDF triple consists of
+
+http://example.org/publishedBy
+
+http://abc-book.org/uri
+
+http://def-press.com/uri
+
+Predicate
+
+Object
+
+(borrowed from linguistics)
+
+allowed are:
+
+– In the subject : URIs and blank nodes   
+– In the predicate: URIs (usually called properties)   
+– In the object: URIs and blank nodes and literals
+
+- Note that the graph can be reconstructed from the list of triples.
+
+### Turtle – Terse RDF Triple Language
+
+simple syntax for RDF   
+triples are directly listed as such
+
+– URIs are in <angle brackets>   
+– Literals are "enclosed in quotes"   
+– triples end with a full-stop .   
+– whitespace (blanks, line feeds) is ignored
+
+```txt
+<http://semantic-web-book.org/uri> <http://example.org/publishedBy> <http://crcpress.com/uri>   
+<http://semantic-web-book.org/uri> <http://example.org/title> "Foundations of Semantic Web Technologies".   
+<http://crcpress.com/uri> <http://example.org/name> "CRC Press" . 
+```
+
+### Turtle
+
+shortcuts for prefixes
+
+```txt
+@prefix book: <http://semantic-web-book.org/>.   
+@prefix ex: <http://example.org/>.   
+@prefix crc: <http://crcpress.com/>.   
+book:uri ex:publishedBy crc:uri .   
+book:uri ex:title "Foundations of Semantic Web Technologies".   
+crc:uri ex:name "CRC Press". 
+```
+
+### Turtle
+
+```txt
+@prefix book: <http://semantic-web-book.org/>.   
+@prefix ex: <http://example.org/>.   
+@prefixCRC: <http://crcpress.com/>.   
+book:uri ex:publishedByCRC:uri .   
+book:uri ex:title "Foundations of Semantic Web Technologies".   
+crc:uri ex:name "CRC Press". 
+```
+
+grouping of triples with the same subject   
+- grouping of triples with same subject and predicate
+
+```txt
+@prefix book: <http://semantic-web-book.org/>.   
+@prefix ex: <http://example.org/>.   
+@prefixCRC: <http://crcpress.com/>.   
+book:uri ex:publishedByCRC:uri ; ex:title "Foundations of Semantic Web Technologies".   
+crc:uri ex:name CRC Press",CRC". 
+```
+
+### Datatypes in RDF
+
+![](assets/第一讲 知识工程与知识图谱-handout/95c4407c371c5f9ddf1e0815ab5f30584c76143e099c57443931865c8f991761.jpg)
+
+```txt
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .  
+<http://www.w3.org/TR/rdf-primer>  
+<http://example.org/title> "RDF Primer"^^xsd:string ;  
+<http://example.org/publicationDate> "2004-02-10"^^xsd:date . 
+```
+
+```txt
+<rdf:Description rdf:about="http://www.w3.org/TR/rdf-primer">
+    <ex:title rdf:datatype="http://www.w3.org/2001/XMLSchema#string">
+        RDF Primer
+    </ex:title>
+    <ex:publicationDate
+        rdf:datatype="http://www.w3.org/2001/XMLSchema#date">
+            2004-02-10
+        </ex:publicationDate>
+    </rdf:Description> 
+```
+
+![](assets/第一讲 知识工程与知识图谱-handout/857eda749bae50ebc894f9bf3e0cf25a99a7f6b3c3c0ab0f54bdd82314fc02e9.jpg)
+
+3.org/TR/xmlschema-2/
+
+![](assets/第一讲 知识工程与知识图谱-handout/a299fddb18ab3bc3a9ce747621b955b2b7357fba4dc956d8240cd95b0a265437.jpg)
+
+ur types
+
+![](assets/第一讲 知识工程与知识图谱-handout/4a41db963b8b0ac3f5ff86627c79a4957e23db2aa594bef1efda356b3e32c928.jpg)
+
+derived by restriction
+
+![](assets/第一讲 知识工程与知识图谱-handout/1464e1a9d7d65aac138cc9028707b530db2e182afe8c54820a3f321da5483560.jpg)
+
+built-in primitive types
+
+![](assets/第一讲 知识工程与知识图谱-handout/334e95658808645e48bb353f6b00f781ae92280f00fec06fd1f9ef8b893ae3e8.jpg)
+
+derived by list
+
+![](assets/第一讲 知识工程与知识图谱-handout/1ea4ef5da1c37c405865a4bc2c7159c9e146cea13dffbad735da9f9b034aca53.jpg)
+
+built-in derived types
+
+![](assets/第一讲 知识工程与知识图谱-handout/7bd28d7e26592220b3d230106c69405f8f11c07b732ef1d15b73e28e3292798f.jpg)
+
+derived by extension or restriction
+
+![](assets/第一讲 知识工程与知识图谱-handout/cb7aae1b9a848b59ebe0b373748e83755e65b436a4f062ca0556db2af779977b.jpg)
+
+complex types
+
+### What is wrong with these?
+
+@prefix ex: <http://example.org/> .
+
+ex:Chutney ex:hasIngredient "1lb green mango",
+
+"1tsp. Cayenne pepper"
+
+@prefix ex: <http://example.org/> .
+
+ex:Chutney ex:ingredient dex:greenMango; ex:amount "1lb" ;
+
+ex:ingredientNe ex:CayennePepper; ex:amount"1tsp." .
+
+### It’s a ternary relationship!
+
+![](assets/第一讲 知识工程与知识图谱-handout/8b708da04f35636fffdcfb3dcb77788675d785a012ea94299148f4f45b13ed5e.jpg)
+
+```rdf
+@prefix ex: <http://example.org/>.   
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.   
+ex:Chutney ex:hasIngredient ex:ingredient1 .   
+ex:ingredient1 rdf:value ex:greenMango; ex:amount "1lb". 
+```
+
+### It doesn’t need a name :)
+
+![](assets/第一讲 知识工程与知识图谱-handout/b144819bfdcee26ed43575824f8aeae10ff36d269b419d6241e85290e8660ae8.jpg)
+
+### Blank nodes syntax
+
+```txt
+@prefix ex: <http://example.org/>.  
+ex:Chutney ex:hasIngredient __id1_.  
+__id1 ex:ingredient ex:greenMango; ex:amount "1lb". 
+```
+
+Shortcut:
+
+```txt
+@prefix ex: <http://example.org/>.  
+ex:Chutney ex:hasIngredient  
+[ ex:ingredient ex:greenMango; ex:amount "1lb" ]. 
+```
+
+### question:
+
+![](assets/第一讲 知识工程与知识图谱-handout/b763f58f0f97dd7a6ef873ed0127997e1931d2868a0f848e49f49b0626166f75.jpg)
+
+```rdf
+<?xml version="1.0"?>   
+<rdf:PDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:exs="http://example.org-schema#"   
+<rdf:Description rdf:about="http://example.org/doc.html"> <rdf:type rdf:resource="http://example.org-schema#Report"/> <exs:theme rdf:resource="http://example.org#Music"/> <exs:theme rdf:resource="http://example.org#History"/> <exs:nbPages rdf:datatype="http://www.w3.org/2001/XMLSchema#int">23</exs:nbPages> </rdf:Description>   
+</rdf:RDF> 
+```
+
+### meaning
+
+### question:
+
+![](assets/第一讲 知识工程与知识图谱-handout/bab54950a89c6e834514b6243f6c8173254374a6ddb8f438496b442550b27d2e.jpg)
+
+![](assets/第一讲 知识工程与知识图谱-handout/3830f9cbd9794088d2949c07167379bb8cb10070ecc043a4c5c4d99a11b0c45b.jpg)
+
+### Types of containers
+
+“open”: new elements can be added.   
+rdf:Seq – ordered list   
+rdf:Bag – unordered set   
+- rdf:Alt – set of alternatives   
+- Lists are actually hardly reflected in the formal semantics (more about this later)
+
+### bags = unordered groups
+
+<rdf:Description rdf:about="#">
+
+<author>
+
+<rdf:Bag>
+
+<rdf:li>Ivan Herman</rdf:li>
+
+<rdf:li>Fabien Gandon</rdf:li>
+
+</rdf :Bag>
+
+</author>
+
+</rdf:Description>
+
+![](assets/第一讲 知识工程与知识图谱-handout/423bb612fe55598e9829d313b5e956377ca587921b6005d8f57d0c396a8c3812.jpg)
+
+<#> author :a
+
+_:a rdf:_1 "Ivan Herman"
+
+_:a rdf:_2 "Fabien Gandon"
+
+![](assets/第一讲 知识工程与知识图谱-handout/a2174319e1515cf9e50ab4e692aae5bce0aa0005c881459c8f5afbb669266878.jpg)
+
+<#> author [
+
+a rdf:Bag ;
+
+rdf:li "Ivan Herman" ;
+
+rdf:li "Fabien Gandon" . ] .
+
+![](assets/第一讲 知识工程与知识图谱-handout/38bf67124bcd1b05c0b5196faf2bd4b1a4b54322bc595e09c99027ee76b0f49a.jpg)
+
+### sequence
+
+### ordered group of resources or literals
+
+<rdf:Description rdf:about $\underline { { \underline { { \mathbf { \Pi } } } } } =$ "#partition">
+
+<contains>
+
+<rdf:Seq>
+
+<rdf:li rdf:about="#C"
+
+<rdf:li rdf:about="#cs/>
+
+<rdf:li rdf:about="#C"/>
+
+<rdf:li rdf:aboute"#D"/>
+
+<rdf:li rdf:about="#E"/>
+
+</rdf:Seq>
+
+</contains>
+
+</rdf:Description>
+
+<partition>
+
+contains [
+
+a rdf:Seq ;
+
+rdf:li "C" ;
+
+rdf:li "C" ;
+
+rdf:li "C" ;
+
+rdf:1i "D" ;
+
+rdf:li "E" .
+
+].
+
+### alternatives
+
+e.g. title of a book in different languages
+
+<rdf:Description rdf:about="#book">
+
+<title>
+
+<rdf:Alt>
+
+<rdf:li xml:lang="fr">l'homme qui prenait sa femme pour unqehapeau</rdf:li>
+
+<rdf:li xml:lang="en">the mah who mistook his wife forahat</rdf:li>
+
+</rdf:Alt>
+
+</title>
+
+</rdf:Description>
+
+![](assets/第一讲 知识工程与知识图谱-handout/59912516cc4c49ac9fb7d83826f52c91203e8cf505207132a4a5d613116b3e3e.jpg)
+
+<#book>
+
+title[
+
+a rdf:Alt
+
+rdf:1i "l'homme...@fr ;
+
+rdf:li "the man..."@en .
+
+】.
+
+![](assets/第一讲 知识工程与知识图谱-handout/ecbda5d435626529d0b1c3ab87e78434fa1bf74c8402490322f6c97b6c8174d6.jpg)
+
+![](assets/第一讲 知识工程与知识图谱-handout/3fe25e8ee0e3e1a74a39c26cfb1a365ca4154e41a51032969de130aa54afb416.jpg)
+
+### collection
+
+### exhaustive and ordered list
+
+![](assets/第一讲 知识工程与知识图谱-handout/c1a08d1393288d9de1a5eb86abbb793bb0a55d30b4033a4319d554ab05f06628.jpg)
+
+```txt
+<rdf:Description rdf:about="#week"> 
+```
+
+```txt
+<dividedIn rdf:parseType="Collection"> 
+```
+
+<rdf:Description rdf:about $\equiv$ "#monday"/>
+
+<rdf:Description rdf:about $=$ "#tuesday"/>
+
+```txt
+<rdf:Description rdf:about="#wednesday"/> 
+```
+
+```txt
+<rdf:Description rdf:about="#thursday"/> 
+```
+
+```xml
+<rdf:Description rdf:about="#friday"/> 
+```
+
+```txt
+<rdf:Description rdf:about="#saturday"/> 
+```
+
+<rdf:Description rdf:about $=$ "#sunday"/>
+
+```xml
+</devidedIn> 
+```
+
+```txt
+</rdfs:Description> 
+```
+
+![](assets/第一讲 知识工程与知识图谱-handout/cd1e0ec9d993297ff1faa89a3eba0fc02825172fe291e00910942debb412d374.jpg)
+
+![](assets/第一讲 知识工程与知识图谱-handout/fd2100ca0b2f8a3d1057d62c2a22e3ba5380791d42676a669fda25c258bafdb9.jpg)
+
+```txt
+<#week> dividedIn 
+```
+
+```txt
+(<#monday> <#tuesday> <#wednesday> 
+```
+
+```txt
+<#thursday> <#friday> <#saturday> <#sunday> 
+```
+
+### Comparison
+
+![](assets/第一讲 知识工程与知识图谱-handout/447b8fa936cbc5a3c5c43679befd7840fb5bcc36062552e2198eaa9ed030d0f3.jpg)
+
+![](assets/第一讲 知识工程与知识图谱-handout/5f70512e5de26589985e57cae87db837ac3addd8a494dc43e5684b37b3aa5753.jpg)
+
+RDF allows to express facts
+
+Anne is the mother of Merula
+
+But we'd like to be able to express more generic knowledge
+
+Mothers are female   
+If somebody has a daughter then that person is a parent
+
+This kind of knowledge is often called schema knowledge or terminological knowledge.   
+· RDF Schema allws us to do some schema knowledge modeling.   
+· OWL (discussed later) gives even more expressivity.
+
+### RDFS
+
+### Classes
+
+– rdfs:Resource   
+- Represents the class of everything. All things described by RDF are resources   
+rdfs:Class   
+- An rdfs:Class declares a resource as a class for other resources.   
+– rdfs:Literal   
+- literal values such as strings and integers.   
+– rdfs:Datatype   
+- the class of datatypes.   
+rdf:Property   
+- the class of properties.
+
+### RDFS
+
+### Properties
+
+### – rdfs:domain
+
+- the rdfs:domain of an rdf:Property declares the class of the subject in a triple whose predicate is that property.
+
+### – rdfs:range
+
+- the rdfs:range of an rdf:Property declares the class or datatype of the object in a triple whose predicate is that property.
+
+### rdf:type
+
+- a property used to state that a resource is an instance of a class.
+
+### – rdfs:subClassOf
+
+- allows declaration of hierarchies of classes.
+
+### rdfs:subPropertyOf
+
+- an instance of rdf:Property that is used to state that all resources related by one property are also related by another.
+
+### RDF 1.1 Semantics
+
+W.3C Recommendation 25 February 2014
+
+### RDFS Entailment Rules
+
+https://www.w 3.org/TR/rdf11 -mt/#rdfsentailment
+
+<table><tr><td></td><td>If S contains:</td><td>then S RDFS entails recognizing D:</td></tr><tr><td>rdfs1</td><td>any IRI aaa in D</td><td>aaa rdf:type rdfs:Datatype .</td></tr><tr><td>rdfs2</td><td>aaa rdfs:domain xxx . 
+yyy aaa zzz .</td><td>yyy rdf:type xxx .</td></tr><tr><td>rdfs3</td><td>aaa rdfs:range xxx . 
+yyy aaa zzz .</td><td>zzz rdf:type xxx .</td></tr><tr><td>rdfs4a</td><td>xxx aaa yyyy .</td><td>xxx rdf:type rdfs:Resource .</td></tr><tr><td>rdfs4b</td><td>xxx aaa yyyy .</td><td>yyyy rdf:type rdfs:Resource .</td></tr><tr><td>rdfs5</td><td>xxx rdfs:subPropertyOf yyyy . 
+yyy rdfs:subPropertyOf zzz .</td><td>xxx rdfs:subPropertyOf zzz .</td></tr><tr><td>rdfs6</td><td>xxx rdf:type rdf:Property .</td><td>xxx rdfs:subPropertyOf xxx .</td></tr><tr><td>rdfs7</td><td>aaa rdfs:subPropertyOfbbb . 
+xxx aaa yyyy .</td><td>xxxbbb yyyy .</td></tr><tr><td>rdfs8</td><td>xxx rdf:type rdfs:Class .</td><td>xxx rdfs:subClassOf rdfs:Resource .</td></tr><tr><td>rdfs9</td><td>xxx rdfs:subClassOf yyyy . 
+zzz rdf:type xxx .</td><td>zzz rdf:type yyyy .</td></tr><tr><td>rdfs10</td><td>xxx rdf:type rdfs:Class .</td><td>xxx rdfs:subClassOf xxx .</td></tr><tr><td>rdfs11</td><td>xxx rdfs:subClassOf yyyy . 
+yyy rdfs:subClassOf zzz .</td><td>xxx rdfs:subClassOf zzz .</td></tr><tr><td>rdfs12</td><td>xxx rdf:type rdfs:ContainerMembershipProperty .</td><td>xxx rdfs:subPropertyOf rdfs:member .</td></tr><tr><td>rdfs13</td><td>xxx rdf:type rdfs:Datatype .</td><td>xxx rdfs:subClassOf rdfs:Literal .</td></tr></table>
+
+### In English
+
+•Dog1 is an animal   
+•Cat1 is a cat   
+•Cats are animals   
+·Zoos host animals   
+·Zo01 hosts the Cat2
+
+<table><tr><td>In English</td><td>The graph</td></tr><tr><td>•Dog1 is an animal
+•Cat1 is a cat
+•Cats are animals
+•Zoos host animals
+•Zoo1 hosts the Cat2</td><td>ex:dog1 rdf:type
+ex:cat1 rdfs:type
+ex:cat2 zoo:host
+RDF special terms RDFS special terms</td></tr><tr><td>•Dog1 is an animal
+•Cat1 is a cat
+•Cats are animals
+•Zoos host animals
+•Zoo1 hosts the Cat2</td><td>ex:dog1 rdf:type
+ex:cat1 rdf:type
+ex:cat2 zoo:host
+RDF special terms RDFS special terms</td></tr></table>
+
+### RDF/turtle
+
+@prefix rdf:<http:/www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+@prefix zoo: <http://example.org/zoo/> .
+
+ex: dog1 rdf:type ex:animal
+
+ex:cat1 rdf:type ex:cat .
+
+ex:cat rdfs: subClass0f ex:animal
+
+zoo:host rdfs:range ex:animal
+
+ex: z001 zoo:host ex:cat2 .
+
+### Simple models
+
+The truth value s p o.I ofa(grounded*) tripl@ s p o. is true exactly if( s, p,o are contained in V) andsI,oI) ∈ IExr(p) .
+
+* A grounded triple does not contain a blank node.
+
+![](assets/第一讲 知识工程与知识图谱-handout/814424a8d64076a9676d41128ad6deca5dbcdb7a4bba0aa423bef68c3fac6853.jpg)
+
+### Simple models
+
+The truth value s p o.I ofa(grounded*) tripl@s p o. is true tripPe
+
+* A grounded triple does not contain a blank node.
+
+![](assets/第一讲 知识工程与知识图谱-handout/f658d7b4ae0e8cf1bd645051b91182f9fcf077209bfd77920ec33c7f4125820b.jpg)
+
+---
+## 03 本体与推理
+### 本体 Ontology
+
+### 哲学 概念
+
+- 关于是和存在的本质 the nature of being and existence   
+- 是及其关系的基本类别 the basic categories of being and their relations
+
+### 知识工程
+
+本体是概念模型的明确规范 Gruber, 1993
+
+An ontology is an explicit specification of a conceptualization
+
+- 概念模型 Conceptualization  
+- 明确 Explicit  
+- 形式化 Formal  
+- 共享 Shared
+
+![](assets/第一讲 知识工程与知识图谱-handout/fd964cce8348d1b840d90ca43489eb7fba025529c6e219002cf451d7f2846365.jpg)
+
+知识工程中借用了“本体”这一哲学概念并赋予其新的含义
+
+### 概念 Concept： 基于集合论进行定义
+
+### 概念表达式 concept expression
+
+![](assets/第一讲 知识工程与知识图谱-handout/541a2885930472ed5cab6008109a0cbc9e6c8654e6147d9a0232f6b34c392479.jpg)  
+概念的否定（补集）
+
+![](assets/第一讲 知识工程与知识图谱-handout/b07c8320b45626099b3eb548899f549bed6c432b2fc39d79d53610dc0b53b8c6.jpg)  
+概念的交（交集）
+
+![](assets/第一讲 知识工程与知识图谱-handout/80b40da3fd27f0e51a41584fd69f99f9e135870ebe676d1702802ec50d3acbbd.jpg)  
+概念的并（并集）
+
+### 概念 Concept： 基于集合论进行定义
+
+概念表达式 Concept expression
+
+概念的存在关系约束 Existential role restrictions
+
+![](assets/第一讲 知识工程与知识图谱-handout/3b2436f10f77b5c8e98693068bafb621f7cdfe9488a52e891235d776435b95f0.jpg)
+
+### 概念 Concept： 基于集合论进行定义
+
+概念表达式 Concept expression
+
+概念的全称关系约束 Universal role restriction
+
+AparentOf.Male
+
+$$
+\forall r. C = \left\{\mathrm {x} \mid \forall \mathrm {y}. (\mathrm {x}, \mathrm {y}) \in r ^{I} \rightarrow \mathrm {y} \in C ^{J} \right\}
+$$
+
+![](assets/第一讲 知识工程与知识图谱-handout/31e656594a1009aa3dfbcce060ac840ab35ef6b733c89cb19068909ba4e42a70.jpg)
+
+### 概念 Concept： 基于集合论进行定义
+
+概念表达式 Concept expression
+
+### 概念的量词关系约束 Qualified Number Restriction
+
+![](assets/第一讲 知识工程与知识图谱-handout/21b37e6eec178ac56da96beebf6bf21be3dbbe34320cd8dfec0594c9a9c2a23b.jpg)
+
+### 公理 Axiom：能判断结果为真或假的表达式
+
+概念的成员：判断一个实例是否属于某概念
+
+![](assets/第一讲 知识工程与知识图谱-handout/26cf76080420763ef8aa73d048e427d0ac46d51364105d865b82d71f5cc390d6.jpg)
+
+### 公理 Axiom：能判断结果为真或假的表达式
+
+关系的成员：判断一对实例是否具有某关系
+
+(Marie Curie, Irene Joliot-Curie)
+
+![](assets/第一讲 知识工程与知识图谱-handout/03396d7902b1c471f8d23219771c1e118a9a595b5ece2cad9218c0691e82c7c3.jpg)
+
+### 公理 Axiom：能判断结果为真或假的表达式
+
+概念包含：判断一个概念是否为另一概念的子集
+
+![](assets/第一讲 知识工程与知识图谱-handout/377914e6f5276be0aee3eca3f58f547db88f1546e42e727804ddae3aaeb24705.jpg)
+
+### 本体示例： 薛定谔的猫
+
+### 本体定义（描述逻辑）
+
+ownscaresFor
+
+Healthy-Dead
+
+CatDeadAlive
+
+HappyCatOwnerEowns.Cat VcareFor.Healthy
+
+### 解释
+
+如果某人拥有（owns）某物，则他关爱（caresFor）该物  
+- 健康（Healthy）的东西不是死的（¬Dead）  
+- 猫（Cat）要么是死的（Dead）要么是活的（Alive）
+
+HappyCatOwner (schrodinger)
+
+快乐的猫主人（HappyCatOwner）拥有一只猫并且他所有关爱的东西都是健康的  
+薛定谔（schrödinger）是快乐的猫主人（HappyCatOwner）
+
+### DL Lg Description Logic 描述逻辑
+
+### An Example Knowledge Base
+
+<table><tr><td>RBox R
+ owns □ caresFor
+ “If somebody owns something, they care for it.”</td></tr><tr><td>TBox T
+ Healthy □ Dead
+ “Healthy beings are not dead.”
+ Cat □ Dead □ Alive
+ “Every cat is dead or alive.”
+ HappyCatOwner □owns Cat □ ∀caresFor. Healthy
+“A happy cat owner owns a cat and all beings he cares for are healthy.”</td></tr><tr><td>ABox A
+ HappyCatOwner (schrödinger)
+ “Schrödinger is a happy cat owner.”</td></tr></table>
+
+### Interpretations
+
+Semantics for DLs is defined ina model theoretic wai.e.based on bractolte   
+A DL interpretation $\boldsymbol { \mathcal { L } }$ fixes a domain set $\Delta ^ { z }$ anda mapping I associatinga,,semanticcounterpart“toeveryame.
+
+N.B.:Different names can bemapped to the same semantic counterpart:no unique name assumption. N.B. $\Delta ^ { \underline { { x } } }$ can be infinite.
+
+![](assets/第一讲 知识工程与知识图谱-handout/c494cd7fc7a2c86ef0681d18cb4f0527587ea59fc64654424bc8e2d64f2fe3b1.jpg)
+
+### Interpretations: An Example
+
+N1 = {sun,morning_star,evening_star,moon,home}.   
+- Nc = {Planet,Star}.   
+NR = {orbitsAround, shines0n}.
+
+$$
+\mathbf {s u n} ^{\mathcal{I}} = \odot
+$$
+
+morning_star
+
+evening-star $\tau _ { \mathit { \Pi } } = \mathcal { \mathfrak { Q } }$
+
+$$
+\mathbf {m o o n} ^{\mathcal{I}} = \mathbb {C}
+$$
+
+$$
+\mathbf {h o m e} ^{\mathcal{I}} = \widehat {\mathbf {\Phi}}
+$$
+
+$$
+\operatorname {P l a n e t} ^{\mathcal{I}} = \{\Uparrow , \Uparrow , \vec {\partial}, \vec {\partial}, 4, \hbar , \vec {\partial}, \vec {\Sigma} \}
+$$
+
+$$
+\mathbf {S t a r} ^{\mathcal{I}} = \{\odot \}
+$$
+
+orbitsAround¹ = {(皂,①),<♀,①),(古,①),(σ²,①),(4,①),
+
+$$
+\langle \hbar , \odot \rangle , \langle \widehat {\mathfrak {s}}, \odot \rangle , \langle \mathfrak {g}, \odot \rangle , \langle \mathbb {P}, \odot \rangle , \langle \mathbb {C}, \widehat {\mathfrak {s}} \rangle \}
+$$
+
+shines0n {(0,￥〉，(0,♀),(0,古),(0,(〉,(0,0²),
+
+$$
+\langle \odot , 4 \rangle , \langle \odot , \hbar \rangle , \langle \odot , \mathfrak {S} \rangle , \langle \odot , \mathfrak {F} \rangle , \langle \odot , E \rangle \}
+$$
+
+$$
+\begin{array}{r l r} \mathsf {s u n} ^{\mathcal{I}} = \odot & \mathsf {P l a n e t} ^{\mathcal{I}} = \{\checkmark , \varphi , \natural , \sigma^{\prime}, 4, \hbar , \hat {\sigma}, \Psi \} \\ \mathsf {m o r n i n g - s t a r} ^{\mathcal{I}} = \varphi & \mathsf {S t a r} ^{\mathcal{I}} = \{\odot \} \\ \mathsf {e v e n i n g - s t a r} ^{\mathcal{I}} = \varphi & \mathsf {o r b i t s A r o u n d} ^{\mathcal{I}} = \{\langle \checkmark , \odot \rangle , \langle \varphi , \odot \rangle , \langle \natural , \odot \rangle , \langle \sigma^{\prime}, \odot \rangle , \langle 4, \odot \rangle , \\ \mathsf {m o o n} ^{\mathcal{I}} = \mathbb {C} & & \langle \hbar , \odot \rangle , \langle \natural , \odot \rangle , \langle \xi , \odot \rangle , \langle P, \odot \rangle , \langle \mathbb {C}, \natural \rangle \} \\ \mathsf {h o m e} ^{\mathcal{I}} = \natural & \mathsf {s h i n e s O n} ^{\mathcal{I}} = \{\langle \odot , \checkmark \rangle , \langle \odot , \varphi \rangle , \langle \odot , \natural \rangle , \langle \odot , \mathbb {C} \rangle , \langle \odot , \sigma^{\prime} \rangle , \\ & & \langle \odot , 4 \rangle , \langle \odot , \hbar \rangle , \langle \odot , \natural \rangle , \langle \odot , \xi \rangle , \langle \odot , P \rangle \} \\ & & \end{array}
+$$
+
+![](assets/第一讲 知识工程与知识图谱-handout/6b73054f112cce7166b886661a0fef422f0c51ab86484a8d9ab22ffef6dcf4bb.jpg)
+
+### Concept building blocks
+
+Atomic building blocks:
+
+Individual names I (objects), e.g. tintin   
+Concept names C (classes), e.g. Dog   
+Role names R (relations)， e.g.owns, travelsTo
+
+Boolean constructors:
+
+conjunction: ∩ (class intersection)   
+disjunction: □ (classunion)   
+negation: (class complement)
+
+Role restrictions:
+
+existential restriction:  (some)   
+universal restriction: ∀ (only)
+
+- and more: cardinality constraints, inverse roles, role composition，..
+
+### Building complex concepts
+
+### Definition (Concept language of ALC)
+
+Every concept name $A \in \mathsf C$ is a concept   
+- T and ⊥ are concepts   
+· If $C$ and $D$ are concepts, then so areC,C  D,C  D   
+o If $r \in { \mathsf { R } }$ and $C$ is a concept, then Vr.C and r.C are concepts
+
+### Which of the following are concepts?
+
+Tn r.T   
+3r.T   
+CU--D   
+3r.∀s.C D   
+∀r.(C n -D)
+
+### Building complex concepts
+
+### Definition (Concept language of ALC)
+
+Every concept name $A \in \mathsf C$ is a concept   
+- T and ⊥ are concepts   
+· If $C$ and $D$ are concepts, then so areC, C ∩ D, C D   
+If $r \in { \mathsf { R } }$ and $C$ is a concept, then Vr.C and r.C are concepts
+
+### Which of the following are concepts?
+
+Tr.T X   
+3r.T   
+C–-D X   
+3r.∀s.C D   
+∀r.(Cn-D)
+
+### Definition (Interpretation)
+
+An ALC interpretation $\mathcal { T }$ consists of a nonempty domain △，and an interpretation function .I such that:
+
+for each individual name $\mathfrak { a } \in \mathsf { I }$ ,a∈△   
+for each concept name A ∈ C， AI S  
+for each role name $r \in { \mathsf { R } }$ ,rIg A X△
+
+![](assets/第一讲 知识工程与知识图谱-handout/c246e0c7c2dec868b17fd21a9b1897a159a1c9669d1c921a319e79286a7b3e9a.jpg)
+
+### Concept language semantics
+
+Extend interpretations to complex concept expressions:
+
+TI=△
+
+⊥¹=の
+
+$( \neg C ) ^ { \mathcal { T } } = \Delta \backslash C ^ { \mathcal { T } }$
+
+(C∩ D) = c n DΠ
+
+(cμ D) = cU dī
+
+(r.C)I = {x ∈△ is related by $r ^ { \mathcal { Z } }$ to some element in $C ^ { \mathcal { I } } \big \}$
+
+$$
+= \{x \in \Delta \mid \exists y (r ^{\mathcal{I}} (x, y) \wedge C ^{\mathcal{I}} (y)) \}
+$$
+
+(Vr.C)T ={x∈△|x is related by $r ^ { \mathcal { Z } }$ Only to elements in $C ^ { \mathcal { I } } \big \}$
+
+$$
+= \{x \in \Delta \mid \forall y (r ^{\mathcal{I}} (x, y) \rightarrow C ^{\mathcal{I}} (y)) \}
+$$
+
+### Concept language semantics
+
+### Arbitrary concept
+
+- A class in the domain   
+$C ^ { \mathcal { T } } \subseteq \Delta ^ { \mathcal { T } }$
+
+![](assets/第一讲 知识工程与知识图谱-handout/1ca4cce477520315f6dfd09a536c5385da20e96ae32bad8b54636ed7d080a9c7.jpg)
+
+### Arbitrary concept
+
+- A class in the domain   
+$C ^ { \mathcal { T } } \subseteq \Delta ^ { \mathcal { T } }$
+
+![](assets/第一讲 知识工程与知识图谱-handout/8b2a794b1fe16121c5ba54a743ec893abee3d32d7dddb7c9cb27f34b4af45af3.jpg)
+
+### Concept negation
+
+The complement of a class   
+（-C)=△²\CI
+
+![](assets/第一讲 知识工程与知识图谱-handout/e9277bd19bb29dda9e4c93aceded60ead791d7b84004e02406b6bf3c4ad619c2.jpg)
+
+### Concept conjunction
+
+The intersection of two classes   
+$( C \cap D ) ^ { \mathcal { I } } = C ^ { \mathcal { I } } \cap D ^ { \mathcal { I } }$
+
+![](assets/第一讲 知识工程与知识图谱-handout/69d647cfb1bef5f7aa70dfa0db0914266965503fddc98c26ce631bbbc068cf1f.jpg)
+
+### Concept conjunction
+
+The intersection of two classes   
+$( C \cap D ) ^ { \mathcal { I } } = C ^ { \mathcal { I } } \cap D ^ { \mathcal { I } }$
+
+![](assets/第一讲 知识工程与知识图谱-handout/0ed64b569c2041e2476fc46ce4976c4d7c99fa1da0ce5606908ac94e53bce415.jpg)
+
+### Concept disjunction
+
+The union of two classes   
+· $( C \sqcup D ) ^ { \mathcal { Z } } = C ^ { \mathcal { \vec { Z } } } \cup D ^ { \mathcal { Z } }$
+
+△I $\Delta ^ { \mathcal { I } }$
+
+![](assets/第一讲 知识工程与知识图谱-handout/255059088819762ba4aee7b44e96ac39c10e8f65bbfcee9218f6ad330656a9b6.jpg)
+
+### Concept language semantics
+
+### Existential restriction
+
+$$
+\left(\exists r. C\right) ^{\mathcal{I}} = \{x \in \Delta \mid \exists y \left(r ^{\mathcal{I}} (x, y) \wedge C ^{\mathcal{I}} (y)\right) \}
+$$
+
+![](assets/第一讲 知识工程与知识图谱-handout/ed1ca09d642e5f61b45c3e0d0d8041ff7bf23a13a9d146d01a6800138e3354ad.jpg)
+
+### Concept language semantics
+
+### Existential restriction
+
+$$
+\left(\exists r. C\right) ^{\mathcal{I}} = \{x \in \Delta \mid \exists y \left(r ^{\mathcal{I}} (x, y) \wedge C ^{\mathcal{I}} (y)\right) \}
+$$
+
+![](assets/第一讲 知识工程与知识图谱-handout/04398ad6cc13b628ca77049865defbf3cc2b7bfeaae6da3d8bf122e66b428098.jpg)
+
+### Universal restriction
+
+$$
+\left(\forall r. C\right) ^{\mathcal{I}} = \{x \in \Delta \mid \forall y \left(r ^{\mathcal{I}} (x, y) \rightarrow C ^{\mathcal{I}} (y)\right) \}
+$$
+
+![](assets/第一讲 知识工程与知识图谱-handout/9828bd84db8af6d279fe6732a0a2e2947bf7d9934e0f1b6b6309b9300efac4fa.jpg)
+
+![](assets/第一讲 知识工程与知识图谱-handout/c5614b5fdea8a277878a5354b78f74ea1fa4e781055242178fddfb7440e8c68c.jpg)
+
+(Canine Male)I [..]   
+- (Eowns.(Canine  Male) ={...}   
+（-Canine ∀owns.-(Male Canine) = {. }
+
+Terminological axioms (TBox axioms):
+
+All owners of a male dog are male   
+In predicate logic:
+
+$$
+\forall x (\exists y \left(\operatorname {O w n s} (x, y) \wedge \operatorname {M a l e} (y) \wedge \operatorname {D o g} (y)\right)\rightarrow \operatorname {M a l e} (x))
+$$
+
+This is a sentence in predicatelogic
+
+Terminological axioms (TBox axioms):
+
+All owners of a male dog are male   
+In predicate logic:
+
+$$
+\forall x (\exists y \left(\operatorname {O w n s} (x, y) \wedge \operatorname {M a l e} (y) \wedge \operatorname {D o g} (y)\right)\rightarrow \operatorname {M a l e} (x))
+$$
+
+This is a sentence in predicate logic
+
+Assertions (ABox assertions):
+
+assert categories to which individuals or pairs of individuals belong   
+Nemo is a dog   
+Emo owns Nemo   
+In predicate logic:
+
+Dog(nemo) > Owns(emo,nemo)
+
+### CΩD
+
+· Concept inclusion subsumption:
+
+C is subsumed by D   
+C is more specific than D   
+D generalises C   
+- All C are D   
+Every C is a D
+
+- Formalises the syllogismAll ... are 1   
+Predicate logic translation:
+
+Binds the free Variable in C and in D   
+$\forall x ( C ( x ) \not \prec { \mathcal { D } } ( x ) )$
+
+### Example
+
+3owns.(Dog  Male)  Male
+
+$$
+a: C; \qquad (a, b): r
+$$
+
+· Concept and role assertions:
+
+- a is an instance of C   
+a and $b$ are related by r
+
+Predicate logic translation:
+
+C(a)   
+r(a,b)
+
+Example
+
+nemo : Dog
+
+nemo :-Male
+
+(emo, nemo) : owns
+
+### Truth in an interpretation
+
+Recall - An interpretation $\mathcal { T }$ is a tuple $\langle \Delta , \cdot ^ { \mathcal { I } } \rangle$ with domain △ of objects and interpretation function .I such that:
+
+for each individual name $\mathfrak { a } \in \mathsf { I }$ ,a¹∈△   
+- for each concept name A ∈C,AI   
+for each role name $r \in { \mathsf { R } }$ ，rI
+
+### Definition (Satisfaction)
+
+•I├CςDifC¹η (read: I satisfies $C \subseteq D _ { \mathbf { \alpha } }$ ）  
+•Il├a:Cif a∈CT   
+- Il(a,b): rif(a¹,b)∈ r
+
+### Truth in an interpretation
+
+•ICΩDif $C ^ { \mathcal { T } } \subseteq D ^ { \mathcal { T } }$
+
+![](assets/第一讲 知识工程与知识图谱-handout/f494b6072c438370a7b8d60a97078a0d1d2171303afa99c7a6db1008595f6328.jpg)
+
+### Truth in an interpretation
+
+•IICΩDif $C ^ { \mathcal { T } } \subseteq D ^ { \mathcal { T } }$   
+$\mathcal { T } \Vdash a : C$ if $\partial ^ { \mathcal { T } } \in C ^ { \mathcal { T } }$
+
+![](assets/第一讲 知识工程与知识图谱-handout/997ec847d5bef4ec1c48ed14fee6af61381028b63ec848124841b95a7b6cb5d7.jpg)
+
+![](assets/第一讲 知识工程与知识图谱-handout/b4b24bfc377e2b04d9ad49526b325a521bcce9d1657ecebbee22e5485e95600e.jpg)
+
+### Truth in an interpretation
+
+- II CΩDif $C ^ { \mathcal { T } } \subseteq D ^ { \mathcal { T } }$   
+$\mathcal { T } \Vdash a : C$ if $\mathsf { a } ^ { \mathcal { Z } } \in C ^ { \mathcal { Z } }$   
+$\mathcal { T } \left| \right| - \left( a , b \right) : r \mathsf { i f } \left( a ^ { \mathcal { T } } , b ^ { \mathcal { T } } \right) \in r ^ { \mathcal { Z } }$ ${ \mathcal { T } } \Vdash ( a , b ) : r$ $\left( a ^ { \mathcal { Z } } , b ^ { \mathcal { Z } } \right) \in r ^ { \mathcal { Z } }$
+
+![](assets/第一讲 知识工程与知识图谱-handout/d091d28c6b8e75a8ec53d0e4ef73acead8f3a6d5804baaa141fbb91a3c1a3666.jpg)
+
+![](assets/第一讲 知识工程与知识图谱-handout/ef6d5ce138ffef6fa831bce97c27df41fce2a671586a0d82d83dc471916ce1aa.jpg)
+
+![](assets/第一讲 知识工程与知识图谱-handout/df2d1028f3aaa446f64ecad379701cd05fb76384000e1139d0827aa0fb23bd65.jpg)
+
+![](assets/第一讲 知识工程与知识图谱-handout/1df5162f673464871a189d2b56f75bb5e215cb1512bdf010473ab125f638bba6.jpg)
+
+- I├ laika : Canine ？  
+- Z片 T』 Canine Зowns.Canine ？  
+- I 』 Зowns.(Male  Canine) ≌ Male ？
+
+![](assets/第一讲 知识工程与知识图谱-handout/34edc0d9c515c9ec2d8ec479e516fa87dffb933e473156b03ce64b373805ab82.jpg)
+
+- Zド laika : Canine ？   
+- I片 T≌ CanineЗowns.Canine ？   
+- I = 3owns.(Male∩ Canine) ≌ Male ？
+
+### Role Inclusion Axioms
+
+parentOfochildofsiblingOf
+
+![](assets/第一讲 知识工程与知识图谱-handout/a1327c1a771103d0311e80f2c882d7fc54b6ea7c9d54eaf1ed7698313c409678.jpg)
+
+### Role Inclusion Axioms
+
+childOf o parentOf
+
+![](assets/第一讲 知识工程与知识图谱-handout/276d7b341cf416f89ff9e395dfb2e53563c41bbb0dbde5ad197aa3e4e927d3e3.jpg)
+
+A knowledge base is a tuple ${ \mathcal { K } } : = \langle { \mathcal { T } } , { \mathcal { A } } \rangle$ , for some TBox T and ABox A   
+Captures both structural knowledge about the domain and explicit knowledge about individuals
+
+### Definition (Satisfaction extended)
+
+- II TifIIC≌D for eachC≌D∈T   
+$A$ if I l├ a : C for each a : C ∈ A and ${ \mathcal { T } } \Vdash ( a , b ) : r$ for each $( a , b ) : r \in { \mathcal { A } }$
+
+- If I I TU A, we say $\mathcal { T }$ is a model of ${ \mathcal { K } } : = \langle { \mathcal { T } } , { \mathcal { A } } \rangle$   
+$\mathcal { K }$ is consistent if it has a model
+
+### (Un)Satisfiability of Knowledge Bases
+
+AKBis satisfiable (also:consistent)if thee exists an interpretation that satisfies all itsaxiors(a model of the KB).Otherwise it is unsatisfiable(alo:inconsistent or contradictory).   
+Is the following KB satisfable?
+
+ReindeerhasNose.Red(rudiph) worksFor.(-ReindeerLFlies(santa) worksFor(rudiph,santa) antabatman
+
+ReindeerMammal MammalnFliesBat BatVworksFor.{batman}
+
+### Reasoning
+
+Is the following KB satisfiable?
+
+Reindeer hasNose.Red(rudolph) Reindeer Mammal $\forall$ worksFor.(-Reindeer Flies)(santa) Mammal Flies Bat  
+worksFor(rudolph, santa) Bat $\square$ VworksFor.{batman}  
+santa $\approx$ batman
+
+### OWL
+
+### Web Ontology LanguageWeb本体语言
+
+![](assets/第一讲 知识工程与知识图谱-handout/4945cdc1f8e70ab62438b1add8ce83b5062f6c43f31fc0b6f39d2afe290f4f27.jpg)  
+User Interface & Applications
+
+### HowDoDLsand OWL Relate
+
+OWL is essentially
+
+SROIQ in disguise   
+■plus extended datatype support   
+plus extralogical features such as annotations,versioning etc.
+
+OWL speak is different fromDL terminology:
+
+<table><tr><td>OWL</td><td>DL</td><td>FOL</td></tr><tr><td>class name</td><td>concept name</td><td>unary predicate</td></tr><tr><td>class</td><td>concept</td><td>formula with one free variable</td></tr><tr><td>object property name</td><td>role name</td><td>binary predicate</td></tr><tr><td>object property ontology</td><td>role</td><td>formula with two free variables</td></tr><tr><td>axiom</td><td>knowledge base</td><td>theory</td></tr><tr><td>vocabulary</td><td>axiom</td><td>sentence</td></tr><tr><td></td><td>vocabulary / signature</td><td>signature</td></tr></table>
+
+### Translating DL into OWL
+
+$$
+\llbracket \mathcal {K B} \rrbracket = \operatorname {P r e} + \operatorname {D e c} (\mathcal {K B}) \sum_{\alpha\in\mathcal{KB}} [   [ \alpha ]   ]
+$$
+
+$$
+\mathrm {P r e} = \left\{ \begin{array}{l l} @ p r e f i x o w 1: & <   \text {h t p : / / w w . w 3 . o r g / 2002 / 07 / o w l \# >}. \\ @ p r e f i x r d f s: & <   \text {h t p : / / w w . w 3 . o r g / 2000 / 01 / r d f - s c h e m a \# >}. \\ @ p r e f i x r d f: & <   \text {h t p : / / w w . w 3 . o r g / 1999 / 02 / 22 - r d f - s y n t a x - n s \# >}. \\ @ p r e f i x x s d: & <   \text {h t p : / / w w . w 3 . o r g / 2001 / X M L S c h e m a \# >}. \end{array} \right.
+$$
+
+$$
+\begin{array}{l} \operatorname {D e c} (\mathcal {K B}) = \sum_{A\in\mathrm{N} _{C} (\mathcal {K B})} A \text {r d f : t y p e o w l : C l a s s}. \\ + \sum_{r\in\mathrm{N} _{R} (\mathcal {K B})} r \text {r d f : t y p e o w l : O b j e c t P r o p e r t y}. \\ \end{array}
+$$
+
+### Translating DL axioms into OWL
+
+Following the Semantic Web rationale, OWL axioms are RDFSvocabulary is reused.
+
+$$
+\llbracket r _{1} \circ \dots \circ r _{n} \sqsubseteq r \rrbracket = \llbracket r \rrbracket_{\mathrm{R}} \text {o w l : p r o p e r t y C h a i n A x i o m} \left(\llbracket r _{1} \rrbracket_{\mathrm{R}} \dots \llbracket r _{n} \rrbracket_{\mathrm{R}}\right).
+$$
+
+$$
+\llbracket \operatorname {D i s} \left(r, r ^{\prime}\right) \rrbracket = \llbracket r \rrbracket_{\mathrm{R}} \text {o w l : p r o p e r t y D i s j o i n t W i t h} \llbracket r ^{\prime} \rrbracket_{\mathrm{R}}.
+$$
+
+$$
+[ C \sqsubseteq D ] = [ C ] _{\mathrm{C}} \text {r d f s : s u b C l a s s 0 f} [ D ] _{\mathrm{C}}.
+$$
+
+$$
+[   [ C (a) ]   ] = a \operatorname {r d f}: \text {t y p e} _{\mathbb{C}} [   [ C ]   ] c.
+$$
+
+$$
+[   [ r (  a, b)   ]   ] = a r b.
+$$
+
+$$
+[   [ r ^{-} (a, b) ]   ] = b r a
+$$
+
+$$
+\begin{array}{r l} {[ \neg r (a, b) ] = [ ] \quad \text {r d f : t y p e o w l : N e g a t i v e P r o p e r t y A s s e r t i o n ;}} \\ & {\quad \text {o w l : a s s e r t i o n P r o p e r t y} [ r ] _{\mathrm{R}} ;} \\ & {\quad \text {o w l : s o u r c e I n d i v i d u a l} a ; \quad \text {o w l : t a r g e t V a l u e} b .} \end{array}
+$$
+
+$$
+[ a \approx b ] = a \text {o w l : s a m e A s} b.
+$$
+
+$$
+[   [ a \not \approx b ]   ] = a \text {o w l : d i f f e r e n t F r o m} b .
+$$
+
+```latex
+[ [u]_{\mathrm{R}} = \text{owl:topObjectProperty} ]
+[ [r]_{\mathrm{R}} = r ]
+[ [r - ]_{\mathrm{R}} = [\text{owl:inverseOf} : r] ]
+[ [A]_{\mathrm{C}} = A ]
+[ [T]_{\mathrm{C}} = \text{owl:Thing} ]
+[ [⊥]_{\mathrm{C}} = \text{owl:Nothing} ]
+[ [ \{a_1, \ldots, a_n \} ]_{\mathrm{C}} = [\text{rdfs:type owl:Class}; \text{owl:oneOf} (\cdot a_1 \ldots \cdot a_n)] ]
+[ [ \neg C ]_{\mathrm{C}} = [\text{rdfs:type owl:Class}; \text{owl:complementOf} [C ]_{\mathrm{C}} ] ]
+[ [C_1 \sqcup \ldots \sqcap C_n ]_{\mathrm{C}} = [\text{rdfs:type owl:Class}; \text{owl:intersectionOf} ([C_1]_{\mathrm{C}} \ldots [C_n]_{\mathrm{C}})] ]
+[ [C_1 \sqcup \ldots \sqcup C_n ]_{\mathrm{C}} = [\text{rdfs:type owl:Class}; \text{owl:unionOf} ([C_1]_{\mathrm{C}} \ldots [C_n]_{\mathrm{C}})] ]
+[ [ \exists r. C ]_{\mathrm{C}} = [\text{rdfs:type owl:Restriction}; \text{owl:onProperty} [r]_{\mathrm{R}}; \text{owl:someValuesFrom} [C]_{\mathrm{C}} ] ]
+[ [ \forall r. C ]_{\mathrm{C}} = [\text{rdfs:type owl:Restriction}; \text{owl:onProperty} [r]_{\mathrm{R}}; \text{owl:allValuesFrom} [C]_{\mathrm{C}} ] ]
+[ [ \exists r. Self ]_{\mathrm{C}} = [\text{rdfs:type owl:Restriction}; \text{owl:onProperty} [r]_{\mathrm{R}}; \text{owl:hasSelf}"true"~xsd:boolean} ] ]
+[ [ \geqslant n r. C ]_{\mathrm{C}} = [\text{rdfs:type owl:Restriction}; \text{owl:minQualifiedCardinality} n^{\sim}\text{xsd:nonNegativeInteger}; \text{owl:onProperty} [r]_{\mathrm{R}}; \text{owl:onClass} [C]_{\mathrm{C}} ] ]
+[ [ \leqslant n r. C ]_{\mathrm{C}} = [\text{rdfs:type owl:Restriction}; \text{owl:maxQualifiedCardinality} n^{\sim}\text{xsd:nonNegativeInteger}; \text{owl:onProperty} [r]_{\mathrm{R}}; \text{owl:onClass} [C]_{\mathrm{C}} ] ] 
+```
+
+### An OWL Ontology in RDF/Turtle serialisation
+
+RBox R owns $\sqsubseteq$ caresFor "If somebody owns something, they care for it."   
+TBox T Healthy $\sqsubseteq$ Dead "Healthy beings are not dead." CatDead Alive "Every cat is dead or alive." HappyCatOwner $\sqsubseteq$ Owns.CatVcaresFor.Healthy "A happy cat owner owns a cat and all beings he cares for are healthy."   
+ABox A HappyCatOwner (schrodinger) "Schrodinger is a happy cat owner."
+
+```rdf
+@prefix : <http://www.example.org/#> .   
+@prefix owl: <http://www.w3.org/2002/07/owl#> .   
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .   
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .   
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .   
+: owns rdf:type owl:ObjectProperty .   
+:caresFor rdf:type owl:ObjectProperty .   
+:Cat rdf:type owl:Class .   
+:Dead rdf:type owl:Class .   
+:Alive rdf:type owl:Class .   
+:Healthy rdf:type owl:Class .   
+:HappyCatOwner rdf:type owl:Class .   
+: owns rdfs:subPropertyOf :caresFor .   
+:Healthy rdfs:subClassOf [ owl:complementOf :Dead ] .   
+:Cat rdfs:subClassOf [ owl:unionOf ( :Dead :Alive) ] .   
+:HappyCatOwner rdfs:subClassOf [ owl:intersectionOf ([ rdf:type owl:Restriction ; owl:onProperty :owns ; owl:someValuesFrom :Cat ] [ rdf:type owl:Restriction ; owl:onProperty :caresFor ; owl:allValuesFrom :Healthy] ) ] .   
+:schrödinger rdf:type :HappyCatOwner . 
+```
+
+<table><tr><td>RBox R
+ owns □ caresFor
+ “If somebody owns something, they care for it.”</td></tr><tr><td>TBox T
+ Healthy □ ¬Dead
+ “Healthy beings are not dead.”
+ Cat □ Dead □ Alive
+ “Every cat is dead or alive.”
+ HappyCatOwner □ Others/cat □ ∀caresFor. Healthy
+ “A happy cat owner owns a cat and all beings he cares for are healthy.”</td></tr><tr><td>ABox A
+ HappyCatOwner (schrödinger)
+ “Schrödinger is a happy cat owner.”</td></tr></table>
+
+```rdf
+@prefix : <http://www.example.org/#> .   
+@prefix owl: <http://www.w3.org/2002/07/owl#>.   
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.   
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.   
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.   
+:owns rdf:type owl:ObjectProperty .   
+:caresFor rdf:type owl:ObjectProperty .   
+:Cat rdf:type owl:Class .   
+:Dead rdf:type owl:Class .   
+:Alive rdf:type owl:Class .   
+:Healthy rdf:type owl:Class .   
+:HappyCatOwner rdf:type owl:Class .   
+:owns rdfs:subPropertyOf :caresFor .   
+:Healthy rdfs:subClassOf [ owl:complementOf :Dead ] .   
+:Cat rdfs:subClassOf [ owl:unionOf (:Dead :Alive) ] .   
+:HappyCatOwner rdfs:subClassOf [ owl:intersectionOf ( [ rdf:type owl:Restriction ; owl:onProperty :owns ; owl:someValuesFrom :Cat ] [ rdf:type owl:Restriction ; owl:onProperty :caresFor ; owl:allValuesFrom :Healthy] ) ] .   
+:schrödinger rdf:type :HappyCatOwner . 
+```
+
+### Behind the Scenes..
+
+```txt
+:HappyCatOwner rdfs:subClassOf [owl:intersectionOf ( [rdfs:type owl:Restriction ; owl:onProperty :owns ; owl:someValuesFrom :Cat ] [rdfs:type owl:Restriction ; owl:onProperty :caresFor ; owl:allValuesFrom :Healthy] ) ] . 
+```
+
+![](assets/第一讲 知识工程与知识图谱-handout/118885d07bf704a5300fa74d0f5b639deab1367bcaa7b7717fb71c71f9ee4dcb.jpg)
+
+<table><tr><td>Axiom type</td><td>Turtle notation</td><td>DL paraphrase</td></tr><tr><td>Class Equivalence</td><td>[[C]]C owl:equivalentClass [[D]]C.</td><td>C ⊆ D, D ⊆ C</td></tr><tr><td>Class Disjointness</td><td>[[C]]C owl:disjointWith [[D]]C.</td><td>C ∩ D ⊥⊥</td></tr><tr><td>Disjoint Classes</td><td>[] rdf:type owl:AllDisjointClasses; owl:members ([C1]C ... [Cn]C).</td><td>C_i ∩ C_j ⊆⊥ for all 1≤i&lt;j≤n</td></tr><tr><td>Disjoint Union</td><td>[[C]]C owl:disjointUnionOf ([C1]C ... [Cn]C).</td><td>∪i&lt;j&gt;C_i ⊆C
+C_i ∩ C_j ⊆⊥ for all 1≤i&lt;j≤n</td></tr><tr><td>Property Equivalence</td><td>[[r]]R owl:equivalentProperty [[s]]R.</td><td>r ⊆ s, s ⊆ r</td></tr><tr><td>Disjoint Properties</td><td>[] rdf:type owl:AllDisjointProperties; owl:members ([r1]R ... [rn]R).</td><td>Dis(r_i, r_j) for all 1≤i&lt;j≤n</td></tr><tr><td>Inverse Properties</td><td>[[r]]R owl:inverseOf [[s]]R.</td><td>Inv(r) ⊆ s</td></tr><tr><td>Property Domain</td><td>[[r]]R rdfs:domain [[C]]C.</td><td>∃r. T ⊆ C</td></tr><tr><td>Property Range</td><td>[[r]]R rdfs:range [[C]]C.</td><td>T ⊆ ∀r.C</td></tr><tr><td>Functional Property</td><td>[[r]]R rdf:type owl:FunctionalProperty .</td><td>T ⊆ ≤1r.T</td></tr><tr><td>Inverse Functional</td><td>[[r]]R rdf:type</td><td>T ⊆ ≤1Inv(r).T</td></tr><tr><td>Property</td><td>owl:InverseFunctionalProperty .</td><td></td></tr><tr><td>Reflexive Property</td><td>[[r]]R rdf:type owl: reflexiveProperty .</td><td>T ⊆ ∃r.Self</td></tr><tr><td>Irreflexive Property</td><td>[[r]]R rdf:type owl: IrreflexiveProperty .</td><td>∃r. Self ⊆ ⊥</td></tr><tr><td>Symmetric Property</td><td>[[r]]R rdf:type owl: SymmetricProperty .</td><td>Inv(r) ⊆ r</td></tr><tr><td>Asymmetric Property</td><td>[[r]]R rdf:type owl: AsymmetricProperty .</td><td>Dis(Inv(r), r)</td></tr><tr><td>Transitive Property</td><td>[[r]]R rdf:type owl: TransitiveProperty .</td><td>r o r ⊆ r</td></tr><tr><td>Different Individuals</td><td>[] rdf:type owl: AllDifferent ; owl:members ( a1 ... an ) .</td><td>ai ≈ aj for all 1≤i&lt;j≤n</td></tr></table>
+
+### ■ 本体推理举例：Schrodinger 是否为 HappyCatOwner?
+
+ex:Healthy rdfs:subClassOf [owl:complementOf ex:Dead].
+
+ex:Cat rdfs:subClassOf [owl:unionOf(ex:Dead,ex:Alive)].
+
+ex:owns rdfs:subPropertyOf ex:caresFor.
+
+ex:HappyCatOwner rdfs:subClassOf [owl:intersectionOf(
+
+[rdf:type owl:Restriction;owl:onProperty ex:owns;Vowl:someValuesFrom ex:Cat]
+
+rdf:type owl:Restriction;owl:onProperty ex:caresFor;owl:allValuesFrom ex:Healthy])].
+
+ex:schrodinger rdf:type ex:HappyCatOwner.
+
+Knowledge Base
+
+本体（知识库）
+
+Tableau
+
+推理算法
+
+```txt
+ex:Healthy rdfs:subClassOf [owl:complementOf ex:Dead]. Knowledge Base   
+ex:Cat rdfs:subClassOf [owl:unionOf (ex:Dead, ex:Alive)].   
+ex:owns rdfs:subPropertyOf ex:caresFor.   
+ex:HappyCatOwner rdfs:subClassOf [owl:intersectionOf( [ rdf:type owl:Restriction; owl:onProperty ex:owns; owl:someValuesFrom ex:Cat], [ rdf:type owl:Restriction; owl:onProperty ex:caresFor; owl:ValuesFrom ex:Healthy])].   
+ex:schrodinger rdf:type ex:HappyCatOwner. 
+```
+
+![](assets/第一讲 知识工程与知识图谱-handout/ce8a46b8e7e4e2ff9d1a68d8ce102904baaf1211d1569d7f45ce12b7e5730d93.jpg)
+
+ex:HappyCatOwner
+
+### Tableau
+
+ex:Healthy rdfs:subClassOf [owl:complementOf ex:Dead].
+
+ex:Cat rdfs:subClassOf [owl:unionOf(ex:Dead,ex:Alive)].
+
+ex:owns rdfs:subPropertyOf ex:caresFor.
+
+ex:HappyCatOwner rdfs:subClassOf [owl:intersectionOf(
+
+[rdf:type owl:Restriction;owl:onProperty ex:owns;owl:smeValuesFrom ex:Cat],
+
+rdf:type owl:Restriction;owl:onProperty ex:caresFor;owl.allValuesFrom ex:Healthyl)].
+
+ex:schrodinger rdf:type ex:HappyCatOwner.
+
+### Knowledge Base
+
+![](assets/第一讲 知识工程与知识图谱-handout/d9eff082011c160a2e10c8515f76e3a6f3128879edfc58b722b6ee30eaed81db.jpg)
+
+### Tableau
+
+![](assets/第一讲 知识工程与知识图谱-handout/d1cdd7c9454d321956a124001ed00204e6cf11ee1db219ade5887d870110ba90.jpg)
+
+ex:HappyCatOwner
+
+[owl:intersectionof
+
+![](assets/第一讲 知识工程与知识图谱-handout/809bd047f22b0041ee9745b51dc33bb63d6bcb543e77b7c735cd6e4f98009a63.jpg)
+
+![](assets/第一讲 知识工程与知识图谱-handout/09d799f3dc687caa34c5ca8f196cc36b412ce2ff0a83c2790f028f460e02bda7.jpg)
+
+```txt
+ex:Healthy rdfs:subClassOf [owl:complementOf ex:Dead]. Knowledge Base   
+ex:Cat rdfs:subClassOf [owl:unionOf (ex:Dead, ex:Alive)].   
+ex:owns rdfs:subPropertyOf ex:caresFor.   
+ex:HappyCatOwner rdfs:subClassOf [owl:intersectionOf( [rdf:type owl:Restriction; owl:onProperty ex:owns; owl:someValuesFrom ex:Cat], [rdf:type owl:Restriction; owl:onProperty ex:caresFor; owl:ValuesFrom ex:Healthy])] .   
+ex:schrodinger rdf:type ex:HappyCatOwner. 
+```
+
+![](assets/第一讲 知识工程与知识图谱-handout/2a6ab559b160ccf4f0c6ae1c56b4be91987e0c71661bc4bb9bb8a67e92cc8417.jpg)
+
+ex:HappyCatOwner
+
+[owl:intersectiono
+
+![](assets/第一讲 知识工程与知识图谱-handout/921061e51df679748efabf78b2e1a178f4183070d59c978b1ff3b7972bc58364.jpg)
+
+![](assets/第一讲 知识工程与知识图谱-handout/6aefeb5c6af6886dbf916717a002e96a3ef85ee984e2f0ee06bedf169f29bac9.jpg)
+
+![](assets/第一讲 知识工程与知识图谱-handout/e61a4455e3ec8514964862ad7cbd3ba34bcccdb79e0f3609a0655e61c2ada0b4.jpg)
+
+### Tableau
+
+ex:Healthy rdfs:subClassOf [owl:complementOf ex:Dead].
+
+ex:Cat rdfs:subClassOf [owl:unionOf(ex:Dead,ex:Alive)].
+
+ex:owns rdfs:subPropertyOf ex:caresFor.
+
+ex:HappyCatOwner rdfs:subClassOf [owl:intersectionOf(
+
+[rdf:type owl:Restriction;owl:onProperty ex:owns; owlsmeValuesFrom ex:Cat]
+
+[rdf:type owl:Restriction;owl:onProperty ex:caresFor;owlallValuesFrom ex:Healthy])].
+
+ex:schrodinger rdf:type ex:HappyCatOwner.
+
+### Knowledge Base
+
+![](assets/第一讲 知识工程与知识图谱-handout/4d2213cba4ab7e7cdceca760bd5012f3d9356015c3ad4bb5f3314a7be5d82cbf.jpg)
+
+ex:owns
+
+ex:HappyCatOwner
+
+[owl:intersectionof
+
+![](assets/第一讲 知识工程与知识图谱-handout/ddcb04c57e0594e311c9046c61c40a5b46c5c894446b04c810a2be46e1ca7ed5.jpg)
+
+![](assets/第一讲 知识工程与知识图谱-handout/6508230405517a5c9f670703c2a23b2dee96723b364763c42a23037dfe55bf44.jpg)
+
+ex:Cat
+
+![](assets/第一讲 知识工程与知识图谱-handout/232e1fec3c30ebd055d55e4ddc9a8e5d786a2152ac1b4b4f342343a0760b6b58.jpg)
+
+### Tableau
+
+ex:Healthy rdfs:subClassOf [owl:complementOf ex:Dead].
+
+ex:Cat rdfs:subClassOf [owl:unionOf(ex:Dead,ex:Alive)].
+
+ex:owns rdfs:subPropertyOf ex:caresFor
+
+ex:HappyCatOwner rdfs:subClassOf [owl:intersectionOf（
+
+[rdf:type owl:Restriction；owl:onProperty ex:owns;owl:soneValuesFrom ex:Cat],
+
+[rdf:type owl:Restriction;owl:onProperty ex:caresFor;owl;allValuesFrom ex:Healthy])].
+
+ex:schrodinger rdf:type ex:HappyCatOwner.
+
+### Knowledge Base
+
+![](assets/第一讲 知识工程与知识图谱-handout/9694b8c638fa4afb406627e305a893e6ba31969e68333a2033bb313202b731e0.jpg)
+
+### Tableau
+
+ex:Healthy rdfs:subClassOf [owl:complementOf ex:Dead].
+
+ex:Cat rdfs:subClassOf [owl:unionOf(ex:Dead,ex:Alive)].
+
+ex:owns rdfs:subPropertyOf ex:caresFor.
+
+ex:HappyCatOwner rdfs:subClassOf [owl:intersectionOf(
+
+[rdf:type owl:Restriction;owl:onProperty ex:owns;owl:someValuesFrom ex:Cat],
+
+[rdf:type owl:Restriction;owl:onProperty excaresFor;owlallValuesFrom ex:Healthy])].
+
+ex:schrodinger rdf:type ex:HappyCatOwner.
+
+### Knowledge Base
+
+![](assets/第一讲 知识工程与知识图谱-handout/ded726117c8a09a7ab0f6c204a90f4678c73d90e8196e30604f8702623c67853.jpg)
+
+ex:owns
+
+ex:caresFor
+
+ex:HappyCatOwner
+
+[owl:intersectionor
+
+![](assets/第一讲 知识工程与知识图谱-handout/317a13d3a9f707a7043ed0686acc1d2805b493ec674333b9067615ae53e96841.jpg)
+
+![](assets/第一讲 知识工程与知识图谱-handout/1c55ce05c73bc8b7ce8a1adfa2cb614470113172343b14d71d1d9bfea20d2d9c.jpg)
+
+ex:Cat ex:Healthy
+
+![](assets/第一讲 知识工程与知识图谱-handout/ef65a0d4af0b986c22f73dd2e6fec6abe6ef59d0bbe0b9738d04cd2f6b8ce331.jpg)
+
+### Tableau
+
+![](assets/第一讲 知识工程与知识图谱-handout/0adbe7cb30d8037648616ce900fac9836f3bdc7bdeb558ddd6b7e9ace8772649.jpg)
+
+ex:Healthy rdfs:subClassOf [owl:complementOf ex:Dead]
+
+ex:Cat rdfs:subClassOf [owl:unionOf(ex:Dead,ex:Alive)]
+
+ex:owns rdfs:subPropertyOf ex:caresFor.
+
+ex:HappyCatOwner rdfs:subClassOf [owl:intersectionOf(
+
+[rdf:type owl:Restriction;owl:onProperty ex:owns;owl;sQmeValuesFrom ex:Cat],
+
+[rdf:type owl:Restriction;owl:onProperty excaresFor;qwlallValuesFrom ex:Healthy])].
+
+ex:schrodinger rdf:type ex:HappyCatOwner.
+
+### Knowledge Base
+
+![](assets/第一讲 知识工程与知识图谱-handout/f79d04cbd1e68f8505a9d0d602c7f83cb183f10d14d99a8d431663368f2f21aa.jpg)
+
+ex:owns
+
+ex:carsFor
+
+ex:HappyCatOwner
+
+[owl:intersectionof
+
+![](assets/第一讲 知识工程与知识图谱-handout/5b39a2c168231e9d05e02ee4cd85b1018417ac85d59cd725d304243a13b47b44.jpg)
+
+![](assets/第一讲 知识工程与知识图谱-handout/88b141fc6277cce421093dd20a4f8d387e4f5aa74d9ba1a2bc12060482c6a5c3.jpg)
+
+![](assets/第一讲 知识工程与知识图谱-handout/af98893d9a056317b38f7a094f0cd6ee933ba6463ce0dd3cb25e472558142a02.jpg)
+
+![](assets/第一讲 知识工程与知识图谱-handout/89d3fa93ef8cdd342ee7894c246f80145678365f7c9be807488eb0e9543b3ea1.jpg)
+
+ex:Cat ex:Healthy
+
+(ex:Dead,ex:Alive)]
+
+![](assets/第一讲 知识工程与知识图谱-handout/510ffbe9ff1f4b8259693c341d3deab1955afd585b2e61d84769968d8e98da93.jpg)
+
+### Tableau
+
+ex:Healthy rdfs:subClassOf owl:complementOf ex:Dead].
+
+ex:Cat rdfs:subClassOf [owl:unionOf(ex:Dead,ex:Alive)].
+
+ex:owns rdfs:subPropertyOf ex:caresFor.
+
+ex:HappyCatOwner rdfs:subClassOf [owl:intersectionOf(
+
+[rdf:type owl:Restriction;owl:onProperty ex:owns;owl;sQmeValuesFrom ex:Cat],
+
+[rdf:type owl:Restriction;owl:onProperty ex:caresFor;qwlallValuesFrom ex:Healthy])].
+
+ex:schrodinger rdf:type ex:HappyCatOwner.
+
+### Knowledge Base
+
+![](assets/第一讲 知识工程与知识图谱-handout/5e14b196371c23714dc9a46e2f7a105e313b0cd6009c4735bd8f31eb0f860fea.jpg)
+
+ex:owns
+
+ex:carsFor
+
+![](assets/第一讲 知识工程与知识图谱-handout/98beaf644da357a32a586211fd4bf46cdbf09bd5e99715d3a54307b702475942.jpg)
+
+ex:HappyCatOwner
+
+[owl:intersectionof
+
+![](assets/第一讲 知识工程与知识图谱-handout/7036e6d215b9a7833ea0d7317f48a5a1db5a16739f8291c41ce9add1c99e45f4.jpg)
+
+![](assets/第一讲 知识工程与知识图谱-handout/4ccb4580720442ce86fe311b13c616ac805e4d153c967c4cad4d8f5420558f7a.jpg)
+
+![](assets/第一讲 知识工程与知识图谱-handout/b7e7853e758403ca259876f6e5c81609d8c38024e1c659f493ad1bd0e4ff192e.jpg)
+
+ex:Cat ex:Healthy
+
+[owl:unionof
+
+(ex:Dead,ex:Alive)]
+
+### Tableau
+
+![](assets/第一讲 知识工程与知识图谱-handout/6957cff4666b625f7e27a2035ef31607eb9769b10064c37e8b892f68f44aa987.jpg)
+
+![](assets/第一讲 知识工程与知识图谱-handout/85f7d4dad48b1fe416c7476d2debd146abf49095f5c052b24fbd033f1f75676b.jpg)
+
+![](assets/第一讲 知识工程与知识图谱-handout/dc4a2115cae9b45bb997bee696c479f2085490d2d94d29a88dc88a929b9cbc9c.jpg)
+
+ex:Healthy rdfs:subClassOf [owl:complementof ex:Dead]. Knowledge Base ex:Cat rdfs:subClassOf [owl:unionOf(ex:Dead,ex:Alive)]. ex:owns rdfs:subPropertyOf ex:caresFor. ex:HappyCatOwner rdfs:subClassOf [owl:intersectionOf( [rdf:type owl:Restriction;owl:onProperty ex:owns; owl:someValuesFrom ex:Cat] [rdf:type owl:Restriction;owl:onProperty ex:caresFor;owTallValuesFrom ex:Healthy])] ex:schrodinger rdf:type ex:HappyCatowner.
+
+![](assets/第一讲 知识工程与知识图谱-handout/c7f1134e34cfb50255a1b18642449d44bd8c0c2785c742790e770c8b8a3a248e.jpg)
+
+### Tableau
+
+![](assets/第一讲 知识工程与知识图谱-handout/2efb210c2f4de95a9e1ac2f5d74fe67dfaf46831d704d4a2bee1c151989db2ea.jpg)
+
+![](assets/第一讲 知识工程与知识图谱-handout/7c3ae7a359922b4900f6f522204eaac161f5b894b0a2e9dac25ce46ea3c46a61.jpg)
+
+![](assets/第一讲 知识工程与知识图谱-handout/7a8882ec5c7551144eba26999965195169cf7996c5274a5813a05ba94ce03017.jpg)
+
+![](assets/第一讲 知识工程与知识图谱-handout/9e503e455175c77549d7e8f4878ee0b33ef92173188adcee0686de746697d843.jpg)
+
+ex:Healthy rdfs:subClassOf [owl:complementOf ex:Dead].
+
+ex:Cat rdfs:subClassOf [owl:unionOf(ex:Dead,ex:Alive)].
+
+ex:owns rdfs:subPropertyOf ex:caresFor.
+
+ex:HappyCatOwner rdfs:subClassOf [owl:intersectionOf(
+
+[rdf:type owl:Restriction;owl:onProperty ex:owns;owlsmeValuesFrom ex:Cat],
+
+[rdf:type owl:Restriction;owl:onProperty ex:caresFor;owjallValuesFrom ex:Healthy])].
+
+ex:schrodinger rdf:type ex:HappyCatOwner.
+
+### Knowledge Base
+
+![](assets/第一讲 知识工程与知识图谱-handout/c29af54b1d3f13e631835544d003b0189d616e8af386330e00e56abbf20d3f5e.jpg)
+
+ex:owns
+
+ex:carOFor
+
+![](assets/第一讲 知识工程与知识图谱-handout/cae1896c9a2ccb8bc47235aad830c9d8ecda5572095ac0aea016bc956c066c63.jpg)
+
+ex:HappyCatOwner
+
+[owl:intersectionof
+
+![](assets/第一讲 知识工程与知识图谱-handout/7d45f201a9df1fad73fa1a69c4939e2bcd9ccdba864ced21692e70cb6c639fad.jpg)
+
+ex:Cat ex:Healthy
+
+[owl:unionof
+
+(ex:Dead,ex:Alive)]
+
+### Tableau
+
+![](assets/第一讲 知识工程与知识图谱-handout/01dfaafe1d4c26cb1435636f0dc122bfbe00cf2f39a0348d90fb1940b08530db.jpg)
+
+![](assets/第一讲 知识工程与知识图谱-handout/790e1485c6875dbfe19f596c35b1d604600ccda63b5f1fc91934151af88b66de.jpg)
+
+ex:owns
+
+![](assets/第一讲 知识工程与知识图谱-handout/ba94ff51c924d787b79ad2870d7ddf0b9821c7aaf3eef18c0e9b6ceeedc7b312.jpg)
+
+ex:HappyCatOwner
+
+[owl:intersectionof（，
+
+ex:Cat ex:Healthy ex:Alive
+
+(ex:Dead,ex:Alive)]
+
+[owl:complementOf ex:Dead]
+
+ex:Healthy ndfs:subClassOf [owl:complementOf ex:Dead].
+
+ex:Cat rdfseswl:unionOf(ex:Dead,ex:Alive)].
+
+ex:ownsrdfs:surroertexrosFor
+
+ex:HappyCatownerrdfs:subciasorseionof（
+
+[rdf:type owl:Restriction;owl:onroepxwns;owl:someValuesFrom ex:Cat]
+
+[rdf:type owl:Restriction;owl:onProperty exaresFor;owtaliValuesFrom ex:Healthyl)].
+
+ex:schrodingerrdf:type ex:HappyCatOwner.
+
+### Knowledge Base
+
+![](assets/第一讲 知识工程与知识图谱-handout/09a45e49a3fdb439b06618c5847239301fca85b0064c2ea694be9c80d3a6e650.jpg)
+
+ex:owns
+
+ex:carror
+
+ex:HappyCatOwner
+
+[owl:intersectionof
+
+![](assets/第一讲 知识工程与知识图谱-handout/62cfc9fa7c71a920b934655dabdc928387893120b4639eb42d4e4aa60e010249.jpg)
+
+![](assets/第一讲 知识工程与知识图谱-handout/58418ae9e884da03554bb11d149ace1a4131eb8a9ca623ee180e96a7dbda9b49.jpg)
+
+ex:Cat ex:Healthy
+
+(ex:Dead,ex:Alive)]
+
+### Tableau
+
+![](assets/第一讲 知识工程与知识图谱-handout/ae95bfcd0c2c0ed3e9ac8ce23af29b5bfcc16e9379e7db239d79d97341810f55.jpg)
+
+[owl:complementOfex:Dead]
+
+![](assets/第一讲 知识工程与知识图谱-handout/618471f4e35cad187b674c76bec183ef232e0fdce1846507f65e5b8d49f7737f.jpg)
+
+![](assets/第一讲 知识工程与知识图谱-handout/6fa3ef303ad040fb894b8ded41a7253564813d76c925521ec0fa1d721f41e589.jpg)
+
+ex:HappyCatOwner
+
+[owl:intersectionof（）]
+
+![](assets/第一讲 知识工程与知识图谱-handout/49cf768caaa7ee56076fc2278928170d164ee3d816df0f489b6dd29f4737ff8e.jpg)
+
+ex:Cat ex:Healthy ex:Alive
+
+(ex:Dead,exv
+
+[owl:complemen
+
+Dead]
+
+---
+## 04 知识图谱
+### 知识工程的发展到知识图谱新阶段
+
+![](assets/第一讲 知识工程与知识图谱-handout/68f522508cd8989e075f74a2188c2b06d729ab25f9e1f8e9c1c30fd56bccf53f.jpg)
+
+知识表示与知识库- Knowledge Representation / Knowledge Base人工智能研究者陆续提出了大量知识表示的方法，如框架系统、产生式规则、描述逻辑等
+
+知识工程得益于KR、NLP、Web、AI多个方面的发展，走向知识图谱新阶段
+
+### Google Knowledge Graph, 2012
+
+![](assets/第一讲 知识工程与知识图谱-handout/561e20e4f4ed08a17e89349ee3af70ed3039385cc9b9bb8587ef4f876f0099b0.jpg)
+
+### 知识图谱是三元组的集合
+
+<Leonardo Da Vinci> <born> <Anchiano>   
+<Leonardo Da Vinci> <died> <Chateau du Clos Luce>   
+<Leonardo Da Vinci> <artworks> <Mona Lisa>   
+<Mona Lisa> <location> <Louvre Museum>   
+<Leonardo Da Vinci> <on view> <Louvre Museum>
+
+### 三元组 （triple） 是知识的最小单元
+
+多条三元组形成关联数据 （Linked Data）  
+Linked Data是关于实例的知识图谱   
+“知识图谱” vs “数据图谱”
+
+### RDF（Resource Description Framework）资源描述框架（N-Triples格式）
+
+<http://dbpedia.org/resource/Leonardo_da_Vinci> <http://dbpedia.org/ontology/born> <http://dbpedia.org/resource/Anchiano> . <http://dbpedia.org/resource/Leonardo_da_Vinci> <http://dbpedia.org/ontology/died> <http://dbpedia.org/resource/Clos_Luce> . <http://dbpedia.org/resource/Leonardo_da_Vinci> <http://dbpedia.org/ontology/artworks> <http://dbpedia.org/resource/Mona_Lisa> . <http://dbpedia.org/resource/Mona_Lisa> <http://dbpedia.org/ontology/location> <http://dbpedia.org/resource/Louvre> . <http://dbpedia.org/resource/Leonardo_da_Vinci> <http://dbpedia.org/ontology/onview> <http://dbpedia.org/resource/Louvre> .
+
+### RDF（ Turtle格式）
+
+@prefix dbo: <http://dbpedia.org/ontology/>   
+@prefix dbr: <http://dbpedia.org/resource/>
+
+dbr:Leonardo_da_Vinci dbo:born dbr:Anchiano ; dbo:died dbr:Clos_Luce ; dbo:artworks dbr:Mona_Lisa . dbr:Mona_Lisa dbo:location dbr:Louvre . dbr:Leonardo_da_Vinci dbo:onview dbr:Louvre .
+
+![](assets/第一讲 知识工程与知识图谱-handout/d7d64416d1bb5f9ca72322102f9eb62b7a183c3d04e843cece217fbe8897470f.jpg)
+
+![](assets/第一讲 知识工程与知识图谱-handout/af79227c3efa9414bc10efb6640fc2697ec9b458d71d1bfc858d16c1aac8ef9a.jpg)
+
+#
+
+![](assets/第一讲 知识工程与知识图谱-handout/69cfad6f19f5008ce2eb6edc21b37ab30dfe496ff2031d47600485ce4b606358.jpg)
+
+### SPARQL 查询
+
+SELECT ?artist ?work
+
+WHERE {
+
+?artist dbo:artworks ?work .
+
+?work dbo:location dbr:Louvre .
+
+?artist dbo:onview dbr:Louvre .
+
+![](assets/第一讲 知识工程与知识图谱-handout/bfda9b48e514fd1fb91006487f41be86561c62a58a300efb71f13905f89d9409.jpg)
+
+![](assets/第一讲 知识工程与知识图谱-handout/ad7ea283fe854ee77f413a60fd4dab459cad97398c93f4b075be22290e1fad0b.jpg)
+
+### 查询结果
+
+<table><tr><td>?artist</td><td>?work</td></tr><tr><td>dbr:Leonardo.da_Vinci</td><td>dbr:Mona_Lisa</td></tr></table>
+
+![](assets/第一讲 知识工程与知识图谱-handout/1d587e2497d2fdc276be5b274717df7ff7064ad7899b11b47bf5ed48373f239a.jpg)
+
+### RDF 知识图谱
+
+dbr:Leonardo_da_Vinci dbo:born dbr:Anchiano ; dbo:died dbr:Clos_Luce ; dbo:artworks dbr:Mona_Lisa . dbr:Mona_Lisa dbo:location dbr:Louvre . dbr:Leonardo_da_Vinci dbo:onview dbr:Louvre .
+
+Anchiano
+
+![](assets/第一讲 知识工程与知识图谱-handout/7b903293ceaf02312488f930d0d5cf04ce33a63e1c40c24e25d1840372d1fdcc.jpg)
+
+au du Clos Luce
+
+![](assets/第一讲 知识工程与知识图谱-handout/44e21c27ef9c6bdd31ee9c214a4a3f220d41e3100f7ca37fba97301e02d187ce.jpg)
+
+Leonardo Da Vinci
+
+![](assets/第一讲 知识工程与知识图谱-handout/c8169ec8b71949025a450ef1c6351e58e37e362b2cb7c713fa4763767cb0725d.jpg)
+
+查询是子图匹配过程
+
+N isa
+
+![](assets/第一讲 知识工程与知识图谱-handout/596512ee85fa7e7678626d80ba06f92831617608704ffb9273b3f8a3d3d4f808.jpg)
+
+![](assets/第一讲 知识工程与知识图谱-handout/30c9ae69e57681b90978632fe40dcea4852c959e716dd3d306a06f4224ade55b.jpg)
+
+![](assets/第一讲 知识工程与知识图谱-handout/5114df54de87af4d18f91750f29ffa9a29eeb495f33ab422771bbbc95a221058.jpg)
+
+Louvre Museum
+
+### 总结
+
+01 知识工程概述  
+02 语义Web   
+03 本体与推理  
+04 知识图谱
+
+![](assets/第一讲 知识工程与知识图谱-handout/43617355dcf5557210511e7e6d427d3c5245a97842c2d8e273f59fe5c99ff187.jpg)
