@@ -39,7 +39,7 @@
 
 ---
 
-## MPI vs Thread#
+## MPI vs Thread
 
 | 对比   | MPI           | Thread（OpenMP/PThread） |
 | ---- | ------------- | ---------------------- |
