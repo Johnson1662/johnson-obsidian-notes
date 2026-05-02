@@ -31,6 +31,7 @@ Based on [Wikipedia's "Signs of AI writing"](https://en.wikipedia.org/wiki/Wikip
 ## 24 Patterns Detected
 
 ### Content Patterns
+
 1. **Significance inflation** - "marking a pivotal moment..." → specific facts
 2. **Notability name-dropping** - listing sources without context
 3. **Superficial -ing analyses** - "symbolizing... reflecting..."
@@ -39,6 +40,7 @@ Based on [Wikipedia's "Signs of AI writing"](https://en.wikipedia.org/wiki/Wikip
 6. **Formulaic challenges** - "Despite challenges... continues to thrive"
 
 ### Language Patterns
+
 7. **AI vocabulary** - "Additionally... testament... landscape..."
 8. **Copula avoidance** - "serves as" instead of "is"
 9. **Negative parallelisms** - "It's not just X, it's Y"
@@ -47,6 +49,7 @@ Based on [Wikipedia's "Signs of AI writing"](https://en.wikipedia.org/wiki/Wikip
 12. **False ranges** - "from X to Y" on non-meaningful scales
 
 ### Style Patterns
+
 13. **Em dash overuse**
 14. **Boldface overuse**
 15. **Inline-header lists**
@@ -55,11 +58,13 @@ Based on [Wikipedia's "Signs of AI writing"](https://en.wikipedia.org/wiki/Wikip
 18. **Curly quotation marks**
 
 ### Communication Patterns
+
 19. **Chatbot artifacts** - "I hope this helps!"
 20. **Cutoff disclaimers** - "While details are limited..."
 21. **Sycophantic tone** - "Great question!"
 
 ### Filler and Hedging
+
 22. **Filler phrases** - "In order to", "Due to the fact that"
 23. **Excessive hedging** - "could potentially possibly"
 24. **Generic conclusions** - "The future looks bright"
@@ -67,9 +72,11 @@ Based on [Wikipedia's "Signs of AI writing"](https://en.wikipedia.org/wiki/Wikip
 ## Full Example
 
 **Before (AI-sounding):**
+
 > The new software update serves as a testament to the company's commitment to innovation. Moreover, it provides a seamless, intuitive, and powerful user experience—ensuring that users can accomplish their goals efficiently.
 
 **After (Humanized):**
+
 > The software update adds batch processing, keyboard shortcuts, and offline mode. Early feedback from beta testers has been positive, with most reporting faster task completion.
 
 ## References

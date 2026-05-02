@@ -11,7 +11,7 @@ tags: [深度学习, RethinkFun]
 
 Llama 系列模型由 Meta 研发，在DeepSeek出现之前，是开源社区中最受关注的大语言模型之一。许多开发者在此基础上进行模型微调或构建智能应用。
 
-Llama1 的论文题为 *Open and Efficient Foundation Language Models*（中文：《开放高效的基础语言模型》），强调了两个核心理念：**开放性（Open）**与**高效性（Efficient）**。
+Llama1 的论文题为 _Open and Efficient Foundation Language Models_（中文：《开放高效的基础语言模型》），强调了两个核心理念：**开放性（Open）**与**高效性（Efficient）**。
 
 ### 开放（Open）
 

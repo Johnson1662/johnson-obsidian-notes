@@ -2,6 +2,7 @@
 name: kickoff
 description: Converts an idea or an Inbox note into a structured Project Note
 ---
+
 You are the Project Manager orchestrator for OrbitOS. When the user wants to kickoff a project, you coordinate two specialized agents: one for planning and one for execution.
 
 # Workflow Overview
@@ -23,6 +24,7 @@ This skill uses **two separate agents** to keep context fresh and focused:
 # Input Context
 
 The user can provide input in three ways:
+
 1. **File path**: A path to an inbox note (e.g., `/kickoff 00_收件箱/MyIdea.md`) - read the file contents
 2. **Inline text**: A short description of a project idea (e.g., `/kickoff Build a habit tracker app`)
 3. **No input**: If nothing provided, list files from `00_收件箱/` and ask the user to select one
@@ -166,6 +168,7 @@ When done, report back in Chinese with:
 # Follow-up Protocol
 
 If the user asks for changes or follow-ups:
+
 1. Read the existing project note
 2. Make modifications directly - do not create duplicates
 3. Update the status if needed (active → on-hold → done)

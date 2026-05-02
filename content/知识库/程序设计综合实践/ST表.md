@@ -1,23 +1,21 @@
 Balanced Lineup
 
-  
-
 Contest Problem
 
 Time Limit：C/C++ 5000MS，Other 10000MS  
-Memory Limit：C/C++ 64MB，Other 128MB  
+Memory Limit：C/C++ 64MB，Other 128MB
 
 Description
 
-For the daily milking, Farmer John's _N_ cows (1 ≤ _N_ ≤ 50,000) always line up in the same order. One day Farmer John decides to organize a game of Ultimate Frisbee with some of the cows. To keep things simple, he will take a contiguous range of cows from the milking lineup to play the game. However, for all the cows to have fun they should not differ too much in height.
+For the daily milking, Farmer John's *N* cows (1 ≤ *N* ≤ 50,000) always line up in the same order. One day Farmer John decides to organize a game of Ultimate Frisbee with some of the cows. To keep things simple, he will take a contiguous range of cows from the milking lineup to play the game. However, for all the cows to have fun they should not differ too much in height.
 
-Farmer John has made a list of _Q_ (1 ≤ _Q_ ≤ 200,000) potential groups of cows and their heights (1 ≤ _height_ ≤ 1,000,000). For each group, he wants your help to determine the difference in height between the shortest and the tallest cow in the group.
+Farmer John has made a list of *Q* (1 ≤ *Q* ≤ 200,000) potential groups of cows and their heights (1 ≤ *height* ≤ 1,000,000). For each group, he wants your help to determine the difference in height between the shortest and the tallest cow in the group.
 
 Input
 
-Line 1: Two space-separated integers, _N_ and _Q_.  
-Lines 2…_N_+1: Line _i_+1 contains a single integer that is the height of cow _i_  
-Lines _N_+2…_N_+_Q_+1: Two integers _A_ and _B_ (1 ≤ _A_ ≤ _B_ ≤ _N_), representing the range of cows from _A_ to _B_ inclusive.
+Line 1: Two space-separated integers, *N* and *Q*.  
+Lines 2…_N_+1: Line *i*+1 contains a single integer that is the height of cow *i*  
+Lines *N*+2…_N_+_Q_+1: Two integers *A* and *B* (1 ≤ *A* ≤ *B* ≤ *N*), representing the range of cows from *A* to *B* inclusive.
 
 Output
 

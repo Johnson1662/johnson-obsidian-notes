@@ -6,6 +6,7 @@
   overflow-y: hidden;
   min-height: 1.4rem;
   flex: 0 0.5 auto;
+
   &:has(button.toc-header.collapsed) {
     flex: 0 1 1.4rem;
   }
@@ -20,17 +21,23 @@ button.toc-header {
   color: var(--dark);
   display: flex;
   align-items: center;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: var(--secondary);
+  }
 
   & h3 {
     font-size: 1rem;
     display: inline-block;
     margin: 0;
+    font-weight: 600;
   }
 
   & .fold {
     margin-left: 0.5rem;
     transition: transform 0.3s ease;
-    opacity: 0.8;
+    opacity: 0.6;
   }
 
   &.collapsed .fold {
@@ -47,20 +54,41 @@ ul.toc-content.overflow {
   overscroll-behavior: contain;
   list-style: none;
 
-  & > li > a {
-    color: var(--dark);
-    opacity: 0.35;
-    transition:
-      0.5s ease opacity,
-      0.3s ease color;
-    &.in-view {
-      opacity: 0.75;
+  & > li {
+    position: relative;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: var(--highlight);
+    }
+
+    & > a {
+      color: var(--dark);
+      opacity: 0.4;
+      transition: 0.3s ease opacity, 0.3s ease color;
+      display: block;
+      padding: 0.15rem 0;
+      padding-left: 0.5rem;
+      border-left: 3px solid transparent;
+
+      &.in-view {
+        opacity: 1;
+        color: var(--dark);
+        border-left-color: var(--secondary);
+        background-color: var(--highlight);
+        font-weight: 500;
+      }
+
+      &:hover {
+        opacity: 0.8;
+      }
     }
   }
 
   @for $i from 0 through 6 {
     & .depth-#{$i} {
-      padding-left: calc(1rem * #{$i});
+      padding-left: calc(0.7rem * #{$i});
     }
   }
 }

@@ -3,6 +3,7 @@
 .search {
   min-width: fit-content;
   max-width: 14rem;
+
   @media all and ($mobile) {
     flex-grow: 0.3;
   }
@@ -10,10 +11,10 @@
   & > .search-button {
     background-color: transparent;
     border: 1px var(--lightgray) solid;
-    border-radius: 4px;
+    border-radius: 8px;
     font-family: inherit;
     font-size: inherit;
-    height: 2rem;
+    height: 2.2rem;
     padding: 0 1rem 0 0;
     display: flex;
     align-items: center;
@@ -21,6 +22,18 @@
     cursor: pointer;
     white-space: nowrap;
     width: 100%;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+      border-color: var(--gray);
+    }
+
+    &:focus,
+    &:focus-visible {
+      outline: none;
+      border-color: var(--secondary);
+      box-shadow: 0 0 0 3px rgba(120, 113, 108, 0.15);
+    }
 
     & > p {
       display: inline;
@@ -37,8 +50,12 @@
       .search-path {
         stroke: var(--darkgray);
         stroke-width: 1.5px;
-        transition: stroke 0.5s ease;
+        transition: stroke 0.3s ease;
       }
+    }
+
+    &:hover svg .search-path {
+      stroke: var(--dark);
     }
   }
 
@@ -52,7 +69,9 @@
     height: 100vh;
     overflow-y: auto;
     display: none;
-    backdrop-filter: blur(4px);
+    backdrop-filter: blur(6px);
+    background: rgba(0, 0, 0, 0.15);
+    animation: fadeIn 0.2s ease;
 
     &.active {
       display: inline-block;
@@ -70,24 +89,27 @@
 
       & > * {
         width: 100%;
-        border-radius: 7px;
+        border-radius: 12px;
         background: var(--light);
-        box-shadow:
-          0 14px 50px rgba(27, 33, 48, 0.12),
-          0 10px 30px rgba(27, 33, 48, 0.16);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12), 0 8px 24px rgba(0, 0, 0, 0.08);
         margin-bottom: 2em;
+        transition: box-shadow 0.3s ease;
       }
 
       & > input {
         box-sizing: border-box;
-        padding: 0.5em 1em;
+        padding: 0.6em 1.2em;
         font-family: var(--bodyFont);
         color: var(--dark);
         font-size: 1.1em;
         border: 1px solid var(--lightgray);
+        border-radius: 12px;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
 
         &:focus {
           outline: none;
+          border-color: var(--secondary);
+          box-shadow: 0 0 0 4px rgba(120, 113, 108, 0.1);
         }
       }
 
@@ -97,6 +119,8 @@
         border: 1px solid var(--lightgray);
         flex: 0 0 100%;
         box-sizing: border-box;
+        border-radius: 12px;
+        overflow: hidden;
 
         &.display-results {
           display: flex;
@@ -180,13 +204,11 @@
             overflow: hidden;
             padding: 1em;
             cursor: pointer;
-            transition: background 0.2s ease;
+            transition: background 0.2s ease, transform 0.15s ease;
             border-bottom: 1px solid var(--lightgray);
             width: 100%;
             display: block;
             box-sizing: border-box;
-
-            // normalize card props
             font-family: inherit;
             font-size: 100%;
             line-height: 1.15;
@@ -200,6 +222,7 @@
             &:focus,
             &.focus {
               background: var(--lightgray);
+              transform: translateX(2px);
             }
 
             & > h3 {
@@ -238,5 +261,14 @@
         }
       }
     }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }

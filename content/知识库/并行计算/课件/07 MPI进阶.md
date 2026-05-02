@@ -5,6 +5,7 @@
 阻塞通信的局限：发送/接收调用会等待直到操作完成（或至少安全返回），期间无法执行其他计算。
 
 ### 非阻塞操作的优势
+
 - 调用后立即返回，不等待任何通信事件
 - 将计算与通信重叠，改进并行效率
 - 避免由于发送/接收次序错误导致的死锁
@@ -12,6 +13,7 @@
 ### 非阻塞发送/接收
 
 **非阻塞发送**：
+
 ```c
 MPI_Isend(void* buf, int count, MPI_Datatype datatype,
             int dest, int tag, MPI_Comm comm,
@@ -19,6 +21,7 @@ MPI_Isend(void* buf, int count, MPI_Datatype datatype,
 ```
 
 **非阻塞接收**：
+
 ```c
 MPI_Irecv(void* buf, int count, MPI_Datatype datatype,
             int source, int tag, MPI_Comm comm,
@@ -29,9 +32,9 @@ MPI_Irecv(void* buf, int count, MPI_Datatype datatype,
 
 ### 非阻塞通信模式对照表#
 
-| 阻塞模式 | 非阻塞等价 | 说明 |
-|----------|-------------|------|
-| `MPI_SEND` | `MPI_Isend` | 标准非阻塞 |
+| 阻塞模式    | 非阻塞等价   | 说明       |
+| ----------- | ------------ | ---------- |
+| `MPI_SEND`  | `MPI_Isend`  | 标准非阻塞 |
 | `MPI_Bsend` | `MPI_Ibsend` | 缓存非阻塞 |
 | `MPI_Ssend` | `MPI_Issend` | 同步非阻塞 |
 | `MPI_Rsend` | `MPI_Irsend` | 就绪非阻塞 |
@@ -48,14 +51,15 @@ MPI_Irecv(void* buf, int count, MPI_Datatype datatype,
 
 ## 非阻塞通信的完成检测#
 
-| 通信数量 | 检测（不阻塞） | 完成（阻塞等待） |
-|-----------|---------------|-----------------|
-| 单个 | `MPI_Test(&req, &flag, &status)` | `MPI_Wait(&req, &status)` |
-| 任意一个 | `MPI_Testany(count, reqs, &idx, &flag, &status)` | `MPI_Waitany(count, reqs, &idx, &status)` |
-| 部分 | `MPI_Testsome(count, reqs, &outcnt, indices, &status)` | `MPI_Waitsome(count, reqs, &outcnt, indices, &status)` |
-| 所有 | `MPI_Testall(count, reqs, &flag, statuses)` | `MPI_Waitall(count, reqs, statuses)` |
+| 通信数量 | 检测（不阻塞）                                         | 完成（阻塞等待）                                       |
+| -------- | ------------------------------------------------------ | ------------------------------------------------------ |
+| 单个     | `MPI_Test(&req, &flag, &status)`                       | `MPI_Wait(&req, &status)`                              |
+| 任意一个 | `MPI_Testany(count, reqs, &idx, &flag, &status)`       | `MPI_Waitany(count, reqs, &idx, &status)`              |
+| 部分     | `MPI_Testsome(count, reqs, &outcnt, indices, &status)` | `MPI_Waitsome(count, reqs, &outcnt, indices, &status)` |
+| 所有     | `MPI_Testall(count, reqs, &flag, statuses)`            | `MPI_Waitall(count, reqs, statuses)`                   |
 
 ### 单个非阻塞通信
+
 ```c
 int MPI_Wait(MPI_Request *request, MPI_Status *status);
 // 阻塞直到通信完成，完成后释放request对象
@@ -65,6 +69,7 @@ int MPI_Test(MPI_Request *request, int *flag, MPI_Status *status);
 ```
 
 ### 多个非阻塞通信
+
 ```c
 // 等待任意一个完成
 int MPI_Waitany(int count, MPI_Request *array_of_request,
@@ -84,10 +89,12 @@ int MPI_Waitall(int count, MPI_Request *array_of_request,
 int MPI_Cancel(MPI_Request *request);
 // 取消非阻塞通信
 ```
+
 - 若取消成功，`MPI_Wait` 或 `MPI_Test` 返回的状态会标明该通信已被取消
 - `int MPI_Test_cancelled(MPI_Status status, int *flag)`：检测是否被取消
 
 ### 非阻塞通信对象释放#
+
 ```c
 int MPI_Request_free(MPI_Request *request);
 // 释放非阻塞通信对象占用的资源
@@ -114,6 +121,7 @@ int MPI_Iprobe(int source, int tag, MPI_Comm comm,
 通信参数与MPI内部对象建立固定联系，优化以降低开销。
 
 ### 使用流程#
+
 1. 初始化：`MPI_Send_init(...)` 或 `MPI_Recv_init(...)`
 2. 启动通信：`MPI_Start(&request)`
 3. 完成通信：`MPI_Wait(&request, &status)`
@@ -124,6 +132,7 @@ int MPI_Iprobe(int source, int tag, MPI_Comm comm,
 ## 死锁与避免#
 
 ### 死锁示例（阻塞操作）#
+
 ```c
 // 每个进程都先发送后接收
 MPI_Send(..., right_rank, ...);
@@ -132,6 +141,7 @@ MPI_Recv(..., left_rank, ...);
 ```
 
 ### 用非阻塞避免死锁#
+
 ```c
 // 方法1：先接收后发送
 MPI_Irecv(..., left_rank, ..., &req1);
@@ -160,11 +170,13 @@ int MPI_Sendrecv(
     MPI_Comm comm, MPI_Status *status
 );
 ```
+
 - 语义上等同于一个发送 + 一个接收
 - 系统优化通信次序，最大限度避免死锁
 - 发送和接收缓冲区必须分开
 
 ### Jacobi迭代示例#
+
 ```c
 int left = (myid > 0) ? myid-1 : MPI_PROC_NULL;
 int right = (myid < n-1) ? myid+1 : MPI_PROC_NULL;
@@ -206,18 +218,19 @@ MPI_Sendrecv(sendData, cnt, MPI_FLOAT, right, tag,
 
 MPI基本数据类型：
 
-| MPI类型 | C类型 |
-|---------|-------|
-| `MPI_CHAR` | `signed char` |
-| `MPI_SHORT` | `signed short int` |
-| `MPI_INT` | `signed int` |
-| `MPI_LONG` | `signed long int` |
-| `MPI_FLOAT` | `float` |
-| `MPI_DOUBLE` | `double` |
+| MPI类型      | C类型              |
+| ------------ | ------------------ |
+| `MPI_CHAR`   | `signed char`      |
+| `MPI_SHORT`  | `signed short int` |
+| `MPI_INT`    | `signed int`       |
+| `MPI_LONG`   | `signed long int`  |
+| `MPI_FLOAT`  | `float`            |
+| `MPI_DOUBLE` | `double`           |
 
 ### 连续数据类型：`MPI_Type_contiguous`#
 
 将连续内存区域定义为一个类型。
+
 ```c
 int MPI_Type_contiguous(int count, MPI_Datatype oldtype,
                           MPI_Datatype *newtype);
@@ -229,6 +242,7 @@ MPI_Type_commit(&newtype);  // 提交类型后使用
 ### 向量数据类型：`MPI_Type_vector`#
 
 定义跨步长为stride的向量类型。
+
 ```c
 int MPI_Type_vector(int count, int blocklength, int stride,
                        MPI_Datatype oldtype, MPI_Datatype *newtype);
@@ -240,6 +254,7 @@ MPI_Type_vector(4, 2, 3, MPI_INT, &newtype);
 ### 结构体数据类型：`MPI_Type_struct`#
 
 定义包含不同类型和位移的结构体类型。
+
 ```c
 int MPI_Type_struct(int count, int *array_of_blocklengths,
                         MPI_Aint *array_of_displacements,

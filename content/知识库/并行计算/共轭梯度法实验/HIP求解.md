@@ -15,6 +15,7 @@
 这是一种**迭代算法**，通过不断改进猜测值来逼近真实解。
 
 **核心思想**：
+
 ```
 1. 从一个初始猜测 x₀ = 0 开始
 2. 计算残差（误差）r = b - Ax
@@ -25,6 +26,7 @@
 ### 1.3 为什么需要GPU加速？
 
 CG算法中**最耗时的操作**是：
+
 - **SpMV（稀疏矩阵向量乘）**: Ap = A × p
 - 这个操作在每次迭代中都要执行
 - 矩阵很大时（如100000×100000），计算量巨大
@@ -55,6 +57,7 @@ __global__ void kernel(...) {
 ```
 
 **关键区别**：
+
 - CPU: 一个工人，按顺序干活
 - GPU: 10000个工人，同时干活
 
@@ -98,7 +101,6 @@ hipMemcpy(x, d_x, n * sizeof(double), hipMemcpyDeviceToHost);
 hipFree(d_x);
 ```
 
-
 ---
 
 ## 四、核心Kernel函数详解
@@ -108,6 +110,7 @@ hipFree(d_x);
 **目标**：计算 y = A × x
 
 **稀疏矩阵存储格式（CSR）**：
+
 ```
 矩阵 A = [1  0  2]
         [0  3  0]
@@ -122,7 +125,7 @@ row_ptr = [0, 2, 3, 5]        // 每行的起始位置
 **代码逐行解释**：
 
 ```cpp
-__global__ void spmv_kernel(int n, const int *row_ptr, const int *col_idx, 
+__global__ void spmv_kernel(int n, const int *row_ptr, const int *col_idx,
                             const double *values, const double *x, double *y)
 {
     // 第1步：确定我是哪个线程，负责哪一行
@@ -132,27 +135,27 @@ __global__ void spmv_kernel(int n, const int *row_ptr, const int *col_idx,
     //
     // 例如：blockDim.x=256, blockIdx.x=2, threadIdx.x=10
     //       i = 2 * 256 + 10 = 522  （我负责第522行）
-    
+
     // 第2步：检查是否越界（线程数可能比行数多）
     if (i < n)
     {
         // 第3步：计算第i行的结果
         double sum = 0.0;
-        
+
         // 遍历第i行的所有非零元素
         for (int j = row_ptr[i]; j < row_ptr[i + 1]; j++)
         {
             //          ^^^^^^^^^^      ^^^^^^^^^^^^^
             //          第i行起始位置    第i+1行起始位置
-            //          
+            //
             // 例如：row_ptr[2]=3, row_ptr[3]=5
             //       说明第2行有2个非零元素（索引3和4）
-            
+
             sum += values[j] * x[col_idx[j]];
             //     ^^^^^^^^^   ^^^^^^^^^^^^^
             //     矩阵元素值   对应的x向量元素
         }
-        
+
         // 第4步：写入结果
         y[i] = sum;
     }
@@ -160,10 +163,10 @@ __global__ void spmv_kernel(int n, const int *row_ptr, const int *col_idx,
 ```
 
 **并行化的魔力**：
+
 - 假设矩阵有10000行
 - CPU：需要10000次循环
 - GPU：10000个线程**同时**计算，理论上快10000倍！
-
 
 ---
 
@@ -174,19 +177,20 @@ __global__ void spmv_kernel(int n, const int *row_ptr, const int *col_idx,
 **挑战**：这是一个 **归约（reduction）** 操作，需要把所有结果加起来。
 
 **两阶段策略**：
+
 1. **阶段1（GPU）**：每个block计算部分和
 2. **阶段2（CPU）**：把所有block的结果加起来
 
 ```cpp
-__global__ void dot_product_kernel(int n, const double *x, const double *y, 
+__global__ void dot_product_kernel(int n, const double *x, const double *y,
                                    double *partial_sums)
 {
     // 共享内存：block内的线程可以共享
     __shared__ double shared_data[256];
-    
+
     int tid = threadIdx.x;                          // 块内线程ID
     int i = blockIdx.x * blockDim.x + threadIdx.x;  // 全局线程ID
-    
+
     // === 第1步：每个线程计算一个乘积 ===
     double sum = 0.0;
     if (i < n)
@@ -195,9 +199,9 @@ __global__ void dot_product_kernel(int n, const double *x, const double *y,
     }
     shared_data[tid] = sum;  // 存入共享内存
     __syncthreads();         // 等待block内所有线程完成
-    
+
     // === 第2步：在共享内存中归约（树形归约）===
-    // 
+    //
     // 假设blockDim.x=8，初始值：[a, b, c, d, e, f, g, h]
     //
     // 第1轮 (s=4): [a+e, b+f, c+g, d+h, e, f, g, h]
@@ -212,7 +216,7 @@ __global__ void dot_product_kernel(int n, const double *x, const double *y,
         }
         __syncthreads();  // 每轮都要同步
     }
-    
+
     // === 第3步：每个block的结果写入全局内存 ===
     if (tid == 0)
     {
@@ -223,18 +227,20 @@ __global__ void dot_product_kernel(int n, const double *x, const double *y,
 ```
 
 **为什么用共享内存？**
+
 - 共享内存速度快（比全局内存快100倍）
 - 同一个block内的线程可以高效通信
 
 **CPU端的最终归约**：
+
 ```cpp
 double gpu_dot_product(...) {
     // 启动kernel
     hipLaunchKernelGGL(dot_product_kernel, ...);
-    
+
     // 拷贝部分和回CPU
     hipMemcpy(h_partial_sums, d_partial_sums, ...);
-    
+
     // CPU完成最后的加法
     double result = 0.0;
     for (int i = 0; i < num_blocks; i++) {
@@ -271,7 +277,7 @@ __global__ void axpy_kernel(int n, double alpha, const double *x, double *y)
 **目标**：z = x + β × y
 
 ```cpp
-__global__ void vector_update_kernel(int n, const double *x, double beta, 
+__global__ void vector_update_kernel(int n, const double *x, double beta,
                                      const double *y, double *z)
 {
     int i = blockIdx.x * blockDim.x + threadIdx.x;
@@ -281,7 +287,6 @@ __global__ void vector_update_kernel(int n, const double *x, double beta,
     }
 }
 ```
-
 
 ---
 
@@ -316,18 +321,18 @@ void cg_solver()
     x = (double *)calloc(n, sizeof(double));  // x = 0
     r = (double *)malloc(n * sizeof(double));
     p = (double *)malloc(n * sizeof(double));
-    
+
     for (int i = 0; i < n; i++)
     {
         r[i] = b[i];  // r = b（因为Ax=0）
         p[i] = r[i];  // p = r
     }
-    
+
     // 拷贝到GPU
     hipMemcpy(d_r, r, n * sizeof(double), hipMemcpyHostToDevice);
     hipMemcpy(d_p, p, n * sizeof(double), hipMemcpyHostToDevice);
     hipMemcpy(d_x, x, n * sizeof(double), hipMemcpyHostToDevice);
-    
+
     // === 设置kernel启动参数 ===
     int block_size = num_threads;  // 每个block有多少线程（如256）
     int num_blocks = (n + block_size - 1) / block_size;  // 需要多少个block
@@ -335,61 +340,60 @@ void cg_solver()
     // 例如：n=10000, block_size=256
     //       num_blocks = (10000 + 255) / 256 = 40
     //       总共40个block，每个256线程，共10240个线程（够用）
-    
+
     // 计算初始残差
     double rho_old = gpu_dot_product(n, d_r, d_r, ...);
-    
+
     // === 迭代求解 ===
     for (int iter = 0; iter < max_iter; iter++)
     {
         // 1. SpMV: Ap = A × p
-        hipLaunchKernelGGL(spmv_kernel, 
+        hipLaunchKernelGGL(spmv_kernel,
                            dim3(num_blocks),    // 启动多少个block
                            dim3(block_size),    // 每个block多少线程
                            0, 0,                // 共享内存大小，stream
                            n, d_row_ptr, d_col_idx, d_values, d_p, d_Ap);
-        
+
         // 2. 计算 pAp = p^T × Ap
         double pAp = gpu_dot_product(n, d_p, d_Ap, ...);
-        
+
         // 3. 计算 α
         double alpha = rho_old / pAp;
-        
+
         // 4. 更新 x = x + α × p
-        hipLaunchKernelGGL(axpy_kernel, 
+        hipLaunchKernelGGL(axpy_kernel,
                            dim3(num_blocks), dim3(block_size), 0, 0,
                            n, alpha, d_p, d_x);
-        
+
         // 5. 更新 r = r - α × Ap
-        hipLaunchKernelGGL(axpy_subtract_kernel, 
+        hipLaunchKernelGGL(axpy_subtract_kernel,
                            dim3(num_blocks), dim3(block_size), 0, 0,
                            n, alpha, d_Ap, d_r);
-        
+
         // 6. 计算新残差
         double rho_new = gpu_dot_product(n, d_r, d_r, ...);
-        
+
         // 7. 检查收敛
         if (sqrt(rho_new) < tol) {
             printf("收敛！\n");
             break;
         }
-        
+
         // 8. 计算 β
         double beta = rho_new / rho_old;
-        
+
         // 9. 更新 p = r + β × p
-        hipLaunchKernelGGL(vector_update_kernel, 
+        hipLaunchKernelGGL(vector_update_kernel,
                            dim3(num_blocks), dim3(block_size), 0, 0,
                            n, d_r, beta, d_p, d_p);
-        
+
         rho_old = rho_new;
     }
-    
+
     // 拷贝结果回CPU
     hipMemcpy(x, d_x, n * sizeof(double), hipMemcpyDeviceToHost);
 }
 ```
-
 
 ---
 
@@ -427,6 +431,7 @@ __syncthreads();  // block内所有线程等待
 ```
 
 **为什么需要同步？**
+
 - 确保所有线程都完成了某个阶段
 - 避免数据竞争
 
@@ -493,7 +498,6 @@ __global__ void kernel(...) {
 }
 ```
 
-
 ---
 
 ## 九、完整流程示意图
@@ -543,13 +547,13 @@ main()
 
 ## 十、与Lab2/Lab3的对比
 
-| 特性 | Lab2 (pthread) | Lab3 (MPI) | Lab4 (GPU) |
-|------|----------------|------------|------------|
-| 并行方式 | CPU多线程 | CPU多进程 | GPU大规模并行 |
-| 线程数 | 1-32 | 1-32 | 数千到数万 |
-| 内存 | 共享内存 | 分布式内存 | GPU显存 |
-| 通信 | 无需通信 | 进程间通信 | CPU-GPU传输 |
-| 适用场景 | 单机多核 | 集群 | 大规模数据并行 |
+| 特性     | Lab2 (pthread) | Lab3 (MPI) | Lab4 (GPU)     |
+| -------- | -------------- | ---------- | -------------- |
+| 并行方式 | CPU多线程      | CPU多进程  | GPU大规模并行  |
+| 线程数   | 1-32           | 1-32       | 数千到数万     |
+| 内存     | 共享内存       | 分布式内存 | GPU显存        |
+| 通信     | 无需通信       | 进程间通信 | CPU-GPU传输    |
+| 适用场景 | 单机多核       | 集群       | 大规模数据并行 |
 
 ---
 
@@ -609,14 +613,17 @@ scp pc-lab:~/Lab4/results/*.png ./results/
 ## 十二、实验参数
 
 ### 矩阵规模
+
 - **small**: 1000, 5000, 10000
 - **large**: 10000, 50000, 100000
 - **all**: 1000, 5000, 10000, 50000, 100000
 
 ### GPU Block大小
+
 - 64, 128, 256, 512
 
 ### 重复次数
+
 - 每个配置重复5次
 
 ---
@@ -662,14 +669,17 @@ hipcc -O3 sparse.cpp -o sparse.o
 ## 十六、故障排查
 
 ### 编译错误
+
 - 检查是否使用了`hipcc`编译器
 - 检查HIP头文件路径
 
 ### 运行错误
+
 - 检查PBS脚本是否申请了GPU资源
 - 检查GPU驱动和运行时是否正常
 
 ### 性能异常
+
 - 检查Block大小是否合理（64-512）
 - 检查数据传输是否优化
 - 查看GPU利用率

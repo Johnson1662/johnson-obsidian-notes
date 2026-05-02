@@ -46,42 +46,42 @@ tags: [深度学习, RethinkFun]
 
 举例来说，假设词嵌入的维度为4，我们得到如下的词嵌入：
 
- Token 
- 性别 
- 可食用性 
- 重量 
- 尊贵性 
+Token
+性别
+可食用性
+重量
+尊贵性
 
- 国王 
- 0.93 
- 0.13 
- 0.3 
- 0.98 
- 皇后 
- -0.91 
- 0.11 
- 0.23 
- 0.97 
- 男人 
- 0.97 
- 0.19 
- 0.28 
- 0.20 
- 女人 
- -0.93 
- 0.17 
- 0.21 
- 0.19 
- 土豆 
- 0.01 
- 0.98 
- 0.05 
- 0.04 
- 马铃薯 
- 0.01 
- 0.97 
- 0.05 
- 0.04
+国王
+0.93
+0.13
+0.3
+0.98
+皇后
+-0.91
+0.11
+0.23
+0.97
+男人
+0.97
+0.19
+0.28
+0.20
+女人
+-0.93
+0.17
+0.21
+0.19
+土豆
+0.01
+0.98
+0.05
+0.04
+马铃薯
+0.01
+0.97
+0.05
+0.04
 
 可以发现，每个维度都有具体的含义，土豆和马铃薯在各个维度上的值都基本相等，这表明它们两个在物理世界中代表同样的含义。国王和皇后的尊贵性都高于男人和女人。国王和男人的性别维度都为正值，而皇后的女人的性别维度都为负值。
 
@@ -129,19 +129,19 @@ Google在2013年提出的Word2Vec，是最著名的词嵌入实验。它通过�
 
 则对于CBOW模型的输入和输出如下：
 
- 输入 
- 输出 
+输入
+输出
 
- ["love","natural"] 
- "I" 
- ["I","natural","language"] 
- "love" 
- ["I","love","language ","processing"] 
- "natural" 
- ["love","natural","processing"] 
- "language" 
- ["natural","language"] 
- "processing"
+["love","natural"]
+"I"
+["I","natural","language"]
+"love"
+["I","love","language ","processing"]
+"natural"
+["love","natural","processing"]
+"language"
+["natural","language"]
+"processing"
 
 接着对每个Token生成独热编码：
 
@@ -169,37 +169,37 @@ CBOW的网络结构非常简单：
 Skip-gram与CBOW刚好相反，它是利用中心词来预测上下文的词。同样它需要对Token进行独热编码，和构建Embedding矩阵。
 假如每个中心词需要预测它前后2个词，则对于上边的例子，它的输入输出为：
 
- 输入 
- 输出 
+输入
+输出
 
- "I" 
- "love" 
- "I" 
- "natural" 
- "love" 
- "I" 
- "love" 
- "natural" 
- "love" 
- "language" 
- "natural" 
- "I" 
- "natural" 
- "love" 
- "natural" 
- "language" 
- "natural" 
- "processing" 
- "language" 
- "love" 
- "language" 
- "natural" 
- "language" 
- "processing" 
- "processing" 
- "natural" 
- "processing" 
- "language"
+"I"
+"love"
+"I"
+"natural"
+"love"
+"I"
+"love"
+"natural"
+"love"
+"language"
+"natural"
+"I"
+"natural"
+"love"
+"natural"
+"language"
+"natural"
+"processing"
+"language"
+"love"
+"language"
+"natural"
+"language"
+"processing"
+"processing"
+"natural"
+"processing"
+"language"
 
 Skip-gram模型的输入只有一个Token，所以不需要进行多Token Embedding的平均，直接用输入Token的Embedding作为输入，然后和CBOW一样接一个线性分类头，预测输出Token。经过大量训练后也可以得到很好的Embedding矩阵。
 

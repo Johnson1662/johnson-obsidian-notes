@@ -17,7 +17,7 @@ tags: [深度学习, RethinkFun]
 
 - 打开Anaconda Prompt。
 
-- 通过conda activate  切换到你的conda环境。
+- 通过conda activate 切换到你的conda环境。
 
 - pip install tensorboard
 

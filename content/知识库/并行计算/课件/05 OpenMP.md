@@ -40,6 +40,7 @@ OpenMP 是一种面向共享内存以及分布式共享内存的多处理器多�
 ```
 
 **示例**：
+
 ```c
 #include <omp.h>
 
@@ -78,14 +79,15 @@ int main() {
 
 **schedule 参数**：
 
-| type    | 说明                           |
-| ------- | ---------------------------- |
-| static  | 循环被分成大小为 chunk 的块，静态分配给线程    |
+| type    | 说明                                              |
+| ------- | ------------------------------------------------- |
+| static  | 循环被分成大小为 chunk 的块，静态分配给线程       |
 | dynamic | 循环被动态划分为大小为 chunk 的块，动态分配给线程 |
 
 chunk 为每个线程分配的计算量；未指定时迭代尽可能平均分配。
 
 **示例**：
+
 ```c
 #include <omp.h>
 #define CHUNKSIZE 100
@@ -124,6 +126,7 @@ int main() {
 ```
 
 **示例**：
+
 ```c
 #include <omp.h>
 #define N 1000
@@ -157,6 +160,7 @@ int main() {
 ```
 
 **示例**：
+
 ```c
 #include <stdio.h>
 
@@ -187,27 +191,35 @@ void a12() {
 ### 同步制导语句
 
 #### master 语句
+
 指定代码段只有主线程执行。
+
 ```c
 #pragma omp master
 ```
 
 #### critical 语句
+
 临界区代码一次只能一个线程执行，其他线程阻塞。
+
 ```c
 #pragma omp critical [name]
 ```
 
 #### barrier 语句
+
 同步线程组中所有线程，先到达的阻塞等待。
+
 ```c
 #pragma omp barrier
 ```
 
 #### atomic 语句
+
 指定特定存储单元被原子更新。
 
 支持的格式：
+
 - `x binop = expr`
 - `x++` / `++x`
 - `x--` / `--x`
@@ -215,6 +227,7 @@ void a12() {
 其中 `binop` 为 `+`, `*`, `-`, `/`, `&`, `^`, `|`, `<<`, `>>` 等。
 
 **示例**：
+
 ```cpp
 #include <iostream>
 #include <omp.h>
@@ -233,36 +246,44 @@ int main() {
     return 0;
 }
 ```
+
 若无 `atomic`，结果不确定。
 
 #### flush 语句
+
 标识同步点，确保所有线程看到一致的存储器视图。
+
 ```c
 #pragma omp flush (list)
 ```
+
 在 barrier、critical、ordered、parallel 退出等场景会隐含执行。
 
 #### ordered 语句
+
 指定循环按迭代次序执行，同一时间只有一个线程执行。
+
 ```c
 #pragma omp ordered
 ```
+
 只能出现在 for 或 parallel for 的动态范围内。
 
 ---
 
 ### 数据域属性子句
 
-| 子句 | 说明 |
-|------|------|
-| `private(list)` | 变量对每个线程是局部的 |
-| `shared(list)` | 变量被所有线程共享 |
-| `default(shared\|none)` | 规定并行域内变量的缺省作用范围 |
-| `firstprivate(list)` | private 的超集，对变量做原子初始化 |
-| `lastprivate(list)` | private 的超集，将最后迭代的值赋给原变量 |
+| 子句                        | 说明                                           |
+| --------------------------- | ---------------------------------------------- |
+| `private(list)`             | 变量对每个线程是局部的                         |
+| `shared(list)`              | 变量被所有线程共享                             |
+| `default(shared\|none)`     | 规定并行域内变量的缺省作用范围                 |
+| `firstprivate(list)`        | private 的超集，对变量做原子初始化             |
+| `lastprivate(list)`         | private 的超集，将最后迭代的值赋给原变量       |
 | `reduction(operator: list)` | 对变量进行规约，每个线程保留私有拷贝，最后合并 |
 
 #### reduction 示例
+
 ```c
 #include <omp.h>
 #define N 100
@@ -296,13 +317,14 @@ int main() {
 
 **与 private 的区别**：
 
-| | PRIVATE | THREADPRIVATE |
-|--|---------|---------------|
-| 位置 | 域的开始或共享任务单元 | 块或整个文件区域的例程定义上 |
-| 持久性 | 否 | 是 |
-| 初始化 | 使用 FIRSTPRIVATE | 使用 COPYIN |
+|        | PRIVATE                | THREADPRIVATE                |
+| ------ | ---------------------- | ---------------------------- |
+| 位置   | 域的开始或共享任务单元 | 块或整个文件区域的例程定义上 |
+| 持久性 | 否                     | 是                           |
+| 初始化 | 使用 FIRSTPRIVATE      | 使用 COPYIN                  |
 
 **示例**：
+
 ```c
 #include <omp.h>
 
@@ -328,6 +350,7 @@ int main() {
 - `copyprivate(list)`：在 single 构造中，将一个线程的私有变量广播到其他线程
 
 **copyin 示例**：
+
 ```c
 #include <omp.h>
 
@@ -352,6 +375,7 @@ int main() {
 ## 运行时库函数与环境变量
 
 ### 运行时库函数
+
 - 需引用头文件 `omp.h`
 - 常用函数：
   - `omp_get_thread_num()`：获取当前线程 ID
@@ -360,12 +384,12 @@ int main() {
 
 ### 环境变量
 
-| 变量 | 说明 |
-|------|------|
-| `OMP_SCHEDULE` | 线程调度类型，用于 for / parallel for |
-| `OMP_NUM_THREADS` | 执行中最大的线程数 |
-| `OMP_DYNAMIC` | TRUE/FALSE，是否动态设定并行域线程数 |
-| `OMP_NESTED` | 是否允许并行嵌套 |
+| 变量              | 说明                                  |
+| ----------------- | ------------------------------------- |
+| `OMP_SCHEDULE`    | 线程调度类型，用于 for / parallel for |
+| `OMP_NUM_THREADS` | 执行中最大的线程数                    |
+| `OMP_DYNAMIC`     | TRUE/FALSE，是否动态设定并行域线程数  |
+| `OMP_NESTED`      | 是否允许并行嵌套                      |
 
 ---
 
@@ -375,6 +399,7 @@ int main() {
 $$P_i = \int_0^1 \frac{4}{1+x^2}dx \approx \frac{1}{N}\sum_{i=1}^N f\left(\frac{i-0.5}{N}\right)$$
 
 ### 串行版本
+
 ```c
 static long num_steps = 100000;
 double step;
@@ -394,6 +419,7 @@ int main() {
 ```
 
 ### 并行域版本
+
 ```c
 #include <omp.h>
 static long num_steps = 100000;
@@ -426,6 +452,7 @@ int main() {
 ```
 
 ### parallel for 版本
+
 ```c
 #include <omp.h>
 static long num_steps = 100000;
@@ -458,6 +485,7 @@ int main() {
 ```
 
 ### critical 版本
+
 ```c
 #include <omp.h>
 static long num_steps = 100000;
@@ -488,6 +516,7 @@ int main() {
 ```
 
 ### reduction 版本（推荐）
+
 ```c
 #include <omp.h>
 static long num_steps = 100000;

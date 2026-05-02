@@ -64,11 +64,9 @@ class TranslationDataset(Dataset):
 
 Transformer训练时，会传递一个Mask矩阵，Mask矩阵的作用有两个：
 
-- 
-对于Encoder输入的序列，在计算自注意力时，不关注`<pad>` token。
+- 对于Encoder输入的序列，在计算自注意力时，不关注`<pad>` token。
 
-- 
-对于Decoder输入的序列，在进行自注意力时，不关注`<pad>` token 和当前 token 后边的 token。
+- 对于Decoder输入的序列，在进行自注意力时，不关注`<pad>` token 和当前 token 后边的 token。
 
 生成Mask的代码：
 

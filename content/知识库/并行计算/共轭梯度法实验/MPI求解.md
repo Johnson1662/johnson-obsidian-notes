@@ -7,6 +7,7 @@
 **MPI (Message Passing Interface)** = 消息传递接口
 
 想象一个场景：
+
 ```
 你有一个大任务要完成，比如搬1000块砖
 - 一个人搬：需要很长时间
@@ -17,13 +18,13 @@ MPI就是让多个"工人"（进程）协作完成任务的工具
 
 ### 1.2 MPI vs pthread（Lab2）的区别
 
-| 特性 | pthread（Lab2） | MPI（Lab3） |
-|------|----------------|-------------|
-| 工作方式 | 多个线程共享内存 | 多个进程独立内存 |
-| 比喻 | 同一个房间的多个人，共用一张桌子 | 不同房间的多个人，通过对讲机交流 |
-| 内存 | 共享（可以直接访问同一个变量） | 独立（必须通过消息传递） |
-| 适用场景 | 单台机器多核 | 多台机器集群 |
-| 通信方式 | 直接访问共享变量 | 发送/接收消息 |
+| 特性     | pthread（Lab2）                  | MPI（Lab3）                      |
+| -------- | -------------------------------- | -------------------------------- |
+| 工作方式 | 多个线程共享内存                 | 多个进程独立内存                 |
+| 比喻     | 同一个房间的多个人，共用一张桌子 | 不同房间的多个人，通过对讲机交流 |
+| 内存     | 共享（可以直接访问同一个变量）   | 独立（必须通过消息传递）         |
+| 适用场景 | 单台机器多核                     | 多台机器集群                     |
+| 通信方式 | 直接访问共享变量                 | 发送/接收消息                    |
 
 ### 1.3 核心概念
 
@@ -57,18 +58,18 @@ int main(int argc, char *argv[])
 {
     // 1. 初始化MPI环境
     MPI_Init(&argc, &argv);
-    
+
     // 2. 获取自己的编号
     int rank;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-    
+
     // 3. 获取总进程数
     int size;
     MPI_Comm_size(MPI_COMM_WORLD, &size);
-    
+
     // 4. 每个进程打印自己的信息
     printf("我是进程 %d，总共有 %d 个进程\n", rank, size);
-    
+
     // 5. 结束MPI环境
     MPI_Finalize();
     return 0;
@@ -76,6 +77,7 @@ int main(int argc, char *argv[])
 ```
 
 **运行结果**（假设用4个进程）：
+
 ```
 我是进程 0，总共有 4 个进程
 我是进程 1，总共有 4 个进程
@@ -84,6 +86,7 @@ int main(int argc, char *argv[])
 ```
 
 **关键点**：
+
 - 每个进程都执行**同一份代码**
 - 但每个进程的`rank`不同，所以可以做不同的事
 
@@ -127,6 +130,7 @@ if (rank == 1) {
 ```
 
 **比喻**：
+
 - MPI_Send = 写信寄出去
 - MPI_Recv = 等待并收信
 
@@ -154,6 +158,7 @@ printf("进程%d收到广播: %d\n", rank, data);
 ```
 
 **结果**：
+
 ```
 进程0收到广播: 999
 进程1收到广播: 999
@@ -183,6 +188,7 @@ printf("进程%d: 局部=%d, 全局和=%d\n", rank, local_sum, global_sum);
 ```
 
 **结果**：
+
 ```
 进程0: 局部=1, 全局和=10
 进程1: 局部=2, 全局和=10
@@ -193,6 +199,7 @@ printf("进程%d: 局部=%d, 全局和=%d\n", rank, local_sum, global_sum);
 **比喻**：每个人报一个数，然后所有人都知道总和
 
 **常用操作**：
+
 - `MPI_SUM`: 求和
 - `MPI_MAX`: 求最大值
 - `MPI_MIN`: 求最小值
@@ -217,13 +224,13 @@ int *global_data = NULL;
 if (rank == 0) {
     recv_counts = (int*)malloc(size * sizeof(int));
     displs = (int*)malloc(size * sizeof(int));
-    
+
     // 计算每个进程发送多少数据
     for (int i = 0; i < size; i++) {
         recv_counts[i] = i + 1;
         displs[i] = (i == 0) ? 0 : displs[i-1] + recv_counts[i-1];
     }
-    
+
     int total = displs[size-1] + recv_counts[size-1];
     global_data = (int*)malloc(total * sizeof(int));
 }
@@ -259,7 +266,6 @@ MPI_Allgatherv(local_data,
 ```
 
 **比喻**：所有学生互相传阅作业，最后每个人都有全班的作业
-
 
 ---
 
@@ -357,33 +363,33 @@ int my_local_n = my_end - my_start;  // 我负责的行数
 // === Rank 0 的工作 ===
 if (rank == 0) {
     // 1. 读取完整的矩阵和向量
-    read_matrix_full(matrix_file, &n_global, &full_row_ptr, 
+    read_matrix_full(matrix_file, &n_global, &full_row_ptr,
                      &full_col_idx, &full_values, &full_nnz);
     read_vector_full(vector_file, &full_b);
-    
+
     // 2. 分发给其他进程
     for (int i = 1; i < size; i++) {
         // 计算进程i需要的数据范围
         int i_start = i * rows_per_proc;
         int i_end = (i == size - 1) ? n_global : (i + 1) * rows_per_proc;
         int i_local_n = i_end - i_start;
-        
+
         // 计算进程i需要的非零元素数量
         int i_nnz = full_row_ptr[i_end] - full_row_ptr[i_start];
-        
+
         // 发送行偏移数组
         MPI_Send(&full_row_ptr[i_start], i_local_n + 1, MPI_INT, i, 0, MPI_COMM_WORLD);
-        
+
         // 发送向量b的对应部分
         MPI_Send(&full_b[i_start], i_local_n, MPI_DOUBLE, i, 1, MPI_COMM_WORLD);
-        
+
         // 发送非零元素值
         MPI_Send(&full_values[full_row_ptr[i_start]], i_nnz, MPI_DOUBLE, i, 2, MPI_COMM_WORLD);
-        
+
         // 发送列索引
         MPI_Send(&full_col_idx[full_row_ptr[i_start]], i_nnz, MPI_INT, i, 3, MPI_COMM_WORLD);
     }
-    
+
     // 3. Rank 0 也要准备自己的数据
     // （从完整数据中复制自己负责的部分）
 }
@@ -393,20 +399,21 @@ else {
     // 接收Rank 0 发来的数据
     row_ptr = (int*)malloc((my_local_n + 1) * sizeof(int));
     b_local = (double*)malloc(my_local_n * sizeof(double));
-    
+
     MPI_Recv(row_ptr, my_local_n + 1, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
     MPI_Recv(b_local, my_local_n, MPI_DOUBLE, 0, 1, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-    
+
     int my_nnz = row_ptr[my_local_n] - row_ptr[0];
     values = (double*)malloc(my_nnz * sizeof(double));
     col_idx = (int*)malloc(my_nnz * sizeof(int));
-    
+
     MPI_Recv(values, my_nnz, MPI_DOUBLE, 0, 2, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
     MPI_Recv(col_idx, my_nnz, MPI_INT, 0, 3, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 }
 ```
 
 **关键点**：
+
 - 消息标签（tag）用于区分不同类型的数据
 - 每个进程只保存自己需要的数据，节省内存
 
@@ -456,7 +463,7 @@ void cg_parallel(int local_n, int n, int rank_start, int rank, int size)
     // 准备Allgatherv所需的参数
     int *recv_counts = (int*)malloc(size * sizeof(int));
     int *displs = (int*)malloc(size * sizeof(int));
-    
+
     int rows_per_proc = n / size;
     for (int i = 0; i < size; i++) {
         int i_start = i * rows_per_proc;
@@ -464,23 +471,23 @@ void cg_parallel(int local_n, int n, int rank_start, int rank, int size)
         recv_counts[i] = i_end - i_start;  // 进程i有多少元素
         displs[i] = i_start;               // 进程i的起始位置
     }
-    
+
     // 分配向量
     double *x_local = (double*)calloc(local_n, sizeof(double));  // 局部解
     double *r_local = (double*)malloc(local_n * sizeof(double)); // 局部残差
     double *Ap_local = (double*)malloc(local_n * sizeof(double));// 局部Ap
     double *p_global = (double*)malloc(n * sizeof(double));      // 完整的p向量
-    
+
     // === 初始化 ===
     for (int i = 0; i < local_n; i++) {
         r_local[i] = b_local[i];  // r = b（因为x=0）
     }
-    
+
     // 初始化p_global：先填入自己的部分，然后同步
     for (int i = 0; i < local_n; i++) {
         p_global[rank_start + i] = r_local[i];
     }
-    
+
     // 同步p向量（所有进程都得到完整的p）
     MPI_Allgatherv(MPI_IN_PLACE,           // 使用原地操作
                    0, MPI_DATATYPE_NULL,   // 发送参数（原地操作时忽略）
@@ -489,13 +496,13 @@ void cg_parallel(int local_n, int n, int rank_start, int rank, int size)
                    displs,                 // 每个进程的起始位置
                    MPI_DOUBLE,
                    MPI_COMM_WORLD);
-    
+
     // 计算初始残差范数
     double local_rho = 0.0;
     for (int i = 0; i < local_n; i++) {
         local_rho += r_local[i] * r_local[i];
     }
-    
+
     double rho_old;
     MPI_Allreduce(&local_rho,    // 局部值
                   &rho_old,      // 全局结果
@@ -503,37 +510,37 @@ void cg_parallel(int local_n, int n, int rank_start, int rank, int size)
                   MPI_DOUBLE,
                   MPI_SUM,       // 求和
                   MPI_COMM_WORLD);
-    
+
     // === 迭代求解 ===
     for (int iter = 0; iter < max_iter; iter++) {
         // 1. SpMV: Ap = A × p（局部计算）
         spmv_csr_local(local_n, p_global, Ap_local);
-        
+
         // 2. 计算 pAp = p^T × Ap（局部计算 + 全局归约）
         double local_pAp = 0.0;
         for (int j = 0; j < local_n; j++) {
             local_pAp += p_global[rank_start + j] * Ap_local[j];
         }
-        
+
         double pAp;
         MPI_Allreduce(&local_pAp, &pAp, 1, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD);
-        
+
         // 3. 更新 x 和 r（局部操作）
         double alpha = rho_old / pAp;
         for (int j = 0; j < local_n; j++) {
             x_local[j] += alpha * p_global[rank_start + j];
             r_local[j] -= alpha * Ap_local[j];
         }
-        
+
         // 4. 计算新残差范数（局部计算 + 全局归约）
         double local_rho_new = 0.0;
         for (int j = 0; j < local_n; j++) {
             local_rho_new += r_local[j] * r_local[j];
         }
-        
+
         double rho_new;
         MPI_Allreduce(&local_rho_new, &rho_new, 1, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD);
-        
+
         // 5. 检查收敛
         if (sqrt(rho_new) < tol) {
             if (rank == 0) {
@@ -541,26 +548,26 @@ void cg_parallel(int local_n, int n, int rank_start, int rank, int size)
             }
             break;
         }
-        
+
         // 6. 更新搜索方向 p（局部更新 + 全局同步）
         double beta = rho_new / rho_old;
         for (int j = 0; j < local_n; j++) {
             p_global[rank_start + j] = r_local[j] + beta * p_global[rank_start + j];
         }
-        
+
         // 同步更新后的p向量
         MPI_Allgatherv(MPI_IN_PLACE, 0, MPI_DATATYPE_NULL,
                        p_global, recv_counts, displs, MPI_DOUBLE,
                        MPI_COMM_WORLD);
-        
+
         rho_old = rho_new;
     }
-    
+
     // === 收集结果到Rank 0 ===
     if (rank == 0) {
         x_final = (double*)malloc(n * sizeof(double));
     }
-    
+
     MPI_Gatherv(x_local,      // 局部解
                 local_n,      // 局部大小
                 MPI_DOUBLE,
@@ -572,7 +579,6 @@ void cg_parallel(int local_n, int n, int rank_start, int rank, int size)
                 MPI_COMM_WORLD);
 }
 ```
-
 
 ---
 
@@ -613,6 +619,7 @@ MPI_Allgatherv(MPI_IN_PLACE, 0, MPI_DATATYPE_NULL,
 ```
 
 **优点**：
+
 - 节省内存
 - 减少数据复制
 
@@ -668,7 +675,7 @@ if (rank == 0) {
   进程1: ----计算--------| 结束
   进程2: ----计算------| 结束
   进程3: ----计算----------| 结束
-  
+
   问题：进程0先结束，计时不准确
 
 有Barrier的情况：
@@ -676,7 +683,7 @@ if (rank == 0) {
   进程1: ----计算--------| 结束
   进程2: ----计算------| 等待 | 结束
   进程3: ----计算----------| 结束
-  
+
   所有进程都等最慢的那个完成
 ```
 
@@ -705,16 +712,16 @@ if (rank == 0) {
 
 ### 7.1 通信类型对比
 
-| 操作 | 类型 | 说明 | 使用场景 |
-|------|------|------|----------|
-| MPI_Send/Recv | 点对点 | 一对一通信 | 数据分发 |
-| MPI_Bcast | 集体 | 一对多广播 | 分发参数 |
-| MPI_Reduce | 集体 | 多对一归约 | 收集结果 |
-| MPI_Allreduce | 集体 | 多对多归约 | 全局求和 |
-| MPI_Gather | 集体 | 多对一收集 | 收集结果 |
-| MPI_Gatherv | 集体 | 多对一收集（不等长）| 收集不等长数据 |
-| MPI_Allgather | 集体 | 多对多收集 | 同步向量 |
-| MPI_Allgatherv | 集体 | 多对多收集（不等长）| 同步不等长向量 |
+| 操作           | 类型   | 说明                 | 使用场景       |
+| -------------- | ------ | -------------------- | -------------- |
+| MPI_Send/Recv  | 点对点 | 一对一通信           | 数据分发       |
+| MPI_Bcast      | 集体   | 一对多广播           | 分发参数       |
+| MPI_Reduce     | 集体   | 多对一归约           | 收集结果       |
+| MPI_Allreduce  | 集体   | 多对多归约           | 全局求和       |
+| MPI_Gather     | 集体   | 多对一收集           | 收集结果       |
+| MPI_Gatherv    | 集体   | 多对一收集（不等长） | 收集不等长数据 |
+| MPI_Allgather  | 集体   | 多对多收集           | 同步向量       |
+| MPI_Allgatherv | 集体   | 多对多收集（不等长） | 同步不等长向量 |
 
 ### 7.2 Lab3中的通信模式
 
@@ -775,11 +782,12 @@ CG迭代阶段（每次迭代）：
   进程1: ██████
   进程2: ████████████
   进程3: ████
-  
+
   问题：进程2成为瓶颈
 ```
 
 **Lab3的负载均衡**：
+
 - 行分块策略：每个进程负责连续的行
 - 对于稀疏矩阵，不同行的非零元素数量可能不同
 - 可能导致轻微的负载不均衡
@@ -808,7 +816,7 @@ fflush(stdout);
 
 ```cpp
 // 在每个进程中检查收到的数据
-printf("[Rank %d] 收到 %d 行, %d 个非零元素\n", 
+printf("[Rank %d] 收到 %d 行, %d 个非零元素\n",
        rank, local_n, row_ptr[local_n] - row_ptr[0]);
 
 // 检查第一行的数据
@@ -821,6 +829,7 @@ if (local_n > 0) {
 ### 9.3 常见错误
 
 **错误1：死锁**
+
 ```cpp
 // ❌ 错误：所有进程都在等待接收
 MPI_Recv(...);
@@ -835,6 +844,7 @@ if (rank == 0) {
 ```
 
 **错误2：数据类型不匹配**
+
 ```cpp
 // ❌ 错误：发送int，接收double
 MPI_Send(&data, 1, MPI_INT, ...);
@@ -846,6 +856,7 @@ MPI_Recv(&data, 1, MPI_INT, ...);
 ```
 
 **错误3：忘记同步**
+
 ```cpp
 // ❌ 错误：没有同步就使用p_global
 for (int i = 0; i < local_n; i++) {
@@ -860,7 +871,6 @@ for (int i = 0; i < local_n; i++) {
 MPI_Allgatherv(...);  // 同步
 // 现在可以安全使用p_global
 ```
-
 
 ---
 
@@ -975,21 +985,22 @@ cd $PBS_O_WORKDIR
 
 ## 十二、与Lab2/Lab4的对比
 
-| 特性         | Lab2 (pthread)  | Lab3 (MPI)  | Lab4 (GPU)    |
-| ---------- | --------------- | ----------- | ------------- |
-| **并行模型**   | 共享内存            | 分布式内存       | 大规模数据并行       |
-| **线程/进程数** | 1-32            | 1-32        | 数千到数万         |
-| **内存访问**   | 直接访问共享变量        | 通过消息传递      | GPU显存         |
-| **通信方式**   | 无需通信            | MPI消息传递     | CPU-GPU传输     |
-| **同步机制**   | pthread_barrier | MPI_Barrier | __syncthreads |
-| **数据分配**   | 自动共享            | 手动分发        | 手动拷贝          |
-| **适用场景**   | 单机多核            | 多机集群        | GPU加速         |
-| **编程难度**   | 中等              | 较高          | 高             |
-| **扩展性**    | 受限于单机核数         | 可扩展到多机      | 受限于GPU        |
+| 特性            | Lab2 (pthread)   | Lab3 (MPI)   | Lab4 (GPU)      |
+| --------------- | ---------------- | ------------ | --------------- |
+| **并行模型**    | 共享内存         | 分布式内存   | 大规模数据并行  |
+| **线程/进程数** | 1-32             | 1-32         | 数千到数万      |
+| **内存访问**    | 直接访问共享变量 | 通过消息传递 | GPU显存         |
+| **通信方式**    | 无需通信         | MPI消息传递  | CPU-GPU传输     |
+| **同步机制**    | pthread_barrier  | MPI_Barrier  | \_\_syncthreads |
+| **数据分配**    | 自动共享         | 手动分发     | 手动拷贝        |
+| **适用场景**    | 单机多核         | 多机集群     | GPU加速         |
+| **编程难度**    | 中等             | 较高         | 高              |
+| **扩展性**      | 受限于单机核数   | 可扩展到多机 | 受限于GPU       |
 
 ### 关键区别
 
 **Lab2 (pthread)**：
+
 ```cpp
 // 所有线程共享同一个数组
 double *x = (double*)malloc(n * sizeof(double));
@@ -1002,6 +1013,7 @@ double *x = (double*)malloc(n * sizeof(double));
 ```
 
 **Lab3 (MPI)**：
+
 ```cpp
 // 每个进程有自己的数组
 double *x_local = (double*)malloc(local_n * sizeof(double));
@@ -1011,6 +1023,7 @@ MPI_Allgatherv(...);
 ```
 
 **Lab4 (GPU)**：
+
 ```cpp
 // CPU和GPU有各自的内存
 double *x_cpu = (double*)malloc(n * sizeof(double));
@@ -1026,14 +1039,17 @@ hipMemcpy(x_gpu, x_cpu, ..., hipMemcpyHostToDevice);
 ## 十三、实验参数
 
 ### 矩阵规模
+
 - **small**: 1000, 5000, 10000
 - **large**: 10000, 50000, 100000
 - **all**: 1000, 5000, 10000, 50000, 100000
 
 ### 进程数
+
 - 1, 2, 4, 8, 16, 32
 
 ### 重复次数
+
 - 每个配置重复5次
 
 ---
@@ -1100,7 +1116,7 @@ cat result.log
     - 计算量小，通信开销占比大
     - 加速比 < 理想值
     - 可能出现负加速（进程多反而慢）
-  
+
   大矩阵（100000×100000）：
     - 计算量大，通信开销占比小
     - 加速比接近理想值
@@ -1111,7 +1127,7 @@ cat result.log
 
 ```
 加速比 vs 进程数：
-  
+
   ^
   |                    理想曲线 /
   |                           /

@@ -310,7 +310,6 @@ Use the AskUserQuestion tool to gather:
 - 22:00-23:00: 建议"熄灯倒计时"，仅回顾今日
 - > 23:00: 尊重熄灯规则，明天请早
 
-
 ## Step 4: Present Summary
 
 Output a concise summary in Chinese:

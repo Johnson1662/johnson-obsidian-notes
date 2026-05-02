@@ -79,7 +79,7 @@ trigram (3-gram)：当前词依赖于前两个词。
 更高阶 n-gram：依赖更长的上下文，但计算和数据需求也会更高。基本上不用。
 举个例子，假设我们有个文本：
 
-*"I love natural language processing"*
+_"I love natural language processing"_
 
 使用bigram模型，整句话的概率近似为：
 

@@ -7,6 +7,7 @@
 **Pthread (POSIX Threads)** = POSIX线程标准
 
 想象一个场景：
+
 ```
 你有一个大任务要完成，比如计算10000行矩阵
 - 一个人算：需要很长时间
@@ -17,13 +18,13 @@ Pthread就是让多个"工人"（线程）在同一台机器上协作完成任�
 
 ### 1.2 线程 vs 进程
 
-| 特性 | 线程（Thread） | 进程（Process） |
-|------|---------------|----------------|
-| 内存 | 共享同一块内存 | 各自独立的内存 |
-| 比喻 | 同一个房间的多个人，共用一张桌子 | 不同房间的多个人 |
-| 通信 | 直接访问共享变量 | 需要进程间通信 |
-| 创建开销 | 小 | 大 |
-| 适用场景 | 单机多核并行计算 | 多任务隔离 |
+| 特性     | 线程（Thread）                   | 进程（Process）  |
+| -------- | -------------------------------- | ---------------- |
+| 内存     | 共享同一块内存                   | 各自独立的内存   |
+| 比喻     | 同一个房间的多个人，共用一张桌子 | 不同房间的多个人 |
+| 通信     | 直接访问共享变量                 | 需要进程间通信   |
+| 创建开销 | 小                               | 大               |
+| 适用场景 | 单机多核并行计算                 | 多任务隔离       |
 
 ### 1.3 核心概念
 
@@ -65,7 +66,7 @@ void* thread_work(void* arg) {
 int main() {
     pthread_t threads[4];  // 线程句柄数组
     int thread_ids[4];     // 线程ID数组
-    
+
     // 创建4个线程
     for (int i = 0; i < 4; i++) {
         thread_ids[i] = i;
@@ -74,18 +75,19 @@ int main() {
                       thread_work,       // 线程函数
                       &thread_ids[i]);   // 传递给线程的参数
     }
-    
+
     // 等待所有线程完成
     for (int i = 0; i < 4; i++) {
         pthread_join(threads[i], NULL);
     }
-    
+
     printf("所有线程完成！\n");
     return 0;
 }
 ```
 
 **运行结果**：
+
 ```
 我是线程 0
 我是线程 1
@@ -95,6 +97,7 @@ int main() {
 ```
 
 **关键点**：
+
 - `pthread_create`: 创建线程
 - `pthread_join`: 等待线程结束
 - 所有线程执行**同一个函数**，但参数不同
@@ -136,13 +139,13 @@ pthread_barrier_init(&barrier, NULL, 4);
 void* thread_work(void* arg) {
     // 第一阶段工作
     printf("线程 %d: 完成第一阶段\n", thread_id);
-    
+
     // 等待所有线程完成第一阶段
     pthread_barrier_wait(&barrier);
-    
+
     // 第二阶段工作（所有线程都到达后才开始）
     printf("线程 %d: 开始第二阶段\n", thread_id);
-    
+
     return NULL;
 }
 
@@ -151,6 +154,7 @@ pthread_barrier_destroy(&barrier);
 ```
 
 **比喻**：
+
 - 4个人一起搬家
 - 第一阶段：每人搬自己的东西
 - 到达barrier：等所有人都搬完
@@ -173,6 +177,7 @@ pthread_barrier_destroy(&barrier);
 这是一种**迭代算法**，通过不断改进猜测值来逼近真实解。
 
 **核心思想**：
+
 ```
 1. 从一个初始猜测 x₀ = 0 开始
 2. 计算残差（误差）r = b - Ax
@@ -205,11 +210,13 @@ pthread_barrier_destroy(&barrier);
 ### 4.4 为什么需要并行化？
 
 CG算法中**最耗时的操作**是：
+
 - **SpMV（稀疏矩阵向量乘）**: Ap = A × p
 - 这个操作在每次迭代中都要执行
 - 矩阵很大时（如100000×100000），计算量巨大
 
 **并行化策略**：
+
 - 把矩阵的行分配给不同的线程
 - 每个线程计算自己负责的行
 - 理论上可以获得接近线程数的加速比
@@ -225,7 +232,7 @@ CG算法中**最耗时的操作**是：
   矩阵 A = [1  0  2]
           [0  3  0]
           [4  0  5]
-  
+
   存储：[1, 0, 2, 0, 3, 0, 4, 0, 5]
   问题：浪费大量空间存储0
 
@@ -255,24 +262,25 @@ CSR存储：
 
 ```cpp
 // y = A × x
-void spmv_csr(int n, const int *row_ptr, const int *col_idx, 
+void spmv_csr(int n, const int *row_ptr, const int *col_idx,
               const double *values, const double *x, double *y) {
     for (int i = 0; i < n; i++) {  // 遍历每一行
         double sum = 0.0;
-        
+
         // 遍历第i行的所有非零元素
         for (int j = row_ptr[i]; j < row_ptr[i+1]; j++) {
             sum += values[j] * x[col_idx[j]];
             //     ^^^^^^^^^   ^^^^^^^^^^^^^
             //     矩阵元素值   对应的x向量元素
         }
-        
+
         y[i] = sum;
     }
 }
 ```
 
 **并行化思路**：
+
 - 每个线程负责一部分行
 - 例如：4个线程，10000行
   - 线程0: 行 0-2499
@@ -314,9 +322,9 @@ int rows_per_thread = n / num_threads;  // 10000 / 4 = 2500
 int remaining_rows = n % num_threads;   // 10000 % 4 = 0
 
 // 计算我负责的起始和结束行
-int start_row = thread_id * rows_per_thread + 
+int start_row = thread_id * rows_per_thread +
                 min(thread_id, remaining_rows);
-int end_row = start_row + rows_per_thread + 
+int end_row = start_row + rows_per_thread +
               (thread_id < remaining_rows ? 1 : 0);
 
 // 例如：
@@ -339,8 +347,6 @@ int end_row = start_row + rows_per_thread +
 // thread_id=2: 2500行 (5001-7500)
 // thread_id=3: 2500行 (7501-10000)
 ```
-
-
 
 ---
 
@@ -418,10 +424,10 @@ void* cg_thread_work(void *arg) {
     int tid = data->thread_id;
     int start = data->start_row;
     int end = data->end_row;
-    
+
     // === 迭代求解 ===
     for (int iter = 0; iter < max_iter; iter++) {
-        
+
         // ========== 步骤1: SpMV（局部计算）==========
         // 每个线程计算自己负责的行
         for (int i = start; i < end; i++) {
@@ -431,10 +437,10 @@ void* cg_thread_work(void *arg) {
             }
             Ap[i] = sum;
         }
-        
+
         // 等待所有线程完成SpMV
         pthread_barrier_wait(&barrier);
-        
+
         // ========== 步骤2: 计算pAp（局部+归约）==========
         // 每个线程计算局部pAp
         double local_pAp = 0.0;
@@ -442,17 +448,17 @@ void* cg_thread_work(void *arg) {
             local_pAp += p[i] * Ap[i];
         }
         local_pAp_array[tid] = local_pAp;
-        
+
         // 等待所有线程完成局部计算
         pthread_barrier_wait(&barrier);
-        
+
         // 主线程汇总并计算alpha
         if (tid == 0) {
             double pAp = 0.0;
             for (int i = 0; i < num_threads; i++) {
                 pAp += local_pAp_array[i];
             }
-            
+
             if (fabs(pAp) < 1e-15) {
                 converged = -1;  // 异常退出
                 shared_alpha = 0.0;
@@ -460,45 +466,45 @@ void* cg_thread_work(void *arg) {
                 shared_alpha = global_rho_old / pAp;
             }
         }
-        
+
         // 等待主线程完成alpha计算
         pthread_barrier_wait(&barrier);
-        
+
         // 检查异常退出
         if (converged == -1) {
             break;
         }
-        
+
         // ========== 步骤3: 更新x和r（局部计算）==========
         double alpha = shared_alpha;
         for (int i = start; i < end; i++) {
             x[i] += alpha * p[i];
             r[i] -= alpha * Ap[i];
         }
-        
+
         // 等待所有线程完成更新
         pthread_barrier_wait(&barrier);
-        
+
         // ========== 步骤4: 计算rho_new（局部+归约）==========
         double local_rho_new = 0.0;
         for (int i = start; i < end; i++) {
             local_rho_new += r[i] * r[i];
         }
         local_rho_array[tid] = local_rho_new;
-        
+
         // 等待所有线程完成局部计算
         pthread_barrier_wait(&barrier);
-        
+
         // 主线程汇总rho_new并检查收敛
         if (tid == 0) {
             double rho_new = 0.0;
             for (int i = 0; i < num_threads; i++) {
                 rho_new += local_rho_array[i];
             }
-            
+
             double res_norm = sqrt(rho_new);
             if (res_norm < tol) {
-                printf("迭代%d次后收敛，残差范数：%.6e\n", 
+                printf("迭代%d次后收敛，残差范数：%.6e\n",
                        iter+1, res_norm);
                 converged = 1;
             } else {
@@ -506,25 +512,25 @@ void* cg_thread_work(void *arg) {
                 global_rho_old = rho_new;
             }
         }
-        
+
         // 等待主线程完成收敛检查
         pthread_barrier_wait(&barrier);
-        
+
         // 检查是否收敛
         if (converged == 1) {
             break;
         }
-        
+
         // ========== 步骤5: 更新p（局部计算）==========
         double beta = shared_beta;
         for (int i = start; i < end; i++) {
             p[i] = r[i] + beta * p[i];
         }
-        
+
         // 等待所有线程完成p更新
         pthread_barrier_wait(&barrier);
     }
-    
+
     return NULL;
 }
 ```
@@ -568,9 +574,9 @@ void* cg_thread_work(void *arg) {
     线程1: local_pAp[1] = Σ(i=2500~4999) p[i]*Ap[i]
     线程2: local_pAp[2] = Σ(i=5000~7499) p[i]*Ap[i]
     线程3: local_pAp[3] = Σ(i=7500~9999) p[i]*Ap[i]
-  
+
   阶段2：主线程汇总
-    pAp = local_pAp[0] + local_pAp[1] + 
+    pAp = local_pAp[0] + local_pAp[1] +
           local_pAp[2] + local_pAp[3]
 ```
 
@@ -584,7 +590,7 @@ if (tid == 0) {
     for (int i = 0; i < num_threads; i++) {
         pAp += local_pAp_array[i];
     }
-    
+
     // 计算共享变量
     shared_alpha = global_rho_old / pAp;
 }
@@ -608,63 +614,63 @@ int main(int argc, char *argv[]) {
     const char *matrix_file = argv[1];
     const char *vector_file = argv[2];
     num_threads = atoi(argv[3]);
-    
+
     // 2. 读取数据
     read_matrix(matrix_file);
     read_vector(vector_file);
-    
+
     // 3. 初始化
     x = (double*)calloc(n, sizeof(double));  // x = 0
     r = (double*)malloc(n * sizeof(double));
     p = (double*)malloc(n * sizeof(double));
     Ap = (double*)malloc(n * sizeof(double));
-    
+
     for (int i = 0; i < n; i++) {
         r[i] = b[i];  // r = b（因为x=0）
         p[i] = r[i];  // p = r
     }
-    
+
     // 计算初始残差
     global_rho_old = 0.0;
     for (int i = 0; i < n; i++) {
         global_rho_old += r[i] * r[i];
     }
-    
+
     // 4. 初始化同步变量
     pthread_barrier_init(&barrier, NULL, num_threads);
     local_pAp_array = (double*)malloc(num_threads * sizeof(double));
     local_rho_array = (double*)malloc(num_threads * sizeof(double));
-    
+
     // 5. 创建线程
     pthread_t *threads = (pthread_t*)malloc(num_threads * sizeof(pthread_t));
     thread_data_t *thread_data = (thread_data_t*)malloc(
         num_threads * sizeof(thread_data_t));
-    
+
     // 分配行块
     int rows_per_thread = n / num_threads;
     int remaining_rows = n % num_threads;
     int current_row = 0;
-    
+
     for (int i = 0; i < num_threads; i++) {
         thread_data[i].thread_id = i;
         thread_data[i].start_row = current_row;
-        thread_data[i].end_row = current_row + rows_per_thread + 
+        thread_data[i].end_row = current_row + rows_per_thread +
                                  (i < remaining_rows ? 1 : 0);
         current_row = thread_data[i].end_row;
-        
-        pthread_create(&threads[i], NULL, cg_thread_work, 
+
+        pthread_create(&threads[i], NULL, cg_thread_work,
                       &thread_data[i]);
     }
-    
+
     // 6. 等待所有线程完成
     for (int i = 0; i < num_threads; i++) {
         pthread_join(threads[i], NULL);
     }
-    
+
     // 7. 验证结果
     double error = verify_solution();
     printf("验证误差 ||Ax-b||: %.6e\n", error);
-    
+
     // 8. 清理
     pthread_barrier_destroy(&barrier);
     free(threads);
@@ -679,7 +685,7 @@ int main(int argc, char *argv[]) {
     free(r);
     free(p);
     free(Ap);
-    
+
     return 0;
 }
 ```
@@ -693,25 +699,25 @@ void read_matrix(const char *filename) {
         printf("无法打开矩阵文件: %s\n", filename);
         exit(1);
     }
-    
+
     int nnz;  // 非零元素个数
     fscanf(fp, "%d %d", &n, &nnz);
-    
+
     // 分配内存
     values = (double*)malloc(nnz * sizeof(double));
     col_idx = (int*)malloc(nnz * sizeof(int));
     row_ptr = (int*)malloc((n + 1) * sizeof(int));
-    
+
     // 读取row_ptr
     for (int i = 0; i <= n; i++) {
         fscanf(fp, "%d", &row_ptr[i]);
     }
-    
+
     // 读取col_idx和values
     for (int i = 0; i < nnz; i++) {
         fscanf(fp, "%d %lf", &col_idx[i], &values[i]);
     }
-    
+
     fclose(fp);
 }
 ```
@@ -721,14 +727,14 @@ void read_matrix(const char *filename) {
 ```cpp
 double verify_solution() {
     double *Ax = (double*)calloc(n, sizeof(double));
-    
+
     // 计算Ax
     for (int i = 0; i < n; i++) {
         for (int j = row_ptr[i]; j < row_ptr[i+1]; j++) {
             Ax[i] += values[j] * x[col_idx[j]];
         }
     }
-    
+
     // 计算||Ax-b||
     double error = 0.0;
     for (int i = 0; i < n; i++) {
@@ -736,7 +742,7 @@ double verify_solution() {
         error += diff * diff;
     }
     error = sqrt(error);
-    
+
     free(Ax);
     return error;
 }
@@ -798,11 +804,12 @@ double verify_solution() {
   线程1: ██████
   线程2: ████████████
   线程3: ████
-  
+
   问题：线程2成为瓶颈
 ```
 
 **Lab2的负载均衡**：
+
 - 行分块策略：每个线程负责连续的行
 - 对于稀疏矩阵，不同行的非零元素数量可能不同
 - 可能导致轻微的负载不均衡
@@ -813,16 +820,17 @@ double verify_solution() {
 好的访问模式（连续访问）：
   线程0访问：x[0], x[1], x[2], ...
   线程1访问：x[2500], x[2501], x[2502], ...
-  
+
   优点：缓存命中率高
 
 坏的访问模式（随机访问）：
   访问：x[100], x[5000], x[200], x[8000], ...
-  
+
   缺点：缓存命中率低
 ```
 
 **Lab2的访问模式**：
+
 - SpMV中访问col_idx[j]对应的x元素
 - 对于稀疏矩阵，可能是随机访问
 - 缓存效率取决于矩阵的稀疏模式
@@ -853,8 +861,6 @@ double verify_solution() {
   - 32线程时效果最好
 ```
 
-
-
 ---
 
 ## 十、编译和运行
@@ -870,6 +876,7 @@ g++ -pthread -O3 -o sparse.o sparse.cpp
 ```
 
 **编译选项说明**：
+
 - `-pthread`: 链接pthread库
 - `-O3`: 开启最高级别优化
 - `-o sparse.o`: 指定输出文件名
@@ -996,11 +1003,11 @@ void* cg_thread_work(void *arg) {
     int tid = data->thread_id;
     int start = data->start_row;
     int end = data->end_row;
-    
+
     // 打印线程信息
     printf("[线程%d] 负责行 %d-%d\n", tid, start, end-1);
     fflush(stdout);  // 立即输出
-    
+
     // 在关键位置打印
     for (int iter = 0; iter < max_iter; iter++) {
         if (tid == 0 && iter % 10 == 0) {
@@ -1017,9 +1024,9 @@ void* cg_thread_work(void *arg) {
 // 在主函数中检查
 printf("线程分配情况：\n");
 for (int i = 0; i < num_threads; i++) {
-    printf("  线程%d: 行 %d-%d (%d行)\n", 
-           i, 
-           thread_data[i].start_row, 
+    printf("  线程%d: 行 %d-%d (%d行)\n",
+           i,
+           thread_data[i].start_row,
            thread_data[i].end_row - 1,
            thread_data[i].end_row - thread_data[i].start_row);
 }
@@ -1028,6 +1035,7 @@ for (int i = 0; i < num_threads; i++) {
 ### 12.3 常见错误
 
 **错误1：忘记初始化barrier**
+
 ```cpp
 // ❌ 错误：没有初始化
 pthread_barrier_wait(&barrier);  // 会崩溃
@@ -1038,6 +1046,7 @@ pthread_barrier_wait(&barrier);
 ```
 
 **错误2：barrier数量不匹配**
+
 ```cpp
 // ❌ 错误：线程数和barrier数量不一致
 pthread_barrier_init(&barrier, NULL, 4);  // 初始化为4
@@ -1049,6 +1058,7 @@ pthread_barrier_init(&barrier, NULL, num_threads);
 ```
 
 **错误3：数据竞争**
+
 ```cpp
 // ❌ 错误：多个线程同时写同一个变量
 double global_sum = 0.0;
@@ -1066,6 +1076,7 @@ if (tid == 0) {
 ```
 
 **错误4：忘记等待线程结束**
+
 ```cpp
 // ❌ 错误：没有join
 for (int i = 0; i < num_threads; i++) {
@@ -1086,21 +1097,22 @@ for (int i = 0; i < num_threads; i++) {
 
 ## 十三、与Lab3/Lab4的对比
 
-| 特性 | Lab2 (pthread) | Lab3 (MPI) | Lab4 (GPU) |
-|------|----------------|------------|------------|
-| **并行模型** | 共享内存多线程 | 分布式内存多进程 | 大规模数据并行 |
-| **线程/进程数** | 1-32 | 1-32 | 数千到数万 |
-| **内存访问** | 直接访问共享变量 | 通过消息传递 | GPU显存 |
-| **通信方式** | 无需通信（共享内存） | MPI消息传递 | CPU-GPU传输 |
-| **同步机制** | pthread_barrier | MPI_Barrier | __syncthreads |
-| **数据分配** | 自动共享 | 手动分发 | 手动拷贝 |
-| **适用场景** | 单机多核 | 多机集群 | GPU加速 |
-| **编程难度** | 中等 | 较高 | 高 |
-| **扩展性** | 受限于单机核数 | 可扩展到多机 | 受限于GPU |
+| 特性            | Lab2 (pthread)       | Lab3 (MPI)       | Lab4 (GPU)      |
+| --------------- | -------------------- | ---------------- | --------------- |
+| **并行模型**    | 共享内存多线程       | 分布式内存多进程 | 大规模数据并行  |
+| **线程/进程数** | 1-32                 | 1-32             | 数千到数万      |
+| **内存访问**    | 直接访问共享变量     | 通过消息传递     | GPU显存         |
+| **通信方式**    | 无需通信（共享内存） | MPI消息传递      | CPU-GPU传输     |
+| **同步机制**    | pthread_barrier      | MPI_Barrier      | \_\_syncthreads |
+| **数据分配**    | 自动共享             | 手动分发         | 手动拷贝        |
+| **适用场景**    | 单机多核             | 多机集群         | GPU加速         |
+| **编程难度**    | 中等                 | 较高             | 高              |
+| **扩展性**      | 受限于单机核数       | 可扩展到多机     | 受限于GPU       |
 
 ### 关键区别
 
 **Lab2 (pthread)**：
+
 ```cpp
 // 所有线程共享同一个数组
 double *x = (double*)malloc(n * sizeof(double));
@@ -1113,6 +1125,7 @@ void* thread_work(void* arg) {
 ```
 
 **Lab3 (MPI)**：
+
 ```cpp
 // 每个进程有自己的数组
 double *x_local = (double*)malloc(local_n * sizeof(double));
@@ -1122,6 +1135,7 @@ MPI_Allgatherv(...);
 ```
 
 **Lab4 (GPU)**：
+
 ```cpp
 // CPU和GPU有各自的内存
 double *x_cpu = (double*)malloc(n * sizeof(double));
@@ -1137,17 +1151,21 @@ hipMemcpy(x_gpu, x_cpu, ..., hipMemcpyHostToDevice);
 ## 十四、实验参数
 
 ### 矩阵规模
+
 - **small**: 1000, 5000, 10000
 - **large**: 50000, 100000
 - **all**: 1000, 5000, 10000, 50000, 100000
 
 ### 线程数
+
 - 1, 2, 4, 8, 16, 32
 
 ### 重复次数
+
 - 每个配置重复10次
 
 ### 稀疏度
+
 - 0.01（1%的元素非零）
 
 ---
@@ -1262,6 +1280,7 @@ A: 小矩阵的计算量小，线程创建和同步的开销占比大，导致�
 ### Q2: 如何选择合适的线程数？
 
 A: 一般选择与CPU核心数相同或略多的线程数。例如：
+
 - 4核CPU：使用4-8线程
 - 8核CPU：使用8-16线程
 - 32核CPU：使用16-32线程
@@ -1269,6 +1288,7 @@ A: 一般选择与CPU核心数相同或略多的线程数。例如：
 ### Q3: 为什么需要这么多barrier？
 
 A: CG算法中有多个依赖关系，必须确保前一步完成后才能进行下一步。例如：
+
 - 必须等所有线程完成SpMV后，才能计算pAp
 - 必须等主线程计算完alpha后，才能更新x和r
 
@@ -1279,6 +1299,7 @@ A: 计算||Ax-b||的范数，应该接近0（如1e-10）。如果误差很大，
 ### Q5: 为什么实际加速比达不到理论值？
 
 A: 主要原因：
+
 1. 同步开销（barrier）
 2. 负载不均衡
 3. 缓存效应
@@ -1287,6 +1308,7 @@ A: 主要原因：
 ### Q6: 如何提高性能？
 
 A: 可以尝试：
+
 1. 使用更大的矩阵（减少同步开销占比）
 2. 优化数据分配策略（提高负载均衡）
 3. 使用编译器优化选项（-O3）
@@ -1304,12 +1326,14 @@ Lab2通过Pthread实现了共轭梯度法的并行化，主要学习内容：
 4. **调试技巧**：打印调试、错误排查
 
 **核心思想**：
+
 - 把大任务分解成小任务
 - 多个线程并行执行小任务
 - 通过barrier同步线程
 - 主线程汇总结果
 
 **下一步**：
+
 - Lab3学习MPI分布式并行
 - Lab4学习GPU大规模并行
 

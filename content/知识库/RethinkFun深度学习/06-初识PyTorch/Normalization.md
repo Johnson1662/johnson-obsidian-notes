@@ -14,27 +14,27 @@ tags: [深度学习, RethinkFun]
 ![](http://rethink.fun/imgs/0611.png)
 
 假设我们构造了如下的数据，这个数据是关于对外卖送餐时间的数据。对于送餐时间（分钟）。影响因素有两个，一个是路上红绿灯的数量，一个是饭店距你的距离（米）。构造数据时，我们假设：
- $time=2*lights+0.01*distance+5$
+$time=2*lights+0.01*distance+5$
 
- time 
- lights 
- distance 
+time
+lights
+distance
 
- 19 
- 2 
- 1000 
- 31 
- 3 
- 2000 
- 14 
- 2 
- 500 
- 15 
- 1 
- 800 
- 43 
- 4 
- 3000
+19
+2
+1000
+31
+3
+2000
+14
+2
+500
+15
+1
+800
+43
+4
+3000
 
 这里的time是用lights和distance，严格按照上边给定参数的线性模型生成的。没有添加误差。
 

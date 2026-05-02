@@ -15,21 +15,21 @@ BLEU（Bilingual Evaluation Understudy）是机器翻译中最常用的自动评
 
 BLEU指标的取值范围为[0,1]之间，值越大代表机器翻译与参考译文越相似，表明翻译效果越好。
 
- BLEU得分 
- 模型表现 
+BLEU得分
+模型表现
 
- 0-0.1 
- 差，基本不可读 
- 0.1-0.2 
- 可表达大体意思，有时会有错误 
- 0.2-0.3 
- 基本流畅可用，有一定错误或者不自然 
- 0.3-0.4 
- 很流畅，但不完美 
- 0.4-0.5 
- 很好，接近人工翻译 
- 0.5-1.0 
- 非常好（罕见）
+0-0.1
+差，基本不可读
+0.1-0.2
+可表达大体意思，有时会有错误
+0.2-0.3
+基本流畅可用，有一定错误或者不自然
+0.3-0.4
+很流畅，但不完美
+0.4-0.5
+很好，接近人工翻译
+0.5-1.0
+非常好（罕见）
 
 ### 14.2.1 BLEU原理
 
@@ -97,16 +97,16 @@ print(f"BLEU score: {bleu.score:.2f}")`
 假设参考翻译$T_r$为“今天天气很好”，模型翻译$T_m$为：“今天今天今天”
 都按照单个字为一个token来拆解，则$T_m$里有两个不同的token：“今”、“天”。这两个token也都出现在$T_r$的token序列里。我们是否就可以定义$p_1=1$呢？当然不行，这个翻译明显是个很差的翻译。BLEU的具体做法如下：
 
- token 
- $count(T_m,token)$ 
- $min(count(T_m,token),count(T_r,token))$ 
+token
+$count(T_m,token)$
+$min(count(T_m,token),count(T_r,token))$
 
- 今 
- 3 
- 1 
- 天 
- 3 
- 2
+今
+3
+1
+天
+3
+2
 
 上表中第二列统计了对于某个token在$T_m$中出现的个数，把这个值叫做$count$。上表中第三列统计了对于某个token在$T_m,T_r$中出现较小的那个count值，把这个值叫做$clip\_count$。
 
@@ -122,22 +122,22 @@ $p_1 = \frac{\sum clip\_count}{\sum count}=3/6 =0.5$
 
 则$T_m$中2个不同的连续token序列为“今天”、“天今”、“天不”、“不错”
 
- token 
- $count(T_m,token)$ 
- $min(count(T_m,token),count(T_r,token))$ 
+token
+$count(T_m,token)$
+$min(count(T_m,token),count(T_r,token))$
 
- 今天 
- 2 
- 1 
- 天今 
- 1 
- 0 
- 天不 
- 1 
- 0 
- 不错 
- 1 
- 1
+今天
+2
+1
+天今
+1
+0
+天不
+1
+0
+不错
+1
+1
 
 $p_1 = \frac{\sum clip\_count}{\sum count}=2/5 =0.4$
 

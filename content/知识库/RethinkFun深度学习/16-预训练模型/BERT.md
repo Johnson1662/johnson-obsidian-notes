@@ -47,14 +47,11 @@ Token级别的问题类似NER，它需要BERT能够为每个token输出它在上
 
 上图中下边有3个不同的Embedding。它们按位相加，构成了序列最终的输入向量。
 
-- 
-Token Embedding，就是每个token的词向量，代表了每个token的原始含义。此时还没有上下文信息。字典里每个token都有一个Embedding，并且是可学习的参数。
+- Token Embedding，就是每个token的词向量，代表了每个token的原始含义。此时还没有上下文信息。字典里每个token都有一个Embedding，并且是可学习的参数。
 
-- 
-Segment Embedding，用于区分每个token属于哪个序列的Embedding，每个序列共享一个Embedding，也是可学习参数。
+- Segment Embedding，用于区分每个token属于哪个序列的Embedding，每个序列共享一个Embedding，也是可学习参数。
 
-- 
-Position Embedding，用于给每个位置一个Embedding，不同与Transformer里用sin和cos函数生成固定位置编码，这里的位置编码也是可学习参数，让模型在训练中自己学习。
+- Position Embedding，用于给每个位置一个Embedding，不同与Transformer里用sin和cos函数生成固定位置编码，这里的位置编码也是可学习参数，让模型在训练中自己学习。
 
 ### 16.2.3 预训练BERT
 

@@ -9,6 +9,12 @@
   margin: 0;
   text-align: inherit;
   flex-shrink: 0;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: var(--highlight);
+  }
 
   & svg {
     position: absolute;
@@ -16,7 +22,11 @@
     height: 20px;
     top: calc(50% - 10px);
     fill: var(--darkgray);
-    transition: opacity 0.1s ease;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+
+  &:hover svg {
+    transform: scale(1.1);
   }
 }
 

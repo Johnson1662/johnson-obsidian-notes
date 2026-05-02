@@ -3,17 +3,20 @@
 ## 计算机系统性能提升方法#
 
 ### Scale Up 模式#
+
 - 单个计算节点能力越来越强大
 - CPU：单核 → 多核 → 众核
 - GPU、MIC（Xeon Phi）等加速器的加入
 - 节点内核心数从几个增长到数千个（如天河二号：每节点2×12核CPU + 3×57核Xeon Phi = 312万核心）
 
 ### Scale Out 模式#
+
 - 可计算节点规模越来越大
 - 通过高速互联网络将更多节点连接起来
 - 例如：天河二号16000个运算节点
 
 ### 多级化成为必然趋势#
+
 - **Scale Up + Scale Out** 结合
 - 节点内：多核+加速器（Scale Up）
 - 节点间：大规模集群（Scale Out）
@@ -28,34 +31,39 @@
 - 节点内：多个处理器共享内存（OpenMP）
 - 节点间：通过互联网络连接（MPI）
 - 编程模型：**MPI+OpenMP**
-![](assets/09%20MPI多级混合编程/file-20260429085036616.png)
-![](assets/09%20MPI多级混合编程/file-20260429085108501.png)
+  ![](assets/09%20MPI多级混合编程/file-20260429085036616.png)
+  ![](assets/09%20MPI多级混合编程/file-20260429085108501.png)
+
 ### 多GPU集群架构（MPI+CUDA）#
 
 - 节点内：多个GPU通过PCIe连接（CUDA）
 - 节点间：通过互联网络连接（MPI）
 - 编程模型：**MPI+CUDA**
-![](assets/09%20MPI多级混合编程/file-20260429085239064.png)
+  ![](assets/09%20MPI多级混合编程/file-20260429085239064.png)
 
 ---
 
 ## MPI vs Thread
 
-| 对比   | MPI           | Thread（OpenMP/PThread） |
-| ---- | ------------- | ---------------------- |
-| 地址空间 | 独立            | 共享内存                   |
-| 适用环境 | 分布式网络计算       | 共享内存机器                 |
-| 通信方式 | 显式（Send/Recv） | 隐式（共享变量）               |
-| 可扩展性 | 高（跨节点）        | 仅节点内                   |
-| 开发难度 | 较高            | 较容易                    |
-| 负载平衡 | 困难            | 支持动态平衡                 |
+| 对比     | MPI               | Thread（OpenMP/PThread） |
+| -------- | ----------------- | ------------------------ |
+| 地址空间 | 独立              | 共享内存                 |
+| 适用环境 | 分布式网络计算    | 共享内存机器             |
+| 通信方式 | 显式（Send/Recv） | 隐式（共享变量）         |
+| 可扩展性 | 高（跨节点）      | 仅节点内                 |
+| 开发难度 | 较高              | 较容易                   |
+| 负载平衡 | 困难              | 支持动态平衡             |
+
 ![](assets/09%20MPI多级混合编程/file-20260429085402187.png)
+
 ### 纯MPI优点
+
 - 高可扩展性
 - 高可移植性
 - 节点间可扩展
 
 ### 纯OpenMP优点
+
 - 容易部署
 - 延迟低
 - 隐式通信
@@ -63,17 +71,20 @@
 - 动态负载平衡
 
 ### 纯MPI缺点#
+
 - 开发调试困难
 - 显式通信
 - 粗粒度划分
 - 负载平衡困难
 
 ### 纯OpenMP缺点#
+
 - 仅运行于共享内存机器
 - 仅节点内可扩展
 - 线程顺序未定义
 
 ### MPI+OpenMP：两全其美#
+
 - 概念简洁，两级并发
 - 适合多核节点架构
 - 缓解纯MPI可扩展性问题，降低进程数和网络洪水
@@ -84,6 +95,7 @@
 ## MPI+OpenMP混合编程模型#
 
 ### 进程内线程创建#
+
 ```c
 #include <mpi.h>
 #include <omp.h>
@@ -110,12 +122,12 @@ int main(int argc, char **argv) {
 
 ### MPI线程支持级别#
 
-| 级别 | 描述 |
-|------|------|
-| `MPI_THREAD_SINGLE` | 不支持多线程，只有主线程 |
-| `MPI_THREAD_FUNNELED` | 多核但只有主线程调用MPI（默认） |
+| 级别                    | 描述                                          |
+| ----------------------- | --------------------------------------------- |
+| `MPI_THREAD_SINGLE`     | 不支持多线程，只有主线程                      |
+| `MPI_THREAD_FUNNELED`   | 多核但只有主线程调用MPI（默认）               |
 | `MPI_THREAD_SERIALIZED` | 多线程可调用MPI，但一次只有一个线程（串行化） |
-| `MPI_THREAD_MULTIPLE` | 任何线程可调用MPI，无限制（最灵活但最复杂） |
+| `MPI_THREAD_MULTIPLE`   | 任何线程可调用MPI，无限制（最灵活但最复杂）   |
 
 ```c
 int MPI_Init_thread(int *argc, char ***argv,
@@ -164,9 +176,11 @@ int main(int argc, char **argv) {
     return 0;
 }
 ```
+
 > 最灵活但最复杂，线程调用顺序不确定，有潜在死锁风险。
 
 ### 计算与通信重叠#
+
 - 一个线程负责通信，其余线程继续执行计算
 - 可提升整体效率，但同步与负载均衡较复杂
 
@@ -175,13 +189,16 @@ int main(int argc, char **argv) {
 ## 举例1：MPI+OpenMP计算π#
 
 ### 公式#
+
 $$\pi = \int_0^1 \frac{4}{1+x^2}dx \approx \sum_{i=0}^{N} \frac{4}{1+(\frac{i+0.5}{N})^2} \times \frac{1}{N}$$
 
 ### 设计#
+
 - 每个MPI进程负责 `1/nproc` 范围的离散求和
 - 每个MPI进程内，`nthreads` 个OpenMP线程负责局部求和
 
 ### 核心代码#
+
 ```c
 #include <stdio.h>
 #include <mpi.h>
@@ -223,6 +240,7 @@ void main(int argc, char **argv) {
 ```
 
 ### PBS脚本#
+
 ```bash
 #!/bin/bash
 #PBS -l nodes=2:ppn=1
@@ -242,13 +260,15 @@ mpirun -np $np -machinefile $PBS_NODEFILE ./hpi
 ## 举例2：Multi-Zone NAS Parallel Benchmarks#
 
 ### 混合编程模式#
-| 层次 | 技术 | 说明 |
-|------|------|------|
-| 节点间 | MPI | 进程间通信 |
-| 节点内 | OpenMP | 线程并行 |
-| 计算 | Zones | 每个Zone由不同进程处理 |
+
+| 层次   | 技术   | 说明                   |
+| ------ | ------ | ---------------------- |
+| 节点间 | MPI    | 进程间通信             |
+| 节点内 | OpenMP | 线程并行               |
+| 计算   | Zones  | 每个Zone由不同进程处理 |
 
 ### BT-MZ（Block Tridiagonal - Multi-Zone）#
+
 ```fortran
 call omp_set_num_threads(weight)
 call mpi_send/recv
@@ -282,6 +302,7 @@ endsubroutine
 ```
 
 ### LU-MZ（Lower-Upper - Multi-Zone）#
+
 ```fortran
 call omp_set_num_threads(weight)
 
@@ -329,6 +350,7 @@ endsubroutine
 ```
 
 ### 并发策略#
+
 - 节点内：CUDA进行GPU并发
 - 节点间：MPI进行跨节点通信
 
@@ -337,6 +359,7 @@ endsubroutine
 ## MPI+CUDA混合编程#
 
 ### 分工合作#
+
 - **CUDA**：处理GPU层次的并发（大规模数据并行）
 - **MPI**：处理节点间的并发（跨节点通信）
 - 每个GPU可由一个MPI进程负责（非必须）
@@ -400,10 +423,12 @@ if (0 == rank) {
 ## 举例：MPI+CUDA计算π#
 
 ### 空间分解#
+
 - 每个MPI进程负责 `1/nproc` 范围的离散求和
 - 每个MPI进程内：`NUM_BLOCK × NUM_THREAD` 个CUDA线程进行求和
 
 ### 核心Kernel#
+
 ```c
 __global__ void cal_pi(float *sum, int nbin, float step, float offset,
                      int nthreads, int nblocks) {
@@ -419,6 +444,7 @@ __global__ void cal_pi(float *sum, int nbin, float step, float offset,
 ```
 
 ### 主程序#
+
 ```c
 #include <stdio.h>
 #include <mpi.h>

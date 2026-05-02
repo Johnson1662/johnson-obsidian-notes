@@ -83,7 +83,7 @@ class TitanicDataset(Dataset):
 
 ### 7.9.2DataLoader
 
-一般情况下，我们不需要自定义DataLoader。PyTorch里默认实现的DataLoader就可以满足我们的使用，它定义了如何批量读取数据的功能。比如你可以通过batch*size设置每次读取数据的大小，通过shuffle参数设置是否对数据集进行打乱。另外如果你的Dataset的`*_getitem__`比较费时，你可以通过num_workers参数指定多进程加载。
+一般情况下，我们不需要自定义DataLoader。PyTorch里默认实现的DataLoader就可以满足我们的使用，它定义了如何批量读取数据的功能。比如你可以通过batch*size设置每次读取数据的大小，通过shuffle参数设置是否对数据集进行打乱。另外如果你的Dataset的`*\_getitem\_\_`比较费时，你可以通过num_workers参数指定多进程加载。
 
 ```
 from torch.utils.data import DataLoader

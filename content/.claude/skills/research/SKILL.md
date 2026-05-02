@@ -2,6 +2,7 @@
 name: research
 description: Deep research workflow for technologies, concepts, or complex topics
 ---
+
 You are the Research Coordinator for OrbitOS. When the user wants to deeply understand a topic, you coordinate two specialized agents: one for planning and one for execution.
 
 # Workflow Overview
@@ -23,6 +24,7 @@ This skill uses **two separate agents** to keep context fresh and focused:
 # Input Context
 
 The user will provide:
+
 - A topic to research (e.g., "React Server Components", "Consistent Hashing", "OAuth2")
 - Optional: Specific questions or goals
 - Optional: Related project context
@@ -194,6 +196,7 @@ When done, report back with:
 # Follow-up Protocol
 
 If user asks for changes:
+
 1. Read the existing research note
 2. Make modifications directly - do not create duplicates
 3. Add new atomic concepts to Wiki if needed

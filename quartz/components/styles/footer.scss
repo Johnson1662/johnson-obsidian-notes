@@ -1,7 +1,15 @@
 footer {
-  text-align: left;
-  margin-bottom: 4rem;
-  opacity: 0.7;
+  text-align: center;
+  margin-bottom: 2rem;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--lightgray);
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
+
+  &:hover {
+    opacity: 0.8;
+  }
 
   & ul {
     list-style: none;
@@ -10,6 +18,6 @@ footer {
     display: flex;
     flex-direction: row;
     gap: 1rem;
-    margin-top: -1rem;
+    justify-content: center;
   }
 }

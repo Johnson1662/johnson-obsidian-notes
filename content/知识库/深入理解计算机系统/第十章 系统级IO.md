@@ -1,7 +1,8 @@
 # 第十章 系统级IO
 
 ```
-``````
+
+```
 
 > I/O是在主存和外部设备（磁盘、终端、网络等）之间拷贝数据的过程
 
@@ -145,8 +146,8 @@ int main(void)
 
 - 在读取的时候遇到 EOF(end-of-file)
   - 实际上，EOF并不是一个存在的字符，而是一个被内核检测到的条件
-  - 对磁盘文件而言，当当前的**文件位置 (current file position)**  超过了文件的**实际长度 (file length)**  时，就会发生 EOF。
-  - 对网络连接而言，当一个进程**关闭了它那一端的连接 (closes its end of the connection)**  时，就会发生 EOF。连接的**另一端进程**试图读取已关闭连接的最后一个字节之后的数据时，就会检测到这个 EOF 状态。
+  - 对磁盘文件而言，当当前的**文件位置 (current file position)** 超过了文件的**实际长度 (file length)** 时，就会发生 EOF。
+  - 对网络连接而言，当一个进程**关闭了它那一端的连接 (closes its end of the connection)** 时，就会发生 EOF。连接的**另一端进程**试图读取已关闭连接的最后一个字节之后的数据时，就会检测到这个 EOF 状态。
 - 从终端中读取文本行
 - 读取和写入网络 sockets
 
@@ -170,11 +171,11 @@ ssize_t rio_readn(int fd, void *usrbuf, size_t n){
 	size_t nleft = n;
 
 	while(nleft > 0){
-		if((nread = read(fd, buf, nleft)) < 0){ 
+		if((nread = read(fd, buf, nleft)) < 0){
 			if(errno == EINTR)  /* Interrupt */
-				nread = 0; 
+				nread = 0;
 
-			else 
+			else
 
 				return -1; /* read error */
 
@@ -194,7 +195,7 @@ ssize_t rio_readn(int fd, void *usrbuf, size_t n){
 
 	}
 
-	
+
 
 	return (n - nleft);
 
@@ -209,7 +210,7 @@ ssize_t rio_writen(int fd, void *usrbuf, size_t n){
 
 	size_t nleft = n;
 
-	
+
 
 	while(nleft > 0){
 
@@ -219,13 +220,13 @@ ssize_t rio_writen(int fd, void *usrbuf, size_t n){
 
 				nwrite = 0;
 
-			else 
+			else
 
 				return -1;
 
 		}
 
-		
+
 
 		buf += nwrite;
 
@@ -233,7 +234,7 @@ ssize_t rio_writen(int fd, void *usrbuf, size_t n){
 
 	}
 
-	
+
 
 	return n;
 
@@ -244,7 +245,7 @@ ssize_t rio_writen(int fd, void *usrbuf, size_t n){
 
 ### 2 有缓冲 I/O
 
-### rio\_t 结构体实现
+### rio_t 结构体实现
 
 ```
 #define RIO_BUFSIZE 8192
@@ -272,7 +273,7 @@ static ssize_t rio_read(rio_t *rp, char *usrbuf, size_t n){
 		if(rp->rio_cnt < 0){
 			if(errno == EINTR)
 				rp->rio_cnt = 0;
-			else 
+			else
 				return -1;
 		}
 		else if(rp->rio_cnt == 0) // EOF
@@ -281,24 +282,24 @@ static ssize_t rio_read(rio_t *rp, char *usrbuf, size_t n){
 			rp->rio_bufptr = rp->rio_buf;
 		}
 	}
-	
+
 	int cnt = rp->rio_cnt < n ? (rp_>rio_cnt) : n;
-	
+
 	memcpy(usrbuf, rp->rio_bufptr, cnt);
 	rp->rio_bufptr += cnt;
 	rp->rio_cnt -= cnt;
 	return cnt;
 }
 
-ssize_t rio_readnb(rio_t *rp, void *usrbuf, size_t n) 
+ssize_t rio_readnb(rio_t *rp, void *usrbuf, size_t n)
 {
     size_t nleft = n;
     ssize_t nread;
     char *bufp = usrbuf;
-    
+
     while (nleft > 0) {
-		if ((nread = rio_read(rp, bufp, nleft)) < 0) 
-	            return -1;          /* errno set by read() */ 
+		if ((nread = rio_read(rp, bufp, nleft)) < 0)
+	            return -1;          /* errno set by read() */
 		else if (nread == 0)
 		    break;              /* EOF */
 		nleft -= nread;
@@ -318,13 +319,13 @@ ssize_t rio_readlineb(rio_t *rp, void *usrbuf, size_t maxlen){
 	            n++;
 	            break;
 	        }
-	    } 
+	    }
 	    else if (rc == 0) {
 	        if (n == 1)
 		        return 0; /* EOF, no data read */
 	        else
 		        break;    /* EOF, some data was read */
-	    } 
+	    }
 	    else
 	        return -1;    /* Error */
     }
@@ -374,7 +375,7 @@ int main (int argc, char **argv)
         type = "directory";
     else
         type = "other";
-        
+
     if ((stat.st_mode & S_IRUSR)) // 检查读权限
         readok = "yes";
     else
@@ -427,11 +428,11 @@ int main()
 
 ## I/O 函数的选择
 
-|函数类型|优点|适用场景|
-| :-------| :-------------------------------------------------------------------| :----------------------------------------------------------------------------|
-|**Unix I/O**|最通用，开销最低。提供文件元数据访问。是所有其他 I/O 的底层实现|必须访问文件元数据或需要最高通用性时|
-|**RIO**|**健壮性强**，自动处理短计数问题。提供了无缓冲和有缓冲两种模式|**网络编程**（套接字）或任何必须保证完整传输的 I/O 场景|
-|**标准 I/O**|提供了**格式化 I/O** (如 printf/scanf)。内置了缓冲区，可减少系统调用次数，效率较高|读/写磁盘文件（除了网络 I/O 外的大多数常规文件操作），尤其是需要格式化 I/O 时|
+| 函数类型     | 优点                                                                               | 适用场景                                                                      |
+| :----------- | :--------------------------------------------------------------------------------- | :---------------------------------------------------------------------------- |
+| **Unix I/O** | 最通用，开销最低。提供文件元数据访问。是所有其他 I/O 的底层实现                    | 必须访问文件元数据或需要最高通用性时                                          |
+| **RIO**      | **健壮性强**，自动处理短计数问题。提供了无缓冲和有缓冲两种模式                     | **网络编程**（套接字）或任何必须保证完整传输的 I/O 场景                       |
+| **标准 I/O** | 提供了**格式化 I/O** (如 printf/scanf)。内置了缓冲区，可减少系统调用次数，效率较高 | 读/写磁盘文件（除了网络 I/O 外的大多数常规文件操作），尤其是需要格式化 I/O 时 |
 
 ## 总结
 

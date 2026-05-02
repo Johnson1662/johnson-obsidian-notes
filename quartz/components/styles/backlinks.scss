@@ -6,6 +6,7 @@
   & > h3 {
     font-size: 1rem;
     margin: 0;
+    font-weight: 600;
   }
 
   & > ul.overflow {
@@ -16,8 +17,23 @@
     overscroll-behavior: contain;
 
     & > li {
+      border-radius: 4px;
+      transition: background-color 0.15s ease;
+      padding: 0.15rem 0.3rem;
+      margin: 0 -0.3rem;
+
+      &:hover {
+        background-color: var(--highlight);
+      }
+
       & > a {
         background-color: transparent;
+        display: block;
+        transition: color 0.2s ease;
+
+        &:hover {
+          color: var(--dark);
+        }
       }
     }
   }

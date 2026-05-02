@@ -436,11 +436,9 @@ t2的shape为（1,3）
 
 你默认创建的tensor都是在CPU/内存上的。你有两种方法让tensor转移到GPU/显存上。
 
-- 
-创建时，设定tensor的设备为“cuda”。
+- 创建时，设定tensor的设备为“cuda”。
 
-- 
-将cpu上的tensor通过`to("cuda")`方法转移到GPU上。
+- 将cpu上的tensor通过`to("cuda")`方法转移到GPU上。
 
 还有一个常用的函数来检查你的环境里是否有可用的英伟达GPU。
 

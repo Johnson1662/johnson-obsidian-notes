@@ -8,10 +8,10 @@
   color: var(--gray);
   border-color: var(--dark);
   background-color: var(--light);
-  border: 1px solid;
-  border-radius: 5px;
+  border: 1px solid var(--lightgray);
+  border-radius: 6px;
   opacity: 0;
-  transition: 0.2s;
+  transition: opacity 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
 
   & > svg {
     fill: var(--light);
@@ -20,17 +20,21 @@
 
   &:hover {
     cursor: pointer;
-    border-color: var(--secondary);
+    border-color: var(--gray);
+    background-color: var(--lightgray);
+    transform: scale(1.05);
   }
 
   &:focus {
     outline: 0;
+    border-color: var(--secondary);
+    box-shadow: 0 0 0 2px rgba(120, 113, 108, 0.15);
   }
 }
 
 pre {
   &:hover > .clipboard-button {
     opacity: 1;
-    transition: 0.2s;
+    transition: opacity 0.2s ease;
   }
 }
