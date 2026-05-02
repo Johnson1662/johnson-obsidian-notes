@@ -1,0 +1,67 @@
+.dashboard {
+  margin: 0;
+  position: relative;
+}
+
+.dashboard-hero {
+  text-align: center;
+  padding: 6rem 1rem 5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 500px;
+  height: 500px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, var(--highlight) 0%, transparent 70%);
+  pointer-events: none;
+  border-radius: 50%;
+}
+
+.dashboard-title {
+  font-size: 2.8rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  margin: 0 0 0.8rem;
+  background: linear-gradient(135deg, var(--dark), var(--secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+  line-height: 1.15;
+}
+
+:root[saved-theme="dark"] .dashboard-title {
+  background: linear-gradient(135deg, var(--dark), var(--tertiary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.dashboard-subtitle {
+  font-size: 1.1rem;
+  color: var(--gray);
+  margin: 0;
+  font-weight: 400;
+  position: relative;
+  letter-spacing: 0.02em;
+}
+
+@media all and (max-width: 800px) {
+  .dashboard-hero {
+    padding: 4rem 1rem 3rem;
+  }
+
+  .dashboard-title {
+    font-size: 2rem;
+  }
+
+  .hero-glow {
+    width: 300px;
+    height: 300px;
+  }
+}

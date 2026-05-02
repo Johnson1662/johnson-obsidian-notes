@@ -1,6 +1,48 @@
 @use "./base.scss";
 
 // ============================================================
+//  Dashboard 专属样式
+// ============================================================
+.dashboard-clean {
+  margin-top: 0;
+
+  & > h2:first-of-type {
+    margin-top: 2.5rem;
+  }
+
+  h2 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    border-bottom: 2px solid var(--lightgray);
+    padding-bottom: 0.4rem;
+    margin: 2rem 0 0.8rem;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      padding: 0.3rem 0;
+      font-size: 0.9rem1;
+
+      &::before {
+        content: "→";
+        color: var(--secondary);
+        margin-right: 0.5rem;
+        font-weight: 600;
+      }
+    }
+  }
+
+  p {
+    font-size: 0.9rem;
+    color: var(--darkgray);
+  }
+}
+
+// ============================================================
 // 全局自定义样式 - Johnson1662
 // ============================================================
 
