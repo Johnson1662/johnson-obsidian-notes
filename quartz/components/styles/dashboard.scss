@@ -233,7 +233,7 @@
 
 .dashboard-content {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 1.5rem;
   padding: 0 1rem 2rem;
   max-width: 1100px;
@@ -316,6 +316,11 @@
   min-width: 0;
 }
 
+.dash-item-title.internal {
+  background-color: transparent !important;
+  padding: 0 !important;
+}
+
 .dash-item-title:hover {
   color: var(--secondary);
 }
@@ -343,8 +348,13 @@
   font-size: 0.65rem;
   padding: 0.1rem 0.3rem;
   border-radius: 4px;
-  background: var(--lightgray);
+  background: var(--highlight);
   color: var(--darkgray);
+}
+
+.dash-item-tags .tag-link.internal {
+  background: var(--highlight) !important;
+  padding: 0.1rem 0.3rem !important;
 }
 
 .dash-tag-more {
@@ -380,20 +390,28 @@
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
-  padding: 0.25rem 0.6rem;
-  border-radius: 20px;
-  background: var(--lightgray);
+  padding: 0.2rem 0.5rem;
+  border-radius: 12px;
+  background: var(--highlight);
+  border: 1px solid var(--lightgray);
   color: var(--dark);
   text-decoration: none;
   font-weight: 500;
   transition:
     background-color 0.15s ease,
+    border-color 0.15s ease,
     transform 0.15s ease;
   line-height: 1.4;
 }
 
+.dash-tag-item.internal {
+  background: var(--highlight) !important;
+  padding: 0.2rem 0.5rem !important;
+}
+
 .dash-tag-item:hover {
-  background: var(--tertiary);
+  background: var(--lightgray);
+  border-color: var(--gray);
   transform: translateY(-1px);
 }
 
@@ -402,16 +420,12 @@
   color: var(--gray);
   font-weight: 600;
   background: var(--light);
-  padding: 0.05rem 0.3rem;
-  border-radius: 10px;
+  padding: 0.05rem 0.25rem;
+  border-radius: 8px;
 }
 
 /* ── 响应式 ─────────────────────────────────────── */
 @media all and (max-width: 1000px) {
-  .dashboard-content {
-    grid-template-columns: 1fr 1fr;
-  }
-
   .dash-recent {
     grid-column: 1 / -1;
   }
