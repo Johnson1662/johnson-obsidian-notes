@@ -66,7 +66,6 @@ export default ((userOpts?: Options) => {
           <div class="shape shape-2" />
           <div class="shape shape-3" />
           <div class="shape shape-4" />
-          <div class="hero-glow" />
 
           <h1 class="dashboard-title">{opts.welcomeTitle}</h1>
           <div class="title-line" />
