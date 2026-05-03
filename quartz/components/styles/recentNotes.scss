@@ -16,7 +16,10 @@
       padding: 0.5rem;
       margin-left: -0.5rem;
       margin-right: -0.5rem;
-      transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+      transition:
+        background-color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
 
       &:hover {
         background-color: var(--light);

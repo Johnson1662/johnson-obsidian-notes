@@ -23,7 +23,9 @@
     top: calc(50% - 10px);
     fill: var(--darkgray);
     stroke: var(--darkgray);
-    transition: opacity 0.2s ease, transform 0.2s ease;
+    transition:
+      opacity 0.2s ease,
+      transform 0.2s ease;
   }
 
   &:hover svg {

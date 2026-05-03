@@ -66,7 +66,9 @@ ul.toc-content.overflow {
     & > a {
       color: var(--dark);
       opacity: 0.4;
-      transition: 0.3s ease opacity, 0.3s ease color;
+      transition:
+        0.3s ease opacity,
+        0.3s ease color;
       display: block;
       padding: 0.15rem 0;
       padding-left: 0.5rem;

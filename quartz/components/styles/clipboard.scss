@@ -11,7 +11,11 @@
   border: 1px solid var(--lightgray);
   border-radius: 6px;
   opacity: 0;
-  transition: opacity 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+  transition:
+    opacity 0.2s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.15s ease;
 
   & > svg {
     fill: var(--light);
