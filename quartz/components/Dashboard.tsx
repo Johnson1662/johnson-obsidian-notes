@@ -36,7 +36,8 @@ export default ((userOpts?: Options) => {
       const contentIdx = parts.indexOf("content")
       if (contentIdx !== -1 && parts.length > contentIdx + 1) {
         const topDir = parts[contentIdx + 1]
-        if (!topDir.startsWith(".") && !topDir.startsWith("_")) {
+        // 排除隐藏目录和文件（如 index.md）
+        if (!topDir.startsWith(".") && !topDir.startsWith("_") && !topDir.endsWith(".md")) {
           dirMap.set(topDir, (dirMap.get(topDir) ?? 0) + 1)
         }
       }
@@ -191,19 +192,23 @@ export default ((userOpts?: Options) => {
               热门标签
             </h2>
             <div class="dash-tag-cloud">
-              {topTags.map(([tag, count]) => {
-                const weight = 0.75 + (count / maxTagCount) * 0.5
-                return (
-                  <a
-                    href={resolveRelative(fileData.slug!, `tags/${tag}` as FullSlug)}
-                    class="dash-tag-item internal"
-                    style={`font-size: calc(0.8rem * ${weight.toFixed(2)})`}
-                  >
-                    <span class="dash-tag-name">{tag}</span>
-                    <span class="dash-tag-count">{count}</span>
-                  </a>
-                )
-              })}
+              {topTags.length > 0 ? (
+                topTags.map(([tag, count]) => {
+                  const weight = 0.75 + (count / maxTagCount) * 0.5
+                  return (
+                    <a
+                      href={resolveRelative(fileData.slug!, `tags/${tag}` as FullSlug)}
+                      class="dash-tag-item internal"
+                      style={`font-size: calc(0.8rem * ${weight.toFixed(2)})`}
+                    >
+                      <span class="dash-tag-name">{tag}</span>
+                      <span class="dash-tag-count">{count}</span>
+                    </a>
+                  )
+                })
+              ) : (
+                <p class="dash-empty">暂无标签，为笔记添加 frontmatter tags 后会在此显示</p>
+              )}
             </div>
           </section>
 
@@ -226,17 +231,21 @@ export default ((userOpts?: Options) => {
               分类目录
             </h2>
             <ul class="dash-list">
-              {categories.map(([dir, count]) => (
-                <li class="dash-list-item">
-                  <a
-                    href={resolveRelative(fileData.slug!, `${dir}/` as FullSlug)}
-                    class="dash-item-title internal"
-                  >
-                    {dir}
-                  </a>
-                  <span class="dash-item-count">{count} 篇</span>
-                </li>
-              ))}
+              {categories.length > 0 ? (
+                categories.map(([dir, count]) => (
+                  <li class="dash-list-item">
+                    <a
+                      href={resolveRelative(fileData.slug!, `${dir}/` as FullSlug)}
+                      class="dash-item-title internal"
+                    >
+                      {dir}
+                    </a>
+                    <span class="dash-item-count">{count} 篇</span>
+                  </li>
+                ))
+              ) : (
+                <p class="dash-empty">暂无分类目录</p>
+              )}
             </ul>
           </section>
         </div>

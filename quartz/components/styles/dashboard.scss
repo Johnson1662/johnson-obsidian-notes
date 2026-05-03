@@ -9,9 +9,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 45vh;
+  min-height: 32vh;
   text-align: center;
-  padding: 3rem 1rem 2rem;
+  padding: 2.5rem 1rem 1.5rem;
   position: relative;
   overflow: hidden;
 }
@@ -359,6 +359,15 @@
   flex-shrink: 0;
 }
 
+/* ── 空状态 ── */
+.dash-empty {
+  font-size: 0.8rem;
+  color: var(--gray);
+  margin: 0;
+  padding: 0.5rem 0;
+  line-height: 1.5;
+}
+
 /* ── 标签云 ── */
 .dash-tag-cloud {
   display: flex;
@@ -410,8 +419,8 @@
 
 @media all and (max-width: 800px) {
   .dashboard-hero {
-    min-height: 35vh;
-    padding: 2.5rem 1rem 1.5rem;
+    min-height: 28vh;
+    padding: 2rem 1rem 1.2rem;
   }
 
   .dashboard-title {
