@@ -166,10 +166,28 @@ async function renderGraph(graph: HTMLElement, fullSlug: FullSlug) {
 
   // we virtualize the simulation and use pixi to actually render it
   const simulation: Simulation<NodeData, LinkData> = forceSimulation<NodeData>(graphData.nodes)
-    .force("charge", forceManyBody().strength(-100 * repelForce))
+    .force(
+      "charge",
+      forceManyBody().strength(
+        (d: any) => -100 * repelForce - nodeRadius(d as NodeData) ** 2 * 0.5,
+      ),
+    )
     .force("center", forceCenter().strength(centerForce))
-    .force("link", forceLink(graphData.links).distance(linkDistance))
-    .force("collide", forceCollide<NodeData>((n) => nodeRadius(n)).iterations(3))
+    .force(
+      "link",
+      forceLink(graphData.links).distance((l: any) => {
+        // dynamically increase link distance for nodes with many connections
+        const sourceLinks = graphData.links.filter(
+          (link) => link.source.id === l.source.id || link.target.id === l.source.id,
+        ).length
+        const targetLinks = graphData.links.filter(
+          (link) => link.source.id === l.target.id || link.target.id === l.target.id,
+        ).length
+        const maxLinks = Math.max(sourceLinks, targetLinks)
+        return linkDistance + Math.max(0, maxLinks - 5) * 1.5
+      }),
+    )
+    .force("collide", forceCollide<NodeData>((n) => nodeRadius(n) + 3).iterations(3))
 
   const radius = (Math.min(width, height) / 2) * 0.8
   if (enableRadial) simulation.force("radial", forceRadial(radius).strength(0.2))
