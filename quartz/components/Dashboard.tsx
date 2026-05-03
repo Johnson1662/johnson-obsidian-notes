@@ -11,7 +11,6 @@ export default ((userOpts?: Options) => {
   const Dashboard: QuartzComponent = ({ displayClass }: QuartzComponentProps) => {
     const opts = {
       welcomeTitle: "Johnson1662's Digital Garden",
-      welcomeSubtitle: "一个 AI 大二学生的知识花园",
       ...userOpts,
     }
 
@@ -20,7 +19,6 @@ export default ((userOpts?: Options) => {
         <header class="dashboard-hero">
           <div class="hero-glow" />
           <h1 class="dashboard-title">{opts.welcomeTitle}</h1>
-          <p class="dashboard-subtitle">{opts.welcomeSubtitle}</p>
         </header>
       </div>
     )
