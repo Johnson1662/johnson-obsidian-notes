@@ -21,6 +21,7 @@ body {
   background-color: var(--light);
   font-family: var(--bodyFont);
   color: var(--darkgray);
+  overflow-x: hidden;
 }
 
 .text-highlight {

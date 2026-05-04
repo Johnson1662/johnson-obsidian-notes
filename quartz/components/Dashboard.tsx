@@ -20,7 +20,7 @@ export default ((userOpts?: Options) => {
     cfg,
   }: QuartzComponentProps) => {
     const opts = {
-      welcomeTitle: "Johnson1662's Digital Garden",
+      welcomeTitle: "Johnson's Digital Garden",
       subtitle: "A space for thoughts, code, and explorations.",
       recentNotesLimit: 5,
       ...userOpts,
