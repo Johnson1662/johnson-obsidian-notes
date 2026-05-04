@@ -21,7 +21,6 @@ export default ((userOpts?: Options) => {
     const opts = {
       welcomeTitle: "Johnson1662's Digital Garden",
       recentNotesLimit: 5,
-      topTagsLimit: 10,
       ...userOpts,
     }
 
@@ -74,19 +73,6 @@ export default ((userOpts?: Options) => {
       .sort(byDateAndAlphabetical(cfg))
       .slice(0, opts.recentNotesLimit)
 
-    /* ── 热门标签 ── */
-    const tagCounts = new Map<string, number>()
-    for (const f of allFiles) {
-      const tags = f.frontmatter?.tags ?? []
-      for (const tag of tags) {
-        tagCounts.set(tag, (tagCounts.get(tag) ?? 0) + 1)
-      }
-    }
-    const topTags = Array.from(tagCounts.entries())
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, opts.topTagsLimit)
-    const maxTagCount = topTags[0]?.[1] ?? 1
-
     /* ── 分类目录（按笔记数排序） ── */
     const categories = Array.from(dirMap.entries()).sort((a, b) => b[1] - a[1])
 
@@ -137,7 +123,6 @@ export default ((userOpts?: Options) => {
               {recentNotes.map((page) => {
                 const title = page.frontmatter?.title ?? "Untitled"
                 const date = getDate(cfg, page)
-                const tags = page.frontmatter?.tags ?? []
                 return (
                   <li class="dash-list-item">
                     <a
@@ -152,64 +137,11 @@ export default ((userOpts?: Options) => {
                           {date.getMonth() + 1}月{date.getDate()}日
                         </span>
                       )}
-                      {tags.length > 0 && (
-                        <span class="dash-item-tags">
-                          {tags.slice(0, 3).map((tag) => (
-                            <a
-                              class="internal tag-link"
-                              href={resolveRelative(fileData.slug!, `tags/${tag}` as FullSlug)}
-                            >
-                              #{tag}
-                            </a>
-                          ))}
-                          {tags.length > 3 && <span class="dash-tag-more">+{tags.length - 3}</span>}
-                        </span>
-                      )}
                     </div>
                   </li>
                 )
               })}
             </ul>
-          </section>
-
-          {/* ── 热门标签 ── */}
-          <section class="dash-section dash-tags">
-            <h2 class="dash-section-title">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M12 2H2v10l9.29 9.29c.94.94 2.48.94 3.42 0l6.58-6.58c.94-.94.94-2.48 0-3.42L12 2Z" />
-                <circle cx="7" cy="7" r="2" />
-              </svg>
-              热门标签
-            </h2>
-            <div class="dash-tag-cloud">
-              {topTags.length > 0 ? (
-                topTags.map(([tag, count]) => {
-                  const weight = 0.75 + (count / maxTagCount) * 0.5
-                  return (
-                    <a
-                      href={resolveRelative(fileData.slug!, `tags/${tag}` as FullSlug)}
-                      class="dash-tag-item internal"
-                      style={`font-size: calc(0.8rem * ${weight.toFixed(2)})`}
-                    >
-                      <span class="dash-tag-name">{tag}</span>
-                      <span class="dash-tag-count">{count}</span>
-                    </a>
-                  )
-                })
-              ) : (
-                <p class="dash-empty">暂无标签，为笔记添加 frontmatter tags 后会在此显示</p>
-              )}
-            </div>
           </section>
 
           {/* ── 分类目录 ── */}
