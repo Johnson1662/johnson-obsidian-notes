@@ -26,29 +26,35 @@ export default ((userOpts?: Options) => {
       ...userOpts,
     }
 
-    const totalNotes = allFiles.length
+    /* ==== 核心逻辑：只过滤并统计 "知识库" 目录下的笔记 ==== */
+    const knowledgeFiles = allFiles.filter((f) => {
+      if (!f.slug || f.slug === "index") return false
+      // 只包含路径以 '知识库/' 开头的文件
+      return f.slug.startsWith("知识库/")
+    })
 
-    /* ── 目录统计 ── */
+    const totalNotes = knowledgeFiles.length
+
+    /* 提取 知识库内部分类统计 */
     const dirMap = new Map<string, number>()
     let latestDate: Date | null = null
-    for (const f of allFiles) {
-      const p = f.filePath ?? ""
-      const parts = p.replace(/\\/g, "/").split("/")
-      const contentIdx = parts.indexOf("content")
-      if (contentIdx !== -1 && parts.length > contentIdx + 1) {
-        const topDir = parts[contentIdx + 1]
-        // 排除隐藏目录和文件（如 index.md）
-        if (!topDir.startsWith(".") && !topDir.startsWith("_") && !topDir.endsWith(".md")) {
-          dirMap.set(topDir, (dirMap.get(topDir) ?? 0) + 1)
-        }
+
+    for (const f of knowledgeFiles) {
+      const parts = f.slug!.split("/")
+      // 此时路径必然是 ["知识库", "分类名称", "文件名.md"] 等
+      if (parts.length >= 3) {
+        // parts[0] 是 '知识库', parts[1] 就是子分类名 (如 'Agent', '数据库系统')
+        const categoryDir = parts[1]
+        dirMap.set(categoryDir, (dirMap.get(categoryDir) ?? 0) + 1)
       }
+
       const d = getDate(cfg, f)
       if (d && (!latestDate || d > latestDate)) latestDate = d
     }
 
     const totalDirs = dirMap.size
 
-    const weekUpdated = allFiles.filter((f) => {
+    const weekUpdated = knowledgeFiles.filter((f) => {
       const d = getDate(cfg, f)
       if (!d) return false
       const now = new Date()
@@ -63,19 +69,18 @@ export default ((userOpts?: Options) => {
     }
 
     const stats = [
-      { label: "笔记", value: totalNotes },
-      { label: "分类", value: totalDirs },
-      { label: "本周", value: weekUpdated },
-      { label: "最近", value: formatDate(latestDate) },
+      { label: "总笔记", value: totalNotes },
+      { label: "分类数", value: totalDirs },
+      { label: "本周更新", value: weekUpdated },
+      { label: "最后更新", value: formatDate(latestDate) },
     ]
 
-    /* ── 最近笔记 ── */
-    const recentNotes = allFiles
-      .filter((f) => f.slug !== "index")
+    /* 提取 最近更新笔记 */
+    const recentNotes = [...knowledgeFiles]
       .sort(byDateAndAlphabetical(cfg))
       .slice(0, opts.recentNotesLimit)
 
-    /* ── 分类目录（按笔记数排序） ── */
+    /* 提取 分类目录列表并按数量排序 */
     const categories = Array.from(dirMap.entries()).sort((a, b) => b[1] - a[1])
 
     return (
@@ -169,7 +174,7 @@ export default ((userOpts?: Options) => {
                 categories.map(([dir, count]) => (
                   <li class="dash-list-item">
                     <a
-                      href={resolveRelative(fileData.slug!, `${dir}/` as FullSlug)}
+                      href={resolveRelative(fileData.slug!, `知识库/${dir}/` as FullSlug)}
                       class="dash-item-title internal"
                     >
                       {dir}

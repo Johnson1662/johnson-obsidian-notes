@@ -46,7 +46,15 @@ export const defaultContentPageLayout: PageLayout = {
         { Component: Component.ReaderMode() },
       ],
     }),
-    Component.Explorer(),
+    Component.Explorer({
+      filterFn: (node) => {
+        if (node.slugSegment === "tags") return false
+        if (node.slug.startsWith("知识库")) return true
+        if (node.slug.split("/").length === 1 && node.slug === "index") return true
+        return false
+      },
+      folderDefaultState: "open",
+    }),
   ],
   right: [
     Component.Graph(),
@@ -70,7 +78,15 @@ export const defaultListPageLayout: PageLayout = {
         { Component: Component.Darkmode() },
       ],
     }),
-    Component.Explorer(),
+    Component.Explorer({
+      filterFn: (node) => {
+        if (node.slugSegment === "tags") return false
+        if (node.slug.startsWith("知识库")) return true
+        if (node.slug.split("/").length === 1 && node.slug === "index") return true
+        return false
+      },
+      folderDefaultState: "open",
+    }),
   ],
   right: [],
 }
