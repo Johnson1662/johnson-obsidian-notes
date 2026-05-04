@@ -7,6 +7,7 @@ import { FullSlug, resolveRelative } from "../util/path"
 
 interface Options {
   welcomeTitle?: string
+  subtitle?: string
   recentNotesLimit?: number
   topTagsLimit?: number
 }
@@ -20,6 +21,7 @@ export default ((userOpts?: Options) => {
   }: QuartzComponentProps) => {
     const opts = {
       welcomeTitle: "Johnson1662's Digital Garden",
+      subtitle: "A space for thoughts, code, and explorations.",
       recentNotesLimit: 5,
       ...userOpts,
     }
@@ -86,7 +88,7 @@ export default ((userOpts?: Options) => {
           <div class="shape shape-4" />
 
           <h1 class="dashboard-title">{opts.welcomeTitle}</h1>
-          <div class="title-line" />
+          <p class="dashboard-subtitle">{opts.subtitle}</p>
 
           <div class="stats-row">
             {stats.map((s) => (

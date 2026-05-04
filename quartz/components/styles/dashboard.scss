@@ -149,23 +149,16 @@
   background-clip: text;
 }
 
-/* 装饰线 */
-.title-line {
-  width: 0;
-  height: 2.5px;
-  margin: 1rem 0 1.8rem;
-  background: linear-gradient(90deg, transparent, var(--dark), transparent);
-  border-radius: 2px;
-  opacity: 0.25;
-  animation: lineExpand 1s ease-out 0.2s forwards;
-  position: relative;
+/* 个人签名 / 副标题 */
+.dashboard-subtitle {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--gray);
+  margin: 0.5rem 0 1.8rem;
+  letter-spacing: 0.01em;
   z-index: 1;
-}
-
-@keyframes lineExpand {
-  to {
-    width: 100px;
-  }
+  position: relative;
+  font-style: italic;
 }
 
 /* ── 统计卡片 ───────────────────────────────────── */
@@ -441,8 +434,9 @@
     font-size: 2.2rem;
   }
 
-  .title-line {
-    margin: 0.8rem 0 1.4rem;
+  .dashboard-subtitle {
+    margin: 0.4rem 0 1.4rem;
+    font-size: 0.95rem;
   }
 
   .stats-row {
@@ -497,11 +491,7 @@
 
 /* 减少动画偏好 */
 @media (prefers-reduced-motion: reduce) {
-  .shape,
-  .title-line {
+  .shape {
     animation: none;
-  }
-  .title-line {
-    width: 100px;
   }
 }
