@@ -220,13 +220,22 @@ a {
     }
 
     @media all and ($desktop) {
-      height: 100dvh;
+      height: 100vh;
       overflow: hidden;
+
+      .page {
+        height: 100vh;
+      }
 
       .center {
         overflow-y: auto;
         height: 100%;
         min-height: 0;
+      }
+
+      .sidebar {
+        height: 100%;
+        position: sticky;
       }
     }
 
