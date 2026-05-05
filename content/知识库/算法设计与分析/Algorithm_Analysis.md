@@ -1,23 +1,7 @@
----
-cover: "[[../数理基础课程/大物2A/assets/作业题/Algorithm_Analysis.jpeg]]"
----
-
-${\begingroup\Huge 算法设计与分析 \endgroup \ }$
-
-$\large (——数据结构之续) \$
-
-$\large\textit{Last Update on 2025.6.23 by Zhou }$
-
----
-
----
-
 # 0
 
 > 这门课的考试占比70%
 > 课后作业和算法大作业，智慧树等占比30%
-
-<!-- Column 1 -->
 
 # 1 算法基础、复杂度、 主定理
 
@@ -52,8 +36,6 @@ $\large\textit{Last Update on 2025.6.23 by Zhou }$
 [4.2 多阶段加权图的动态规划算法](4.2%20多阶段加权图的动态规划算法.md)
 
 [4.3 0-1背包问题动态规划算法](4.3%200-1背包问题动态规划算法.md)
-
-<!-- Column 2 -->
 
 [4.4 矩阵链乘法动态规划算法](4.4%20矩阵链乘法动态规划算法.md)
 
@@ -91,16 +73,9 @@ $\large\textit{Last Update on 2025.6.23 by Zhou }$
 
 [7.3 问题难的等价性](7.3%20问题难的等价性.md)
 
-<!-- Column 1 -->
-
-[课程PPT](课程PPT.md)
-
-<!-- Column 2 -->
 
 [[往年题/往年题]]
 
-<!-- Column 3 -->
-
-[推荐看的视频作者主页\_youtube](推荐看的视频作者主页_youtube.md)
+推荐看的youtube博主主页：[https://www.youtube.com/@abdul_bari]
 
 ---
