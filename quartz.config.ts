@@ -23,8 +23,8 @@ const config: QuartzConfig = {
       fontOrigin: "googleFonts",
       cdnCaching: true,
       typography: {
-        header: "Playfair Display",
-        body: "Inter",
+        header: "Google Sans",
+        body: "Google Sans",
         code: "Hack",
       },
       colors: {
