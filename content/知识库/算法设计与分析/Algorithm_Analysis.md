@@ -1,5 +1,5 @@
 ---
-cover: "[[知识库/数理基础课程/大物2A/assets/作业题/Algorithm_Analysis.jpeg]]"
+cover: "[[../数理基础课程/大物2A/assets/作业题/Algorithm_Analysis.jpeg]]"
 ---
 ${\begingroup\Huge 算法设计与分析 \endgroup \ }$
 
@@ -95,7 +95,7 @@ $\large\textit{Last Update on 2025.6.23 by Zhou }$
 [课程PPT](课程PPT.md)
 
 <!-- Column 2 -->
-[[往年题]]
+[[往年题/往年题]]
 
 <!-- Column 3 -->
 [推荐看的视频作者主页_youtube](推荐看的视频作者主页_youtube.md)
