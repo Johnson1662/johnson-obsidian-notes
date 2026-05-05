@@ -13,25 +13,6 @@ html {
   @media all and ($mobile) {
     scroll-padding-top: 4rem;
   }
-
-  @media all and ($desktop) {
-    overflow-y: hidden;
-    height: 100vh;
-  }
-}
-
-body {
-  margin: 0;
-  box-sizing: border-box;
-  background-color: var(--light);
-  font-family: var(--bodyFont);
-  color: var(--darkgray);
-  overflow-x: hidden;
-
-  @media all and ($desktop) {
-    overflow-y: hidden;
-    height: 100vh;
-  }
 }
 
 body {
@@ -182,6 +163,12 @@ a {
 .page {
   max-width: calc(#{map.get($breakpoints, desktop)} + 300px);
   margin: 0 auto;
+
+  @media all and ($desktop) {
+    height: 100vh;
+    overflow: hidden;
+  }
+
   & article {
     & > h1 {
       font-size: 2rem;
@@ -239,12 +226,8 @@ a {
     }
 
     @media all and ($desktop) {
-      height: 100vh;
+      height: 100%;
       overflow: hidden;
-
-      .page {
-        height: 100vh;
-      }
 
       .center {
         overflow-y: auto;
