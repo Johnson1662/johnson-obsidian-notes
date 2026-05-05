@@ -13,6 +13,25 @@ html {
   @media all and ($mobile) {
     scroll-padding-top: 4rem;
   }
+
+  @media all and ($desktop) {
+    overflow-y: hidden;
+    height: 100vh;
+  }
+}
+
+body {
+  margin: 0;
+  box-sizing: border-box;
+  background-color: var(--light);
+  font-family: var(--bodyFont);
+  color: var(--darkgray);
+  overflow-x: hidden;
+
+  @media all and ($desktop) {
+    overflow-y: hidden;
+    height: 100vh;
+  }
 }
 
 body {
