@@ -47,7 +47,7 @@ $tabletGrid: (
       "grid-sidebar-left grid-footer"',
 );
 $desktopGrid: (
-  templateRows: "auto 1fr auto",
+  templateRows: "auto auto auto",
   templateColumns: "#{$sidePanelWidth} auto #{$sidePanelWidth}",
   rowGap: "5px",
   columnGap: "5px",

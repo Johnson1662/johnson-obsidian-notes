@@ -163,12 +163,6 @@ a {
 .page {
   max-width: calc(#{map.get($breakpoints, desktop)} + 300px);
   margin: 0 auto;
-
-  @media all and ($desktop) {
-    height: 100vh;
-    overflow: hidden;
-  }
-
   & article {
     & > h1 {
       font-size: 2rem;
@@ -225,22 +219,6 @@ a {
       margin: 0 auto;
     }
 
-    @media all and ($desktop) {
-      height: 100%;
-      overflow: hidden;
-
-      .center {
-        overflow-y: auto;
-        height: 100%;
-        min-height: 0;
-      }
-
-      .sidebar {
-        height: 100%;
-        position: sticky;
-      }
-    }
-
     & .sidebar {
       gap: 1.2rem;
       top: 0;
@@ -249,6 +227,12 @@ a {
       display: flex;
       height: 100vh;
       position: sticky;
+      overflow-y: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      &::-webkit-scrollbar {
+        display: none;
+      }
     }
 
     & .sidebar.left {
