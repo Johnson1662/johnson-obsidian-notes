@@ -22,11 +22,6 @@ body {
   font-family: var(--bodyFont);
   color: var(--darkgray);
 
-  @media all and not ($mobile) {
-    height: 100vh;
-    overflow: hidden;
-  }
-
   @media all and ($mobile) {
     overflow-x: hidden;
   }
@@ -172,10 +167,6 @@ a {
   max-width: calc(#{map.get($breakpoints, desktop)} + 300px);
   margin: 0 auto;
 
-  @media all and not ($mobile) {
-    height: 100vh;
-  }
-
   & article {
     & > h1 {
       font-size: 2rem;
@@ -227,10 +218,6 @@ a {
 
     @media all and not ($desktop) {
       padding: 0 1rem;
-    }
-    @media all and not ($mobile) {
-      height: 100vh;
-      overflow: hidden;
     }
     @media all and ($mobile) {
       margin: 0 auto;
@@ -347,12 +334,6 @@ a {
     }
     & .center {
       grid-area: grid-center;
-
-      @media all and not ($mobile) {
-        height: 100vh;
-        overflow-y: auto;
-        scrollbar-gutter: stable;
-      }
     }
     & footer {
       margin-left: 0;
