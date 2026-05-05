@@ -7,10 +7,10 @@
 html {
   scroll-behavior: smooth;
   text-size-adjust: none;
-  overflow-x: hidden;
   width: 100vw;
 
   @media all and ($mobile) {
+    overflow-x: hidden;
     scroll-padding-top: 4rem;
   }
 }
@@ -21,7 +21,10 @@ body {
   background-color: var(--light);
   font-family: var(--bodyFont);
   color: var(--darkgray);
-  overflow-x: hidden;
+
+  @media all and ($mobile) {
+    overflow-x: hidden;
+  }
 }
 
 .text-highlight {
@@ -222,6 +225,7 @@ a {
     & .sidebar {
       gap: 1.2rem;
       top: 0;
+      align-self: start;
       box-sizing: border-box;
       padding: $topSpacing 2rem 2rem 2rem;
       display: flex;
