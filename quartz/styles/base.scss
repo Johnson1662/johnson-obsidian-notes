@@ -22,6 +22,11 @@ body {
   font-family: var(--bodyFont);
   color: var(--darkgray);
 
+  @media all and not ($mobile) {
+    height: 100vh;
+    overflow: hidden;
+  }
+
   @media all and ($mobile) {
     overflow-x: hidden;
   }
@@ -166,6 +171,11 @@ a {
 .page {
   max-width: calc(#{map.get($breakpoints, desktop)} + 300px);
   margin: 0 auto;
+
+  @media all and not ($mobile) {
+    height: 100vh;
+  }
+
   & article {
     & > h1 {
       font-size: 2rem;
@@ -217,6 +227,10 @@ a {
 
     @media all and not ($desktop) {
       padding: 0 1rem;
+    }
+    @media all and not ($mobile) {
+      height: 100vh;
+      overflow: hidden;
     }
     @media all and ($mobile) {
       margin: 0 auto;
@@ -278,6 +292,22 @@ a {
           display: none;
         }
       }
+      @media all and ($tablet) {
+        position: sticky;
+        height: 100vh;
+        width: auto;
+        flex-direction: column;
+        padding: $topSpacing 2rem 2rem 2rem;
+
+        & > * {
+          flex: unset;
+          max-height: unset;
+        }
+
+        & > .toc {
+          display: block;
+        }
+      }
     }
     & .page-header,
     & .page-footer {
@@ -313,6 +343,15 @@ a {
       @media all and ($mobile) {
         margin-right: 0;
         margin-left: 0;
+      }
+    }
+    & .center {
+      grid-area: grid-center;
+
+      @media all and not ($mobile) {
+        height: 100vh;
+        overflow-y: auto;
+        scrollbar-gutter: stable;
       }
     }
     & footer {
