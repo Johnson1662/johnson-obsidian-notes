@@ -23,8 +23,8 @@ const config: QuartzConfig = {
       fontOrigin: "googleFonts",
       cdnCaching: true,
       typography: {
-        header: "Google Sans",
-        body: "Google Sans",
+        header: "Playfair Display",
+        body: "Inter",
         code: "Hack",
       },
       colors: {
@@ -71,7 +71,7 @@ const config: QuartzConfig = {
       Plugin.TableOfContents(),
       Plugin.CrawlLinks({ markdownLinkResolution: "relative" }),
       Plugin.Description(),
-      Plugin.Latex({ renderEngine: "katex", katexOptions: { strict: false } }),
+      Plugin.Latex({ renderEngine: "katex" }),
     ],
     filters: [Plugin.RemoveDrafts()],
     emitters: [
@@ -89,7 +89,7 @@ const config: QuartzConfig = {
       Plugin.Favicon(),
       Plugin.NotFoundPage(),
       // Comment out CustomOgImages to speed up build time
-      // Plugin.CustomOgImages(),
+      Plugin.CustomOgImages(),
     ],
   },
 }
