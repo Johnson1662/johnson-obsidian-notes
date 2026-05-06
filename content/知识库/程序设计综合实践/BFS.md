@@ -296,3 +296,149 @@ int main() {
     return 0;
 }
 ```
+
+非常可乐
+
+  
+
+Contest Problem
+
+Time Limit：C/C++ 1000MS，Other 2000MS  
+Memory Limit：C/C++ 128MB，Other 256MB  
+
+Description
+
+大家一定觉的运动以后喝可乐是一件很惬意的事情，但是seeyou却不这么认为。因为每次当seeyou买了可乐以后，阿牛就要求和seeyou一起分享这一瓶可乐，而且一定要喝的和seeyou一样多。但seeyou的手中只有两个杯子，它们的容量分别是N 毫升和M 毫升 可乐的体积为S（S<101）毫升 (正好装满一瓶) ，它们三个之间可以相互倒可乐 (都是没有刻度的，且 S=N+M，101＞S＞0，N＞0，M＞0) 。聪明的ACMER你们说他们能平分吗？如果能请输出倒可乐的最少的次数，如果不能输出"NO"。
+
+Input
+
+三个整数 :S 可乐的体积 , N 和 M是两个杯子的容量，以"0 0 0"结束。
+
+Output
+
+如果能平分的话请输出最少要倒的次数，否则输出"NO"。
+
+Sample Input 1 
+
+7 4 3
+4 1 3
+0 0 0
+
+Sample Output 1 
+
+NO
+3
+
+结合知识库内容，针对“非常可乐”问题的解答如下：
+
+### 1. 对应算法及出处
+
+- **算法名称**：**广度优先搜索（Breadth-First Search, BFS）**。
+    
+- **PPT出处**：该问题属于典型的“状态空间搜索”。在《25262程序设计综合实践-第五次课.pdf》中，BFS 被专门用于解决此类求“最少次数”或“最短路径”的问题（参考 PPT 中关于 BFS 搜索框架及状态转换的部分）。
+    
+
+---
+
+### 2. 算法介绍与问题分析
+
+#### 算法介绍（零基础版）
+
+这个问题可以类比成“走迷宫”**，只不过迷宫的每个“房间”不是坐标，而是**三个容器里可乐的剩余量：
+
+1. **初始状态**：一共有 $S$ 毫升可乐，分布在容器 $(S, 0, 0)$ 中（瓶子装满，两个杯子为空）。
+    
+2. **动作尝试**：每一步你可以尝试从一个容器倒向另一个容器。因为没有刻度，倒水只有两种结果：要么把目标容器**倒满**，要么把源容器**倒空**。
+    
+3. **层层递进**：
+    
+    - 第一步：尝试所有可能的倒水组合（共 6 种可能：瓶倒杯1、瓶倒杯2、杯1倒瓶...）。
+        
+    - 第二步：在第一步产生的所有新状态基础上，再进行一次倒水。
+        
+4. **目标达成**：当你发现某次倒完后，其中两个容器的量正好等于 $S/2$（且 $S$ 必须是偶数，否则无法平分），那么当前的步数就是最少次数。
+    
+5. **判重**：为了不反复在同一个状态纠缠，我们用一个三维数组 `visited[s][n][m]` 记录这个状态是否出现过。
+    
+
+#### 问题分析
+
+- **平分前提**：总容量 $S$ 必须是偶数，奇数直接输出 "NO"。
+    
+- **状态表示**：用三个变量 `(s, n, m)` 表示当前瓶子和两个杯子里的水量。
+    
+- **转移规则**：共有 6 种倒法（$S \to N, S \to M, N \to S, N \to M, M \to S, M \to N$）。
+    
+- **终止状态**：当且仅当有两个容器的水量为 $S/2$ 时（因为总和是 $S$，所以第三个容器必然为 0 或 $S/2$）。
+    
+
+---
+
+### 3. 简洁高效的代码实现 (C++)
+
+C++
+
+```
+#include <iostream>
+#include <queue>
+#include <cstring>
+
+using namespace std;
+
+struct State {
+    int v[3]; // v[0]:S, v[1]:N, v[2]:M
+    int step;
+};
+
+int cap[3]; // 容量上限
+bool vis[101][101][101];
+
+int bfs() {
+    if (cap[0] % 2 != 0) return -1; // 奇数无法平分
+    int target = cap[0] / 2;
+    
+    memset(vis, 0, sizeof(vis));
+    queue<State> q;
+    q.push({{cap[0], 0, 0}, 0});
+    vis[cap[0]][0][0] = true;
+
+    while (!q.empty()) {
+        State cur = q.front();
+        q.pop();
+
+        // 检查是否达到平分状态（任意两个容器等于 S/2）
+        int cnt = 0;
+        for(int i=0; i<3; i++) if(cur.v[i] == target) cnt++;
+        if(cnt == 2) return cur.step;
+
+        // 尝试 6 种倒水方式：从 i 倒向 j
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (i == j) continue;
+                
+                State next = cur;
+                // 计算倒水量：要么把 j 倒满，要么把 i 倒空
+                int pour = min(next.v[i], cap[j] - next.v[j]);
+                next.v[i] -= pour;
+                next.v[j] += pour;
+                next.step = cur.step + 1;
+
+                if (!vis[next.v[0]][next.v[1]][next.v[2]]) {
+                    vis[next.v[0]][next.v[1]][next.v[2]] = true;
+                    q.push(next);
+                }
+            }
+        }
+    }
+    return -1;
+}
+
+int main() {
+    while (cin >> cap[0] >> cap[1] >> cap[2] && (cap[0] || cap[1] || cap[2])) {
+        int res = bfs();
+        if (res == -1) cout << "NO" << endl;
+        else cout << res << endl;
+    }
+    return 0;
+}
+```
