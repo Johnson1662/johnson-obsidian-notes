@@ -1,6 +1,6 @@
 # DFS（深度优先搜索）
 
-## Lake Counting（数池塘）
+## 数池塘（Lake Counting）
 
 **Contest Problem**
 
@@ -128,17 +128,17 @@ int main()
 - **Time Limit**：C/C++ 1000MS，Other 2000MS
 - **Memory Limit**：C/C++ 128MB，Other 256MB
 
-### Description
+### 题目描述
 
 有 n 个木棒，需要用上所有木棒，围成一个正方形。如果可以围成正方形，则输出 "yes"，否则输出 "no"。
 
-### Input
+### 输入格式
 
 第一行输入一个整数 T 表示样例个数。对于每个样例：
 - 第一行输入一个整数 N 表示木棍的个数
 - 第二行输入 N 个数字表示木棒的长度
 
-### Output
+### 输出格式
 
 对于每个样例，如果可以则输出 "yes"，否则输出 "no"。
 
@@ -252,7 +252,7 @@ int main() {
 
 ---
 
-## Prime Circle（素数环）
+## 素数环（Prime Circle）
 
 **Contest Problem**
 
