@@ -366,3 +366,122 @@ int main() {
     return 0;
 }
 ```
+
+---
+
+## 经典剪枝——Sticks（POJ1011）
+### 问题描述
+
+乔治有一堆长度相同的木棍，他将这些木棍切成若干（不超过64根）长度不超过50的小木棍，问原来的木棍可能的最短长度为多少？输入n，然后给出n个小木棍的长度，输出结果。（保证有解）
+
+搜索方法：从小到大枚举可能的长度L，然后判断是否可行（n根小木棒能否恰好拼成整数根L长的木棒）。不加优化纯暴力DFS必然超时。
+
+### 算法分析
+
+POJ 1011 "Sticks" 是一道非常经典的 **深度优先搜索 (DFS)** 题目。它的核心难点不在于搜索本身，而在于如何通过**剪枝 (Pruning)** 来降低复杂度，否则面对 $2^{64}$ 级别的状态空间必然会超时。
+
+#### 核心解题思路
+
+1. **基本搜索逻辑**：
+   * **枚举原长 $L$**：原木棍的长度 $L$ 必定在 `[最长的小木棍长度, 所有木棍总长度]` 之间。
+   * **约束条件**：$L$ 必须能被总长度整除（因为要拼成整数根）。
+   * **DFS 状态**：`dfs(当前拼到了第几根, 当前这根还差多少长度, 上次用的小木棍索引)`。
+
+2. **五大关键剪枝技巧**（缺一不可）：
+   * **优化 1：降序排序**。将小木棍按长度从大到小排序。先尝试长的木棍可以更快地填满 $L$，如果失败能更早回溯。
+   * **优化 2：去重剪枝**。如果当前木棍 `sticks[i]` 尝试失败，那么后面所有长度相同的木棍都可以直接跳过。
+   * **优化 3：首棍失败剪枝**。如果在尝试拼一根新木棍时，第一根选中的木棍 `sticks[i]` 就无法完成后续拼接，那么当前 $L$ 方案必然失败（因为这根木棍早晚得用上）。
+   * **优化 4：末棍失败剪枝**。如果放入某根木棍恰好填满了当前的 $L$，但剩下的木棍无法拼出后续的完整木棍，则直接回溯。
+   * **优化 5：控制搜索起点**。每次搜索下一根小木棍时，从上一次选中的木棍索引之后开始找。
+
+#### 关键点解释
+
+* **`total_len % target_len != 0`**：这是第一道防线，确保我们只尝试合法的几何分割。
+* **`dfs` 中的 `cur_sum == 0` 判定**：这是一个逻辑上的"必杀技"。如果在一根新木棍的起点位置放上一根现存最长的木棍都无法得出解，那么换任何一根更短的木棍放在这个起点位置也绝对无法得出解。
+* **状态回溯**：`used[i] = false` 是 DFS 的标配，代表"尝试不选这根木棍"的情况。
+
+### 代码实现
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <numeric>
+#include <functional>
+
+using namespace std;
+
+int n;
+int sticks[65];
+bool used[65];
+int target_len; // 当前枚举的目标原长
+int total_len;
+int num_sticks; // 最终应该拼成的根数
+
+// cnt: 已拼好的木棍数, cur_sum: 当前正在拼的木棍已达到的长度, last_idx: 上次使用的棍子下标
+bool dfs(int cnt, int cur_sum, int last_idx) {
+    if (cnt == num_sticks) return true; // 全部拼完
+
+    if (cur_sum == target_len) {
+        // 当前这根拼好了，开始拼下一根，从第 0 个棍子重新寻找
+        return dfs(cnt + 1, 0, -1);
+    }
+
+    // 剪枝 5：从 last_idx + 1 开始搜
+    for (int i = last_idx + 1; i < n; ++i) {
+        if (used[i] || cur_sum + sticks[i] > target_len) continue;
+
+        used[i] = true;
+        if (dfs(cnt, cur_sum + sticks[i], i)) return true;
+        used[i] = false; // 回溯
+
+        // --- 核心剪枝策略 ---
+
+        // 剪枝 3：如果这是新木棍的第一根就失败了，后续不用搜了
+        if (cur_sum == 0) return false;
+
+        // 剪枝 4：如果这根木棍恰好填满但后续失败了，说明当前方案不可行
+        if (cur_sum + sticks[i] == target_len) return false;
+
+        // 剪枝 2：跳过相同长度的木棍
+        while (i + 1 < n && sticks[i] == sticks[i + 1]) i++;
+    }
+
+    return false;
+}
+
+void solve() {
+    while (cin >> n && n != 0) {
+        total_len = 0;
+        int max_len = 0;
+        for (int i = 0; i < n; ++i) {
+            cin >> sticks[i];
+            total_len += sticks[i];
+            if (sticks[i] > max_len) max_len = sticks[i];
+        }
+
+        // 剪枝 1：降序排序
+        sort(sticks, sticks + n, greater<int>());
+
+        // 枚举可能的目标长度 L
+        for (target_len = max_len; target_len <= total_len; ++target_len) {
+            if (total_len % target_len != 0) continue; // 必须整除
+
+            num_sticks = total_len / target_len;
+            fill(used, used + n, false);
+
+            if (dfs(0, 0, -1)) {
+                cout << target_len << endl;
+                break;
+            }
+        }
+    }
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    solve();
+    return 0;
+}
+```
