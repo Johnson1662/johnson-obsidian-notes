@@ -2,12 +2,6 @@
 
 ## 数池塘（Lake Counting）
 
-**Contest Problem**
-
-- **Time Limit**：C/C++ 1000MS，Other 2000MS
-- **Memory Limit**：C/C++ 64MB，Other 128MB
-- **Level**：Beginner
-
 ### 题目描述
 
 由于近期的降雨，农夫约翰的田地（一个 $N \times M$ 的矩形，1 ≤ N ≤ 100；1 ≤ M ≤ 100）中积攒了许多水洼。每个格子要么是水（'W'），要么是旱地（'.'）。农夫约翰想知道他的田里形成了多少个池塘。池塘定义为一组相连的水洼，每个格子与其八个方向的邻居相邻。
@@ -122,11 +116,6 @@ int main()
 ---
 
 ## 正方形（拼棒问题）
-
-**Contest Problem**
-
-- **Time Limit**：C/C++ 1000MS，Other 2000MS
-- **Memory Limit**：C/C++ 128MB，Other 256MB
 
 ### 题目描述
 
@@ -253,11 +242,6 @@ int main() {
 ---
 
 ## 素数环（Prime Circle）
-
-**Contest Problem**
-
-- **Time Limit**：C/C++ 1000MS，Other 2000MS
-- **Memory Limit**：C/C++ 128MB，Other 256MB
 
 ### 题目描述
 

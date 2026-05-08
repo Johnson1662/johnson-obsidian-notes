@@ -2,11 +2,6 @@
 
 ## 迷宫问题
 
-**Contest Problem**
-
-- **Time Limit**：C/C++ 1000MS，Other 2000MS
-- **Memory Limit**：C/C++ 128MB，Other 256MB
-
 ### 题目描述
 
 有一个 $5 \times 5$ 的迷宫，其中的 1 表示墙壁，0 表示可以走的路，只能横着走或竖着走，不能斜着走。要求编程序找出从左上角到右下角的最短路线。
