@@ -129,11 +129,6 @@ int main() {
 
 ## 数的变换
 
-**Contest Problem**
-
-- **Time Limit**：C/C++ 1000MS，Other 2000MS
-- **Memory Limit**：C/C++ 256MB，Other 512MB
-
 ### 题目描述
 
 有一个有趣的游戏，从一个数 `K` 开始，然后有三种操作：
@@ -244,11 +239,6 @@ int main() {
 ---
 
 ## 非常可乐
-
-**Contest Problem**
-
-- **Time Limit**：C/C++ 1000MS，Other 2000MS
-- **Memory Limit**：C/C++ 128MB，Other 256MB
 
 ### 题目描述
 
