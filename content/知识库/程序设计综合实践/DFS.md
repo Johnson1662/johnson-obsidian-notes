@@ -1,6 +1,6 @@
 # DFS（深度优先搜索）
 
-## Lake Counting
+## Lake Counting（数池塘）
 
 **Contest Problem**
 
@@ -8,20 +8,20 @@
 - **Memory Limit**：C/C++ 64MB，Other 128MB
 - **Level**：Beginner
 
-### Description
+### 题目描述
 
-Due to recent rains, water has pooled in various places in Farmer John's field, which is represented by a rectangle of N x M (1 ≤ N ≤ 100; 1 ≤ M ≤ 100) squares. Each square contains either water ('W') or dry land ('.'). Farmer John would like to figure out how many ponds have formed in his field. A pond is a connected set of squares with water in them, where a square is considered adjacent to all eight of its neighbors.
+由于近期的降雨，农夫约翰的田地（一个 N × M 的矩形，1 ≤ N ≤ 100；1 ≤ M ≤ 100）中积攒了许多水洼。每个格子要么是水（'W'），要么是旱地（'.'）。农夫约翰想知道他的田里形成了多少个池塘。池塘定义为一组相连的水洼，每个格子与其八个方向的邻居相邻。
 
-Given a diagram of Farmer John's field, determine how many ponds he has.
+给定农夫约翰田地的示意图，请计算出他有多少个池塘。
 
-### Input
+### 输入格式
 
-- Line 1: Two space-separated integers: N and M
-- Lines 2…N+1: M characters per line representing one row of Farmer John's field. Each character is either 'W' or '.'. The characters do not have spaces between them.
+- 第 1 行：两个空格分隔的整数 N 和 M
+- 第 2…N+1 行：每行 M 个字符，表示田地的一行。每个字符是 'W' 或 '.'，字符之间没有空格。
 
-### Output
+### 输出格式
 
-- Line 1: The number of ponds in Farmer John's field.
+- 第 1 行：田中池塘的数量
 
 ### Sample Input
 
@@ -259,19 +259,19 @@ int main() {
 - **Time Limit**：C/C++ 1000MS，Other 2000MS
 - **Memory Limit**：C/C++ 128MB，Other 256MB
 
-### Description
+### 题目描述
 
-A ring is composed of n circles as shown in diagram. Put natural number 1 into each circle separately, and the sum of numbers in two adjacent circles should be a prime.
+如图所示，由 n 个圆圈组成一个环。在每个圆圈中填入一个自然数，要求相邻两个圆圈中的数字之和必须为素数。
 
-Note: the number of first circle should always be 1.
+注意：第一个圆圈中的数字必须始终为 1。
 
-### Input
+### 输入格式:
 
 多组测试数据，每行一个 n，输入以 0 结束。
 
-### Output
+### 输出格式:
 
-For each case, output all possible sequences in lexicographical order. Print a blank line after each case.
+对于每个测试用例，按字典序输出所有可能的序列，每个用例后输出一个空行。
 
 ### Sample Input
 
