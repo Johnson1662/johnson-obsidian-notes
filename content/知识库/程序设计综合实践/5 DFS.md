@@ -353,12 +353,33 @@ int main() {
 
 ---
 
-## 经典剪枝——Sticks（POJ1011）
+## Sticks
 ### 问题描述
 
-乔治有一堆长度相同的木棍，他将这些木棍切成若干（不超过64根）长度不超过50的小木棍，问原来的木棍可能的最短长度为多少？输入n，然后给出n个小木棍的长度，输出结果。（保证有解）
+Description
 
-搜索方法：从小到大枚举可能的长度L，然后判断是否可行（n根小木棒能否恰好拼成整数根L长的木棒）。不加优化纯暴力DFS必然超时。
+George took sticks of the same length and cut them randomly until all parts became at most 50 units long. Now he wants to return sticks to the original state, but he forgot how many sticks he had originally and how long they were originally. Please help him and design a program which computes the smallest possible original length of those sticks. All lengths expressed in units are integers greater than zero.
+
+Input
+
+The input contains blocks of 2 lines. The first line contains the number of sticks parts after cutting, there are at most 64 sticks. The second line contains the lengths of those parts separated by the space. The last line of the file contains zero.
+
+Output
+
+The output should contains the smallest possible length of original sticks, one per line.
+
+Sample Input 1 
+
+9
+5 2 1 5 2 1 5 2 1
+4
+1 2 3 4
+0
+
+Sample Output 1 
+
+6
+5
 
 ### 算法分析
 
