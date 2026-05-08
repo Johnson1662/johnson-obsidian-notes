@@ -1,31 +1,31 @@
 # ST表
 
-## Balanced Lineup
+## Balanced Lineup（平衡的队伍）
 
 **Contest Problem**
 
 - **Time Limit**：C/C++ 5000MS，Other 10000MS
 - **Memory Limit**：C/C++ 64MB，Other 128MB
 
-### Description
+### 题目描述
 
-For the daily milking, Farmer John's *N* cows (1 ≤ *N* ≤ 50,000) always line up in the same order. One day Farmer John decides to organize a game of Ultimate Frisbee with some of the cows. To keep things simple, he will take a contiguous range of cows from the milking lineup to play the game. However, for all the cows to have fun they should not differ too much in height.
+每天挤奶时，农夫约翰的 *N* 头奶牛（1 ≤ *N* ≤ 50,000）总是按同样的顺序排成一队。有一天，农夫约翰决定组织一场终极飞盘比赛，选一些奶牛参加。为了简单起见，他将选取队伍中连续的一段奶牛参赛。不过，为了让所有参赛奶牛都玩得开心，它们的身高差不能太大。
 
-Farmer John has made a list of *Q* (1 ≤ *Q* ≤ 200,000) potential groups of cows and their heights (1 ≤ *height* ≤ 1,000,000). For each group, he wants your help to determine the difference in height between the shortest and the tallest cow in the group.
+农夫约翰列出了一份名单，包含 *Q*（1 ≤ *Q* ≤ 200,000）组候选奶牛及其身高（1 ≤ *身高* ≤ 1,000,000）。对于每个候选组，他需要你帮忙计算该组中最高奶牛与最矮奶牛的身高差。
 
-### Input
+### 输入格式
 
-Line 1: Two space-separated integers, *N* and *Q*.
+第 1 行：两个空格分隔的整数 *N* 和 *Q*。
 
-Lines 2…*N*+1: Line *i*+1 contains a single integer that is the height of cow *i*
+第 2…*N*+1 行：第 *i*+1 行包含一个整数，表示第 *i* 头奶牛的身高。
 
-Lines *N*+2…*N*+*Q*+1: Two integers *A* and *B* (1 ≤ *A* ≤ *B* ≤ *N*), representing the range of cows from *A* to *B* inclusive.
+第 *N*+2…*N*+*Q*+1 行：两个整数 *A* 和 *B*（1 ≤ *A* ≤ *B* ≤ *N*），表示要查询的奶牛范围（从 *A* 到 *B*，包含两端）。
 
-### Output
+### 输出格式
 
-Lines 1…*Q*: Each line contains a single integer that is a response to a reply and indicates the difference in height between the tallest and shortest cow in the range.
+共 *Q* 行：每行一个整数，表示该范围内的最高与最矮奶牛的身高差。
 
-### Sample Input
+### 样例输入
 
 ```
 6 3
@@ -40,7 +40,7 @@ Lines 1…*Q*: Each line contains a single integer that is a response to a reply
 2 2
 ```
 
-### Sample Output
+### 样例输出
 
 ```
 6
@@ -48,7 +48,16 @@ Lines 1…*Q*: Each line contains a single integer that is a response to a reply
 0
 ```
 
-### Solution
+### 解题思路
+
+使用 ST 表（稀疏表）进行区间最值查询。ST 表可以在 O(1) 时间内回答区间最大值和最小值查询，预处理时间为 O(N log N)。
+
+具体步骤：
+1. 预处理 `max_st[i][j]` 和 `min_st[i][j]`，表示区间 `[i, i+2^j-1]` 的最大值和最小值。
+2. 对于每个查询 `[l, r]`，找到最大的 k 使得 `2^k ≤ r-l+1`，然后分别从 l 和 r-2^k+1 开始取最值。
+3. 输出最大值与最小值之差。
+
+### 代码实现
 
 ```cpp
 #include <iostream>
