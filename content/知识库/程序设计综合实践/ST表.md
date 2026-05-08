@@ -1,28 +1,33 @@
-Balanced Lineup
+# ST表
 
-Contest Problem
+## Balanced Lineup
 
-Time Limit：C/C++ 5000MS，Other 10000MS  
-Memory Limit：C/C++ 64MB，Other 128MB
+**Contest Problem**
 
-Description
+- **Time Limit**：C/C++ 5000MS，Other 10000MS
+- **Memory Limit**：C/C++ 64MB，Other 128MB
 
-For the daily milking, Farmer John's *N* cows (1 ≤ *N* ≤ 50,000) always line up in the same order. One day Farmer John decides to organize a game of Ultimate Frisbee with some of the cows. To keep things simple, he will take a contiguous range of cows from the milking lineup to play the game. However, for all the cows to have fun they should not differ too much in height.
+### Description
 
-Farmer John has made a list of *Q* (1 ≤ *Q* ≤ 200,000) potential groups of cows and their heights (1 ≤ *height* ≤ 1,000,000). For each group, he wants your help to determine the difference in height between the shortest and the tallest cow in the group.
+For the daily milking, Farmer John's *N* cows (1 ≤ *N* ≤ 50,000) always line up in the same order. One day Farmer John decides to organize a game of Ultimate Frisbee with some of the cows. To keep things simple, he will take a contiguous range of cows from the milking lineup to play the game. However, for all the cows to have fun they should not differ too much in height.
 
-Input
+Farmer John has made a list of *Q* (1 ≤ *Q* ≤ 200,000) potential groups of cows and their heights (1 ≤ *height* ≤ 1,000,000). For each group, he wants your help to determine the difference in height between the shortest and the tallest cow in the group.
 
-Line 1: Two space-separated integers, *N* and *Q*.  
-Lines 2…_N_+1: Line *i*+1 contains a single integer that is the height of cow *i*  
-Lines *N*+2…_N_+_Q_+1: Two integers *A* and *B* (1 ≤ *A* ≤ *B* ≤ *N*), representing the range of cows from *A* to *B* inclusive.
+### Input
 
-Output
+Line 1: Two space-separated integers, *N* and *Q*.
 
-Lines 1…_Q_: Each line contains a single integer that is a response to a reply and indicates the difference in height between the tallest and shortest cow in the range.
+Lines 2…*N*+1: Line *i*+1 contains a single integer that is the height of cow *i*
 
-Sample Input 1 
+Lines *N*+2…*N*+*Q*+1: Two integers *A* and *B* (1 ≤ *A* ≤ *B* ≤ *N*), representing the range of cows from *A* to *B* inclusive.
 
+### Output
+
+Lines 1…*Q*: Each line contains a single integer that is a response to a reply and indicates the difference in height between the tallest and shortest cow in the range.
+
+### Sample Input
+
+```
 6 3
 1
 7
@@ -33,14 +38,19 @@ Sample Input 1 
 1 5
 4 6
 2 2
+```
 
-Sample Output 1 
+### Sample Output
 
+```
 6
 3
 0
+```
 
-```C++
+### Solution
+
+```cpp
 #include <iostream>
 #include <vector>
 #include <algorithm>
