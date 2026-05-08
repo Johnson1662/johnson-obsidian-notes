@@ -1,3 +1,133 @@
+Lake Counting
+
+  
+
+No tag
+
+Time Limit：C/C++ 1000MS，Other 2000MS  
+Memory Limit：C/C++ 64MB，Other 128MB  
+Level： Beginner  
+Created By：  
+
+Description
+
+Due to recent rains, water has pooled in various places in Farmer John’s field, which is represented by a rectangle of N x M (1 <= N <= 100; 1 <= M <= 100) squares. Each square contains either water (‘W’) or dry land (’.’). Farmer John would like to figure out how many ponds have formed in his field. A pond is a connected set of squares with water in them, where a square is considered adjacent to all eight of its neighbors.
+
+Given a diagram of Farmer John’s field, determine how many ponds he has.
+
+Input
+
+- Line 1: Two space-separated integers: N and M
+    
+- Lines 2…N+1: M characters per line representing one row of Farmer John’s field. Each character is either ‘W’ or ‘.’. The characters do not have spaces between them.
+    
+
+Output
+
+- Line 1: The number of ponds in Farmer John’s field.
+
+Sample Input 1 
+
+10 12
+W........WW.
+.WWW.....WWW
+....WW...WW.
+.........WW.
+.........W..
+..W......W..
+.W.W.....WW.
+W.W.W.....W.
+.W.W......W.
+..W.......W.
+
+Sample Output 1 
+
+3
+
+Hint
+
+OUTPUT DETAILS:
+
+There are three ponds: one in the upper left, one in the lower left,and one along the right side.
+
+```C++
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+int N, M;
+vector<string> field;
+
+// 深度优先搜索，将属于同一个水池的所有 'W' 替换为 '.'
+void dfs(int x, int y)
+{
+    // 将当前位置标记为已访问（通过把 W 变成 . 来实现，避免使用额外的 visited 数组）
+    field[x][y] = '.';
+
+    // 遍历周围 8 个方向
+    for (int dx = -1; dx <= 1; ++dx)
+    {
+        for (int dy = -1; dy <= 1; ++dy)
+        {
+            // 跳过自身
+            if (dx == 0 && dy == 0)
+                continue;
+
+            int nx = x + dx;
+            int ny = y + dy;
+
+            // 越界检查以及是否为水域检查
+            if (nx >= 0 && nx < N && ny >= 0 && ny < M && field[nx][ny] == 'W')
+            {
+                dfs(nx, ny);
+            }
+        }
+    }
+}
+
+int main()
+{
+    // 基础输入处理
+    if (!(cin >> N >> M))
+        return 0;
+
+    field.resize(N);
+    for (int i = 0; i < N; ++i)
+    {
+        cin >> field[i];
+    }
+
+    int count = 0;
+    for (int i = 0; i < N; ++i)
+    {
+        for (int j = 0; j < M; ++j)
+        {
+            // 只要遇到 'W'，就意味着发现了一个新的水池
+            if (field[i][j] == 'W')
+            {
+                count++;
+                // 搜索并标记所有连通的 'W'
+                dfs(i, j);
+            }
+        }
+    }
+
+    cout << count << endl;
+
+    return 0;
+}
+
+
+/**
+* @runId: 622385
+* @language: C++
+* @author: 3024205103
+* @submitTime: 2026-04-19 16:29:15
+*/
+```
+
 正方形
 
 
