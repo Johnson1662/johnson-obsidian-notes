@@ -1,6 +1,6 @@
 ---
 title: 首页
-custom_instructions: |
+custom_instructions: |-
   ## 会话启动协议 (Session Start Protocol)
 
   每次新对话开始时，**立即执行**以下步骤：
