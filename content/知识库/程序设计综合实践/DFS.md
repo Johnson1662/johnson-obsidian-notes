@@ -1,0 +1,368 @@
+# DFS（深度优先搜索）
+
+## Lake Counting
+
+**Contest Problem**
+
+- **Time Limit**：C/C++ 1000MS，Other 2000MS
+- **Memory Limit**：C/C++ 64MB，Other 128MB
+- **Level**：Beginner
+
+### Description
+
+Due to recent rains, water has pooled in various places in Farmer John's field, which is represented by a rectangle of N x M (1 ≤ N ≤ 100; 1 ≤ M ≤ 100) squares. Each square contains either water ('W') or dry land ('.'). Farmer John would like to figure out how many ponds have formed in his field. A pond is a connected set of squares with water in them, where a square is considered adjacent to all eight of its neighbors.
+
+Given a diagram of Farmer John's field, determine how many ponds he has.
+
+### Input
+
+- Line 1: Two space-separated integers: N and M
+- Lines 2…N+1: M characters per line representing one row of Farmer John's field. Each character is either 'W' or '.'. The characters do not have spaces between them.
+
+### Output
+
+- Line 1: The number of ponds in Farmer John's field.
+
+### Sample Input
+
+```
+10 12
+W........WW.
+.WWW.....WWW
+....WW...WW.
+.........WW.
+.........W..
+..W......W..
+.W.W.....WW.
+W.W.W.....W.
+.W.W......W.
+..W.......W.
+```
+
+### Sample Output
+
+```
+3
+```
+
+### Solution
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+int N, M;
+vector<string> field;
+
+// 深度优先搜索，将属于同一个水池的所有 'W' 替换为 '.'
+void dfs(int x, int y)
+{
+    // 将当前位置标记为已访问（通过把 W 变成 . 来实现，避免使用额外的 visited 数组）
+    field[x][y] = '.';
+
+    // 遍历周围 8 个方向
+    for (int dx = -1; dx <= 1; ++dx)
+    {
+        for (int dy = -1; dy <= 1; ++dy)
+        {
+            // 跳过自身
+            if (dx == 0 && dy == 0)
+                continue;
+
+            int nx = x + dx;
+            int ny = y + dy;
+
+            // 越界检查以及是否为水域检查
+            if (nx >= 0 && nx < N && ny >= 0 && ny < M && field[nx][ny] == 'W')
+            {
+                dfs(nx, ny);
+            }
+        }
+    }
+}
+
+int main()
+{
+    // 基础输入处理
+    if (!(cin >> N >> M))
+        return 0;
+
+    field.resize(N);
+    for (int i = 0; i < N; ++i)
+    {
+        cin >> field[i];
+    }
+
+    int count = 0;
+    for (int i = 0; i < N; ++i)
+    {
+        for (int j = 0; j < M; ++j)
+        {
+            // 只要遇到 'W'，就意味着发现了一个新的水池
+            if (field[i][j] == 'W')
+            {
+                count++;
+                // 搜索并标记所有连通的 'W'
+                dfs(i, j);
+            }
+        }
+    }
+
+    cout << count << endl;
+
+    return 0;
+}
+```
+
+> Submitted by 3024205103 @ 2026-04-19 16:29:15
+
+---
+
+## 正方形（拼棒问题）
+
+**Contest Problem**
+
+- **Time Limit**：C/C++ 1000MS，Other 2000MS
+- **Memory Limit**：C/C++ 128MB，Other 256MB
+
+### Description
+
+有 n 个木棒，需要用上所有木棒，围成一个正方形。如果可以围成正方形，则输出 "yes"，否则输出 "no"。
+
+### Input
+
+第一行输入一个整数 T 表示样例个数。对于每个样例：
+- 第一行输入一个整数 N 表示木棍的个数
+- 第二行输入 N 个数字表示木棒的长度
+
+### Output
+
+对于每个样例，如果可以则输出 "yes"，否则输出 "no"。
+
+### Sample Input
+
+```
+3
+4
+1 1 1 1
+5
+10 20 30 40 50
+8
+1 7 2 6 4 4 3 5
+```
+
+### Sample Output
+
+```
+yes
+no
+yes
+```
+
+### 算法分析
+
+这个问题本质上是在玩一个"拼图游戏"：
+1. **目标明确**：要把所有木棒分成 4 组，每组的长度总和必须相等（等于总周长的 1/4）。
+2. **递归尝试（DFS）**：拿出一根木棒，尝试把它放进第一条边。如果放得下，就继续放下一根；如果放不下，就把它拿出来，换一根试试。
+3. **回溯**：如果发现当前这种组合怎么也拼不成四条等长的边，就"反悔"回到上一步，重新调整之前的选择。
+
+**剪枝优化**：
+- **前置检查**：木棒总长度必须能被 4 整除；最长的那根木棒不能超过正方形的边长。
+- **搜索优化**：从大到小排序（先尝试长木棒）；相同长度跳过；关键位置剪枝。
+
+### Solution
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <numeric>
+#include <algorithm>
+
+using namespace std;
+
+int sticks[25];
+bool used[25];
+int n, side_len;
+
+// count: 当前已经拼凑好的边数
+// current_len: 当前正在拼凑的边的长度
+// index: 从第几个木棒开始尝试
+bool dfs(int count, int current_len, int index) {
+    if (count == 3) return true; // 只要拼好了3条边，第4条必然自动成立
+
+    for (int i = index; i < n; i++) {
+        if (used[i] || current_len + sticks[i] > side_len) continue;
+
+        used[i] = true;
+        if (current_len + sticks[i] == side_len) {
+            // 拼好了一条完整边，开始拼下一条（从头开始找木棒）
+            if (dfs(count + 1, 0, 0)) return true;
+        } else {
+            // 继续拼当前边
+            if (dfs(count, current_len + sticks[i], i + 1)) return true;
+        }
+        used[i] = false; // 回溯
+
+        // 剪枝优化：如果当前尝试失败，且它是该边的第一根或刚好凑满，
+        // 或者后续有相同长度的，则都不必再试。
+        if (current_len == 0 || current_len + sticks[i] == side_len) return false;
+        while (i + 1 < n && sticks[i+1] == sticks[i]) i++;
+    }
+    return false;
+}
+
+void solve() {
+    cin >> n;
+    int sum = 0;
+    for (int i = 0; i < n; i++) {
+        cin >> sticks[i];
+        sum += sticks[i];
+        used[i] = false;
+    }
+
+    // 基本可行性判断
+    if (sum % 4 != 0) {
+        cout << "no" << endl;
+        return;
+    }
+    side_len = sum / 4;
+    sort(sticks, sticks + n, greater<int>()); // 从大到小排序
+
+    if (sticks[0] > side_len) {
+        cout << "no" << endl;
+        return;
+    }
+
+    if (dfs(0, 0, 0)) cout << "yes" << endl;
+    else cout << "no" << endl;
+}
+
+int main() {
+    int T;
+    cin >> T;
+    while (T--) {
+        solve();
+    }
+    return 0;
+}
+```
+
+---
+
+## Prime Circle（素数环）
+
+**Contest Problem**
+
+- **Time Limit**：C/C++ 1000MS，Other 2000MS
+- **Memory Limit**：C/C++ 128MB，Other 256MB
+
+### Description
+
+A ring is composed of n circles as shown in diagram. Put natural number 1 into each circle separately, and the sum of numbers in two adjacent circles should be a prime.
+
+Note: the number of first circle should always be 1.
+
+### Input
+
+多组测试数据，每行一个 n，输入以 0 结束。
+
+### Output
+
+For each case, output all possible sequences in lexicographical order. Print a blank line after each case.
+
+### Sample Input
+
+```
+6
+8
+0
+```
+
+### Sample Output
+
+```
+Case 1:
+1 4 3 2 5 6
+1 6 5 2 3 4
+
+Case 2:
+1 2 3 8 5 6 7 4
+1 2 5 8 3 4 7 6
+1 4 7 6 5 8 3 2
+1 6 7 4 3 8 5 2
+```
+
+### 算法分析
+
+回溯法类似于"走迷宫"：
+1. **尝试**：按数字从小到大（字典序）尝试填入一个尚未使用的数字。
+2. **检查**：检查该数字与前一个数字的和是否为素数。
+3. **递归**：如果满足，就去填下一个位置。
+4. **回溯**：如果填到最后发现不通，就退回到上一步，换一个数字继续试。
+
+**剪枝**：由于 n 的范围通常较小（如 n ≤ 16），可以直接预处理素数表或使用简单的素数判定。注意题目提示使用"更快的输出方式"，在 C++ 中建议使用 `printf` 代替 `cout`。
+
+### Solution
+
+```cpp
+#include <cstdio>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int n, a[25];
+bool used[25];
+
+// 判定素数（由于和最大不超过40，也可以用预处理数组）
+bool is_prime(int x) {
+    if (x < 2) return false;
+    for (int i = 2; i * i <= x; i++) {
+        if (x % i == 0) return false;
+    }
+    return true;
+}
+
+// cur: 当前正在尝试填入第几个位置
+void dfs(int cur) {
+    // 终止条件：已经填满了n个数字
+    if (cur == n) {
+        // 额外判定：首尾相加是否为素数
+        if (is_prime(a[n - 1] + a[0])) {
+            for (int i = 0; i < n; i++) {
+                printf("%d%c", a[i], i == n - 1 ? '\n' : ' ');
+            }
+        }
+        return;
+    }
+
+    for (int i = 2; i <= n; i++) {
+        if (!used[i] && is_prime(i + a[cur - 1])) {
+            used[i] = true;
+            a[cur] = i;     // 尝试填入
+            dfs(cur + 1);   // 递归搜索
+            used[i] = false; // 回溯：撤销标记
+        }
+    }
+}
+
+int main() {
+    int kase = 0;
+    while (scanf("%d", &n) != EOF) {
+        if (kase > 0) printf("\n"); // 每组案例间空一行
+        printf("Case %d:\n", ++kase);
+
+        for (int i = 0; i < 25; i++) used[i] = false;
+        a[0] = 1; // 题目要求第一个数始终为1
+        used[1] = true;
+
+        if (n % 2 == 0) { // 奇数无解
+            dfs(1);
+        }
+    }
+    return 0;
+}
+```

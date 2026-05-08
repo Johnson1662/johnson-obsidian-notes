@@ -1,127 +1,6 @@
-# DFS（深度优先搜索）
+# BFS（广度优先搜索）
 
-## Lake Counting
-
-**Contest Problem**
-
-- **Time Limit**：C/C++ 1000MS，Other 2000MS
-- **Memory Limit**：C/C++ 64MB，Other 128MB
-- **Level**：Beginner
-
-### Description
-
-Due to recent rains, water has pooled in various places in Farmer John's field, which is represented by a rectangle of N x M (1 ≤ N ≤ 100; 1 ≤ M ≤ 100) squares. Each square contains either water ('W') or dry land ('.'). Farmer John would like to figure out how many ponds have formed in his field. A pond is a connected set of squares with water in them, where a square is considered adjacent to all eight of its neighbors.
-
-Given a diagram of Farmer John's field, determine how many ponds he has.
-
-### Input
-
-- Line 1: Two space-separated integers: N and M
-- Lines 2…N+1: M characters per line representing one row of Farmer John's field. Each character is either 'W' or '.'. The characters do not have spaces between them.
-
-### Output
-
-- Line 1: The number of ponds in Farmer John's field.
-
-### Sample Input
-
-```
-10 12
-W........WW.
-.WWW.....WWW
-....WW...WW.
-.........WW.
-.........W..
-..W......W..
-.W.W.....WW.
-W.W.W.....W.
-.W.W......W.
-..W.......W.
-```
-
-### Sample Output
-
-```
-3
-```
-
-### Solution
-
-```cpp
-#include <iostream>
-#include <vector>
-#include <string>
-
-using namespace std;
-
-int N, M;
-vector<string> field;
-
-// 深度优先搜索，将属于同一个水池的所有 'W' 替换为 '.'
-void dfs(int x, int y)
-{
-    // 将当前位置标记为已访问（通过把 W 变成 . 来实现，避免使用额外的 visited 数组）
-    field[x][y] = '.';
-
-    // 遍历周围 8 个方向
-    for (int dx = -1; dx <= 1; ++dx)
-    {
-        for (int dy = -1; dy <= 1; ++dy)
-        {
-            // 跳过自身
-            if (dx == 0 && dy == 0)
-                continue;
-
-            int nx = x + dx;
-            int ny = y + dy;
-
-            // 越界检查以及是否为水域检查
-            if (nx >= 0 && nx < N && ny >= 0 && ny < M && field[nx][ny] == 'W')
-            {
-                dfs(nx, ny);
-            }
-        }
-    }
-}
-
-int main()
-{
-    // 基础输入处理
-    if (!(cin >> N >> M))
-        return 0;
-
-    field.resize(N);
-    for (int i = 0; i < N; ++i)
-    {
-        cin >> field[i];
-    }
-
-    int count = 0;
-    for (int i = 0; i < N; ++i)
-    {
-        for (int j = 0; j < M; ++j)
-        {
-            // 只要遇到 'W'，就意味着发现了一个新的水池
-            if (field[i][j] == 'W')
-            {
-                count++;
-                // 搜索并标记所有连通的 'W'
-                dfs(i, j);
-            }
-        }
-    }
-
-    cout << count << endl;
-
-    return 0;
-}
-```
-
-> Submitted by 3024205103 @ 2026-04-19 16:29:15
-
----
-
-## 正方形（拼棒问题）
+## 迷宫问题
 
 **Contest Problem**
 
@@ -130,121 +9,238 @@ int main()
 
 ### Description
 
-有 n 个木棒，需要用上所有木棒，围成一个正方形。如果可以围成正方形，则输出 "yes"，否则输出 "no"。
+有一个 5×5 的迷宫，其中的 1 表示墙壁，0 表示可以走的路，只能横着走或竖着走，不能斜着走。要求编程序找出从左上角到右下角的最短路线。
+
+数据保证有唯一解。
 
 ### Input
 
-第一行输入一个整数 T 表示样例个数。对于每个样例：
-- 第一行输入一个整数 N 表示木棍的个数
-- 第二行输入 N 个数字表示木棒的长度
+一个 5×5 的二维数组，表示一个迷宫。
 
 ### Output
 
-对于每个样例，如果可以则输出 "yes"，否则输出 "no"。
+左上角到右下角的最短路径，格式如样例所示。
 
 ### Sample Input
 
 ```
-3
-4
-1 1 1 1
-5
-10 20 30 40 50
-8
-1 7 2 6 4 4 3 5
+0 1 0 0 0
+0 1 0 1 0
+0 0 0 0 0
+0 1 1 1 0
+0 0 0 1 0
 ```
 
 ### Sample Output
 
 ```
-yes
-no
-yes
+(0, 0)
+(1, 0)
+(2, 0)
+(2, 1)
+(2, 2)
+(2, 3)
+(2, 4)
+(3, 4)
+(4, 4)
 ```
 
 ### 算法分析
 
-这个问题本质上是在玩一个"拼图游戏"：
-1. **目标明确**：要把所有木棒分成 4 组，每组的长度总和必须相等（等于总周长的 1/4）。
-2. **递归尝试（DFS）**：拿出一根木棒，尝试把它放进第一条边。如果放得下，就继续放下一根；如果放不下，就把它拿出来，换一根试试。
-3. **回溯**：如果发现当前这种组合怎么也拼不成四条等长的边，就"反悔"回到上一步，重新调整之前的选择。
+BFS 算法利用队列（Queue）实现。由 BFS 的思想可知，当第一次访问到某个点时，必然是经过最少步数到达的。
 
-**剪枝优化**：
-- **前置检查**：木棒总长度必须能被 4 整除；最长的那根木棒不能超过正方形的边长。
-- **搜索优化**：从大到小排序（先尝试长木棒）；相同长度跳过；关键位置剪枝。
+为了最后能输出完整的路径，需要额外开辟一个数组（如 `pre[x][y]`）来记录当前格子的"上一个格子"是谁。找到终点后，从终点逆向回溯到起点即可得到完整路线。
 
 ### Solution
 
 ```cpp
 #include <iostream>
+#include <queue>
 #include <vector>
-#include <numeric>
-#include <algorithm>
+#include <stack>
 
 using namespace std;
 
-int sticks[25];
-bool used[25];
-int n, side_len;
+// 定义坐标点结构
+struct Node {
+    int x, y;
+};
 
-// count: 当前已经拼凑好的边数
-// current_len: 当前正在拼凑的边的长度
-// index: 从第几个木棒开始尝试
-bool dfs(int count, int current_len, int index) {
-    if (count == 3) return true; // 只要拼好了3条边，第4条必然自动成立
+int maze[5][5];
+Node pre[5][5]; // 记录路径：pre[i][j] 存储到达该点的上一个点坐标
+bool visited[5][5];
 
-    for (int i = index; i < n; i++) {
-        if (used[i] || current_len + sticks[i] > side_len) continue;
+// 方向数组：下、右、上、左
+int dx[] = {1, 0, -1, 0};
+int dy[] = {0, 1, 0, -1};
 
-        used[i] = true;
-        if (current_len + sticks[i] == side_len) {
-            // 拼好了一条完整边，开始拼下一条（从头开始找木棒）
-            if (dfs(count + 1, 0, 0)) return true;
-        } else {
-            // 继续拼当前边
-            if (dfs(count, current_len + sticks[i], i + 1)) return true;
+void bfs() {
+    queue<Node> q;
+    q.push({0, 0});
+    visited[0][0] = true;
+
+    while (!q.empty()) {
+        Node curr = q.front();
+        q.pop();
+
+        // 达到右下角终点
+        if (curr.x == 4 && curr.y == 4) return;
+
+        for (int i = 0; i < 4; i++) {
+            int nx = curr.x + dx[i];
+            int ny = curr.y + dy[i];
+
+            // 边界检查、障碍检查及是否访问检查
+            if (nx >= 0 && nx < 5 && ny >= 0 && ny < 5 && maze[nx][ny] == 0 && !visited[nx][ny]) {
+                visited[nx][ny] = true;
+                pre[nx][ny] = curr; // 记录路径
+                q.push({nx, ny});
+            }
         }
-        used[i] = false; // 回溯
-
-        // 剪枝优化：如果当前尝试失败，且它是该边的第一根或刚好凑满，
-        // 或者后续有相同长度的，则都不必再试。
-        if (current_len == 0 || current_len + sticks[i] == side_len) return false;
-        while (i + 1 < n && sticks[i+1] == sticks[i]) i++;
     }
-    return false;
 }
 
-void solve() {
-    cin >> n;
-    int sum = 0;
-    for (int i = 0; i < n; i++) {
-        cin >> sticks[i];
-        sum += sticks[i];
-        used[i] = false;
+int main() {
+    // 输入迷宫
+    for (int i = 0; i < 5; i++) {
+        for (int j = 0; j < 5; j++) {
+            cin >> maze[i][j];
+        }
     }
 
-    // 基本可行性判断
-    if (sum % 4 != 0) {
-        cout << "no" << endl;
-        return;
-    }
-    side_len = sum / 4;
-    sort(sticks, sticks + n, greater<int>()); // 从大到小排序
+    bfs();
 
-    if (sticks[0] > side_len) {
-        cout << "no" << endl;
-        return;
+    // 路径回溯：从终点 (4,4) 逆推回起点 (0,0)
+    stack<Node> path;
+    Node temp = {4, 4};
+    while (temp.x != 0 || temp.y != 0) {
+        path.push(temp);
+        temp = pre[temp.x][temp.y];
+    }
+    path.push({0, 0});
+
+    // 按顺序输出
+    while (!path.empty()) {
+        Node p = path.top();
+        cout << "(" << p.x << ", " << p.y << ")" << endl;
+        path.pop();
     }
 
-    if (dfs(0, 0, 0)) cout << "yes" << endl;
-    else cout << "no" << endl;
+    return 0;
+}
+```
+
+---
+
+## 数的变换
+
+**Contest Problem**
+
+- **Time Limit**：C/C++ 1000MS，Other 2000MS
+- **Memory Limit**：C/C++ 256MB，Other 512MB
+
+### Description
+
+有一个有趣的游戏，从一个数 K 开始，然后有三种操作：
+1. 当前数乘以 2
+2. 如果当前数是偶数，可以除以 2
+3. 当前数加 1
+
+我们的目标是通过最少的操作次数得到数 P。数据范围为 0 < P, K < 100000，并且在操作过程中当前数永远不会大于或等于 100000。
+
+### Input
+
+第一行是一个数 T，表示输入数据的组数。然后输入 T 组数据。
+
+每组数据包含两个整数 K 和 P，分别表示开始数和目标数。
+
+### Output
+
+输出最少的操作次数，如果不可能由 K 经过一些操作得到 P，输出 -1。
+
+### Sample Input
+
+```
+2
+11 20
+99999 50000
+```
+
+### Sample Output
+
+```
+7
+-1
+```
+
+### Hint
+
+第一组样例中，可进行如下操作：11 → 12 → 6 → 3 → 4 → 5 → 10 → 20。
+
+对第二组样例，尽管我们可以通过 99999 → 100000 → 50000 这样的操作得到答案，但要求任何中间数不能大于等于 100000，所以不可以这样操作。
+
+### 算法分析
+
+BFS 就像是在水中投下一颗石子产生的**涟漪**：
+
+1. **逐层扩展**：从起始数 K 出发，第一步能变出的所有数字（通过 ×2、÷2 或 +1）算作"第一层"。
+2. **先到先得**：接着从第一层的所有数字出发，变出它们能达到的、且之前没出现过的数字，算作"第二层"。
+3. **最短性保证**：因为我们是按步数一层一层往外找的，所以**第一次**变出目标数 P 时，所经过的层数就是最少的操作次数。
+
+**注意**：题目特别强调"操作过程中当前数永远不会大于或等于 100,000"。这意味着在进行 ×2 或 +1 操作时，必须先判断结果是否小于 100000，否则该操作无效。
+
+### Solution
+
+```cpp
+#include <iostream>
+#include <queue>
+#include <cstring>
+
+using namespace std;
+
+const int MAXN = 100000;
+int dist[MAXN]; // 记录到达每个数的最少步数，同时充当 visit 数组
+
+int bfs(int k, int p) {
+    if (k == p) return 0;
+
+    memset(dist, -1, sizeof(dist));
+    queue<int> q;
+
+    q.push(k);
+    dist[k] = 0;
+
+    while (!q.empty()) {
+        int curr = q.front();
+        q.pop();
+
+        // 尝试三种操作
+        int next_states[3];
+        next_states[0] = curr * 2;         // 操作1: 乘2
+        next_states[1] = (curr % 2 == 0) ? curr / 2 : -1; // 操作2: 偶数除2
+        next_states[2] = curr + 1;         // 操作3: 加1
+
+        for (int i = 0; i < 3; i++) {
+            int next = next_states[i];
+
+            // 检查边界：必须 >0 且 <100000，且未被访问过
+            if (next > 0 && next < MAXN && dist[next] == -1) {
+                dist[next] = dist[curr] + 1;
+                if (next == p) return dist[next]; // 找到目标，直接返回
+                q.push(next);
+            }
+        }
+    }
+    return -1; // 无法到达
 }
 
 int main() {
     int T;
-    cin >> T;
+    if (!(cin >> T)) return 0;
     while (T--) {
-        solve();
+        int k, p;
+        cin >> k >> p;
+        cout << bfs(k, p) << endl;
     }
     return 0;
 }
@@ -252,7 +248,7 @@ int main() {
 
 ---
 
-## Prime Circle（素数环）
+## 非常可乐
 
 **Contest Problem**
 
@@ -261,107 +257,107 @@ int main() {
 
 ### Description
 
-A ring is composed of n circles as shown in diagram. Put natural number 1 into each circle separately, and the sum of numbers in two adjacent circles should be a prime.
+大家一定觉的运动以后喝可乐是一件很惬意的事情，但是 seeyou 却不这么认为。因为每次当 seeyou 买了可乐以后，阿牛就要求和 seeyou 一起分享这一瓶可乐，而且一定要喝的和 seeyou 一样多。
 
-Note: the number of first circle should always be 1.
+但 seeyou 的手中只有两个杯子，它们的容量分别是 N 毫升和 M 毫升。可乐的体积为 S（S < 101）毫升（正好装满一瓶），它们三个之间可以相互倒可乐（都是没有刻度的，且 S = N + M，101 > S > 0，N > 0，M > 0）。
+
+聪明的 ACMER 你们说他们能平分吗？如果能请输出倒可乐的最少的次数，如果不能输出 "NO"。
 
 ### Input
 
-多组测试数据，每行一个 n，输入以 0 结束。
+三个整数：S 可乐的体积，N 和 M 是两个杯子的容量，以 "0 0 0" 结束。
 
 ### Output
 
-For each case, output all possible sequences in lexicographical order. Print a blank line after each case.
+如果能平分的话请输出最少要倒的次数，否则输出 "NO"。
 
 ### Sample Input
 
 ```
-6
-8
-0
+7 4 3
+4 1 3
+0 0 0
 ```
 
 ### Sample Output
 
 ```
-Case 1:
-1 4 3 2 5 6
-1 6 5 2 3 4
-
-Case 2:
-1 2 3 8 5 6 7 4
-1 2 5 8 3 4 7 6
-1 4 7 6 5 8 3 2
-1 6 7 4 3 8 5 2
+NO
+3
 ```
 
 ### 算法分析
 
-回溯法类似于"走迷宫"：
-1. **尝试**：按数字从小到大（字典序）尝试填入一个尚未使用的数字。
-2. **检查**：检查该数字与前一个数字的和是否为素数。
-3. **递归**：如果满足，就去填下一个位置。
-4. **回溯**：如果填到最后发现不通，就退回到上一步，换一个数字继续试。
+这个问题可以类比成"走迷宫"，只不过迷宫的每个"房间"不是坐标，而是**三个容器里可乐的剩余量**：
 
-**剪枝**：由于 n 的范围通常较小（如 n ≤ 16），可以直接预处理素数表或使用简单的素数判定。注意题目提示使用"更快的输出方式"，在 C++ 中建议使用 `printf` 代替 `cout`。
+1. **初始状态**：一共有 S 毫升可乐，分布在容器 (S, 0, 0) 中（瓶子装满，两个杯子为空）。
+2. **动作尝试**：每一步你可以尝试从一个容器倒向另一个容器。因为没有刻度，倒水只有两种结果：要么把目标容器**倒满**，要么把源容器**倒空**。
+3. **层层递进**：第一步尝试所有可能的倒水组合（共 6 种可能），第二步在产生的新状态基础上再进行一次倒水。
+4. **目标达成**：当你发现某次倒完后，其中两个容器的量正好等于 S/2（且 S 必须是偶数，否则无法平分），那么当前的步数就是最少次数。
+5. **判重**：为了不反复在同一个状态纠缠，我们用一个三维数组 `visited[s][n][m]` 记录这个状态是否出现过。
 
 ### Solution
 
 ```cpp
-#include <cstdio>
-#include <vector>
-#include <algorithm>
+#include <iostream>
+#include <queue>
+#include <cstring>
 
 using namespace std;
 
-int n, a[25];
-bool used[25];
+struct State {
+    int v[3]; // v[0]:S, v[1]:N, v[2]:M
+    int step;
+};
 
-// 判定素数（由于和最大不超过40，也可以用预处理数组）
-bool is_prime(int x) {
-    if (x < 2) return false;
-    for (int i = 2; i * i <= x; i++) {
-        if (x % i == 0) return false;
-    }
-    return true;
-}
+int cap[3]; // 容量上限
+bool vis[101][101][101];
 
-// cur: 当前正在尝试填入第几个位置
-void dfs(int cur) {
-    // 终止条件：已经填满了n个数字
-    if (cur == n) {
-        // 额外判定：首尾相加是否为素数
-        if (is_prime(a[n - 1] + a[0])) {
-            for (int i = 0; i < n; i++) {
-                printf("%d%c", a[i], i == n - 1 ? '\n' : ' ');
+int bfs() {
+    if (cap[0] % 2 != 0) return -1; // 奇数无法平分
+    int target = cap[0] / 2;
+
+    memset(vis, 0, sizeof(vis));
+    queue<State> q;
+    q.push({{cap[0], 0, 0}, 0});
+    vis[cap[0]][0][0] = true;
+
+    while (!q.empty()) {
+        State cur = q.front();
+        q.pop();
+
+        // 检查是否达到平分状态（任意两个容器等于 S/2）
+        int cnt = 0;
+        for(int i = 0; i < 3; i++) if(cur.v[i] == target) cnt++;
+        if(cnt == 2) return cur.step;
+
+        // 尝试 6 种倒水方式：从 i 倒向 j
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (i == j) continue;
+
+                State next = cur;
+                // 计算倒水量：要么把 j 倒满，要么把 i 倒空
+                int pour = min(next.v[i], cap[j] - next.v[j]);
+                next.v[i] -= pour;
+                next.v[j] += pour;
+                next.step = cur.step + 1;
+
+                if (!vis[next.v[0]][next.v[1]][next.v[2]]) {
+                    vis[next.v[0]][next.v[1]][next.v[2]] = true;
+                    q.push(next);
+                }
             }
         }
-        return;
     }
-
-    for (int i = 2; i <= n; i++) {
-        if (!used[i] && is_prime(i + a[cur - 1])) {
-            used[i] = true;
-            a[cur] = i;     // 尝试填入
-            dfs(cur + 1);   // 递归搜索
-            used[i] = false; // 回溯：撤销标记
-        }
-    }
+    return -1;
 }
 
 int main() {
-    int kase = 0;
-    while (scanf("%d", &n) != EOF) {
-        if (kase > 0) printf("\n"); // 每组案例间空一行
-        printf("Case %d:\n", ++kase);
-
-        for (int i = 0; i < 25; i++) used[i] = false;
-        a[0] = 1; // 题目要求第一个数始终为1
-        used[1] = true;
-
-        if (n % 2 == 0) { // 奇数无解
-            dfs(1);
-        }
+    while (cin >> cap[0] >> cap[1] >> cap[2] && (cap[0] || cap[1] || cap[2])) {
+        int res = bfs();
+        if (res == -1) cout << "NO" << endl;
+        else cout << res << endl;
     }
     return 0;
 }
