@@ -36,7 +36,7 @@
       "environmentHash": ""
     },
     "codex": {
-      "enabled": true,
+      "enabled": false,
       "safeMode": "workspace-write",
       "cliPath": "",
       "cliPathsByHost": {},
@@ -52,21 +52,23 @@
     "opencode": {
       "cliPath": "",
       "cliPathsByHost": {
-        "LAPTOP-3FLH46E9": "C:\\Users\\lneoo\\AppData\\Roaming\\npm\\opencode"
+        "LAPTOP-3FLH46E9": "C:\\Users\\lneoo\\AppData\\Roaming\\npm\\node_modules\\.opencode-ai-sVJxMFA9\\node_modules\\opencode-windows-x64\\bin\\opencode.exe"
       },
       "enabled": true,
       "environmentHash": "",
       "environmentVariables": "",
       "modelAliases": {},
       "preferredThinkingByModel": {},
-      "selectedMode": "",
-      "visibleModels": []
+      "selectedMode": "claudian-yolo",
+      "visibleModels": [
+        "opencode/big-pickle"
+      ]
     }
   },
   "settingsProvider": "claude",
   "savedProviderModel": {
     "claude": "opus",
-    "opencode": "opencode",
+    "opencode": "opencode:opencode/big-pickle",
     "codex": "gpt-5.5"
   },
   "savedProviderEffort": {
