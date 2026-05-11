@@ -1,0 +1,2839 @@
+﻿1
+00:00:00,000 --> 00:00:10,880
+[音乐] 现在已经覆盖了 dijkstra 的链接状态
+[Music]
+
+2
+00:00:10,880 --> 00:00:12,960
+[音乐] 现在已经覆盖了 dijkstra 的链接状态
+having now covered dijkstra's link state routing algorithm we're ready to dive down to
+
+3
+00:00:12,960 --> 00:00:15,519
+我们准备深入研究路由算法
+having now covered dijkstra's link state routing algorithm we're ready to dive down to
+
+4
+00:00:15,519 --> 00:00:17,520
+来看看第二大类路由算法
+having now covered dijkstra's link state routing algorithm we're ready to dive down to
+
+5
+00:00:17,520 --> 00:00:19,279
+来看看第二大类路由算法
+the second broad class of routing algorithms take a look the distributed bellman ford
+
+6
+00:00:19,279 --> 00:00:22,560
+分布式贝尔曼福特算法和
+the second broad class of routing algorithms take a look the distributed bellman ford
+
+7
+00:00:22,560 --> 00:00:27,359
+这真的只是它是一个美丽的算法，它是我所知道的最好的例子
+algorithm and this is really just it's a beautiful algorithm it's the best example
+
+8
+00:00:27,359 --> 00:00:33,040
+如何使用简单的局部直观分布式计算
+i know of how simple local intuitive distributed calculations can be used to compute
+
+9
+00:00:33,040 --> 00:00:35,680
+在这种情况下计算相同的结果最少的成本
+i know of how simple local intuitive distributed calculations can be used to compute
+
+10
+00:00:35,680 --> 00:00:36,399
+在这种情况下计算相同的结果最少的成本
+the same result in this case least costs pass as a centralized algorithm i
+
+11
+00:00:36,399 --> 00:00:39,120
+作为集中式算法传递我认为你真的会喜欢这个
+the same result in this case least costs pass as a centralized algorithm i
+
+12
+00:00:39,120 --> 00:00:42,000
+作为集中式算法传递我认为你真的会喜欢这个
+think you're really going to like this the distance vector algorithm for computing least
+
+13
+00:00:42,000 --> 00:00:46,000
+计算最小成本路径的距离向量算法基于
+think you're really going to like this the distance vector algorithm for computing least
+
+14
+00:00:46,000 --> 00:00:49,520
+此处显示的所谓的 bellman-ford 方程
+cost paths is based on what's known as the bellman-ford equation shown here and
+
+15
+00:00:49,520 --> 00:00:50,960
+虽然方程式本身可能看起来有点令人生畏，但它是
+cost paths is based on what's known as the bellman-ford equation shown here and
+
+16
+00:00:50,960 --> 00:00:52,719
+虽然方程式本身可能看起来有点令人生畏，但它是
+while the equation itself might look a little bit daunting it's really pretty intuitive
+
+17
+00:00:52,719 --> 00:00:56,719
+非常直观，贝尔曼-福特方程表达了
+while the equation itself might look a little bit daunting it's really pretty intuitive
+
+18
+00:00:56,719 --> 00:00:59,920
+如果我想从源头获得最低成本
+the bellman-ford equation expresses the notion that if i want a minimum cost from
+
+19
+00:00:59,920 --> 00:01:06,560
+x 到目的地 y 那么这条路径必须有 x 的邻居之一说 v 作为
+source x to destination y then that path must have one of x's neighbors
+
+20
+00:01:06,560 --> 00:01:07,920
+第一跳所以我会总结从
+source x to destination y then that path must have one of x's neighbors
+
+21
+00:01:07,920 --> 00:01:10,479
+第一跳所以我会总结从
+say v as a first hop so i'll sum the cost of getting from
+
+22
+00:01:10,479 --> 00:01:12,319
+源 x 到邻居 v 加上然后从
+say v as a first hop so i'll sum the cost of getting from
+
+23
+00:01:12,319 --> 00:01:14,319
+源 x 到邻居 v 加上然后从
+source x to neighbor v plus the cost of then getting from neighbor v
+
+24
+00:01:14,319 --> 00:01:17,040
+邻居 v 到目的地 y 这是 x 到达目的地的成本
+source x to neighbor v plus the cost of then getting from neighbor v
+
+25
+00:01:17,040 --> 00:01:19,119
+邻居 v 到目的地 y 这是 x 到达目的地的成本
+to destination y this is x's cost of getting to destination y through neighbor
+
+26
+00:01:19,119 --> 00:01:23,119
+目的地 y 通过邻居 v 然后我会
+to destination y this is x's cost of getting to destination y through neighbor
+
+27
+00:01:23,119 --> 00:01:27,840
+自 x 的最小值以来所有邻居 v 的最小成本路径
+v and then i'll take the minimum cost path over all neighbors v since
+
+28
+00:01:27,840 --> 00:01:28,640
+cross pass 必须通过它的一个邻居 v
+v and then i'll take the minimum cost path over all neighbors v since
+
+29
+00:01:28,640 --> 00:01:31,438
+cross pass 必须通过它的一个邻居 v
+x's minimum cross pass must pass through one of its neighbors v that's it
+
+30
+00:01:31,438 --> 00:01:35,520
+这就是贝尔曼福特方程
+x's minimum cross pass must pass through one of its neighbors v that's it
+
+31
+00:01:35,520 --> 00:01:37,360
+可能了解 bellman Ford 的最佳方式是看一看
+that's the bellman ford equation well probably the best way to understand bellman ford
+
+32
+00:01:37,360 --> 00:01:39,350
+可能了解 bellman Ford 的最佳方式是看一看
+is to take a look at an
+
+33
+00:01:39,350 --> 00:01:39,360
+可能了解 bellman Ford 的最佳方式是看一看
+bellman ford is to take a look at an
+
+34
+00:01:39,360 --> 00:01:42,078
+例如，让我们在上下文中这样做
+example so let's do that in the context of the network which you'll recognize
+
+35
+00:01:42,078 --> 00:01:43,759
+您将识别出的网络我们将查看源节点 u
+example so let's do that in the context of the network which you'll recognize
+
+36
+00:01:43,759 --> 00:01:46,000
+您将识别出的网络我们将查看源节点 u
+we're going to look at a source node u
+
+37
+00:01:46,000 --> 00:01:47,759
+和目标节点 z 并注意 u 有三个邻居
+and a destination node
+
+38
+00:01:47,759 --> 00:01:50,880
+和目标节点 z 并注意 u 有三个邻居
+z and notice that u has three neighbors
+
+39
+00:01:50,880 --> 00:01:54,799
+vx 和 w，这是邻居们知道的
+v x and w and here's what the neighbors
+
+40
+00:01:54,799 --> 00:01:55,439
+vx 和 w，这是邻居们知道的
+know
+
+41
+00:01:55,439 --> 00:01:57,439
+邻居 v 知道它可以到达目的地 z
+neighbor v knows that it can reach
+
+42
+00:01:57,439 --> 00:01:58,640
+邻居 v 知道它可以到达目的地 z
+destination z
+
+43
+00:01:58,640 --> 00:02:01,520
+成本为五个邻居 x 知道
+with a cost of five neighbor x knows
+
+44
+00:02:01,520 --> 00:02:01,840
+成本为五个邻居 x 知道
+that
+
+45
+00:02:01,840 --> 00:02:04,000
+它可以以 3 和邻居 w 的成本到达目的地 z
+it can reach destination z with a cost
+
+46
+00:02:04,000 --> 00:02:06,000
+它可以以 3 和邻居 w 的成本到达目的地 z
+of three and neighbor w
+
+47
+00:02:06,000 --> 00:02:08,239
+知道它可以以三的代价到达目的地 z
+knows that it can reach destination z
+
+48
+00:02:08,239 --> 00:02:09,440
+知道它可以以三的代价到达目的地 z
+with a cost of three
+
+49
+00:02:09,440 --> 00:02:10,959
+所以这就是邻居们知道邻居们将要交流的内容
+so that's what the neighbors know the
+
+50
+00:02:10,959 --> 00:02:12,560
+所以这就是邻居们知道邻居们将要交流的内容
+neighbors are going to communicate
+
+51
+00:02:12,560 --> 00:02:14,959
+这些信息会反馈给您 这对您意味着什么
+this information back to you what is
+
+52
+00:02:14,959 --> 00:02:17,280
+这些信息会反馈给您 这对您意味着什么
+this going to mean for you
+
+53
+00:02:17,280 --> 00:02:19,120
+对于这个例子，贝尔曼福特方程表示最小成本
+for this example the bellman ford
+
+54
+00:02:19,120 --> 00:02:21,280
+对于这个例子，贝尔曼福特方程表示最小成本
+equation says that the minimum cost
+
+55
+00:02:21,280 --> 00:02:23,760
+从 u 到 z 的路径将是三个量中的最小值
+path from u to z is going to be the
+
+56
+00:02:23,760 --> 00:02:25,760
+从 u 到 z 的路径将是三个量中的最小值
+minimum of three quantities
+
+57
+00:02:25,760 --> 00:02:27,680
+从源 u 到邻居 v 的成本加上从
+the cost of getting from source u to
+
+58
+00:02:27,680 --> 00:02:30,000
+从源 u 到邻居 v 的成本加上从
+neighbor v plus the cost of getting from
+
+59
+00:02:30,000 --> 00:02:30,560
+邻居 v 到目的地 z 的成本
+neighbor v
+
+60
+00:02:30,560 --> 00:02:33,040
+邻居 v 到目的地 z 的成本
+to destination z the cost of getting
+
+61
+00:02:33,040 --> 00:02:33,760
+从你到邻居 x 加上得到的成本
+from u
+
+62
+00:02:33,760 --> 00:02:36,080
+从你到邻居 x 加上得到的成本
+to neighbor x plus the cost of getting
+
+63
+00:02:36,080 --> 00:02:37,519
+从 x 到 z 以及从 u 到 w 的成本加上
+from x to z
+
+64
+00:02:37,519 --> 00:02:40,480
+从 x 到 z 以及从 u 到 w 的成本加上
+and the cost of getting from u to w plus
+
+65
+00:02:40,480 --> 00:02:43,040
+如果您在此处插入数字，则从 w 到 z 的成本
+the cost of getting from w to z
+
+66
+00:02:43,040 --> 00:02:44,560
+如果您在此处插入数字，则从 w 到 z 的成本
+if you plug in the numbers here you'll
+
+67
+00:02:44,560 --> 00:02:47,280
+找到从 u 到 z 的最小成本是通过邻居 x 并且成本为 4。
+find the minimum cost to get from u to z
+
+68
+00:02:47,280 --> 00:02:50,480
+找到从 u 到 z 的最小成本是通过邻居 x 并且成本为 4。
+is via neighbor x and at a cost of 4.
+
+69
+00:02:50,480 --> 00:02:52,560
+贝尔曼福特方程表达了距离之间的关系
+well the bellman ford equation expresses
+
+70
+00:02:52,560 --> 00:02:54,560
+贝尔曼福特方程表达了距离之间的关系
+a relationship among the distance
+
+71
+00:02:54,560 --> 00:02:55,280
+相邻节点中的向量，但我们当然
+vectors
+
+72
+00:02:55,280 --> 00:02:57,280
+相邻节点中的向量，但我们当然
+in neighboring nodes but of course we
+
+73
+00:02:57,280 --> 00:02:59,200
+仍然需要计算这些距离向量
+still need to compute these distance
+
+74
+00:02:59,200 --> 00:02:59,919
+仍然需要计算这些距离向量
+vectors
+
+75
+00:02:59,919 --> 00:03:01,840
+但是这样做的方法很自然地由
+but the way to do that is naturally
+
+76
+00:03:01,840 --> 00:03:02,959
+但是这样做的方法很自然地由
+expressed by the
+
+77
+00:03:02,959 --> 00:03:05,519
+形成距离向量与相邻节点的关系
+form the relationship between distance
+
+78
+00:03:05,519 --> 00:03:07,360
+形成距离向量与相邻节点的关系
+vectors and neighboring nodes
+
+79
+00:03:07,360 --> 00:03:09,680
+函数我们如何计算这些距离向量将遵循形式
+function how we compute these distance
+
+80
+00:03:09,680 --> 00:03:12,879
+函数我们如何计算这些距离向量将遵循形式
+vectors is going to follow form
+
+81
+00:03:12,879 --> 00:03:14,720
+这是距离向量算法背后的关键思想
+and here are the key ideas behind the
+
+82
+00:03:14,720 --> 00:03:16,480
+这是距离向量算法背后的关键思想
+distance vector algorithm
+
+83
+00:03:16,480 --> 00:03:18,800
+每个节点不时将自己的距离向量估计发送到
+from time to time each node is going to
+
+84
+00:03:18,800 --> 00:03:21,200
+每个节点不时将自己的距离向量估计发送到
+send its own distance vector estimate to
+
+85
+00:03:21,200 --> 00:03:22,400
+它的邻居，当一个节点 x 收到一个新的
+its neighbors
+
+86
+00:03:22,400 --> 00:03:24,400
+它的邻居，当一个节点 x 收到一个新的
+and when a node x receives a new
+
+87
+00:03:24,400 --> 00:03:26,639
+与其邻居之一的距离向量估计
+distance vector estimate from one of its
+
+88
+00:03:26,639 --> 00:03:27,440
+与其邻居之一的距离向量估计
+neighbors
+
+89
+00:03:27,440 --> 00:03:29,840
+它将使用贝尔曼福特方程更新自己的距离向量
+it's going to update its own distance
+
+90
+00:03:29,840 --> 00:03:32,319
+它将使用贝尔曼福特方程更新自己的距离向量
+vector using the bellman ford equation
+
+91
+00:03:32,319 --> 00:03:35,519
+即节点 x 对每个节点都会说得很好
+that is node x is going to say well for
+
+92
+00:03:35,519 --> 00:03:36,319
+即节点 x 对每个节点都会说得很好
+each node
+
+93
+00:03:36,319 --> 00:03:39,519
+y 在网络中我要计算我的距离
+y in the network i'm going to compute my
+
+94
+00:03:39,519 --> 00:03:40,159
+y 在网络中我要计算我的距离
+distance
+
+95
+00:03:40,159 --> 00:03:43,599
+x 到 y 是我所有邻居中的最小值 v 的成本
+x to y to be the minimum across
+
+96
+00:03:43,599 --> 00:03:45,920
+x 到 y 是我所有邻居中的最小值 v 的成本
+all of my neighbors v the cost of
+
+97
+00:03:45,920 --> 00:03:47,440
+从我到 v 然后 v 从它自身获取的成本
+getting from me to v
+
+98
+00:03:47,440 --> 00:03:50,159
+从我到 v 然后 v 从它自身获取的成本
+and then v's cost of getting from itself
+
+99
+00:03:50,159 --> 00:03:52,720
+玩具
+to y
+
+100
+00:03:52,720 --> 00:03:53,110
+分布式贝尔曼福特算法分为三个步骤和
+to y
+
+101
+00:03:53,110 --> 00:03:55,120
+分布式贝尔曼福特算法分为三个步骤和
+the distributed bellman ford algorithm
+
+102
+00:03:55,120 --> 00:03:56,640
+分布式贝尔曼福特算法分为三个步骤和
+has three steps and all nodes in the network are going to perform the
+
+103
+00:03:56,640 --> 00:04:00,640
+网络中的所有节点都将执行相同的三个步骤
+has three steps and all nodes in the network are going to perform the
+
+104
+00:04:00,640 --> 00:04:04,560
+所以如果我是一个节点，第一步就是我要等待
+same three steps so if i'm a node the first step is i'm going
+
+105
+00:04:04,560 --> 00:04:08,239
+我要等到我从我的一个人那里收到一个距离向量
+to wait i'm going to wait till either i receive a distance vector from
+
+106
+00:04:08,239 --> 00:04:09,920
+直接连接的邻居或者我要等待本地链接
+to wait i'm going to wait till either i receive a distance vector from
+
+107
+00:04:09,920 --> 00:04:11,920
+直接连接的邻居或者我要等待本地链接
+one of my directly attached neighbors or i'm going to wait for a local
+
+108
+00:04:11,920 --> 00:04:12,959
+在我收到这些事件之一后成本改变了两个
+one of my directly attached neighbors or i'm going to wait for a local
+
+109
+00:04:12,959 --> 00:04:15,680
+在我收到这些事件之一后成本改变了两个
+link cost change two after i receive one of these events i'm going to
+
+110
+00:04:15,680 --> 00:04:18,479
+我要运行贝尔曼福特计算
+link cost change two after i receive one of these events i'm going to
+
+111
+00:04:18,479 --> 00:04:23,279
+对于网络中的所有目的地，使用最近收到的
+run the bellman ford calculation for all destinations in the network using the most
+
+112
+00:04:23,279 --> 00:04:28,800
+如果我自己的距离向量改变为与我的邻居的距离向量三
+recently received distance vectors from my neighbors three if my own distance vector changes
+
+113
+00:04:28,800 --> 00:04:33,520
+贝尔曼福特计算的结果我要发送我的新距离向量
+as a result of the bellman ford calculations i'm going to send my new
+
+114
+00:04:33,520 --> 00:04:37,120
+给我的每个邻居，就是这样，然后我要迭代
+distance vector to each of my neighbors and that's it then i'm going to
+
+115
+00:04:37,120 --> 00:04:40,479
+这个算法再简单不过了
+iterate again well this algorithm could hardly be simpler and believe it or not
+
+116
+00:04:40,479 --> 00:04:42,000
+不管你信不信，希望我们完成后你会相信
+iterate again well this algorithm could hardly be simpler and believe it or not
+
+117
+00:04:42,000 --> 00:04:43,839
+不管你信不信，希望我们完成后你会相信
+and hopefully you'll believe it when we're done this distributed algorithm will result in
+
+118
+00:04:43,839 --> 00:04:47,440
+这种分布式算法将导致所有节点具有
+and hopefully you'll believe it when we're done this distributed algorithm will result in
+
+119
+00:04:47,440 --> 00:04:51,360
+迭代计算一个距离向量来告诉他们
+all nodes having iteratively computed a distance vector that will tell them the least
+
+120
+00:04:51,360 --> 00:04:53,600
+到网络中每个其他节点的最低成本路径
+all nodes having iteratively computed a distance vector that will tell them the least
+
+121
+00:04:53,600 --> 00:04:54,639
+到网络中每个其他节点的最低成本路径
+cost path to every other node in the network and the neighbor to route
+
+122
+00:04:54,639 --> 00:04:56,880
+以及要路由到的邻居以沿着该最小成本路径启动数据包
+cost path to every other node in the network and the neighbor to route
+
+123
+00:04:56,880 --> 00:04:59,440
+以及要路由到的邻居以沿着该最小成本路径启动数据包
+to to start a packet along that minimum cost path to a given destination
+
+124
+00:04:59,440 --> 00:05:02,080
+到给定的目的地并注意，与链路状态算法不同的是，节点
+to to start a packet along that minimum cost path to a given destination
+
+125
+00:05:02,080 --> 00:05:04,400
+到给定的目的地并注意，与链路状态算法不同的是，节点
+and note that unlike the link state algorithm a node doesn't know the entire
+
+126
+00:05:04,400 --> 00:05:06,560
+不知道从源到目的地的整个路径，但在
+and note that unlike the link state algorithm a node doesn't know the entire
+
+127
+00:05:06,560 --> 00:05:08,639
+不知道从源到目的地的整个路径，但在
+path from source to destination but in the end it doesn't really need to
+
+128
+00:05:08,639 --> 00:05:10,000
+结束它并不真的需要这样做它只需要知道
+path from source to destination but in the end it doesn't really need to
+
+129
+00:05:10,000 --> 00:05:12,790
+结束它并不真的需要这样做它只需要知道
+does it it just needs to know
+
+130
+00:05:12,790 --> 00:05:12,800
+结束它并不真的需要这样做它只需要知道
+need to does it it just needs to know
+
+131
+00:05:12,800 --> 00:05:17,600
+将数据包转发到哪个邻居以到达给定目的地
+which neighbor to forward a packet to in order to reach a given destination
+
+132
+00:05:17,600 --> 00:05:20,000
+沿着最小成本路径以及距离向量算法具有
+which neighbor to forward a packet to in order to reach a given destination
+
+133
+00:05:20,000 --> 00:05:21,919
+沿着最小成本路径以及距离向量算法具有
+along the minimum cost path well the distance vector algorithm has some amazing properties
+
+134
+00:05:21,919 --> 00:05:26,000
+一些惊人的属性，每个属性都是迭代和异步的
+along the minimum cost path well the distance vector algorithm has some amazing properties
+
+135
+00:05:26,000 --> 00:05:29,279
+迭代是由本地链路成本变化引起的
+it's iterative and asynchronous each iteration is caused by either a local link cost
+
+136
+00:05:29,279 --> 00:05:33,440
+或收到来自邻居的距离向量更新消息
+change or the receipt of a distance vector update message from a neighbor and
+
+137
+00:05:33,440 --> 00:05:35,430
+我们已经讨论过这个好像所有节点都是同步的
+we've talked about this as if it's
+
+138
+00:05:35,430 --> 00:05:35,440
+我们已经讨论过这个好像所有节点都是同步的
+and we've talked about this as if it's
+
+139
+00:05:35,440 --> 00:05:36,960
+我们已经讨论过这个好像所有节点都是同步的
+synchronous that all nodes are exchanging distance vector in lock step but in fact
+
+140
+00:05:36,960 --> 00:05:41,199
+在锁定步骤中交换距离向量但实际上是节点
+synchronous that all nodes are exchanging distance vector in lock step but in fact
+
+141
+00:05:41,199 --> 00:05:41,520
+可以相互异步迭代
+synchronous that all nodes are exchanging distance vector in lock step but in fact
+
+142
+00:05:41,520 --> 00:05:44,000
+可以相互异步迭代
+nodes can iterate asynchronously from each other and with very different iteration speeds will
+
+143
+00:05:44,000 --> 00:05:48,160
+并且以非常不同的迭代速度仍然会收敛
+nodes can iterate asynchronously from each other and with very different iteration speeds will
+
+144
+00:05:48,160 --> 00:05:52,240
+算法也是分布式的，每个节点都会自动停止
+still converge the algorithm is also distributed and it's self-stopping each node notifies its
+
+145
+00:05:52,240 --> 00:05:53,520
+仅当其距离向量发生变化时才通知其邻居 然后仅在必要时通知他们的邻居，并且如果
+still converge the algorithm is also distributed and it's self-stopping each node notifies its
+
+146
+00:05:53,520 --> 00:06:00,240
+仅当其距离向量发生变化时才通知其邻居 然后仅在必要时通知他们的邻居，并且如果
+neighbor only when its distance vector changes neighbors then notify their neighbors only if
+
+147
+00:06:00,240 --> 00:06:04,880
+不发送更改或未收到通知，则无需执行任何操作
+necessary and if no change is sent or no notification is received then no
+
+148
+00:06:04,880 --> 00:06:06,720
+很好，这就是描述
+necessary and if no change is sent or no notification is received then no
+
+149
+00:06:06,720 --> 00:06:08,240
+很好，这就是描述
+actions need to be taken well that's it for describing the distance vector algorithm
+
+150
+00:06:08,240 --> 00:06:10,080
+距离向量算法它是非常简单的算法，不只是
+actions need to be taken well that's it for describing the distance vector algorithm
+
+151
+00:06:10,080 --> 00:06:12,319
+距离向量算法它是非常简单的算法，不只是
+it's pretty simple algorithm isn't it just three steps waiting to receive the distance
+
+152
+00:06:12,319 --> 00:06:15,199
+三步等待接收距离向量
+it's pretty simple algorithm isn't it just three steps waiting to receive the distance
+
+153
+00:06:15,199 --> 00:06:18,639
+来自执行距离向量计算的邻居
+vector from a neighbor performing a distance vector calculation and then if my own
+
+154
+00:06:18,639 --> 00:06:21,279
+然后如果我自己的距离我的本地距离向量已经改变
+vector from a neighbor performing a distance vector calculation and then if my own
+
+155
+00:06:21,279 --> 00:06:22,880
+然后如果我自己的距离我的本地距离向量已经改变
+distance my local distance vector has changed i'm going to send my local distance
+
+156
+00:06:22,880 --> 00:06:26,720
+我要立即将我的本地距离向量发送给我所有的人
+distance my local distance vector has changed i'm going to send my local distance
+
+157
+00:06:26,720 --> 00:06:31,600
+附上的邻居就是这样，现在让我们来看看贝尔曼福特的行动
+vector to all of my immediately attached neighbors that's it let's now take a
+
+158
+00:06:31,600 --> 00:06:35,279
+让我们从一个总体结构的高级视图开始
+look at bellman ford in action and let's start with a high-level view of
+
+159
+00:06:35,279 --> 00:06:36,479
+这里的计算是一个简单的九节点网格网络
+look at bellman ford in action and let's start with a high-level view of
+
+160
+00:06:36,479 --> 00:06:38,479
+这里的计算是一个简单的九节点网格网络
+the overall structure of a computation here's a simple nine-node grid network that we
+
+161
+00:06:38,479 --> 00:06:40,080
+我们用作我们的例子它非常对称，除了有一个
+the overall structure of a computation here's a simple nine-node grid network that we
+
+162
+00:06:40,080 --> 00:06:41,839
+我们用作我们的例子它非常对称，除了有一个
+use as our example it's pretty symmetric except there's a missing link between cnf
+
+163
+00:06:41,839 --> 00:06:44,000
+cnf 和这里从 a 到 b 的链接之间缺少链接有一个
+use as our example it's pretty symmetric except there's a missing link between cnf
+
+164
+00:06:44,000 --> 00:06:46,479
+cnf 和这里从 a 到 b 的链接之间缺少链接有一个
+and this link here from a to b has a
+
+165
+00:06:46,479 --> 00:06:48,720
+成本为 8，而所有其他链接的成本为 1。
+cost of 8 while all other links have a
+
+166
+00:06:48,720 --> 00:06:50,240
+成本为 8，而所有其他链接的成本为 1。
+cost of 1.
+
+167
+00:06:50,240 --> 00:06:52,319
+在 t 等于 0 时，所有节点都有它们到它们的距离向量估计
+at t equals 0 all nodes have their
+
+168
+00:06:52,319 --> 00:06:54,160
+在 t 等于 0 时，所有节点都有它们到它们的距离向量估计
+distance vector estimates to their
+
+169
+00:06:54,160 --> 00:06:54,880
+直接连接的邻居只有在这里你可以
+directly
+
+170
+00:06:54,880 --> 00:06:57,680
+直接连接的邻居只有在这里你可以
+connected neighbors only here you can
+
+171
+00:06:57,680 --> 00:06:59,680
+看到节点 a 中的距离向量，其目的地 b 的 dv 条目有一个
+see the distance vector in node a
+
+172
+00:06:59,680 --> 00:07:02,400
+看到节点 a 中的距离向量，其目的地 b 的 dv 条目有一个
+its dv entry for destination b has a
+
+173
+00:07:02,400 --> 00:07:04,319
+成本为 8 并且其目的地 d 的 dv 条目的成本为 1。
+cost of 8 and its dv
+
+174
+00:07:04,319 --> 00:07:08,080
+成本为 8 并且其目的地 d 的 dv 条目的成本为 1。
+entry for destination d is a cost of 1.
+
+175
+00:07:08,080 --> 00:07:09,759
+请注意，这些只是对最低成本路径的估计
+note that these are just estimates of
+
+176
+00:07:09,759 --> 00:07:11,120
+请注意，这些只是对最低成本路径的估计
+the least cost paths
+
+177
+00:07:11,120 --> 00:07:13,360
+甚至直接邻居，因为我们可以在这里看到
+even to direct neighbors since as we can
+
+178
+00:07:13,360 --> 00:07:14,240
+甚至直接邻居，因为我们可以在这里看到
+see here
+
+179
+00:07:14,240 --> 00:07:17,759
+从 a 到 b 有 3 条成本为 3 的路径
+there's a 3 path of cost 3 to get from a
+
+180
+00:07:17,759 --> 00:07:18,560
+从 a 到 b 有 3 条成本为 3 的路径
+to b
+
+181
+00:07:18,560 --> 00:07:20,400
+这将发现比初始成本 8 便宜
+which will found to be cheaper than this
+
+182
+00:07:20,400 --> 00:07:21,919
+这将发现比初始成本 8 便宜
+initial cost of 8
+
+183
+00:07:21,919 --> 00:07:24,319
+通过 a 和 b 之间的直接链接，所以在 t 等于 0 时让我们假设
+via the direct link between a and b so
+
+184
+00:07:24,319 --> 00:07:26,240
+通过 a 和 b 之间的直接链接，所以在 t 等于 0 时让我们假设
+at t equals 0 let's assume that
+
+185
+00:07:26,240 --> 00:07:27,759
+这样做之后，所有节点都初始化了它们的距离向量
+all nodes have initialized their
+
+186
+00:07:27,759 --> 00:07:30,319
+这样做之后，所有节点都初始化了它们的距离向量
+distance vectors after doing so
+
+187
+00:07:30,319 --> 00:07:31,919
+将他们的距离向量发送到他们的直接邻居
+send their distance vectors to their
+
+188
+00:07:31,919 --> 00:07:33,440
+将他们的距离向量发送到他们的直接邻居
+immediate neighbors
+
+189
+00:07:33,440 --> 00:07:36,400
+在 t 等于 1 时，所有节点都从其邻居接收距离向量
+at t equals 1 all nodes receive distance
+
+190
+00:07:36,400 --> 00:07:37,840
+在 t 等于 1 时，所有节点都从其邻居接收距离向量
+vectors from their neighbors
+
+191
+00:07:37,840 --> 00:07:40,479
+计算它们的局部距离向量以及它们的距离的任何分量
+compute their local distance vector and
+
+192
+00:07:40,479 --> 00:07:42,479
+计算它们的局部距离向量以及它们的距离的任何分量
+if any component of their distance
+
+193
+00:07:42,479 --> 00:07:43,680
+向量改变了，他们会发送他们新的本地距离
+vectors changed
+
+194
+00:07:43,680 --> 00:07:45,520
+向量改变了，他们会发送他们新的本地距离
+they'll send their new local distance
+
+195
+00:07:45,520 --> 00:07:47,199
+到它们在 t 处的邻居的向量等于 2 个节点的接收距离
+vector to their neighbors
+
+196
+00:07:47,199 --> 00:07:49,360
+到它们在 t 处的邻居的向量等于 2 个节点的接收距离
+at t equals 2 nodes receive distance
+
+197
+00:07:49,360 --> 00:07:50,879
+来自他们邻居的向量计算他们的局部距离向量和
+vectors from their neighbors
+
+198
+00:07:50,879 --> 00:07:53,199
+来自他们邻居的向量计算他们的局部距离向量和
+compute their local distance vector and
+
+199
+00:07:53,199 --> 00:07:54,960
+如果它们的距离向量的任何分量再次发生变化
+if any component of their distance
+
+200
+00:07:54,960 --> 00:07:56,479
+如果它们的距离向量的任何分量再次发生变化
+vectors changed again
+
+201
+00:07:56,479 --> 00:07:58,400
+他们会将新的本地距离向量发送给邻居
+they'll send their new local distance
+
+202
+00:07:58,400 --> 00:08:00,080
+他们会将新的本地距离向量发送给邻居
+vector to their neighbors
+
+203
+00:08:00,080 --> 00:08:02,560
+等等，让我在这里强调一下，我们已经描述了迭代过程
+and so on and let me stress here that
+
+204
+00:08:02,560 --> 00:08:04,560
+等等，让我在这里强调一下，我们已经描述了迭代过程
+we've described the iterative process
+
+205
+00:08:04,560 --> 00:08:05,280
+这里好像所有节点都在链接步骤中运行
+here as if
+
+206
+00:08:05,280 --> 00:08:07,440
+这里好像所有节点都在链接步骤中运行
+all nodes are operating in link step
+
+207
+00:08:07,440 --> 00:08:09,680
+这样更容易理解，但实际上节点可以迭代
+it's easier to understand it that way
+
+208
+00:08:09,680 --> 00:08:12,000
+这样更容易理解，但实际上节点可以迭代
+but in fact nodes can iterate at
+
+209
+00:08:12,000 --> 00:08:14,080
+不同的速度，这仍然有效
+different speeds and this will still
+
+210
+00:08:14,080 --> 00:08:15,759
+不同的速度，这仍然有效
+work
+
+211
+00:08:15,759 --> 00:08:17,759
+好吧，这里的简短动画向您展示了整体情况
+well the short animation here has shown
+
+212
+00:08:17,759 --> 00:08:19,280
+好吧，这里的简短动画向您展示了整体情况
+you a little bit about the overall
+
+213
+00:08:19,280 --> 00:08:21,440
+分布式贝尔曼福特计算的结构
+structure of the distributed bellman
+
+214
+00:08:21,440 --> 00:08:22,879
+分布式贝尔曼福特计算的结构
+ford calculations
+
+215
+00:08:22,879 --> 00:08:24,960
+但我们仍然需要看看核心的本地计算
+but we still need to look at the local
+
+216
+00:08:24,960 --> 00:08:27,039
+但我们仍然需要看看核心的本地计算
+computation that's at the heart
+
+217
+00:08:27,039 --> 00:08:29,280
+当我们从我们的
+of the algorithm when we take the
+
+218
+00:08:29,280 --> 00:08:31,039
+当我们从我们的
+individual distance vectors from our
+
+219
+00:08:31,039 --> 00:08:31,759
+邻居我们运行贝尔曼福特方程
+neighbors
+
+220
+00:08:31,759 --> 00:08:33,839
+邻居我们运行贝尔曼福特方程
+we run the bellman ford equation over
+
+221
+00:08:33,839 --> 00:08:35,360
+并计算我们新的局部分布式距离向量让我们
+and compute our new
+
+222
+00:08:35,360 --> 00:08:38,159
+并计算我们新的局部分布式距离向量让我们
+local distributed distance vector let's
+
+223
+00:08:38,159 --> 00:08:40,880
+看看这个本地计算让我们回想一下，在 t 等于 0 所有
+take a look at this local computation
+
+224
+00:08:40,880 --> 00:08:43,279
+看看这个本地计算让我们回想一下，在 t 等于 0 所有
+let's recall that at t equals 0 all
+
+225
+00:08:43,279 --> 00:08:45,679
+节点已经计算了它们的局部距离向量，你可以在这里看到
+nodes have computed their local distance
+
+226
+00:08:45,679 --> 00:08:47,760
+节点已经计算了它们的局部距离向量，你可以在这里看到
+vectors which you can see here
+
+227
+00:08:47,760 --> 00:08:50,320
+我们看一下b的距离向量b就知道可以到达a
+let's take a look at b's distance vector
+
+228
+00:08:50,320 --> 00:08:52,320
+我们看一下b的距离向量b就知道可以到达a
+b knows that it can get to a
+
+229
+00:08:52,320 --> 00:08:55,200
+直接成本为 8 到 c 直接成本
+directly with a cost of 8 to c directly
+
+230
+00:08:55,200 --> 00:08:55,920
+直接成本为 8 到 c 直接成本
+with a cost
+
+231
+00:08:55,920 --> 00:08:59,440
+1 和 e 直接以 1 的成本。这是 b 的初始距离向量
+of 1 and to e directly with a cost of 1.
+
+232
+00:08:59,440 --> 00:09:02,160
+1 和 e 直接以 1 的成本。这是 b 的初始距离向量
+this is b's initial distance vector the
+
+233
+00:09:02,160 --> 00:09:03,360
+a c 和 e 的距离向量也在后面显示
+distance vectors of a
+
+234
+00:09:03,360 --> 00:09:06,399
+a c 和 e 的距离向量也在后面显示
+c and e are also shown here after
+
+235
+00:09:06,399 --> 00:09:08,399
+计算初始距离向量所有节点发送它们的初始距离
+computing the initial distance vectors
+
+236
+00:09:08,399 --> 00:09:10,320
+计算初始距离向量所有节点发送它们的初始距离
+all nodes send their initial distance
+
+237
+00:09:10,320 --> 00:09:12,320
+向量到它们直接连接的邻居
+vectors to their directly attached
+
+238
+00:09:12,320 --> 00:09:12,958
+向量到它们直接连接的邻居
+neighbors
+
+239
+00:09:12,958 --> 00:09:15,600
+只是让我们假设在 t 等于 1
+only and let's suppose that at t equals
+
+240
+00:09:15,600 --> 00:09:16,399
+只是让我们假设在 t 等于 1
+1
+
+241
+00:09:16,399 --> 00:09:18,958
+b 现在从其邻居接收这些距离向量
+b now receives these distance vectors
+
+242
+00:09:18,958 --> 00:09:20,640
+b 现在从其邻居接收这些距离向量
+from its neighbors
+
+243
+00:09:20,640 --> 00:09:22,080
+这是 b 进行的贝尔曼福特计算
+and here are the bellman ford
+
+244
+00:09:22,080 --> 00:09:24,240
+这是 b 进行的贝尔曼福特计算
+calculations carried out by b
+
+245
+00:09:24,240 --> 00:09:27,200
+在 t 等于 1 之后 b 从其接收到初始距离向量
+at t equals 1 following b's receipt of
+
+246
+00:09:27,200 --> 00:09:29,200
+在 t 等于 1 之后 b 从其接收到初始距离向量
+the initial distance vectors from its
+
+247
+00:09:29,200 --> 00:09:29,920
+邻居 ae 和 c 记得在每一步
+neighbors
+
+248
+00:09:29,920 --> 00:09:33,839
+邻居 ae 和 c 记得在每一步
+a e and c remember that at each step
+
+249
+00:09:33,839 --> 00:09:35,760
+当接收到新的距离向量时，节点将重新计算自己的本地
+when the new distance vector is received
+
+250
+00:09:35,760 --> 00:09:38,000
+当接收到新的距离向量时，节点将重新计算自己的本地
+a node will recalculate its own local
+
+251
+00:09:38,000 --> 00:09:39,279
+使用这个新接收到的信息的距离向量
+distance vector
+
+252
+00:09:39,279 --> 00:09:41,600
+使用这个新接收到的信息的距离向量
+using this newly received information
+
+253
+00:09:41,600 --> 00:09:43,279
+让我们来看看 b 的几个计算
+let's take a look at a couple of b's
+
+254
+00:09:43,279 --> 00:09:44,399
+让我们来看看 b 的几个计算
+calculations
+
+255
+00:09:44,399 --> 00:09:46,559
+让我们先看看 b 如何计算它到 a 的距离
+let's first look at how b calculates its
+
+256
+00:09:46,559 --> 00:09:47,760
+让我们先看看 b 如何计算它到 a 的距离
+distance to a
+
+257
+00:09:47,760 --> 00:09:50,320
+b 说得好，我与 a 的距离是三件事中的最小值
+b says well my distance to a is the
+
+258
+00:09:50,320 --> 00:09:52,080
+b 说得好，我与 a 的距离是三件事中的最小值
+minimum of three things
+
+259
+00:09:52,080 --> 00:09:55,200
+我对 a 与自身的距离的直接成本为零
+my direct cost to a plus a's distance to
+
+260
+00:09:55,200 --> 00:09:56,800
+我对 a 与自身的距离的直接成本为零
+itself which is zero
+
+261
+00:09:56,800 --> 00:09:59,839
+我对 c 加 c 的直接成本是对 a 的成本或我对 e 的直接成本和 e 对 a 的成本
+my direct cost to c plus c is cost to a
+
+262
+00:09:59,839 --> 00:10:03,600
+我对 c 加 c 的直接成本是对 a 的成本或我对 e 的直接成本和 e 对 a 的成本
+or my direct cost to e and e's cost to a
+
+263
+00:10:03,600 --> 00:10:07,350
+这是 8 无穷大的最小值，即 8
+that's the minimum of 8 infinity  which is 8
+
+264
+00:10:07,350 --> 00:10:07,360
+这是 8 无穷大的最小值，即 8
+infinity which is 8
+
+265
+00:10:07,360 --> 00:10:10,720
+所以这里 b 的距离向量没有变化
+so there's no change here in b's distance vector with respect to a but
+
+266
+00:10:10,720 --> 00:10:13,040
+关于 a 但现在让我们看看 b
+so there's no change here in b's distance vector with respect to a but
+
+267
+00:10:13,040 --> 00:10:13,920
+关于 a 但现在让我们看看 b
+now let's take a look at b's new distance table entry for d recall
+
+268
+00:10:13,920 --> 00:10:18,399
+d 的新距离表条目记得在 t 等于 0
+now let's take a look at b's new distance table entry for d recall
+
+269
+00:10:18,399 --> 00:10:21,519
+b 到达 d 的成本是无限的，现在它重新计算成本如下
+that at t equals 0 b had an infinite cost to get to d
+
+270
+00:10:21,519 --> 00:10:24,000
+b 到达 d 的成本是无限的，现在它重新计算成本如下
+now it recomputes that cost as follows b says well my cost to get
+
+271
+00:10:24,000 --> 00:10:26,720
+b 说得好，我到达 d 的成本将是三件事中的最小值
+now it recomputes that cost as follows b says well my cost to get
+
+272
+00:10:26,720 --> 00:10:28,880
+b 说得好，我到达 d 的成本将是三件事中的最小值
+to d is going to be the minimum of three things my cost to
+
+273
+00:10:28,880 --> 00:10:32,230
+我从自己 b 到 a 的成本加上 a 到 d 的成本
+get from myself b to a plus
+
+274
+00:10:32,230 --> 00:10:32,240
+我从自己 b 到 a 的成本加上 a 到 d 的成本
+my cost to get from myself b to a plus
+
+275
+00:10:32,240 --> 00:10:35,440
+我从自己 b 到 a 的成本加上 a 到 d 的成本
+a's cost to get to d my cost to get from b to c
+
+276
+00:10:35,440 --> 00:10:35,839
+b 到 c 和 c 是成本到 d 我的成本得到  e 加上 e 到 d 的成本，如果你插入
+a's cost to get to d my cost to get from b to c
+
+277
+00:10:35,839 --> 00:10:39,269
+b 到 c 和 c 是成本到 d 我的成本得到  e 加上 e 到 d 的成本，如果你插入
+and c is cost to d my cost to get o c and c
+
+278
+00:10:39,269 --> 00:10:39,279
+b 到 c 和 c 是成本到 d 我的成本得到  e 加上 e 到 d 的成本，如果你插入
+is cost to d my cost to get
+
+279
+00:10:39,279 --> 00:10:43,120
+b 到 c 和 c 是成本到 d 我的成本得到  e 加上 e 到 d 的成本，如果你插入
+to e plus e's cost to d if you plug in the values that
+
+280
+00:10:43,120 --> 00:10:45,519
+值成为 9 2 和无穷大的最小值，即 2，你可以
+to e plus e's cost to d if you plug in the values that
+
+281
+00:10:45,519 --> 00:10:48,800
+值成为 9 2 和无穷大的最小值，即 2，你可以
+becomes the minimum of 9 2 and infinity which is 2 and you can
+
+282
+00:10:48,800 --> 00:10:49,600
+看到 b 同样重新计算新的 dv 条目
+becomes the minimum of 9 2 and infinity which is 2 and you can
+
+283
+00:10:49,600 --> 00:10:52,720
+看到 b 同样重新计算新的 dv 条目
+see that b similarly recomputes new dv entries for destinations f and h as
+
+284
+00:10:52,720 --> 00:10:55,839
+对于目的地 f 和 h 以及这里是新的总距离
+see that b similarly recomputes new dv entries for destinations f and h as
+
+285
+00:10:55,839 --> 00:10:58,160
+对于目的地 f 和 h 以及这里是新的总距离
+well and so here's the new overall distance vector computed by b note that
+
+286
+00:10:58,160 --> 00:11:02,240
+由 b 计算的向量注意与 b 的前一个相比
+well and so here's the new overall distance vector computed by b note that
+
+287
+00:11:02,240 --> 00:11:03,440
+距离向量有三个新的低成本条目
+well and so here's the new overall distance vector computed by b note that
+
+288
+00:11:03,440 --> 00:11:06,720
+距离向量有三个新的低成本条目
+compared with b's previous distance vector there are three new lower cost entries for
+
+289
+00:11:06,720 --> 00:11:11,120
+对于目的地 df 和 h this
+compared with b's previous distance vector there are three new lower cost entries for
+
+290
+00:11:11,120 --> 00:11:15,920
+新的距离向量然后成为 b 的当前距离向量
+destinations d f and h this new distance vector then becomes b's current distance
+
+291
+00:11:15,920 --> 00:11:18,958
+现在让我们再看看节点 c 的时间
+vector now let's take a look at node c again at time t equals
+
+292
+00:11:18,958 --> 00:11:22,240
+t 等于 1，在 c 收到 b 的初始距离向量后，让我们看看
+vector now let's take a look at node c again at time t equals
+
+293
+00:11:22,240 --> 00:11:24,880
+t 等于 1，在 c 收到 b 的初始距离向量后，让我们看看
+1 and after c has received b's initial distance vector let's see how c
+
+294
+00:11:24,880 --> 00:11:27,360
+c 如何重新计算它自己的距离向量，但在此之前让我们退后一步
+1 and after c has received b's initial distance vector let's see how c
+
+295
+00:11:27,360 --> 00:11:29,760
+c 如何重新计算它自己的距离向量，但在此之前让我们退后一步
+recomputes its own distance vector but before doing so let's step back and take
+
+296
+00:11:29,760 --> 00:11:31,190
+看看这里的图片并直观地思考
+a look at the picture here and
+
+297
+00:11:31,190 --> 00:11:31,200
+看看这里的图片并直观地思考
+take a look at the picture here and
+
+298
+00:11:31,200 --> 00:11:32,800
+看看这里的图片并直观地思考
+think intuitively about what b is telling c by b sending its initial distance
+
+299
+00:11:32,800 --> 00:11:38,000
+b 通过 b 发送其初始距离向量告诉 c 什么
+think intuitively about what b is telling c by b sending its initial distance
+
+300
+00:11:38,000 --> 00:11:41,279
+b 是说嘿，看，我可以以 8 的成本到达 a，我可以以 a 到达 e
+vector well b is saying hey look i can reach a at a cost
+
+301
+00:11:41,279 --> 00:11:44,550
+b 是说嘿，看，我可以以 8 的成本到达 a，我可以以 a 到达 e
+of 8 and i can reach e at a at a cost of 8
+
+302
+00:11:44,550 --> 00:11:44,559
+b 是说嘿，看，我可以以 8 的成本到达 a，我可以以 a 到达 e
+and i can reach e at a
+
+303
+00:11:44,559 --> 00:11:49,200
+1. 井 b 的成本是 c 的邻居，c 知道是否
+cost of 1. well b is c's neighbor and c knows if that b
+
+304
+00:11:49,200 --> 00:11:51,910
+b 可以以 1 的成本到达 e 并且 c 知道它可以使用 a 到达 b
+can reach e with a cost of 1
+
+305
+00:11:51,910 --> 00:11:51,920
+b 可以以 1 的成本到达 e 并且 c 知道它可以使用 a 到达 b
+that b can reach e with a cost of 1
+
+306
+00:11:51,920 --> 00:11:54,240
+b 可以以 1 的成本到达 e 并且 c 知道它可以使用 a 到达 b
+and c knows that it can reach b with a cost of 1 then
+
+307
+00:11:54,240 --> 00:11:55,279
+成本为 1 然后 c 知道它可以用 a 到达 e
+and c knows that it can reach b with a cost of 1 then
+
+308
+00:11:55,279 --> 00:11:58,629
+成本为 1 然后 c 知道它可以用 a 到达 e
+c knows that it can reach e with a
+
+309
+00:11:58,629 --> 00:11:58,639
+成本为 1 然后 c 知道它可以用 a 到达 e
+then c knows that it can reach e with a
+
+310
+00:11:58,639 --> 00:12:02,639
+2 通过 b 的成本，这正是
+cost of 2 via b and this is precisely the bellman ford equation that's
+
+311
+00:12:02,639 --> 00:12:06,880
+贝尔曼福特方程，这是贝尔曼福特背后的直觉
+cost of 2 via b and this is precisely the bellman ford equation that's
+
+312
+00:12:06,880 --> 00:12:10,880
+不清楚按下倒带按钮并收听
+the intuition behind bellman ford it's not clear well hit the rewind button and
+
+313
+00:12:10,880 --> 00:12:12,559
+再次解释，所以这里是c对其的计算
+the intuition behind bellman ford it's not clear well hit the rewind button and
+
+314
+00:12:12,559 --> 00:12:15,040
+再次解释，所以这里是c对其的计算
+listen to that explanation again and so here are c's calculations of its new
+
+315
+00:12:15,040 --> 00:12:16,399
+新的距离向量让我们关注 c 的 dv 入口
+listen to that explanation again and so here are c's calculations of its new
+
+316
+00:12:16,399 --> 00:12:18,720
+新的距离向量让我们关注 c 的 dv 入口
+distance vector let's focus on c's dv entry to destination e here c's calculation
+
+317
+00:12:18,720 --> 00:12:22,800
+目的地 e 这里 c 的计算很简单，因为它只是
+distance vector let's focus on c's dv entry to destination e here c's calculation
+
+318
+00:12:22,800 --> 00:12:27,440
+有一个邻居 c 说我去 ei 可以去 b
+simple since it's only got one neighbor c says for me to get to
+
+319
+00:12:27,440 --> 00:12:30,958
+成本为 1 且 b 告诉我，如果 b
+e i can get to b with a cost of one and b tells
+
+320
+00:12:30,958 --> 00:12:34,480
+可以以 1 的成本到达 e 所以我的成本
+me that if b can get to e with a cost of one so
+
+321
+00:12:34,480 --> 00:12:38,559
+c 是到达 evb 的成本是一加一
+my cost c is cost to get to e v b is one plus
+
+322
+00:12:38,559 --> 00:12:42,160
+等于 2 你可能会认为这有点乏味
+one equals two well you're probably thinking it's getting a little tedious to go
+
+323
+00:12:42,160 --> 00:12:43,279
+通过一个又一个的例子，但你可能想做一个
+one equals two well you're probably thinking it's getting a little tedious to go
+
+324
+00:12:43,279 --> 00:12:45,839
+通过一个又一个的例子，但你可能想做一个
+through one example after another but you might wanna do a few calculations for
+
+325
+00:12:45,839 --> 00:12:47,679
+自己做一些计算只是为了测试你的理解
+through one example after another but you might wanna do a few calculations for
+
+326
+00:12:47,679 --> 00:12:49,839
+自己做一些计算只是为了测试你的理解
+yourself just to test your understanding for example consider the scenario here where node
+
+327
+00:12:49,839 --> 00:12:54,078
+示例考虑这里节点 e 接收距离的场景
+yourself just to test your understanding for example consider the scenario here where node
+
+328
+00:12:54,078 --> 00:12:55,040
+来自其邻居 bdh 和 f 的向量表
+yourself just to test your understanding for example consider the scenario here where node
+
+329
+00:12:55,040 --> 00:12:58,480
+来自其邻居 bdh 和 f 的向量表
+e is receiving distance vector tables from its neighbors b d h and f
+
+330
+00:12:58,480 --> 00:13:00,559
+节点 e 计算出的新距离向量是多少
+e is receiving distance vector tables from its neighbors b d h and f
+
+331
+00:13:00,559 --> 00:13:01,519
+节点 e 计算出的新距离向量是多少
+what's the new distance vector computed by node e  which entries have changed
+
+332
+00:13:01,519 --> 00:13:04,880
+哪些条目已更改
+what's the new distance vector computed by node e  which entries have changed
+
+333
+00:13:04,880 --> 00:13:05,110
+贝尔曼福特算法可以被认为是扩散信息
+what's the new distance vector computed by node e  which entries have changed
+
+334
+00:13:05,110 --> 00:13:07,040
+贝尔曼福特算法可以被认为是扩散信息
+the bellman ford algorithm can be
+
+335
+00:13:07,040 --> 00:13:09,279
+贝尔曼福特算法可以被认为是扩散信息
+thought of as diffusing information throughout the network to appreciate this notion of diffusion
+
+336
+00:13:09,279 --> 00:13:12,880
+在整个网络中欣赏这种扩散的概念
+thought of as diffusing information throughout the network to appreciate this notion of diffusion
+
+337
+00:13:12,880 --> 00:13:14,958
+让我们看看节点 c 并问自己这个问题
+let's take a look at node c
+
+338
+00:13:14,958 --> 00:13:17,519
+让我们看看节点 c 并问自己这个问题
+and ask ourselves the question what do
+
+339
+00:13:17,519 --> 00:13:19,040
+网络中的其他节点知道节点 c 的状态，比如在 t
+other nodes in the network
+
+340
+00:13:19,040 --> 00:13:21,600
+网络中的其他节点知道节点 c 的状态，比如在 t
+know about the state of node c say at t
+
+341
+00:13:21,600 --> 00:13:22,559
+等于零，他们什么时候知道这个信息
+equals zero
+
+342
+00:13:22,559 --> 00:13:25,200
+等于零，他们什么时候知道这个信息
+and when do they learn this information
+
+343
+00:13:25,200 --> 00:13:25,760
+在 t 等于零时 c 没有与
+at t
+
+344
+00:13:25,760 --> 00:13:28,000
+在 t 等于零时 c 没有与
+equals zero c hasn't communicated with
+
+345
+00:13:28,000 --> 00:13:29,839
+任何人，所以没有其他节点在 t 有关于节点 c 的信息
+anybody so no other nodes
+
+346
+00:13:29,839 --> 00:13:32,720
+任何人，所以没有其他节点在 t 有关于节点 c 的信息
+have information about node c at t
+
+347
+00:13:32,720 --> 00:13:34,078
+等于 1 c 在 t 处的状态等于 0 有
+equals one
+
+348
+00:13:34,078 --> 00:13:36,800
+等于 1 c 在 t 处的状态等于 0 有
+c's state at t equals zero has
+
+349
+00:13:36,800 --> 00:13:37,760
+通过距离交换传播到 b
+propagated
+
+350
+00:13:37,760 --> 00:13:39,920
+通过距离交换传播到 b
+over to b by the exchange of distance
+
+351
+00:13:39,920 --> 00:13:42,480
+向量所以在 t 等于一个 c 状态在 t 等于零可以影响
+vectors so at t equals one
+
+352
+00:13:42,480 --> 00:13:45,040
+向量所以在 t 等于一个 c 状态在 t 等于零可以影响
+c state at t equals zero can influence
+
+353
+00:13:45,040 --> 00:13:46,240
+t 处 b 处的计算在 t 处等于 1
+the calculations
+
+354
+00:13:46,240 --> 00:13:49,440
+t 处 b 处的计算在 t 处等于 1
+at b at t equals one at t
+
+355
+00:13:49,440 --> 00:13:52,639
+等于 t 处来自节点 c 的两个信息等于 0 已进一步传播
+equals two information from node c at t
+
+356
+00:13:52,639 --> 00:13:54,880
+等于 t 处来自节点 c 的两个信息等于 0 已进一步传播
+equals zero has propagated further
+
+357
+00:13:54,880 --> 00:13:58,320
+到节点 e 和节点 a 并想象你的节点 e
+to nodes e and to nodes a and imagine
+
+358
+00:13:58,320 --> 00:13:59,679
+到节点 e 和节点 a 并想象你的节点 e
+your node e
+
+359
+00:13:59,679 --> 00:14:02,559
+在 t 等于 2 你看到节点 c 在 t 的状态的第一个影响
+at t equals two you're seeing the first
+
+360
+00:14:02,559 --> 00:14:05,279
+在 t 等于 2 你看到节点 c 在 t 的状态的第一个影响
+influence of the state of node c at t
+
+361
+00:14:05,279 --> 00:14:08,320
+现在在 t 处等于 0 两个时间单位后等于 2
+equals 0 now at t equals 2 two time
+
+362
+00:14:08,320 --> 00:14:09,839
+现在在 t 处等于 0 两个时间单位后等于 2
+units later
+
+363
+00:14:09,839 --> 00:14:12,078
+这种信息传播速度的概念就像看星星一样
+this notion of information propagation
+
+364
+00:14:12,078 --> 00:14:14,399
+这种信息传播速度的概念就像看星星一样
+speed it's almost like looking at a star
+
+365
+00:14:14,399 --> 00:14:16,559
+在晚上，你现在看到的光是那颗星星发出许多光年
+at night the light you're seeing now was
+
+366
+00:14:16,559 --> 00:14:18,720
+在晚上，你现在看到的光是那颗星星发出许多光年
+emitted by that star many light years
+
+367
+00:14:18,720 --> 00:14:19,440
+以前，信息也是如此
+ago
+
+368
+00:14:19,440 --> 00:14:21,040
+以前，信息也是如此
+and so it is with information
+
+369
+00:14:21,040 --> 00:14:22,560
+在网络中的传播 e 在 t 处看到的成本等于
+propagation in a network
+
+370
+00:14:22,560 --> 00:14:24,959
+在网络中的传播 e 在 t 处看到的成本等于
+the cost that e is seeing at t equals
+
+371
+00:14:24,959 --> 00:14:26,000
+两个关于 c 反映 c 状态在 t 等于零
+two regarding
+
+372
+00:14:26,000 --> 00:14:29,120
+两个关于 c 反映 c 状态在 t 等于零
+c reflects c state at t equals zero
+
+373
+00:14:29,120 --> 00:14:30,720
+即使 e 在 t 接收此信息等于 2
+even though e is receiving this
+
+374
+00:14:30,720 --> 00:14:33,199
+即使 e 在 t 接收此信息等于 2
+information at t equals two
+
+375
+00:14:33,199 --> 00:14:36,160
+继续在 t 等于三个 c 状态 在 t 等于零可以
+well continuing on at t equals three c
+
+376
+00:14:36,160 --> 00:14:37,920
+继续在 t 等于三个 c 状态 在 t 等于零可以
+state at t equals zero can
+
+377
+00:14:37,920 --> 00:14:40,399
+影响距离向量计算最多三跳
+influence distance vector computations
+
+378
+00:14:40,399 --> 00:14:41,839
+影响距离向量计算最多三跳
+up to three hops away
+
+379
+00:14:41,839 --> 00:14:46,870
+在节点 df 和 h 处，最后在 t 处等于 4
+that's at nodes d f and h and finally at  equals four
+
+380
+00:14:46,870 --> 00:14:46,880
+在节点 df 和 h 处，最后在 t 处等于 4
+t equals four
+
+381
+00:14:46,880 --> 00:14:51,360
+c 保持在 t 等于 0 可以影响距离向量计算多达四个
+c stayed at t equals zero can influence distance vector computations up to four
+
+382
+00:14:51,360 --> 00:14:52,399
+在这种情况下，也会在节点 g 和 i 处跳开
+c stayed at t equals zero can influence distance vector computations up to four
+
+383
+00:14:52,399 --> 00:14:55,519
+在这种情况下，也会在节点 g 和 i 处跳开
+hops away in this case at nodes g and i as well and note
+
+384
+00:14:55,519 --> 00:14:57,760
+请注意，它采用了网络直径的四个时间步长
+hops away in this case at nodes g and i as well and note
+
+385
+00:14:57,760 --> 00:14:59,440
+请注意，它采用了网络直径的四个时间步长
+that it's taken four time steps the diameter of the network for information to
+
+386
+00:14:59,440 --> 00:15:01,440
+使信息从网络的一个边缘传播到另一边缘
+that it's taken four time steps the diameter of the network for information to
+
+387
+00:15:01,440 --> 00:15:04,800
+使信息从网络的一个边缘传播到另一边缘
+propagate from one edge of the network to the other so far we've only
+
+388
+00:15:04,800 --> 00:15:07,040
+到目前为止，我们只看了初始距离向量计算
+propagate from one edge of the network to the other so far we've only
+
+389
+00:15:07,040 --> 00:15:08,800
+到目前为止，我们只看了初始距离向量计算
+looked at the initial distance vector calculation after some number of iterations the computational
+
+390
+00:15:08,800 --> 00:15:13,360
+经过一定次数的迭代后，计算过程将停顿
+looked at the initial distance vector calculation after some number of iterations the computational
+
+391
+00:15:13,360 --> 00:15:17,440
+请记住，如果局部距离向量没有变化，我不会
+process will have quiesce remember if there are no changes in a local distance
+
+392
+00:15:17,440 --> 00:15:21,920
+向我的邻居发送距离向量更新，所以最终在那里
+vector i'm not going to send out distance vector updates to my neighbors so
+
+393
+00:15:21,920 --> 00:15:26,000
+不再计算局部变化算法将收敛
+eventually when there are no local changes computed anymore the algorithm will have converged
+
+394
+00:15:26,000 --> 00:15:27,920
+不会有更多的距离向量被交换
+eventually when there are no local changes computed anymore the algorithm will have converged
+
+395
+00:15:27,920 --> 00:15:29,279
+不会有更多的距离向量被交换
+there'll be no more distance vectors being exchanged now let's take a look at
+
+396
+00:15:29,279 --> 00:15:31,519
+现在让我们看看如果链接成本发生变化会发生什么，因为我们的
+there'll be no more distance vectors being exchanged now let's take a look at
+
+397
+00:15:31,519 --> 00:15:33,440
+现在让我们看看如果链接成本发生变化会发生什么，因为我们的
+what happens if there are link cost changes because our distance vector algorithm can
+
+398
+00:15:33,440 --> 00:15:36,399
+距离向量算法已经可以适应
+what happens if there are link cost changes because our distance vector algorithm can
+
+399
+00:15:36,399 --> 00:15:38,880
+并且步骤相同，如果我是本地节点，则会注意到链接成本变化
+already accommodate that and the steps are the same a link cost change is
+
+400
+00:15:38,880 --> 00:15:41,350
+并且步骤相同，如果我是本地节点，则会注意到链接成本变化
+noted if i'm a local node i
+
+401
+00:15:41,350 --> 00:15:41,360
+并且步骤相同，如果我是本地节点，则会注意到链接成本变化
+change is noted if i'm a local node i
+
+402
+00:15:41,360 --> 00:15:46,480
+请注意，局部变化我使用新的重新计算我的局部距离向量
+note that local change i recompute my local distance vector using the new local
+
+403
+00:15:46,480 --> 00:15:48,870
+本地链接成本以及我拥有的旧距离向量
+link costs as well as the old
+
+404
+00:15:48,870 --> 00:15:48,880
+本地链接成本以及我拥有的旧距离向量
+local link costs as well as the old
+
+405
+00:15:48,880 --> 00:15:50,959
+本地链接成本以及我拥有的旧距离向量
+distance vectors that i have for my neighbors and if my local distance vector
+
+406
+00:15:50,959 --> 00:15:54,959
+我的邻居，如果我的本地距离向量再次改变
+distance vectors that i have for my neighbors and if my local distance vector
+
+407
+00:15:54,959 --> 00:15:58,639
+我只是把它发给我当地的邻居，所以算法差不多
+is changed once again i just send it out to my local neighbors so
+
+408
+00:15:58,639 --> 00:16:03,360
+保持不变，现在让我们看一下链接成本如何变化的示例
+the algorithm is pretty much unchanged so let's now take a look at an
+
+409
+00:16:03,360 --> 00:16:06,079
+使用此处显示的网络进行传播
+example of how link cost changes propagate using the network shown up here on
+
+410
+00:16:06,079 --> 00:16:09,199
+对，让我们从节点 y 的角度来看
+the right and let's take the point of view of node y who sees
+
+411
+00:16:09,199 --> 00:16:12,399
+谁看到 xy 链接成本从 4 变为 1，它会下降，因此在 t 时等于
+the right and let's take the point of view of node y who sees
+
+412
+00:16:12,399 --> 00:16:14,880
+谁看到 xy 链接成本从 4 变为 1，它会下降，因此在 t 时等于
+the xy link cost change from four to one it goes down so at
+
+413
+00:16:14,880 --> 00:16:15,839
+零假设 y 检测到此链接成本更改更新
+the xy link cost change from four to one it goes down so at
+
+414
+00:16:15,839 --> 00:16:18,800
+零假设 y 检测到此链接成本更改更新
+t equals zero let's say y detects this link cost change updates its distance
+
+415
+00:16:18,800 --> 00:16:20,480
+它的距离向量要注意，现在它有一个新的成本
+t equals zero let's say y detects this link cost change updates its distance
+
+416
+00:16:20,480 --> 00:16:22,000
+它的距离向量要注意，现在它有一个新的成本
+vector to note that now it's got a new cost to x of 1
+
+417
+00:16:22,000 --> 00:16:25,120
+x of 1 并将其新距离向量发送到其邻居
+vector to note that now it's got a new cost to x of 1
+
+418
+00:16:25,120 --> 00:16:26,480
+x of 1 并将其新距离向量发送到其邻居
+and sends its new distance vector to its neighbors at t1 z receives this
+
+419
+00:16:26,480 --> 00:16:30,079
+在 t1 z 接收这个更新的距离向量
+and sends its new distance vector to its neighbors at t1 z receives this
+
+420
+00:16:30,079 --> 00:16:36,240
+从 y 更新它自己的距离向量，计算它到 x 的新的最低成本路径
+updated distance vector from y updates its own distance vector computing its new least
+
+421
+00:16:36,240 --> 00:16:40,240
+为 2 并且现在因为 z 的距离向量已更改
+cost path to x as 2 and now since z's distance vector is changed
+
+422
+00:16:40,240 --> 00:16:42,160
+z 将它的距离向量发送到它的邻居 x 和 y
+z sends its distance vector to its
+
+423
+00:16:42,160 --> 00:16:43,680
+z 将它的距离向量发送到它的邻居 x 和 y
+neighbors x and y
+
+424
+00:16:43,680 --> 00:16:46,959
+在 t 2 y 接收 z 的更新距离向量
+at t 2 y receives z's updated distance
+
+425
+00:16:46,959 --> 00:16:47,519
+在 t 2 y 接收 z 的更新距离向量
+vector
+
+426
+00:16:47,519 --> 00:16:50,160
+重新计算它自己的距离向量，在这种情况下
+recalculates its own distance vector and
+
+427
+00:16:50,160 --> 00:16:50,959
+重新计算它自己的距离向量，在这种情况下
+in this case
+
+428
+00:16:50,959 --> 00:16:53,600
+y 在其距离向量中的最小成本不会改变
+y's least costs in its distance vector
+
+429
+00:16:53,600 --> 00:16:54,560
+y 在其距离向量中的最小成本不会改变
+don't change
+
+430
+00:16:54,560 --> 00:16:57,199
+所以 y 不会向 z 发送任何东西
+and so y doesn't send anything back out
+
+431
+00:16:57,199 --> 00:16:57,920
+所以 y 不会向 z 发送任何东西
+to z
+
+432
+00:16:57,920 --> 00:17:01,279
+或 x 算法停止并在两次迭代后完成
+or x the algorithm quieses and is done
+
+433
+00:17:01,279 --> 00:17:03,199
+或 x 算法停止并在两次迭代后完成
+so just after two iterations the
+
+434
+00:17:03,199 --> 00:17:05,119
+此处重新计算距离向量得出结论
+recomputation of the distance vector
+
+435
+00:17:05,119 --> 00:17:06,400
+此处重新计算距离向量得出结论
+here concludes
+
+436
+00:17:06,400 --> 00:17:07,760
+我们会注意到，网络范围内的距离向量重新计算
+and we'll note that the network wide
+
+437
+00:17:07,760 --> 00:17:09,760
+我们会注意到，网络范围内的距离向量重新计算
+recomputation of the distance vectors
+
+438
+00:17:09,760 --> 00:17:11,520
+对于此链接成本更改示例，发生得非常快
+happened pretty quickly for this link
+
+439
+00:17:11,520 --> 00:17:12,880
+对于此链接成本更改示例，发生得非常快
+cost change example
+
+440
+00:17:12,880 --> 00:17:14,720
+所需的确切时间与网络的直径有关
+the exact amount of time needed was
+
+441
+00:17:14,720 --> 00:17:17,119
+所需的确切时间与网络的直径有关
+related to the diameter of the network
+
+442
+00:17:17,119 --> 00:17:18,480
+就像你想象的那样
+as you might imagine
+
+443
+00:17:18,480 --> 00:17:20,720
+就像你想象的那样
+and that's as fast as it could happen
+
+444
+00:17:20,720 --> 00:17:23,280
+鉴于我们之前的星光类比，网络中有一句谚语
+given our earlier starlight analogy
+
+445
+00:17:23,280 --> 00:17:25,199
+鉴于我们之前的星光类比，网络中有一句谚语
+and there's a saying in networking that
+
+446
+00:17:25,199 --> 00:17:26,720
+当 bellman 中的链接权重下降时，好消息传得很快
+good news travels fast
+
+447
+00:17:26,720 --> 00:17:28,720
+当 bellman 中的链接权重下降时，好消息传得很快
+when a link weight goes down in bellman
+
+448
+00:17:28,720 --> 00:17:31,200
+福特所有节点重新计算它们的最终距离向量
+ford all nodes recompute their final
+
+449
+00:17:31,200 --> 00:17:32,240
+福特所有节点重新计算它们的最终距离向量
+distance vectors
+
+450
+00:17:32,240 --> 00:17:34,720
+相对较快，但如果链接成本上升会发生什么
+relatively quickly but what happens if
+
+451
+00:17:34,720 --> 00:17:35,600
+相对较快，但如果链接成本上升会发生什么
+link costs go
+
+452
+00:17:35,600 --> 00:17:39,520
+在这个例子中，链接的成本来自
+up in this example here the cost of the
+
+453
+00:17:39,520 --> 00:17:40,080
+在这个例子中，链接的成本来自
+link from
+
+454
+00:17:40,080 --> 00:17:43,200
+x 到 y 现在变为 60，您将需要考虑在此示例中会发生什么
+x to y now goes to 60 and you'll want to
+
+455
+00:17:43,200 --> 00:17:45,200
+x 到 y 现在变为 60，您将需要考虑在此示例中会发生什么
+think about what happens in this example
+
+456
+00:17:45,200 --> 00:17:47,600
+但基本上这就是当链接成本上升到 60 时会发生什么 y 说 uh oh
+but basically this is what happens when
+
+457
+00:17:47,600 --> 00:17:50,400
+但基本上这就是当链接成本上升到 60 时会发生什么 y 说 uh oh
+the link cost goes to 60 y says uh oh
+
+458
+00:17:50,400 --> 00:17:53,039
+我最好通过 z 开始路由，因为 z 有
+i better start routing through z since z
+
+459
+00:17:53,039 --> 00:17:53,440
+我最好通过 z 开始路由，因为 z 有
+has
+
+460
+00:17:53,440 --> 00:17:56,080
+以 5 到 x 的成本向我宣传了路径
+advertised the path to me with a cost of
+
+461
+00:17:56,080 --> 00:17:57,200
+以 5 到 x 的成本向我宣传了路径
+5 to x
+
+462
+00:17:57,200 --> 00:18:01,039
+给我 6 y 的总成本告诉 z 它对 x 的明智的新成本
+giving me an overall cost of 6 y informs
+
+463
+00:18:01,039 --> 00:18:04,400
+给我 6 y 的总成本告诉 z 它对 x 的明智的新成本
+z of its wise new cost to x
+
+464
+00:18:04,400 --> 00:18:07,520
+通过距离向量更新井 z 然后说这个更新并说
+via a distance vector update well z then
+
+465
+00:18:07,520 --> 00:18:08,880
+通过距离向量更新井 z 然后说这个更新并说
+says this update and says
+
+466
+00:18:08,880 --> 00:18:11,919
+天哪，如果 y 对 x 的成本是 6 那么我对 x 的成本现在是 7 到 y
+golly if y's cost to x is 6
+
+467
+00:18:11,919 --> 00:18:15,440
+天哪，如果 y 对 x 的成本是 6 那么我对 x 的成本现在是 7 到 y
+then my cost to x is now 7 through y
+
+468
+00:18:15,440 --> 00:18:18,880
+并且表格 yy 说 uh-oh 如果 z 的成本是 7 才能到达 x 那么我的
+and forms y y says uh-oh
+
+469
+00:18:18,880 --> 00:18:21,520
+并且表格 yy 说 uh-oh 如果 z 的成本是 7 才能到达 x 那么我的
+if z's cost is 7 to get to x then my
+
+470
+00:18:21,520 --> 00:18:23,119
+成本将是 8。如果 y 到达 x 的成本，那么 z 说得很好
+cost is going to be 8.
+
+471
+00:18:23,119 --> 00:18:25,679
+成本将是 8。如果 y 到达 x 的成本，那么 z 说得很好
+z then says well if y's cost to get to x
+
+472
+00:18:25,679 --> 00:18:27,520
+是 8 然后我的是 9 等等，这就是所谓的
+is 8 then mine is 9
+
+473
+00:18:27,520 --> 00:18:29,919
+是 8 然后我的是 9 等等，这就是所谓的
+and so on this is what's known as the
+
+474
+00:18:29,919 --> 00:18:31,600
+数到无穷大的问题，想想会发生什么
+count to infinity problem
+
+475
+00:18:31,600 --> 00:18:33,280
+数到无穷大的问题，想想会发生什么
+and think about what would have happened
+
+476
+00:18:33,280 --> 00:18:35,440
+如果链接成本变为 600 万而不是 60
+if the link cost had changed to 6
+
+477
+00:18:35,440 --> 00:18:37,200
+如果链接成本变为 600 万而不是 60
+million instead of just 60
+
+478
+00:18:37,200 --> 00:18:40,160
+很好，有很多迭代当然有解决方法来计数
+well be a lot of iterations of course
+
+479
+00:18:40,160 --> 00:18:41,840
+很好，有很多迭代当然有解决方法来计数
+there are workarounds to the count to
+
+480
+00:18:41,840 --> 00:18:43,039
+无穷大问题，但我认为这里更大的教训是
+infinity problem
+
+481
+00:18:43,039 --> 00:18:44,960
+无穷大问题，但我认为这里更大的教训是
+but i think the larger lesson here is
+
+482
+00:18:44,960 --> 00:18:46,799
+像分布式算法一样美丽优雅
+that as beautiful and elegant as
+
+483
+00:18:46,799 --> 00:18:48,559
+像分布式算法一样美丽优雅
+distributed algorithms are
+
+484
+00:18:48,559 --> 00:18:50,880
+他们的操作和病理通常很微妙
+their operations and their pathologies
+
+485
+00:18:50,880 --> 00:18:53,119
+他们的操作和病理通常很微妙
+can often be subtle
+
+486
+00:18:53,119 --> 00:18:54,640
+好吧，让我们通过对路由算法的比较来结束我们对路由算法的讨论
+well let's wrap up our discussion of
+
+487
+00:18:54,640 --> 00:18:57,039
+好吧，让我们通过对路由算法的比较来结束我们对路由算法的讨论
+routing algorithms with a comparison of
+
+488
+00:18:57,039 --> 00:18:58,960
+链接状态和距离向量算法让我们开始吧
+link state and distance vector
+
+489
+00:18:58,960 --> 00:19:00,640
+链接状态和距离向量算法让我们开始吧
+algorithms let's start off
+
+490
+00:19:00,640 --> 00:19:03,359
+与消息复杂性我们之前看到的消息复杂性做链接
+with message complexity we saw earlier
+
+491
+00:19:03,359 --> 00:19:05,840
+与消息复杂性我们之前看到的消息复杂性做链接
+that the message complexity to do link
+
+492
+00:19:05,840 --> 00:19:07,039
+状态传播是链接状态的 n 次平方
+state dissemination
+
+493
+00:19:07,039 --> 00:19:09,280
+状态传播是链接状态的 n 次平方
+is order n squared for the link state
+
+494
+00:19:09,280 --> 00:19:10,160
+我们了解到距离向量的算法
+algorithm
+
+495
+00:19:10,160 --> 00:19:12,000
+我们了解到距离向量的算法
+for distance vector we learned that it
+
+496
+00:19:12,000 --> 00:19:14,320
+取网络直径的阶数，可能为 n 阶
+takes the order the diameter of the
+
+497
+00:19:14,320 --> 00:19:15,919
+取网络直径的阶数，可能为 n 阶
+network potentially order n for
+
+498
+00:19:15,919 --> 00:19:17,520
+信息从网络的一端传播到另一端
+information to propagate
+
+499
+00:19:17,520 --> 00:19:19,520
+信息从网络的一端传播到另一端
+from one end of the network to the other
+
+500
+00:19:19,520 --> 00:19:21,440
+我们看到，在每一步，一个节点可能需要
+and we saw that at each step
+
+501
+00:19:21,440 --> 00:19:24,080
+我们看到，在每一步，一个节点可能需要
+a node may potentially need to
+
+502
+00:19:24,080 --> 00:19:26,480
+根据我们看到的收敛速度与其每个邻居进行通信
+communicate with each of its neighbors
+
+503
+00:19:26,480 --> 00:19:28,640
+根据我们看到的收敛速度与其每个邻居进行通信
+in terms of speed of convergence we saw
+
+504
+00:19:28,640 --> 00:19:30,240
+链接状态是 n 阶计算算法阶次
+that link state is order
+
+505
+00:19:30,240 --> 00:19:32,559
+链接状态是 n 阶计算算法阶次
+n squared computational algorithm order
+
+506
+00:19:32,559 --> 00:19:33,440
+n平方通信算法，我们看到
+n squared
+
+507
+00:19:33,440 --> 00:19:35,919
+n平方通信算法，我们看到
+communication algorithm and we saw that
+
+508
+00:19:35,919 --> 00:19:38,240
+在距离向量的情况下可能存在振荡
+there can be oscillations the case of
+
+509
+00:19:38,240 --> 00:19:39,359
+在距离向量的情况下可能存在振荡
+distance vector
+
+510
+00:19:39,359 --> 00:19:41,760
+我们再次看到收敛时间可能会有所不同
+we saw that convergence times again can
+
+511
+00:19:41,760 --> 00:19:42,400
+我们再次看到收敛时间可能会有所不同
+vary
+
+512
+00:19:42,400 --> 00:19:44,400
+并且在算法收敛时实际上可能存在路由循环
+and there can actually be routing loops
+
+513
+00:19:44,400 --> 00:19:46,640
+并且在算法收敛时实际上可能存在路由循环
+while the algorithm is converging
+
+514
+00:19:46,640 --> 00:19:48,640
+最后让我们考虑一下在链接状态或距离下会发生什么
+and lastly let's think about what can
+
+515
+00:19:48,640 --> 00:19:50,640
+最后让我们考虑一下在链接状态或距离下会发生什么
+happen in a link state or a distance
+
+516
+00:19:50,640 --> 00:19:52,240
+路由器故障时的矢量算法
+vector algorithm if a router
+
+517
+00:19:52,240 --> 00:19:53,200
+路由器故障时的矢量算法
+malfunctions
+
+518
+00:19:53,200 --> 00:19:56,320
+或者在链接状态下受到很好的损害，路由器可以通告错误的链接
+or is compromised well under link state
+
+519
+00:19:56,320 --> 00:19:58,559
+或者在链接状态下受到很好的损害，路由器可以通告错误的链接
+a router can advertise incorrect link
+
+520
+00:19:58,559 --> 00:20:00,960
+成本，但每个路由器计算自己的路由和转发表，所以
+costs but each router computes its
+
+521
+00:20:00,960 --> 00:20:03,600
+成本，但每个路由器计算自己的路由和转发表，所以
+own routing and forwarding tables so
+
+522
+00:20:03,600 --> 00:20:05,440
+故障在链接状态下相当局部化
+failure is rather localized under link
+
+523
+00:20:05,440 --> 00:20:06,159
+故障在链接状态下相当局部化
+state
+
+524
+00:20:06,159 --> 00:20:08,320
+在距离向量下，路由器可以通告错误
+under distance vector a router can
+
+525
+00:20:08,320 --> 00:20:09,679
+在距离向量下，路由器可以通告错误
+advertise an incorrect
+
+526
+00:20:09,679 --> 00:20:12,400
+路径成本，例如路由器可以说嘿
+path cost for example a router could say
+
+527
+00:20:12,400 --> 00:20:12,799
+路径成本，例如路由器可以说嘿
+hey
+
+528
+00:20:12,799 --> 00:20:15,520
+我有一个非常低的路径成本到互联网上的任何地方
+i've got a really low path cost to
+
+529
+00:20:15,520 --> 00:20:17,200
+我有一个非常低的路径成本到互联网上的任何地方
+everywhere in the internet
+
+530
+00:20:17,200 --> 00:20:19,760
+这被称为黑洞，因为每个路由器的距离向量被
+this is known as black holing since each
+
+531
+00:20:19,760 --> 00:20:21,440
+这被称为黑洞，因为每个路由器的距离向量被
+router's distance vector is used by
+
+532
+00:20:21,440 --> 00:20:23,919
+然后其他错误可以作为额外的路由器通过网络传播
+others errors can then propagate through
+
+533
+00:20:23,919 --> 00:20:25,840
+然后其他错误可以作为额外的路由器通过网络传播
+the network as additional routers
+
+534
+00:20:25,840 --> 00:20:27,919
+宣传他们的新距离向量和这种类型的黑洞路由
+advertise their new distance vector
+
+535
+00:20:27,919 --> 00:20:29,520
+宣传他们的新距离向量和这种类型的黑洞路由
+and this type of black hole routing
+
+536
+00:20:29,520 --> 00:20:31,200
+故障实际发生在互联网上
+failures actually occurred in the
+
+537
+00:20:31,200 --> 00:20:31,760
+故障实际发生在互联网上
+internet
+
+538
+00:20:31,760 --> 00:20:34,880
+当一个小型互联网服务供应商做广告时，嘿，我将零成本传递给了一个主要的
+when a small isp advertised hey i've got
+
+539
+00:20:34,880 --> 00:20:36,799
+当一个小型互联网服务供应商做广告时，嘿，我将零成本传递给了一个主要的
+a zero cost passed to a major
+
+540
+00:20:36,799 --> 00:20:40,000
+isp 我认为当这个 isp 没有真正连接到时，那个 isp 是 att
+isp i think that isp was att
+
+541
+00:20:40,000 --> 00:20:42,400
+isp 我认为当这个 isp 没有真正连接到时，那个 isp 是 att
+when this isp wasn't really connected to
+
+542
+00:20:42,400 --> 00:20:43,919
+那个主要的互联网服务提供商，嘿什么网络可以传递零
+that major isp
+
+543
+00:20:43,919 --> 00:20:46,640
+那个主要的互联网服务提供商，嘿什么网络可以传递零
+and hey what network can pass up a zero
+
+544
+00:20:46,640 --> 00:20:48,000
+到主要目的地网络和许多其他网络的路径成本
+path cost to a major
+
+545
+00:20:48,000 --> 00:20:50,320
+到主要目的地网络和许多其他网络的路径成本
+destination network and so many other
+
+546
+00:20:50,320 --> 00:20:52,080
+互联网中想要将流量路由到的网络
+networks in the internet who wanted to
+
+547
+00:20:52,080 --> 00:20:53,280
+互联网中想要将流量路由到的网络
+route traffic to at  sent their traffic to this small isp
+
+548
+00:20:53,280 --> 00:20:56,710
+t 将他们的流量发送到这个被黑洞化的小互联网服务提供商，现在想象一下
+route traffic to at  sent their traffic to this small isp
+
+549
+00:20:56,710 --> 00:20:56,720
+t 将他们的流量发送到这个被黑洞化的小互联网服务提供商，现在想象一下
+t sent their traffic to this small isp
+
+550
+00:20:56,720 --> 00:20:58,880
+t 将他们的流量发送到这个被黑洞化的小互联网服务提供商，现在想象一下
+where it was blackholed now imagine you're at t and you're saying hey why
+
+551
+00:20:58,880 --> 00:21:02,960
+你在 t 并且你说嘿为什么我不再收到流量
+where it was blackholed now imagine you're at t and you're saying hey why
+
+552
+00:21:02,960 --> 00:21:05,840
+不再来自互联网的很大一部分
+am i no longer receiving traffic from a good portion of the internet anymore
+
+553
+00:21:05,840 --> 00:21:08,080
+好吧，答案是流量在一个小型互联网服务提供商中被黑洞化了
+well the answer was that traffic's been
+
+554
+00:21:08,080 --> 00:21:10,960
+好吧，答案是流量在一个小型互联网服务提供商中被黑洞化了
+black holed in a small isp instead
+
+555
+00:21:10,960 --> 00:21:13,440
+由于该 isp 中的路由器配置错误
+due to a misconfigured router in that
+
+556
+00:21:13,440 --> 00:21:15,039
+由于该 isp 中的路由器配置错误
+isp
+
+557
+00:21:15,039 --> 00:21:16,720
+到此结束我们对路由算法 dijkstra 的讨论
+well that wraps up our discussion of
+
+558
+00:21:16,720 --> 00:21:18,559
+到此结束我们对路由算法 dijkstra 的讨论
+routing algorithms dijkstra's
+
+559
+00:21:18,559 --> 00:21:20,480
+集中式链路状态算法分布式贝尔曼福特算法
+centralized link state algorithm
+
+560
+00:21:20,480 --> 00:21:23,200
+集中式链路状态算法分布式贝尔曼福特算法
+the distributed bellman ford algorithm
+
+561
+00:21:23,200 --> 00:21:24,799
+在接下来的两节中，我们将介绍实施例
+in the next two sections we're going to
+
+562
+00:21:24,799 --> 00:21:26,240
+在接下来的两节中，我们将介绍实施例
+cover the embodiment
+
+563
+00:21:26,240 --> 00:21:28,240
+互联网路由协议中的这些路由算法
+of these routing algorithms in internet
+
+564
+00:21:28,240 --> 00:21:29,679
+互联网路由协议中的这些路由算法
+routing protocols
+
+565
+00:21:29,679 --> 00:21:32,400
+开放最短路径优先ospf路由协议
+the open shortest path first ospf
+
+566
+00:21:32,400 --> 00:21:33,600
+开放最短路径优先ospf路由协议
+routing protocol
+
+567
+00:21:33,600 --> 00:21:54,950
+和 bgp 边界网关协议认为你会喜欢它们 你
+and the bgp border gateway protocol  think you'll enjoy them
+
+568
+00:21:33,600 --> 00:21:56,000
+和 bgp 边界网关协议认为你会喜欢它们 你
+

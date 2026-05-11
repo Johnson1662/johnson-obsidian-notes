@@ -1,0 +1,1880 @@
+﻿1
+00:00:10,709 --> 00:00:10,719
+[Music]
+
+2
+00:00:10,719 --> 00:00:14,160
+in this first section on http we're going to start off with just a
+
+3
+00:00:14,160 --> 00:00:17,199
+very quick overview of the web and http
+
+4
+00:00:17,199 --> 00:00:18,720
+then we're going to dive down into the
+
+5
+00:00:18,720 --> 00:00:21,119
+two types of http connections
+
+6
+00:00:21,119 --> 00:00:23,119
+persistent and non-persistent
+
+7
+00:00:23,119 --> 00:00:24,160
+connections and
+
+8
+00:00:24,160 --> 00:00:27,199
+look at the major messages used by http
+
+9
+00:00:27,199 --> 00:00:29,439
+the request message and the response
+
+10
+00:00:29,439 --> 00:00:31,519
+message and then finally we'll wrap up
+
+11
+00:00:31,519 --> 00:00:32,559
+this first
+
+12
+00:00:32,559 --> 00:00:34,559
+section by taking a look at what are
+
+13
+00:00:34,559 --> 00:00:36,479
+known as cookies a ways for
+
+14
+00:00:36,479 --> 00:00:39,760
+state to persist at a server between one
+
+15
+00:00:39,760 --> 00:00:40,879
+client connection
+
+16
+00:00:40,879 --> 00:00:43,990
+and another client connection now this  just the first
+
+17
+00:00:43,990 --> 00:00:44,000
+is just the first
+
+18
+00:00:44,000 --> 00:00:49,120
+of two parts that we're going to cover on http but we've got a
+
+19
+00:00:49,120 --> 00:00:53,440
+lot to cover here so let's get started well let's begin our discussion of
+
+20
+00:00:53,440 --> 00:00:57,440
+the web and http with just a very quick review to set the stage
+
+21
+00:00:57,440 --> 00:01:00,480
+remember that a web page consists of a
+
+22
+00:01:00,480 --> 00:01:00,879
+base
+
+23
+00:01:00,879 --> 00:01:04,479
+html file as well as a set of referenced
+
+24
+00:01:04,479 --> 00:01:06,560
+objects and each of these objects can be
+
+25
+00:01:06,560 --> 00:01:08,640
+stored on different web servers
+
+26
+00:01:08,640 --> 00:01:11,760
+an object can be an html file jpeg image
+
+27
+00:01:11,760 --> 00:01:12,640
+a java apple
+
+28
+00:01:12,640 --> 00:01:15,119
+audio file or many other things and the
+
+29
+00:01:15,119 --> 00:01:17,200
+web page itself as well as the reference
+
+30
+00:01:17,200 --> 00:01:19,200
+objects are each addressable by what's
+
+31
+00:01:19,200 --> 00:01:20,720
+known as a url
+
+32
+00:01:20,720 --> 00:01:22,959
+there's a host name associated with it
+
+33
+00:01:22,959 --> 00:01:25,040
+and then on that host there's a path
+
+34
+00:01:25,040 --> 00:01:27,360
+name piece to it
+
+35
+00:01:27,360 --> 00:01:29,200
+well let's get started with our study of
+
+36
+00:01:29,200 --> 00:01:32,078
+http and the very first thing to know
+
+37
+00:01:32,078 --> 00:01:34,880
+is that http adopts the client server
+
+38
+00:01:34,880 --> 00:01:36,959
+model that we just studied in section
+
+39
+00:01:36,959 --> 00:01:38,400
+2.1
+
+40
+00:01:38,400 --> 00:01:41,040
+a client might be a web browser like
+
+41
+00:01:41,040 --> 00:01:42,799
+firefox or safari or
+
+42
+00:01:42,799 --> 00:01:44,720
+edge or it might actually be embedded in
+
+43
+00:01:44,720 --> 00:01:46,959
+a device and you might not even see it
+
+44
+00:01:46,959 --> 00:01:49,200
+a server might be a traditional web
+
+45
+00:01:49,200 --> 00:01:50,000
+server that
+
+46
+00:01:50,000 --> 00:01:52,240
+only serves web pages or a more general
+
+47
+00:01:52,240 --> 00:01:53,360
+purpose server
+
+48
+00:01:53,360 --> 00:01:56,719
+like gaia.cs.umass.edu which provides a
+
+49
+00:01:56,719 --> 00:01:59,439
+number of services
+
+50
+00:01:59,439 --> 00:02:01,920
+in this animation here we see on the top
+
+51
+00:02:01,920 --> 00:02:04,320
+pc running the firefox browser
+
+52
+00:02:04,320 --> 00:02:07,119
+making an http request to a server and
+
+53
+00:02:07,119 --> 00:02:08,080
+getting a response
+
+54
+00:02:08,080 --> 00:02:10,399
+back at the bottom we see an iphone
+
+55
+00:02:10,399 --> 00:02:12,720
+running safari browser also making an
+
+56
+00:02:12,720 --> 00:02:14,080
+http request
+
+57
+00:02:14,080 --> 00:02:16,959
+and getting an http response back both
+
+58
+00:02:16,959 --> 00:02:19,440
+of those browsers are speaking the http
+
+59
+00:02:19,440 --> 00:02:23,040
+protocol with the apache web server
+
+60
+00:02:23,040 --> 00:02:25,919
+http uses the transport services
+
+61
+00:02:25,919 --> 00:02:27,599
+provided by the tcp
+
+62
+00:02:27,599 --> 00:02:29,760
+protocol and here's how an http
+
+63
+00:02:29,760 --> 00:02:31,200
+transaction works
+
+64
+00:02:31,200 --> 00:02:33,599
+the http client your web browser for
+
+65
+00:02:33,599 --> 00:02:34,319
+example
+
+66
+00:02:34,319 --> 00:02:37,280
+opens a tcp connection to a web server
+
+67
+00:02:37,280 --> 00:02:39,280
+using port 80. we'll learn about port
+
+68
+00:02:39,280 --> 00:02:40,800
+numbers in just a second
+
+69
+00:02:40,800 --> 00:02:43,519
+one or more messages http messages are
+
+70
+00:02:43,519 --> 00:02:45,440
+then exchanged between the client and
+
+71
+00:02:45,440 --> 00:02:46,480
+the server
+
+72
+00:02:46,480 --> 00:02:49,840
+and then the tcp connection is closed
+
+73
+00:02:49,840 --> 00:02:52,239
+http is a stateless protocol
+
+74
+00:02:52,239 --> 00:02:54,319
+this means that the server maintains no
+
+75
+00:02:54,319 --> 00:02:56,720
+internal state about the ongoing request
+
+76
+00:02:56,720 --> 00:02:58,639
+there's a single request for an object
+
+77
+00:02:58,639 --> 00:03:00,800
+and a single reply that's it
+
+78
+00:03:00,800 --> 00:03:02,560
+there's no worrying about something like
+
+79
+00:03:02,560 --> 00:03:04,480
+well this transaction has five steps
+
+80
+00:03:04,480 --> 00:03:06,080
+we're now in step three
+
+81
+00:03:06,080 --> 00:03:08,000
+and if i fail i'm going to need to roll
+
+82
+00:03:08,000 --> 00:03:10,000
+back my state to what it was
+
+83
+00:03:10,000 --> 00:03:11,599
+before this five step transaction
+
+84
+00:03:11,599 --> 00:03:13,919
+started none of that with http
+
+85
+00:03:13,919 --> 00:03:15,919
+it's stateless and you might ask why
+
+86
+00:03:15,919 --> 00:03:18,239
+well because of its simplicity
+
+87
+00:03:18,239 --> 00:03:20,239
+as we'll see protocols that maintain
+
+88
+00:03:20,239 --> 00:03:21,919
+state will need to deal with clean up
+
+89
+00:03:21,919 --> 00:03:23,919
+problems when a multi-step transaction
+
+90
+00:03:23,919 --> 00:03:24,560
+fails
+
+91
+00:03:24,560 --> 00:03:26,319
+returning to the initial state and
+
+92
+00:03:26,319 --> 00:03:29,599
+resolving inconsistent state
+
+93
+00:03:29,599 --> 00:03:32,239
+there are two types of http connections
+
+94
+00:03:32,239 --> 00:03:34,239
+what are called persistent connections
+
+95
+00:03:34,239 --> 00:03:36,720
+and non-persistent connections and it's
+
+96
+00:03:36,720 --> 00:03:38,000
+important to remember
+
+97
+00:03:38,000 --> 00:03:41,040
+these http connections between a browser
+
+98
+00:03:41,040 --> 00:03:44,080
+and a server are different than the tcp
+
+99
+00:03:44,080 --> 00:03:46,000
+connection which is provided at the
+
+100
+00:03:46,000 --> 00:03:48,879
+transport layer underneath
+
+101
+00:03:48,879 --> 00:03:51,840
+in non-persistent http a tcp connection
+
+102
+00:03:51,840 --> 00:03:52,640
+is opened
+
+103
+00:03:52,640 --> 00:03:54,959
+at most one object is then sent over the
+
+104
+00:03:54,959 --> 00:03:56,239
+tcp connection
+
+105
+00:03:56,239 --> 00:03:58,959
+and the tcp connection is closed
+
+106
+00:03:58,959 --> 00:04:00,080
+downloading multiple
+
+107
+00:04:00,080 --> 00:04:02,640
+objects is going to require multiple tcp
+
+108
+00:04:02,640 --> 00:04:04,239
+connections to be established
+
+109
+00:04:04,239 --> 00:04:06,159
+and we'll see that it takes a round-trip
+
+110
+00:04:06,159 --> 00:04:08,480
+time first to open the tcp connection
+
+111
+00:04:08,480 --> 00:04:10,000
+and then another rtt
+
+112
+00:04:10,000 --> 00:04:11,760
+to make the request and receive the
+
+113
+00:04:11,760 --> 00:04:13,760
+response
+
+114
+00:04:13,760 --> 00:04:17,120
+in persistent http a tcp connection is
+
+115
+00:04:17,120 --> 00:04:18,799
+again open to the server
+
+116
+00:04:18,799 --> 00:04:21,440
+but this time multiple objects can be
+
+117
+00:04:21,440 --> 00:04:22,240
+transferred
+
+118
+00:04:22,240 --> 00:04:24,960
+serially over the single tcp connection
+
+119
+00:04:24,960 --> 00:04:26,000
+between the client
+
+120
+00:04:26,000 --> 00:04:28,639
+and the server once those multiple
+
+121
+00:04:28,639 --> 00:04:30,479
+objects have been requested and returned
+
+122
+00:04:30,479 --> 00:04:32,720
+the tcp connection can be closed
+
+123
+00:04:32,720 --> 00:04:36,240
+persistent http corresponds to http
+
+124
+00:04:36,240 --> 00:04:39,040
+version 1.1 which is probably the most
+
+125
+00:04:39,040 --> 00:04:43,360
+common form of http in use today
+
+126
+00:04:43,360 --> 00:04:46,240
+here's an example of non-persistent http
+
+127
+00:04:46,240 --> 00:04:47,360
+and operation
+
+128
+00:04:47,360 --> 00:04:49,680
+let's assume that the user in step 1a
+
+129
+00:04:49,680 --> 00:04:53,230
+here enters a url
+
+130
+00:04:54,629 --> 00:04:54,639
+www.sumschool.edu
+
+131
+00:04:54,639 --> 00:04:58,720
+and asks for a web page that contains text as well as references to
+
+132
+00:04:58,720 --> 00:05:02,080
+10 jpeg image in that base html file
+
+133
+00:05:02,080 --> 00:05:04,000
+so in step 1a we see the client
+
+134
+00:05:04,000 --> 00:05:06,400
+initiating the tcp connection to the
+
+135
+00:05:06,400 --> 00:05:08,080
+http server
+
+136
+00:05:08,080 --> 00:05:12,800
+at port 80 at www.sumschool.edu
+
+137
+00:05:12,800 --> 00:05:16,000
+in step 1b the http server at the host
+
+138
+00:05:16,000 --> 00:05:17,759
+which has been waiting for a tcp
+
+139
+00:05:17,759 --> 00:05:20,639
+connection at port 80 accepts this tcp
+
+140
+00:05:20,639 --> 00:05:21,520
+connection
+
+141
+00:05:21,520 --> 00:05:23,600
+and notifies the client and notice in
+
+142
+00:05:23,600 --> 00:05:25,279
+steps one a and one b
+
+143
+00:05:25,279 --> 00:05:28,320
+no http requests have actually flowed
+
+144
+00:05:28,320 --> 00:05:28,720
+yet
+
+145
+00:05:28,720 --> 00:05:31,360
+this happens in step two in step two the
+
+146
+00:05:31,360 --> 00:05:32,479
+http client
+
+147
+00:05:32,479 --> 00:05:35,759
+sends the http request message into the
+
+148
+00:05:35,759 --> 00:05:37,520
+tcp connection that's just been
+
+149
+00:05:37,520 --> 00:05:38,560
+established
+
+150
+00:05:38,560 --> 00:05:41,440
+this http message indicates that the
+
+151
+00:05:41,440 --> 00:05:43,199
+client wants to receive
+
+152
+00:05:43,199 --> 00:05:46,560
+this base html file in step 3 the
+
+153
+00:05:46,560 --> 00:05:49,520
+servers now receive this http request
+
+154
+00:05:49,520 --> 00:05:50,240
+message
+
+155
+00:05:50,240 --> 00:05:52,479
+and forms the response message that
+
+156
+00:05:52,479 --> 00:05:54,560
+contains the requested object
+
+157
+00:05:54,560 --> 00:05:57,440
+and sends this message back to the http
+
+158
+00:05:57,440 --> 00:05:58,160
+client
+
+159
+00:05:58,160 --> 00:05:59,919
+after sending the response message in
+
+160
+00:05:59,919 --> 00:06:02,960
+step 4 the http server closes the tcp
+
+161
+00:06:02,960 --> 00:06:03,759
+connection
+
+162
+00:06:03,759 --> 00:06:06,479
+in step 5 the http client receives the
+
+163
+00:06:06,479 --> 00:06:08,880
+response message containing the html
+
+164
+00:06:08,880 --> 00:06:09,440
+file
+
+165
+00:06:09,440 --> 00:06:12,639
+displays the html file parses it finds
+
+166
+00:06:12,639 --> 00:06:13,759
+the 10 reference
+
+167
+00:06:13,759 --> 00:06:16,800
+jpeg objects and in step 6 now
+
+168
+00:06:16,800 --> 00:06:18,479
+it's going to have to repeat the
+
+169
+00:06:18,479 --> 00:06:20,000
+preceding five steps
+
+170
+00:06:20,000 --> 00:06:24,160
+for each of the reference jpeg objects
+
+171
+00:06:24,160 --> 00:06:26,319
+now we can take a look at the response
+
+172
+00:06:26,319 --> 00:06:28,960
+time for non-persistent http
+
+173
+00:06:28,960 --> 00:06:30,800
+we can define the response time as the
+
+174
+00:06:30,800 --> 00:06:32,800
+amount of time from when a user
+
+175
+00:06:32,800 --> 00:06:35,839
+first enters a url into a browser
+
+176
+00:06:35,839 --> 00:06:38,720
+until that base html file is received
+
+177
+00:06:38,720 --> 00:06:39,600
+and displayed
+
+178
+00:06:39,600 --> 00:06:42,800
+so let's define the rtt the round trip
+
+179
+00:06:42,800 --> 00:06:44,080
+time as the amount of time
+
+180
+00:06:44,080 --> 00:06:46,560
+needed for a very small packet to travel
+
+181
+00:06:46,560 --> 00:06:47,520
+from the client
+
+182
+00:06:47,520 --> 00:06:50,720
+to the server and back and so we can see
+
+183
+00:06:50,720 --> 00:06:52,240
+that the non-persistent
+
+184
+00:06:52,240 --> 00:06:55,360
+http response time per object has the
+
+185
+00:06:55,360 --> 00:06:56,560
+following components
+
+186
+00:06:56,560 --> 00:06:59,599
+well one rtt is needed to initiate the
+
+187
+00:06:59,599 --> 00:07:01,039
+tcp connection
+
+188
+00:07:01,039 --> 00:07:04,000
+and another rtt a second rtt is needed
+
+189
+00:07:04,000 --> 00:07:06,560
+for the http request to be transmitted
+
+190
+00:07:06,560 --> 00:07:07,599
+and received
+
+191
+00:07:07,599 --> 00:07:10,000
+and for the first bytes of the http
+
+192
+00:07:10,000 --> 00:07:10,800
+response
+
+193
+00:07:10,800 --> 00:07:13,520
+to be returned and then finally there's
+
+194
+00:07:13,520 --> 00:07:14,400
+the amount of time
+
+195
+00:07:14,400 --> 00:07:16,400
+needed for the server to actually
+
+196
+00:07:16,400 --> 00:07:17,680
+transmit the file
+
+197
+00:07:17,680 --> 00:07:21,350
+into its internet connection
+
+198
+00:07:24,950 --> 00:07:24,960
+and so overall the non-persistent http
+
+199
+00:07:24,960 --> 00:07:32,000
+response time is two rtt plus whatever amount of time is needed to transmit
+
+200
+00:07:32,000 --> 00:07:38,639
+the file so we've seen that two rtts are needed to fetch a web
+
+201
+00:07:38,639 --> 00:07:41,280
+object now multiple objects can often be retrieved in parallel but still two rtts
+
+202
+00:07:41,280 --> 00:07:44,550
+is well two rtts and you know
+
+203
+00:07:44,550 --> 00:07:44,560
+two rtts is well two rtts and you know
+
+204
+00:07:44,560 --> 00:07:51,599
+we really want to get our information as fast as possible so it's possible
+
+205
+00:07:51,599 --> 00:07:56,000
+using a simple technique to actually cut this latency from two rtts to one
+
+206
+00:07:56,000 --> 00:08:01,199
+rtt and that's to use a technique known as persistent connection and this is
+
+207
+00:08:01,199 --> 00:08:08,960
+the way that most web servers are now operating in persistent http http 1.1
+
+208
+00:08:08,960 --> 00:08:13,440
+the server leaves the connection open after sending the response subsequent http messages between
+
+209
+00:08:13,440 --> 00:08:19,520
+the same client and server can then be sent over this open connection without
+
+210
+00:08:19,520 --> 00:08:25,120
+having to wait that rtt to establish a new tcp connection when a client
+
+211
+00:08:25,120 --> 00:08:27,440
+has a new request to send it sends it as soon as it encounters
+
+212
+00:08:27,440 --> 00:08:30,000
+a referenced object and so we can see
+
+213
+00:08:30,000 --> 00:08:32,399
+here how persistent http cuts the
+
+214
+00:08:32,399 --> 00:08:33,519
+response time
+
+215
+00:08:33,519 --> 00:08:37,599
+in half to one rdt
+
+216
+00:08:37,599 --> 00:08:39,360
+now that we've looked at the two styles
+
+217
+00:08:39,360 --> 00:08:41,679
+of http connections we can dive down
+
+218
+00:08:41,679 --> 00:08:42,958
+into the details
+
+219
+00:08:42,958 --> 00:08:46,080
+of the http messages themselves and
+
+220
+00:08:46,080 --> 00:08:46,640
+remember
+
+221
+00:08:46,640 --> 00:08:49,760
+way back in section 1.1 we said that a
+
+222
+00:08:49,760 --> 00:08:52,320
+protocol defines the format and the
+
+223
+00:08:52,320 --> 00:08:53,040
+order
+
+224
+00:08:53,040 --> 00:08:55,040
+of messages sent and received among
+
+225
+00:08:55,040 --> 00:08:56,160
+network entities
+
+226
+00:08:56,160 --> 00:08:58,160
+and the actions taken when these
+
+227
+00:08:58,160 --> 00:09:00,160
+messages are sent and received
+
+228
+00:09:00,160 --> 00:09:02,480
+let's take a look at the http protocol
+
+229
+00:09:02,480 --> 00:09:05,839
+and let's take a look at its messages
+
+230
+00:09:05,839 --> 00:09:08,160
+there are two types of http messages
+
+231
+00:09:08,160 --> 00:09:10,880
+request messages and response messages
+
+232
+00:09:10,880 --> 00:09:12,720
+let's take a look at a request message
+
+233
+00:09:12,720 --> 00:09:14,640
+first a request message
+
+234
+00:09:14,640 --> 00:09:16,800
+starts with a single request line with
+
+235
+00:09:16,800 --> 00:09:18,958
+that line beginning with a method name
+
+236
+00:09:18,958 --> 00:09:19,760
+for example
+
+237
+00:09:19,760 --> 00:09:23,279
+get as shown here a url in this case the
+
+238
+00:09:23,279 --> 00:09:25,920
+name of the html file being requested
+
+239
+00:09:25,920 --> 00:09:29,360
+the version of http in this case 1.1
+
+240
+00:09:29,360 --> 00:09:31,600
+and a new line that is a carriage return
+
+241
+00:09:31,600 --> 00:09:32,640
+line feed
+
+242
+00:09:32,640 --> 00:09:34,720
+the single request line is then followed
+
+243
+00:09:34,720 --> 00:09:36,720
+by a number of header lines that provide
+
+244
+00:09:36,720 --> 00:09:38,240
+additional information
+
+245
+00:09:38,240 --> 00:09:40,000
+for example the name of the host where
+
+246
+00:09:40,000 --> 00:09:41,760
+the request is being made
+
+247
+00:09:41,760 --> 00:09:43,920
+the type of browser making a request in
+
+248
+00:09:43,920 --> 00:09:45,440
+this case firefox
+
+249
+00:09:45,440 --> 00:09:47,040
+the types of objects that can be
+
+250
+00:09:47,040 --> 00:09:48,880
+accepted and preferred language in this
+
+251
+00:09:48,880 --> 00:09:49,519
+case u.s
+
+252
+00:09:49,519 --> 00:09:51,279
+english and the fact that this
+
+253
+00:09:51,279 --> 00:09:53,040
+connection should be kept alive
+
+254
+00:09:53,040 --> 00:09:55,200
+the request message ends with an empty
+
+255
+00:09:55,200 --> 00:09:56,800
+line so as you can see
+
+256
+00:09:56,800 --> 00:09:59,839
+very human readable
+
+257
+00:09:59,839 --> 00:10:02,240
+here's the general format for an http
+
+258
+00:10:02,240 --> 00:10:03,440
+request message
+
+259
+00:10:03,440 --> 00:10:05,279
+we see the request line followed by
+
+260
+00:10:05,279 --> 00:10:08,559
+header lines http protocol specification
+
+261
+00:10:08,559 --> 00:10:12,000
+rfc 7320 is 85 pages long
+
+262
+00:10:12,000 --> 00:10:14,078
+and has all the details about the
+
+263
+00:10:14,078 --> 00:10:16,880
+methods header field names and values
+
+264
+00:10:16,880 --> 00:10:18,880
+fortunately for us as networking
+
+265
+00:10:18,880 --> 00:10:20,320
+students we don't need to know
+
+266
+00:10:20,320 --> 00:10:22,640
+all of those details but if we were
+
+267
+00:10:22,640 --> 00:10:25,040
+implementing an http client or server
+
+268
+00:10:25,040 --> 00:10:26,078
+we'd have to know
+
+269
+00:10:26,078 --> 00:10:28,240
+every detail when we looked at the get
+
+270
+00:10:28,240 --> 00:10:29,839
+message in the previous slide there was
+
+271
+00:10:29,839 --> 00:10:31,360
+no entity body
+
+272
+00:10:31,360 --> 00:10:33,519
+that's needed by some request messages
+
+273
+00:10:33,519 --> 00:10:35,760
+like post which we'll see in a second
+
+274
+00:10:35,760 --> 00:10:38,240
+that need to send additional information
+
+275
+00:10:38,240 --> 00:10:41,040
+not in the header fields to the server
+
+276
+00:10:41,040 --> 00:10:43,920
+here are the four types of http request
+
+277
+00:10:43,920 --> 00:10:45,760
+messages we've seen the get method
+
+278
+00:10:45,760 --> 00:10:47,679
+already the post method is used to
+
+279
+00:10:47,679 --> 00:10:50,320
+upload completed form data to the server
+
+280
+00:10:50,320 --> 00:10:52,559
+and the put method can be used to upload
+
+281
+00:10:52,559 --> 00:10:54,160
+a new object to the server
+
+282
+00:10:54,160 --> 00:10:57,040
+with a given url possibly replacing an
+
+283
+00:10:57,040 --> 00:10:58,480
+existing object
+
+284
+00:10:58,480 --> 00:11:00,559
+and last the head method ask for a
+
+285
+00:11:00,559 --> 00:11:01,600
+response that's
+
+286
+00:11:01,600 --> 00:11:04,160
+identical to that of a get request but
+
+287
+00:11:04,160 --> 00:11:06,240
+without the response body
+
+288
+00:11:06,240 --> 00:11:07,839
+this could be used for example to
+
+289
+00:11:07,839 --> 00:11:09,679
+determine the size of an object that
+
+290
+00:11:09,679 --> 00:11:10,880
+would be retrieved
+
+291
+00:11:10,880 --> 00:11:12,839
+but without actually retrieving that
+
+292
+00:11:12,839 --> 00:11:14,399
+object
+
+293
+00:11:14,399 --> 00:11:15,839
+now let's quickly take a look at the
+
+294
+00:11:15,839 --> 00:11:18,078
+http response message
+
+295
+00:11:18,078 --> 00:11:20,078
+the response message begins with a
+
+296
+00:11:20,078 --> 00:11:21,920
+status line and the first thing on the
+
+297
+00:11:21,920 --> 00:11:22,720
+status line
+
+298
+00:11:22,720 --> 00:11:25,120
+is the version number of the http
+
+299
+00:11:25,120 --> 00:11:26,480
+protocol being used
+
+300
+00:11:26,480 --> 00:11:29,920
+in this example here 1.1 following the
+
+301
+00:11:29,920 --> 00:11:31,679
+version number are the two most
+
+302
+00:11:31,679 --> 00:11:33,279
+important pieces of information
+
+303
+00:11:33,279 --> 00:11:36,078
+in the response message a status code
+
+304
+00:11:36,078 --> 00:11:37,760
+and a short message
+
+305
+00:11:37,760 --> 00:11:39,839
+in this case the status code shown is
+
+306
+00:11:39,839 --> 00:11:42,000
+200 which means that everything went
+
+307
+00:11:42,000 --> 00:11:44,880
+okay and a short status phrase in this
+
+308
+00:11:44,880 --> 00:11:45,600
+case
+
+309
+00:11:45,600 --> 00:11:49,920
+the word ok following the status line
+
+310
+00:11:49,920 --> 00:11:51,679
+there are response header lines
+
+311
+00:11:51,679 --> 00:11:54,000
+as in the case of the request message
+
+312
+00:11:54,000 --> 00:11:56,399
+that provide additional information
+
+313
+00:11:56,399 --> 00:11:58,800
+for example shown here you can see that
+
+314
+00:11:58,800 --> 00:12:01,360
+the date and time the response was sent
+
+315
+00:12:01,360 --> 00:12:03,519
+the type of server is also shown in this
+
+316
+00:12:03,519 --> 00:12:05,958
+case an apache server version
+
+317
+00:12:05,958 --> 00:12:09,519
+2.4.6 the last modified field shows the
+
+318
+00:12:09,519 --> 00:12:12,078
+time when the document was last modified
+
+319
+00:12:12,078 --> 00:12:14,160
+the content length field shows how long
+
+320
+00:12:14,160 --> 00:12:15,519
+the document is
+
+321
+00:12:15,519 --> 00:12:17,679
+and the content type field indicates the
+
+322
+00:12:17,679 --> 00:12:19,679
+type of object that's being returned
+
+323
+00:12:19,679 --> 00:12:22,320
+in this case an html document and
+
+324
+00:12:22,320 --> 00:12:24,078
+finally the body of the object
+
+325
+00:12:24,078 --> 00:12:26,320
+being returned in this case the html
+
+326
+00:12:26,320 --> 00:12:28,240
+document itself
+
+327
+00:12:28,240 --> 00:12:30,800
+and here are just a few of the http
+
+328
+00:12:30,800 --> 00:12:33,440
+response status codes and phrases
+
+329
+00:12:33,440 --> 00:12:36,240
+we've already seen the 200 okay
+
+330
+00:12:36,240 --> 00:12:38,639
+indicating that a request has succeeded
+
+331
+00:12:38,639 --> 00:12:41,440
+you've probably seen a 404 not found
+
+332
+00:12:41,440 --> 00:12:43,040
+when a requested document
+
+333
+00:12:43,040 --> 00:12:45,760
+was not found on the server all of the
+
+334
+00:12:45,760 --> 00:12:47,920
+response status codes and phrases are
+
+335
+00:12:47,920 --> 00:12:48,639
+contained
+
+336
+00:12:48,639 --> 00:12:51,600
+in the rfc document so take a look there
+
+337
+00:12:51,600 --> 00:12:52,078
+if you're
+
+338
+00:12:52,078 --> 00:12:54,480
+really interested in learning about all
+
+339
+00:12:54,480 --> 00:12:57,120
+of the status codes and response phrases
+
+340
+00:12:57,120 --> 00:12:59,679
+so that wraps up our discussion of http
+
+341
+00:12:59,679 --> 00:13:00,480
+messages
+
+342
+00:13:00,480 --> 00:13:02,240
+it's pretty simple as promised and
+
+343
+00:13:02,240 --> 00:13:04,320
+there's only two types of messages
+
+344
+00:13:04,320 --> 00:13:06,639
+and as also promised it's pretty human
+
+345
+00:13:06,639 --> 00:13:08,720
+digestible we could look at those http
+
+346
+00:13:08,720 --> 00:13:09,440
+messages
+
+347
+00:13:09,440 --> 00:13:11,839
+and pretty much understand them let's
+
+348
+00:13:11,839 --> 00:13:14,559
+wrap up our initial study of http
+
+349
+00:13:14,559 --> 00:13:16,958
+by coming back to this question of
+
+350
+00:13:16,958 --> 00:13:19,760
+statelessness we said that http
+
+351
+00:13:19,760 --> 00:13:22,800
+is a stateless protocol as it turns out
+
+352
+00:13:22,800 --> 00:13:24,720
+it's possible for a web server to
+
+353
+00:13:24,720 --> 00:13:26,880
+actually maintain some user state
+
+354
+00:13:26,880 --> 00:13:29,120
+to remember what a user's done in the
+
+355
+00:13:29,120 --> 00:13:30,320
+past
+
+356
+00:13:30,320 --> 00:13:32,240
+and how that might influence what a user
+
+357
+00:13:32,240 --> 00:13:34,399
+wants to do in a current session
+
+358
+00:13:34,399 --> 00:13:37,040
+by using a technique known as cookies
+
+359
+00:13:37,040 --> 00:13:39,360
+let's take a look
+
+360
+00:13:39,360 --> 00:13:41,519
+websites will use cookies to maintain
+
+361
+00:13:41,519 --> 00:13:43,040
+information about a user
+
+362
+00:13:43,040 --> 00:13:46,000
+more specifically a user's browser in
+
+363
+00:13:46,000 --> 00:13:47,440
+between transactions
+
+364
+00:13:47,440 --> 00:13:49,279
+and there are four components to using
+
+365
+00:13:49,279 --> 00:13:50,720
+cookies first
+
+366
+00:13:50,720 --> 00:13:53,120
+a server at some point is going to send
+
+367
+00:13:53,120 --> 00:13:53,920
+a cookie
+
+368
+00:13:53,920 --> 00:13:56,000
+to a client the cookie is just a number
+
+369
+00:13:56,000 --> 00:13:58,078
+and it's contained in a cookie header
+
+370
+00:13:58,078 --> 00:13:58,639
+line
+
+371
+00:13:58,639 --> 00:14:01,199
+of an http response message being sent
+
+372
+00:14:01,199 --> 00:14:02,559
+to a client
+
+373
+00:14:02,559 --> 00:14:04,958
+then later when the client next makes a
+
+374
+00:14:04,958 --> 00:14:06,559
+request to that server it will
+
+375
+00:14:06,559 --> 00:14:08,480
+send along that cookie value to the
+
+376
+00:14:08,480 --> 00:14:11,120
+server in a cookie header line
+
+377
+00:14:11,120 --> 00:14:13,679
+now the server is going to remember all
+
+378
+00:14:13,679 --> 00:14:15,519
+of the requests that's received and the
+
+379
+00:14:15,519 --> 00:14:17,040
+responses it's sent
+
+380
+00:14:17,040 --> 00:14:19,519
+associated with that cookie value so
+
+381
+00:14:19,519 --> 00:14:20,880
+it'll have a history
+
+382
+00:14:20,880 --> 00:14:23,360
+of the interactions with that user let's
+
+383
+00:14:23,360 --> 00:14:24,959
+take a look at an example
+
+384
+00:14:24,959 --> 00:14:27,920
+let's take a look at an example in this
+
+385
+00:14:27,920 --> 00:14:30,320
+example a client on the left here is
+
+386
+00:14:30,320 --> 00:14:33,120
+going to make a couple of http requests
+
+387
+00:14:33,120 --> 00:14:35,839
+to an amazon server for example on the
+
+388
+00:14:35,839 --> 00:14:36,320
+right
+
+389
+00:14:36,320 --> 00:14:38,399
+which has a back-end database where it's
+
+390
+00:14:38,399 --> 00:14:40,079
+going to store cookie-related
+
+391
+00:14:40,079 --> 00:14:41,120
+information
+
+392
+00:14:41,120 --> 00:14:43,199
+the client also has cookie information
+
+393
+00:14:43,199 --> 00:14:45,440
+from other websites it's visited
+
+394
+00:14:45,440 --> 00:14:47,600
+in this case a cookie from ebay for
+
+395
+00:14:47,600 --> 00:14:49,600
+example but it doesn't have a cookie
+
+396
+00:14:49,600 --> 00:14:50,720
+from amazon
+
+397
+00:14:50,720 --> 00:14:54,560
+yet the client makes a request as usual
+
+398
+00:14:54,560 --> 00:14:57,120
+to the amazon web server initially
+
+399
+00:14:57,120 --> 00:14:58,000
+without a cookie
+
+400
+00:14:58,000 --> 00:15:00,560
+line when the amazon web server gets the
+
+401
+00:15:00,560 --> 00:15:02,320
+http request
+
+402
+00:15:02,320 --> 00:15:04,800
+creates a cookie stores the cookie and
+
+403
+00:15:04,800 --> 00:15:05,680
+the transaction
+
+404
+00:15:05,680 --> 00:15:08,320
+information in its database and sends an
+
+405
+00:15:08,320 --> 00:15:10,639
+http response to the client
+
+406
+00:15:10,639 --> 00:15:13,760
+including a cookie value
+
+407
+00:15:13,760 --> 00:15:15,440
+now here in the second request by the
+
+408
+00:15:15,440 --> 00:15:17,920
+client the client includes its cookie
+
+409
+00:15:17,920 --> 00:15:19,279
+value to amazon
+
+410
+00:15:19,279 --> 00:15:21,199
+allowing the amazon server to take a
+
+411
+00:15:21,199 --> 00:15:22,800
+cookie specific action
+
+412
+00:15:22,800 --> 00:15:25,360
+perhaps taking the first http request
+
+413
+00:15:25,360 --> 00:15:26,720
+now into account
+
+414
+00:15:26,720 --> 00:15:28,880
+for example maybe the first transaction
+
+415
+00:15:28,880 --> 00:15:30,720
+was a request to look at one item of
+
+416
+00:15:30,720 --> 00:15:33,680
+merchandise and the second http request
+
+417
+00:15:33,680 --> 00:15:35,440
+wanted to look at a second item of
+
+418
+00:15:35,440 --> 00:15:36,320
+merchandise
+
+419
+00:15:36,320 --> 00:15:39,120
+with cookies the second reply could be
+
+420
+00:15:39,120 --> 00:15:41,040
+crafted to offer the client a deal on
+
+421
+00:15:41,040 --> 00:15:41,600
+buying
+
+422
+00:15:41,600 --> 00:15:43,839
+both of those items of merchandise
+
+423
+00:15:43,839 --> 00:15:44,639
+together
+
+424
+00:15:44,639 --> 00:15:46,480
+even though the second request only
+
+425
+00:15:46,480 --> 00:15:48,480
+wanted to look at one particular
+
+426
+00:15:48,480 --> 00:15:50,800
+piece of merchandise the client comes
+
+427
+00:15:50,800 --> 00:15:52,560
+back a week later and again provides a
+
+428
+00:15:52,560 --> 00:15:53,199
+cookie
+
+429
+00:15:53,199 --> 00:15:55,120
+the server can again take a cookie
+
+430
+00:15:55,120 --> 00:15:56,560
+specific action
+
+431
+00:15:56,560 --> 00:15:58,720
+for example it could say hey i missed
+
+432
+00:15:58,720 --> 00:16:00,480
+you during the past week you sure you
+
+433
+00:16:00,480 --> 00:16:01,519
+don't want to buy those
+
+434
+00:16:01,519 --> 00:16:03,600
+items that you looked at during the past
+
+435
+00:16:03,600 --> 00:16:04,720
+week
+
+436
+00:16:04,720 --> 00:16:07,040
+so in this example we can see how
+
+437
+00:16:07,040 --> 00:16:08,240
+cookies can be used
+
+438
+00:16:08,240 --> 00:16:11,600
+to store state about a user at a website
+
+439
+00:16:11,600 --> 00:16:15,279
+in between http interactions
+
+440
+00:16:15,279 --> 00:16:17,600
+given that cookies can be used to store
+
+441
+00:16:17,600 --> 00:16:19,920
+user state over multiple transactions
+
+442
+00:16:19,920 --> 00:16:22,320
+they've got lots of uses remembering
+
+443
+00:16:22,320 --> 00:16:24,079
+that you've authenticated yourself to a
+
+444
+00:16:24,079 --> 00:16:25,040
+site before
+
+445
+00:16:25,040 --> 00:16:26,800
+for remembering the contents of your
+
+446
+00:16:26,800 --> 00:16:28,399
+shopping cart or for making
+
+447
+00:16:28,399 --> 00:16:29,360
+recommendations
+
+448
+00:16:29,360 --> 00:16:32,399
+based on past behavior you may have also
+
+449
+00:16:32,399 --> 00:16:34,320
+read about the many privacy concerns
+
+450
+00:16:34,320 --> 00:16:37,269
+about cookies  can allow websites to learn a
+
+451
+00:16:37,269 --> 00:16:37,279
+cookies can allow websites to learn a
+
+452
+00:16:37,279 --> 00:16:42,240
+lot about you there are what are called third-party cookies that can be put
+
+453
+00:16:42,240 --> 00:16:47,600
+into your browser and allow websites to establish a common identity across multiple websites
+
+454
+00:16:47,600 --> 00:16:54,959
+and you may have also heard about the eu's general data protection regulation gdpr
+
+455
+00:16:54,959 --> 00:17:00,480
+under gdpr cookies that aren't strictly necessary for the operation of a website can
+
+456
+00:17:00,480 --> 00:17:05,919
+only be activated after you've given your explicit consent for their use and for
+
+457
+00:17:05,919 --> 00:17:07,839
+the collection of personal data you may have noticed recently that at a lot
+
+458
+00:17:07,839 --> 00:17:09,590
+of sites before you're able to use
+
+459
+00:17:09,590 --> 00:17:09,600
+lot of sites before you're able to use
+
+460
+00:17:09,600 --> 00:17:15,109
+ that site you have to agree  to a certain cookie policy
+
+461
+00:17:17,189 --> 00:17:17,199
+well that wraps up the first part of our
+
+462
+00:17:17,199 --> 00:17:24,240
+study of the web and http and we've learned a lot already we after
+
+463
+00:17:24,240 --> 00:17:28,400
+a quick introduction we dove down into the different types of http connections we
+
+464
+00:17:28,400 --> 00:17:32,880
+studied the request and the response messages and we also took a look at
+
+465
+00:17:32,880 --> 00:17:38,640
+cookies a way to remember some state on the server side between user interactions
+
+466
+00:17:38,640 --> 00:17:42,559
+with that server so coming up next in the second part we're going to
+
+467
+00:17:42,559 --> 00:17:48,720
+take another deeper dive into some additional aspects of improving http performance we're going
+
+468
+00:17:48,720 --> 00:17:52,559
+to look at web caches we're going to look at the conditional get request
+
+469
+00:17:52,559 --> 00:17:57,039
+and then finally we're going to look at http version 2 the most recent
+
+470
+00:17:57,039 --> 00:18:04,270
+version of http and take a quick peek at http version 3  which is coming within the next year or
+

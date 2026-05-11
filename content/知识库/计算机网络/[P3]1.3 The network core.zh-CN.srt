@@ -1,0 +1,2684 @@
+﻿1
+00:00:00,000 --> 00:00:11,659
+[音乐]
+in this section we're going to overview
+
+2
+00:00:11,659 --> 00:00:14,000
+在本节中，我们将概述网络
+in this section we're going to overview
+
+3
+00:00:14,000 --> 00:00:14,719
+在本节中，我们将概述网络
+the network core we're going to see what happens inside the network core and
+
+4
+00:00:14,719 --> 00:00:18,000
+core 我们将看看网络核心内部发生了什么
+the network core we're going to see what happens inside the network core and
+
+5
+00:00:18,000 --> 00:00:19,829
+我们将介绍一些重要的话题
+we're going to introduce a number of
+
+6
+00:00:19,829 --> 00:00:19,840
+我们将介绍一些重要的话题
+and we're going to introduce a number of
+
+7
+00:00:19,840 --> 00:00:21,039
+我们将介绍一些重要的话题
+important topics we'll talk about backward forwarding packet queuing delays and packet loss we'll
+
+8
+00:00:21,039 --> 00:00:25,359
+我们将讨论后向转发数据包排队延迟和数据包丢失
+important topics we'll talk about backward forwarding packet queuing delays and packet loss we'll
+
+9
+00:00:25,359 --> 00:00:27,279
+我们将讨论称为电路的分组交换的替代方案
+important topics we'll talk about backward forwarding packet queuing delays and packet loss we'll
+
+10
+00:00:27,279 --> 00:00:28,880
+我们将讨论称为电路的分组交换的替代方案
+talk about an alternative to packet switching known as circuit switching and we'll talk
+
+11
+00:00:28,880 --> 00:00:31,679
+切换，我们将讨论的结构
+talk about an alternative to packet switching known as circuit switching and we'll talk
+
+12
+00:00:31,679 --> 00:00:34,479
+互联网我们会明白我们所说的意思
+about the structure of the internet we'll see what we mean when we say
+
+13
+00:00:34,479 --> 00:00:38,239
+互联网是一个网络网络，网络核心仅由一个
+the internet is a network of networks
+
+14
+00:00:38,239 --> 00:00:40,640
+互联网是一个网络网络，网络核心仅由一个
+the network core consists simply of a
+
+15
+00:00:40,640 --> 00:00:42,800
+通过一组互连的一组路由器
+set of routers that are interconnected
+
+16
+00:00:42,800 --> 00:00:43,600
+通过一组互连的一组路由器
+by a set
+
+17
+00:00:43,600 --> 00:00:45,440
+通信链路和互联网的核心运营基于
+of communication links and the
+
+18
+00:00:45,440 --> 00:00:48,000
+通信链路和互联网的核心运营基于
+internet's core operation is based on a
+
+19
+00:00:48,000 --> 00:00:49,840
+被称为分组交换的原理其实比较简单
+principle known as packet switching
+
+20
+00:00:49,840 --> 00:00:52,000
+被称为分组交换的原理其实比较简单
+which is really relatively simple the
+
+21
+00:00:52,000 --> 00:00:53,440
+想法是以下发生的事情是最终主持
+idea is the following
+
+22
+00:00:53,440 --> 00:00:55,440
+想法是以下发生的事情是最终主持
+what happens is that the end hosts that
+
+23
+00:00:55,440 --> 00:00:56,879
+我们前面讲过把应用程序级别的消息划分
+we talked about earlier
+
+24
+00:00:56,879 --> 00:00:59,600
+我们前面讲过把应用程序级别的消息划分
+take application level messages divide
+
+25
+00:00:59,600 --> 00:01:01,840
+将这些消息放入数据块中将这些数据块放入数据包中
+those messages into chunks of data
+
+26
+00:01:01,840 --> 00:01:04,400
+将这些消息放入数据块中将这些数据块放入数据包中
+put those chunks of data inside packets
+
+27
+00:01:04,400 --> 00:01:05,920
+并将这些数据包发送到互联网现在这些数据包
+and send those packets
+
+28
+00:01:05,920 --> 00:01:08,720
+并将这些数据包发送到互联网现在这些数据包
+into the internet now those packets are
+
+29
+00:01:08,720 --> 00:01:09,119
+然后沿着来自源的路径转发
+then
+
+30
+00:01:09,119 --> 00:01:11,840
+然后沿着来自源的路径转发
+forwarded along a path from a source
+
+31
+00:01:11,840 --> 00:01:12,400
+节点到目标节点，例如从
+node
+
+32
+00:01:12,400 --> 00:01:14,959
+节点到目标节点，例如从
+to a destination node for example from a
+
+33
+00:01:14,959 --> 00:01:16,959
+网络服务器可能连接到运行网络浏览器的笔记本电脑
+web server maybe to your laptop
+
+34
+00:01:16,959 --> 00:01:19,200
+网络服务器可能连接到运行网络浏览器的笔记本电脑
+that's running running a web browser
+
+35
+00:01:19,200 --> 00:01:20,479
+从那个网络服务器发出一个请求，所以让我们解压
+that made a request
+
+36
+00:01:20,479 --> 00:01:23,360
+从那个网络服务器发出一个请求，所以让我们解压
+from that web server so let's unpack
+
+37
+00:01:23,360 --> 00:01:25,280
+最后的声明只是一点点，因为我们实际上听到了很多
+that last statement just a little bit
+
+38
+00:01:25,280 --> 00:01:27,840
+最后的声明只是一点点，因为我们实际上听到了很多
+because we actually heard a lot of
+
+39
+00:01:27,840 --> 00:01:30,000
+重要的话我们谈到了转发
+important words there we talked about
+
+40
+00:01:30,000 --> 00:01:30,880
+重要的话我们谈到了转发
+forwarding
+
+41
+00:01:30,880 --> 00:01:32,880
+我们讨论了从源到目的地的路径 我们讨论了一个源
+we talked about a path from source to
+
+42
+00:01:32,880 --> 00:01:34,959
+我们讨论了从源到目的地的路径 我们讨论了一个源
+destination and we talked about a source
+
+43
+00:01:34,959 --> 00:01:36,479
+和目的地有两个关键功能执行
+and a destination
+
+44
+00:01:36,479 --> 00:01:38,400
+和目的地有两个关键功能执行
+there are two key functions performed
+
+45
+00:01:38,400 --> 00:01:40,159
+在网络核心转发有时也称为
+inside the network core
+
+46
+00:01:40,159 --> 00:01:42,240
+在网络核心转发有时也称为
+forwarding sometimes also known as
+
+47
+00:01:42,240 --> 00:01:44,078
+交换和路由 让我们来看看路由器内部
+switching and routing
+
+48
+00:01:44,078 --> 00:01:46,000
+交换和路由 让我们来看看路由器内部
+let's take a look inside a router so we
+
+49
+00:01:46,000 --> 00:01:48,560
+可以看到这些函数转发的是一个本地操作它是关于
+can see what these functions are
+
+50
+00:01:48,560 --> 00:01:51,439
+可以看到这些函数转发的是一个本地操作它是关于
+forwarding is a local action it's about
+
+51
+00:01:51,439 --> 00:01:53,040
+从路由器的输入链路移动到达的数据包
+moving an arriving packet from the
+
+52
+00:01:53,040 --> 00:01:54,479
+从路由器的输入链路移动到达的数据包
+router's input link
+
+53
+00:01:54,479 --> 00:01:56,880
+到适当的路由器输出链路转发由转发控制
+to the appropriate router output link
+
+54
+00:01:56,880 --> 00:01:58,880
+到适当的路由器输出链路转发由转发控制
+forwarding is controlled by a forwarding
+
+55
+00:01:58,880 --> 00:02:00,320
+我们在这里看到的表，里面有一个转发表
+table that we see here
+
+56
+00:02:00,320 --> 00:02:02,320
+我们在这里看到的表，里面有一个转发表
+and there's a forwarding table inside
+
+57
+00:02:02,320 --> 00:02:04,479
+互联网上数以百万计的路由器中的每一个
+each and every of the millions of
+
+58
+00:02:04,479 --> 00:02:06,079
+互联网上数以百万计的路由器中的每一个
+routers in the internet
+
+59
+00:02:06,079 --> 00:02:08,399
+当数据包到达时，路由器会在数据包内部查找目的地 址，然后查找目标地址
+when a packet arrives a router will look
+
+60
+00:02:08,399 --> 00:02:10,319
+当数据包到达时，路由器会在数据包内部查找目的地 址，然后查找目标地址
+inside the packet for a destination
+
+61
+00:02:10,319 --> 00:02:11,038
+当数据包到达时，路由器会在数据包内部查找目的地 址，然后查找目标地址
+address
+
+62
+00:02:11,038 --> 00:02:13,360
+当数据包到达时，路由器会在数据包内部查找目的地 址，然后查找目标地址
+and then look up the destination address
+
+63
+00:02:13,360 --> 00:02:15,919
+在我们在这里看到的转发表中，然后传输传入的数据包
+in its forwarding table as we see here
+
+64
+00:02:15,919 --> 00:02:18,160
+在我们在这里看到的转发表中，然后传输传入的数据包
+and then transmit that incoming packet
+
+65
+00:02:18,160 --> 00:02:19,520
+在通向该目的地的输出链接上
+on the output link
+
+66
+00:02:19,520 --> 00:02:22,319
+在通向该目的地的输出链接上
+that leads to that destination well
+
+67
+00:02:22,319 --> 00:02:24,560
+在概念上查找和转发非常简单，但您可能会
+that's pretty simple conceptually
+
+68
+00:02:24,560 --> 00:02:27,200
+在概念上查找和转发非常简单，但您可能会
+look up and forwarding but you might be
+
+69
+00:02:27,200 --> 00:02:27,760
+想知道里面的内容怎么样
+wondering
+
+70
+00:02:27,760 --> 00:02:29,840
+想知道里面的内容怎么样
+well how are the contents of that
+
+71
+00:02:29,840 --> 00:02:30,879
+首先创建的转发表就是
+forwarding table
+
+72
+00:02:30,879 --> 00:02:33,280
+首先创建的转发表就是
+created in the first place and that's
+
+73
+00:02:33,280 --> 00:02:35,120
+我们遇到第二个关键函数的地方
+where we encounter the second key
+
+74
+00:02:35,120 --> 00:02:36,000
+我们遇到第二个关键函数的地方
+function
+
+75
+00:02:36,000 --> 00:02:41,190
+网络核心的路由路由是全局动作
+of the network core and that's routing  is the global action of
+
+76
+00:02:41,190 --> 00:02:41,200
+网络核心的路由路由是全局动作
+routing is the global action of
+
+77
+00:02:41,200 --> 00:02:46,080
+确定数据包采用的源到目标路径，我们将看到
+determining the source to destination paths taken by packets as we'll see routing algorithms
+
+78
+00:02:46,080 --> 00:02:48,160
+路由算法计算这些路径并计算每个路由器的本地
+determining the source to destination paths taken by packets as we'll see routing algorithms
+
+79
+00:02:48,160 --> 00:02:50,720
+路由算法计算这些路径并计算每个路由器的本地
+compute these paths and compute the local per router forwarding tables needed to realize
+
+80
+00:02:50,720 --> 00:02:54,480
+实现这种端到端所需的转发表
+compute these paths and compute the local per router forwarding tables needed to realize
+
+81
+00:02:54,480 --> 00:02:56,639
+转发路径 一个很好的类比，可以理解
+compute these paths and compute the local per router forwarding tables needed to realize
+
+82
+00:02:56,639 --> 00:02:58,720
+转发路径 一个很好的类比，可以理解
+this end-to-end forwarding path a good analogy for understanding the difference between forwarding and
+
+83
+00:02:58,720 --> 00:03:01,840
+转发和路由的区别是考虑
+this end-to-end forwarding path a good analogy for understanding the difference between forwarding and
+
+84
+00:03:01,840 --> 00:03:05,280
+我最近从圣何塞开车去旅行
+routing is to think about taking a trip in a car i recently drove
+
+85
+00:03:05,280 --> 00:03:06,319
+加州一路到东海岸
+routing is to think about taking a trip in a car i recently drove
+
+86
+00:03:06,319 --> 00:03:07,519
+加州一路到东海岸
+from san jose california all the way to the east coast to northampton massachusetts
+
+87
+00:03:07,519 --> 00:03:10,720
+北安普敦马萨诸塞州这是一次长途旅行
+from san jose california all the way to the east coast to northampton massachusetts
+
+88
+00:03:10,720 --> 00:03:13,919
+好吧，我决定在这里走这条上层路线
+it was a long trip well i decided to take this upper route here
+
+89
+00:03:13,919 --> 00:03:16,400
+而不是这里的这条较低的路线，那就是路线决定
+rather than this lower route here and
+
+90
+00:03:16,400 --> 00:03:18,239
+而不是这里的这条较低的路线，那就是路线决定
+that's the routing decision
+
+91
+00:03:18,239 --> 00:03:20,639
+这就是从源头获取的路径
+that's made the path that's taken from
+
+92
+00:03:20,639 --> 00:03:21,760
+这就是从源头获取的路径
+the source
+
+93
+00:03:21,760 --> 00:03:23,840
+加利福尼亚州圣何塞到目的地北安普敦马萨诸塞州
+san jose california to the destination
+
+94
+00:03:23,840 --> 00:03:25,680
+加利福尼亚州圣何塞到目的地北安普敦马萨诸塞州
+northampton massachusetts
+
+95
+00:03:25,680 --> 00:03:28,080
+现在当我到达一个交汇处时说在加利福尼亚州萨克拉门托
+now when i get to an interchange say in
+
+96
+00:03:28,080 --> 00:03:29,760
+现在当我到达一个交汇处时说在加利福尼亚州萨克拉门托
+sacramento california
+
+97
+00:03:29,760 --> 00:03:32,000
+我正在进入城市的输入道路之一
+i'm coming into the city on one of the
+
+98
+00:03:32,000 --> 00:03:32,959
+我正在进入城市的输入道路之一
+input roads
+
+99
+00:03:32,959 --> 00:03:35,040
+我需要被转送出城
+and i need to be forwarded out of the
+
+100
+00:03:35,040 --> 00:03:36,000
+我需要被转送出城
+city on an
+
+101
+00:03:36,000 --> 00:03:38,720
+克利夫兰的输出道路在这里以及沿途的所有交叉路口
+output road in cleveland here and really
+
+102
+00:03:38,720 --> 00:03:41,200
+克利夫兰的输出道路在这里以及沿途的所有交叉路口
+at all intersections along the way
+
+103
+00:03:41,200 --> 00:03:43,760
+从输入道路切换到输出道路是局部的
+that switching from an input road to an
+
+104
+00:03:43,760 --> 00:03:45,440
+从输入道路切换到输出道路是局部的
+output road is the local
+
+105
+00:03:45,440 --> 00:03:47,599
+具有全局路由功能确定的转发功能
+forwarding function with the global
+
+106
+00:03:47,599 --> 00:03:49,200
+具有全局路由功能确定的转发功能
+routing function determining
+
+107
+00:03:49,200 --> 00:03:51,280
+我实际转发到哪条输出道路上
+which of the output roads i'm actually
+
+108
+00:03:51,280 --> 00:03:52,560
+我实际转发到哪条输出道路上
+forwarded onto
+
+109
+00:03:52,560 --> 00:03:54,400
+您可能想稍微考虑一下本地之间的这种关系
+you might want to think just a bit about
+
+110
+00:03:54,400 --> 00:03:56,319
+您可能想稍微考虑一下本地之间的这种关系
+this relationship between the local
+
+111
+00:03:56,319 --> 00:03:57,599
+转发功能和全局路由功能可以
+forwarding function
+
+112
+00:03:57,599 --> 00:03:59,599
+转发功能和全局路由功能可以
+and the global routing function can you
+
+113
+00:03:59,599 --> 00:04:02,239
+想想其他的类比让我们接下来关注传输
+think of other analogies
+
+114
+00:04:02,239 --> 00:04:04,560
+想想其他的类比让我们接下来关注传输
+let's next focus on the transmission of
+
+115
+00:04:04,560 --> 00:04:06,560
+网络核心路由器上的数据包位
+packet bits at a router in the network
+
+116
+00:04:06,560 --> 00:04:07,280
+网络核心路由器上的数据包位
+core
+
+117
+00:04:07,280 --> 00:04:09,360
+在这个图中，我们在这里说明了正在传输的数据包中的位
+in this figure here we're illustrating
+
+118
+00:04:09,360 --> 00:04:11,120
+在这个图中，我们在这里说明了正在传输的数据包中的位
+the bits in a packet being transmitted
+
+119
+00:04:11,120 --> 00:04:12,959
+从一个路由器到下一个你希望你还记得我们说过
+from one router to the next
+
+120
+00:04:12,959 --> 00:04:15,040
+从一个路由器到下一个你希望你还记得我们说过
+you'll hopefully recall that we said
+
+121
+00:04:15,040 --> 00:04:16,079
+如果一个数据包的 l 位长并且链路传输
+that if a packet's
+
+122
+00:04:16,079 --> 00:04:18,320
+如果一个数据包的 l 位长并且链路传输
+l bits long and the link transmission
+
+123
+00:04:18,320 --> 00:04:20,320
+速率是每秒 r 位，然后将用 l 除以 r
+rate is r bits per second
+
+124
+00:04:20,320 --> 00:04:22,479
+速率是每秒 r 位，然后将用 l 除以 r
+then it's going to take l divided by r
+
+125
+00:04:22,479 --> 00:04:24,720
+将数据包传输到链路传输位的秒数将是
+seconds to transmit the packet
+
+126
+00:04:24,720 --> 00:04:27,440
+将数据包传输到链路传输位的秒数将是
+into the link transmitted bits will be
+
+127
+00:04:27,440 --> 00:04:28,080
+在接收端接收并收集
+received
+
+128
+00:04:28,080 --> 00:04:30,560
+在接收端接收并收集
+and gathered up at the receiving end of
+
+129
+00:04:30,560 --> 00:04:31,199
+一个链接，直到收到完整的数据包
+a link
+
+130
+00:04:31,199 --> 00:04:33,520
+一个链接，直到收到完整的数据包
+until the full packet has been received
+
+131
+00:04:33,520 --> 00:04:35,040
+你可以看到这里收集的比特和数据包
+you can see the bits and the packets
+
+132
+00:04:35,040 --> 00:04:36,560
+你可以看到这里收集的比特和数据包
+being gathered up here
+
+133
+00:04:36,560 --> 00:04:38,720
+一旦数据包被完全接收，它就可以被转发到下一跳
+once the packet's been fully received it
+
+134
+00:04:38,720 --> 00:04:41,360
+一旦数据包被完全接收，它就可以被转发到下一跳
+can then be forwarded on to the next hop
+
+135
+00:04:41,360 --> 00:04:43,759
+等等，这就是所谓的数据包的存储和转发操作
+and so on this is what's known as the
+
+136
+00:04:43,759 --> 00:04:46,160
+等等，这就是所谓的数据包的存储和转发操作
+store and forward operation of a packet
+
+137
+00:04:46,160 --> 00:04:47,600
+现在切换网络让我们仔细看看什么
+switch network
+
+138
+00:04:47,600 --> 00:04:49,440
+现在切换网络让我们仔细看看什么
+now let's take a closer look at what
+
+139
+00:04:49,440 --> 00:04:51,600
+当数据包到达路由器进行转发时发生
+happens as packet arrived to a router
+
+140
+00:04:51,600 --> 00:04:53,120
+当数据包到达路由器进行转发时发生
+for forwarding
+
+141
+00:04:53,120 --> 00:04:55,120
+在这张图中，我们看到了一个带有三个链接的路由器
+in this figure here we see a router with
+
+142
+00:04:55,120 --> 00:04:56,240
+在这张图中，我们看到了一个带有三个链接的路由器
+three links
+
+143
+00:04:56,240 --> 00:04:58,320
+让我们假设主机 a 正在向主机 c 发送数据包
+let's assume that host a is sending
+
+144
+00:04:58,320 --> 00:04:59,759
+让我们假设主机 a 正在向主机 c 发送数据包
+packets to host c
+
+145
+00:04:59,759 --> 00:05:03,120
+并且主机 b 正在向主机 e 发送数据包，现在让我们仔细看看
+and host b is sending packets to host e
+
+146
+00:05:03,120 --> 00:05:06,000
+并且主机 b 正在向主机 e 发送数据包，现在让我们仔细看看
+and now let's take a close look at the
+
+147
+00:05:06,000 --> 00:05:07,680
+输入链路速率 链路的传输速率 r 从
+input link rates
+
+148
+00:05:07,680 --> 00:05:09,919
+输入链路速率 链路的传输速率 r 从
+the transmission rate r of the link from
+
+149
+00:05:09,919 --> 00:05:11,919
+a 到第一跳路由器是每秒 100 兆比特
+a to the first hop router is 100
+
+150
+00:05:11,919 --> 00:05:13,360
+a 到第一跳路由器是每秒 100 兆比特
+megabits per second
+
+151
+00:05:13,360 --> 00:05:15,759
+从 b 到第一跳路由器的第二条链路也是如此
+as is the second link from b to the
+
+152
+00:05:15,759 --> 00:05:16,880
+从 b 到第一跳路由器的第二条链路也是如此
+first hop router
+
+153
+00:05:16,880 --> 00:05:18,720
+但是从第一跳路由器到第二跳路由器的链路的传输速率
+but the transmission rate of the link
+
+154
+00:05:18,720 --> 00:05:20,639
+但是从第一跳路由器到第二跳路由器的链路的传输速率
+from the first hop router to the second
+
+155
+00:05:20,639 --> 00:05:23,520
+跳路由器每秒只有 1.5 兆比特
+hop router is only 1.5 megabits per
+
+156
+00:05:23,520 --> 00:05:24,240
+跳路由器每秒只有 1.5 兆比特
+second
+
+157
+00:05:24,240 --> 00:05:27,039
+它几乎慢了 100 倍，这与家庭中的情况相差不远
+it's almost 100 times slower and this
+
+158
+00:05:27,039 --> 00:05:28,560
+它几乎慢了 100 倍，这与家庭中的情况相差不远
+isn't far from the case in a home
+
+159
+00:05:28,560 --> 00:05:30,240
+家庭网络路由器可能在家中连接了以太网的网络
+network where the home network router
+
+160
+00:05:30,240 --> 00:05:32,560
+家庭网络路由器可能在家中连接了以太网的网络
+may have attached ethernets in the home
+
+161
+00:05:32,560 --> 00:05:34,880
+以每秒千兆位或每秒 54 兆位的 wi-fi 运行
+running at a gigabit per second or wi-fi
+
+162
+00:05:34,880 --> 00:05:36,960
+以每秒千兆位或每秒 54 兆位的 wi-fi 运行
+at 54 megabits per second
+
+163
+00:05:36,960 --> 00:05:39,520
+但是到电缆标题的访问链接要慢得多，也许只是
+but the access link to the cable heading
+
+164
+00:05:39,520 --> 00:05:41,520
+但是到电缆标题的访问链接要慢得多，也许只是
+is much slower perhaps only
+
+165
+00:05:41,520 --> 00:05:43,919
+每秒 5 或 10 兆位，所以问题来了
+5 or 10 megabits per second and so
+
+166
+00:05:43,919 --> 00:05:45,120
+每秒 5 或 10 兆位，所以问题来了
+here's the question
+
+167
+00:05:45,120 --> 00:05:47,440
+当数据包到达这个第一跳路由器时会发生什么
+what happens as packets arrive to this
+
+168
+00:05:47,440 --> 00:05:49,360
+当数据包到达这个第一跳路由器时会发生什么
+first hop router
+
+169
+00:05:49,360 --> 00:05:51,520
+这个例子中的路由器只能以每秒 1.5 兆比特的速度传输
+well the router in this example can only
+
+170
+00:05:51,520 --> 00:05:54,240
+这个例子中的路由器只能以每秒 1.5 兆比特的速度传输
+transmit at 1.5 megabits per second
+
+171
+00:05:54,240 --> 00:05:56,560
+当然，数据包的到达速度可以比每秒 1.5 兆比特快得多
+and certainly packets can arrive a lot
+
+172
+00:05:56,560 --> 00:05:59,199
+当然，数据包的到达速度可以比每秒 1.5 兆比特快得多
+faster than 1.5 megabits per second
+
+173
+00:05:59,199 --> 00:06:01,199
+如果 a 和 b 同时传输大量数据包
+if a and b are both transmitting a lot
+
+174
+00:06:01,199 --> 00:06:03,520
+如果 a 和 b 同时传输大量数据包
+of packets at the same time
+
+175
+00:06:03,520 --> 00:06:05,839
+如果太多的数据包以太快的速度到达，则会形成一个数据包队列
+if too many packets arrive at too fast a
+
+176
+00:06:05,839 --> 00:06:08,400
+如果太多的数据包以太快的速度到达，则会形成一个数据包队列
+rate then a queue of packets will form
+
+177
+00:06:08,400 --> 00:06:09,839
+在如图所示的第一跳路由器中发生排队
+in that first hop router
+
+178
+00:06:09,839 --> 00:06:13,039
+在如图所示的第一跳路由器中发生排队
+as shown in the figure queuing happens
+
+179
+00:06:13,039 --> 00:06:14,720
+每当工作比某些服务设施更快到达时
+whenever work arrives
+
+180
+00:06:14,720 --> 00:06:16,960
+每当工作比某些服务设施更快到达时
+faster than some service facility can
+
+181
+00:06:16,960 --> 00:06:19,039
+实际上为这项工作提供服务，当然我们都熟悉这里的队列
+actually serve that work and of course
+
+182
+00:06:19,039 --> 00:06:21,520
+实际上为这项工作提供服务，当然我们都熟悉这里的队列
+we're all familiar with queues here's a
+
+183
+00:06:21,520 --> 00:06:23,680
+等待在收费站获得服务的汽车队列
+queue of cars waiting to get service at
+
+184
+00:06:23,680 --> 00:06:24,720
+等待在收费站获得服务的汽车队列
+a toll booth
+
+185
+00:06:24,720 --> 00:06:26,800
+我们在结账柜台排队等候
+we wait in lines and stores at the
+
+186
+00:06:26,800 --> 00:06:27,839
+我们在结账柜台排队等候
+checkout counter
+
+187
+00:06:27,839 --> 00:06:29,839
+我想你们中的许多人一直在财务长办公室排队等候
+and i imagine many of you have been
+
+188
+00:06:29,839 --> 00:06:31,839
+我想你们中的许多人一直在财务长办公室排队等候
+waiting at lines in the bursar's office
+
+189
+00:06:31,839 --> 00:06:33,440
+为了支付你的账单，这里有一群人在排队等候
+to pay your bills
+
+190
+00:06:33,440 --> 00:06:35,120
+为了支付你的账单，这里有一群人在排队等候
+here's a group of people queuing to get
+
+191
+00:06:35,120 --> 00:06:36,639
+在一栋楼里，一群英国人在等着
+in a building and here's a group of
+
+192
+00:06:36,639 --> 00:06:38,319
+在一栋楼里，一群英国人在等着
+folks in the uk waiting
+
+193
+00:06:38,319 --> 00:06:40,160
+如果你去过英国，你可能知道排队就是这个词
+if you've been in the uk you probably
+
+194
+00:06:40,160 --> 00:06:42,080
+如果你去过英国，你可能知道排队就是这个词
+know that queuing is actually the word
+
+195
+00:06:42,080 --> 00:06:43,600
+英国人在排队时常说
+that brits use to say when you're
+
+196
+00:06:43,600 --> 00:06:44,800
+英国人在排队时常说
+waiting in line
+
+197
+00:06:44,800 --> 00:06:47,120
+英国人真的很擅长暗示看看这个视频
+the brits are really good at cueing
+
+198
+00:06:47,120 --> 00:06:48,319
+英国人真的很擅长暗示看看这个视频
+check out this video
+
+199
+00:06:48,319 --> 00:06:50,960
+这是非常彻底的存在指南
+this is the awfully thorough guide to
+
+200
+00:06:50,960 --> 00:06:51,520
+这是非常彻底的存在指南
+being
+
+201
+00:06:51,520 --> 00:06:55,120
+英国总督在这一集中叫 blimey 排队
+british governor call blimey
+
+202
+00:06:55,120 --> 00:06:58,839
+英国总督在这一集中叫 blimey 排队
+in this episode queuing
+
+203
+00:06:58,839 --> 00:07:00,400
+[鼓掌] 如果排队是奥运项目
+[Applause]
+
+204
+00:07:00,400 --> 00:07:02,639
+[鼓掌] 如果排队是奥运项目
+if queuing were an olympic event then
+
+205
+00:07:02,639 --> 00:07:03,919
+英国会赢得金牌然后等待一个小时
+great britain would win
+
+206
+00:07:03,919 --> 00:07:06,720
+英国会赢得金牌然后等待一个小时
+gold then it would wait for an hour take
+
+207
+00:07:06,720 --> 00:07:07,599
+一张票赢银牌和铜牌 没人排队
+a ticket
+
+208
+00:07:07,599 --> 00:07:11,199
+一张票赢银牌和铜牌 没人排队
+and win silver and bronze no one queues
+
+209
+00:07:11,199 --> 00:07:12,720
+比英国人好，如果你想适应你需要
+better than the british
+
+210
+00:07:12,720 --> 00:07:14,800
+比英国人好，如果你想适应你需要
+and if you want to fit in you need to
+
+211
+00:07:14,800 --> 00:07:17,840
+知道规则
+know the rules
+
+212
+00:07:17,840 --> 00:07:18,469
+好回到网络数据包线索将在路由器上形成
+know the rules
+
+213
+00:07:18,469 --> 00:07:21,199
+好回到网络数据包线索将在路由器上形成
+well to get back to networking packet
+
+214
+00:07:21,199 --> 00:07:23,280
+好回到网络数据包线索将在路由器上形成
+cues are going to form at a router's outbound link whenever the arrival rate
+
+215
+00:07:23,280 --> 00:07:26,479
+每当到达速率（以比特为单位）
+cues are going to form at a router's outbound link whenever the arrival rate
+
+216
+00:07:26,479 --> 00:07:30,560
+输入链路上的秒超过传输速率比特每
+in bits per second on the input link exceeds the transmission rate bits per
+
+217
+00:07:30,560 --> 00:07:31,199
+一段时间内的第二个输出链接
+in bits per second on the input link exceeds the transmission rate bits per
+
+218
+00:07:31,199 --> 00:07:33,360
+一段时间内的第二个输出链接
+second of that output link for some period of time when there are packet
+
+219
+00:07:33,360 --> 00:07:35,360
+当有数据包队列时，他们将排队延迟
+second of that output link for some period of time when there are packet
+
+220
+00:07:35,360 --> 00:07:36,960
+当有数据包队列时，他们将排队延迟
+queues they're going to be queuing delays packets are going to have to wait
+
+221
+00:07:36,960 --> 00:07:38,479
+数据包将不得不在路由器中等待而不是被转发
+queues they're going to be queuing delays packets are going to have to wait
+
+222
+00:07:38,479 --> 00:07:41,039
+数据包将不得不在路由器中等待而不是被转发
+in routers rather than being forwarded on their way to their destination and because
+
+223
+00:07:41,039 --> 00:07:44,720
+他们到达目的地的方式，因为只有这么多的记忆
+in routers rather than being forwarded on their way to their destination and because
+
+224
+00:07:44,720 --> 00:07:48,960
+将提示数据包存储在路由器中，队列变得太长并且
+there's only so much memory to store cued packets in a router the queue
+
+225
+00:07:48,960 --> 00:07:52,800
+路由器的内存耗尽，到达的数据包可能会到达
+becomes too long and a router's memory is exhausted an arriving packet may arrive
+
+226
+00:07:52,800 --> 00:07:53,840
+路由器并找不到可存储在其中的内存
+becomes too long and a router's memory is exhausted an arriving packet may arrive
+
+227
+00:07:53,840 --> 00:07:56,800
+路由器并找不到可存储在其中的内存
+to a router and find no memory in which to be stored in such
+
+228
+00:07:56,800 --> 00:07:58,000
+数据包将在该路由器上丢失或丢失的情况
+to a router and find no memory in which to be stored in such
+
+229
+00:07:58,000 --> 00:08:01,039
+数据包将在该路由器上丢失或丢失的情况
+cases a packet's going to be dropped or lost at that router and as
+
+230
+00:08:01,039 --> 00:08:03,520
+正如我们将看到的事实，数据包可能会延迟
+cases a packet's going to be dropped or lost at that router and as
+
+231
+00:08:03,520 --> 00:08:04,800
+正如我们将看到的事实，数据包可能会延迟
+we'll see the fact that packets can be delayed and or lost is going
+
+232
+00:08:04,800 --> 00:08:07,360
+和或丢失将成为头痛的主要来源
+we'll see the fact that packets can be delayed and or lost is going
+
+233
+00:08:07,360 --> 00:08:08,479
+和或丢失将成为头痛的主要来源
+to be a major source of headaches for a lot of network protocols well
+
+234
+00:08:08,479 --> 00:08:13,520
+到目前为止，我们一直在谈论许多网络协议
+to be a major source of headaches for a lot of network protocols well
+
+235
+00:08:13,520 --> 00:08:17,360
+包交换，我们刚刚看到包排队延迟
+so far we've been talking about packet switching and we've just seen that packet
+
+236
+00:08:17,360 --> 00:08:21,280
+并且可能会发生丢包，因为网络并不总是控制
+queuing delays and packet loss can happen because the network doesn't always control senders
+
+237
+00:08:21,280 --> 00:08:23,919
+发送者足够小心，以确保大的排队延迟和数据包丢失
+queuing delays and packet loss can happen because the network doesn't always control senders
+
+238
+00:08:23,919 --> 00:08:26,080
+发送者足够小心，以确保大的排队延迟和数据包丢失
+carefully enough to ensure that large queuing delays and packet loss doesn't happen now
+
+239
+00:08:26,080 --> 00:08:28,560
+现在不会发生 包交换不是构建网络的唯一方法
+carefully enough to ensure that large queuing delays and packet loss doesn't happen now
+
+240
+00:08:28,560 --> 00:08:31,120
+现在不会发生 包交换不是构建网络的唯一方法
+packet switching is not the only way to build a network and indeed long
+
+241
+00:08:31,120 --> 00:08:33,440
+确实早在互联网出现之前，早在分组交换之前
+packet switching is not the only way to build a network and indeed long
+
+242
+00:08:33,440 --> 00:08:35,760
+确实早在互联网出现之前，早在分组交换之前
+before the internet was around and long before packet switching telephone networks employed a
+
+243
+00:08:35,760 --> 00:08:39,360
+电话网络采用了不同形式的技术
+before the internet was around and long before packet switching telephone networks employed a
+
+244
+00:08:39,360 --> 00:08:43,360
+被称为电路交换让我们来看看电路交换
+different form of technology known as circuit switching let's take a look at circuit
+
+245
+00:08:43,360 --> 00:08:47,920
+在电路交换中，有一个呼叫的概念而不是数据包的概念
+switching in circuit switching there's a notion of a call rather than a notion
+
+246
+00:08:47,920 --> 00:08:52,480
+在呼叫开始之前从源流向目的地的所有
+of packets that flow from source to destination before a call starts all of
+
+247
+00:08:52,480 --> 00:08:56,399
+该呼叫将需要的网络内资源
+the resources within the network that are going to be needed for that call
+
+248
+00:08:56,399 --> 00:08:59,040
+分配给从源到目标的调用
+are allocated to that call from source
+
+249
+00:08:59,040 --> 00:09:00,480
+分配给从源到目标的调用
+to destination
+
+250
+00:09:00,480 --> 00:09:02,720
+所以一旦呼叫开始，呼叫将保留足够的传输
+so once the call begins the call will
+
+251
+00:09:02,720 --> 00:09:04,559
+所以一旦呼叫开始，呼叫将保留足够的传输
+have reserved enough transmission
+
+252
+00:09:04,559 --> 00:09:05,600
+自身的能力，以确保排队将
+capacity
+
+253
+00:09:05,600 --> 00:09:08,320
+自身的能力，以确保排队将
+for itself to ensure that queuing will
+
+254
+00:09:08,320 --> 00:09:08,880
+永远不会发生，除了
+never
+
+255
+00:09:08,880 --> 00:09:10,958
+永远不会发生，除了
+occur there's no delay other than
+
+256
+00:09:10,958 --> 00:09:12,399
+网络内传播延迟和数据不丢失
+propagation delay and
+
+257
+00:09:12,399 --> 00:09:14,800
+网络内传播延迟和数据不丢失
+no loss of data within the network
+
+258
+00:09:14,800 --> 00:09:17,120
+因为链路容量已被保留供此呼叫专用
+because link capacity has been reserved
+
+259
+00:09:17,120 --> 00:09:20,320
+因为链路容量已被保留供此呼叫专用
+for the exclusive use of this call
+
+260
+00:09:20,320 --> 00:09:22,800
+在这个图中，这里的每个链接都有四个电路
+in this diagram here each link has four
+
+261
+00:09:22,800 --> 00:09:23,600
+在这个图中，这里的每个链接都有四个电路
+circuits
+
+262
+00:09:23,600 --> 00:09:25,679
+从左上角到右下角的呼叫被分配到第二个电路
+the call from the top left to the bottom
+
+263
+00:09:25,679 --> 00:09:28,240
+从左上角到右下角的呼叫被分配到第二个电路
+right is allocated the second circuit
+
+264
+00:09:28,240 --> 00:09:30,320
+在顶部链接和右侧链接的第一个电路上
+on the top link and the first circuit on
+
+265
+00:09:30,320 --> 00:09:31,279
+在顶部链接和右侧链接的第一个电路上
+the right link
+
+266
+00:09:31,279 --> 00:09:33,120
+电路是不共享的专用资源
+the circuits are dedicated resources
+
+267
+00:09:33,120 --> 00:09:34,320
+电路是不共享的专用资源
+they're not shared
+
+268
+00:09:34,320 --> 00:09:36,880
+对于任何其他用户，它真的就像有一根电线
+with any other users it's really like
+
+269
+00:09:36,880 --> 00:09:38,000
+对于任何其他用户，它真的就像有一根电线
+there's a wire
+
+270
+00:09:38,000 --> 00:09:40,480
+从源头到目的地，所以这一切听起来都不错
+from source to destination so all this
+
+271
+00:09:40,480 --> 00:09:41,600
+从源头到目的地，所以这一切听起来都不错
+sounds pretty good
+
+272
+00:09:41,600 --> 00:09:44,399
+没有延迟没有损失没有比这更好的了
+no delays no loss doesn't get any better
+
+273
+00:09:44,399 --> 00:09:45,279
+没有延迟没有损失没有比这更好的了
+than that
+
+274
+00:09:45,279 --> 00:09:47,440
+直到你开始考虑这样一个事实，因为资源是为
+until you start to think about the fact
+
+275
+00:09:47,440 --> 00:09:49,360
+直到你开始考虑这样一个事实，因为资源是为
+that since resources are reserved for
+
+276
+00:09:49,360 --> 00:09:51,839
+呼叫的独占使用，但电路可以空闲，如果有
+the exclusive use of a call
+
+277
+00:09:51,839 --> 00:09:53,679
+呼叫的独占使用，但电路可以空闲，如果有
+but the circuits can go idle if there's
+
+278
+00:09:53,679 --> 00:09:55,760
+没有数据可发送该呼叫，如果带宽不足，则存在问题
+no data to send on that call
+
+279
+00:09:55,760 --> 00:09:58,320
+没有数据可发送该呼叫，如果带宽不足，则存在问题
+and there's the rub if the bandwidth
+
+280
+00:09:58,320 --> 00:10:00,000
+没有被呼叫使用它丢失了没有其他人没有其他呼叫可以
+isn't used by the call
+
+281
+00:10:00,000 --> 00:10:02,880
+没有被呼叫使用它丢失了没有其他人没有其他呼叫可以
+it's lost no one else no other calls can
+
+282
+00:10:02,880 --> 00:10:03,600
+使用它，因此电路交换网络可以
+use it
+
+283
+00:10:03,600 --> 00:10:05,440
+使用它，因此电路交换网络可以
+and so a circuit switch network can be
+
+284
+00:10:05,440 --> 00:10:09,120
+正如我们将在第二个电路交换中看到的那样，效率低下是在两个电路中的一个中完成的
+inefficient as we'll see in a second
+
+285
+00:10:09,120 --> 00:10:11,360
+正如我们将在第二个电路交换中看到的那样，效率低下是在两个电路中的一个中完成的
+circuit switching is done in one of two
+
+286
+00:10:11,360 --> 00:10:12,399
+频分复用 fdm 或
+ways either
+
+287
+00:10:12,399 --> 00:10:15,600
+频分复用 fdm 或
+frequency division multiplexing fdm or
+
+288
+00:10:15,600 --> 00:10:19,200
+时分复用 tdm in fdm 电磁或光谱
+time division multiplexing tdm in fdm
+
+289
+00:10:19,200 --> 00:10:21,440
+时分复用 tdm in fdm 电磁或光谱
+the electromagnetic or optical spectrum
+
+290
+00:10:21,440 --> 00:10:24,000
+被划分为窄频带，并且每个呼叫都被分配其中之一
+is divided into narrow frequency bands
+
+291
+00:10:24,000 --> 00:10:26,958
+被划分为窄频带，并且每个呼叫都被分配其中之一
+and each call is allocated one of those
+
+292
+00:10:26,958 --> 00:10:28,078
+窄带，可以全速率传输
+narrow bands
+
+293
+00:10:28,078 --> 00:10:30,078
+窄带，可以全速率传输
+and can transmit at the full rate
+
+294
+00:10:30,078 --> 00:10:31,600
+该频段在 tdm 时间内允许被划分为时隙和
+allowed by that band
+
+295
+00:10:31,600 --> 00:10:34,720
+该频段在 tdm 时间内允许被划分为时隙和
+in tdm time is divided into slots and
+
+296
+00:10:34,720 --> 00:10:37,120
+每个调用都分配了一组周期性的时隙
+each call is allocated a periodic set of
+
+297
+00:10:37,120 --> 00:10:38,160
+每个调用都分配了一组周期性的时隙
+slots
+
+298
+00:10:38,160 --> 00:10:40,078
+源只能在其分配的时隙内传输，但可以这样做
+a source can transmit only during its
+
+299
+00:10:40,078 --> 00:10:42,559
+源只能在其分配的时隙内传输，但可以这样做
+allocated time slots but can do so
+
+300
+00:10:42,559 --> 00:10:44,958
+以该更宽频带的更高最大速率
+at the higher maximum rate of that wider
+
+301
+00:10:44,958 --> 00:10:47,279
+以该更宽频带的更高最大速率
+frequency band
+
+302
+00:10:47,279 --> 00:10:48,958
+既然我们已经介绍了电路交换和
+so now that we've been introduced to the
+
+303
+00:10:48,958 --> 00:10:50,640
+既然我们已经介绍了电路交换和
+notion of both circuit switching and
+
+304
+00:10:50,640 --> 00:10:51,679
+分组交换让我们看一个数值例子
+packet switching
+
+305
+00:10:51,679 --> 00:10:54,000
+分组交换让我们看一个数值例子
+let's take a look at a numerical example
+
+306
+00:10:54,000 --> 00:10:56,240
+查看在特定情况下可支持的用户数量
+to look at the numbers of users
+
+307
+00:10:56,240 --> 00:10:58,640
+查看在特定情况下可支持的用户数量
+that are supportable in a specific
+
+308
+00:10:58,640 --> 00:11:00,000
+网络场景 这是我们要查看的场景
+networking scenario
+
+309
+00:11:00,000 --> 00:11:02,000
+网络场景 这是我们要查看的场景
+here's the scenario we want to look at
+
+310
+00:11:02,000 --> 00:11:03,760
+让我们假设我们有一个千兆每秒的链接
+let's assume that we've got a gigabit
+
+311
+00:11:03,760 --> 00:11:05,040
+让我们假设我们有一个千兆每秒的链接
+per second link
+
+312
+00:11:05,040 --> 00:11:07,519
+有最终用户，每个最终用户的行为如下
+there are end users and each of these
+
+313
+00:11:07,519 --> 00:11:09,679
+有最终用户，每个最终用户的行为如下
+end users behaves as follows
+
+314
+00:11:09,679 --> 00:11:12,078
+当他们有数据要发送时，他们需要发送
+when they have data to send they need to
+
+315
+00:11:12,078 --> 00:11:13,120
+当他们有数据要发送时，他们需要发送
+send at
+
+316
+00:11:13,120 --> 00:11:15,920
+每秒兆位，占整个链路带宽的十分之一
+megabits per second that's one-tenth of
+
+317
+00:11:15,920 --> 00:11:17,760
+每秒兆位，占整个链路带宽的十分之一
+the overall link bandwidth
+
+318
+00:11:17,760 --> 00:11:20,880
+然而，用户只会有 10 次忙碌，这意味着 90% 的时间
+however users are only going to be busy
+
+319
+00:11:20,880 --> 00:11:23,440
+然而，用户只会有 10 次忙碌，这意味着 90% 的时间
+10 of the time that means 90 percent of
+
+320
+00:11:23,440 --> 00:11:24,240
+他们没有数据要发送的时候让我们来看看 一个关于有多少分组交换用户和
+the time
+
+321
+00:11:24,240 --> 00:11:26,640
+他们没有数据要发送的时候让我们来看看 一个关于有多少分组交换用户和
+they have no data to send let's take a
+
+322
+00:11:26,640 --> 00:11:28,000
+他们没有数据要发送的时候让我们来看看 一个关于有多少分组交换用户和
+look at a numerical example
+
+323
+00:11:28,000 --> 00:11:30,399
+他们没有数据要发送的时候让我们来看看 一个关于有多少分组交换用户和
+about how many packet-switched users and
+
+324
+00:11:30,399 --> 00:11:32,480
+可以支持多少电路交换机用户
+how many circuit switch users can be
+
+325
+00:11:32,480 --> 00:11:33,440
+可以支持多少电路交换机用户
+supported
+
+326
+00:11:33,440 --> 00:11:36,078
+在这个网络设置中，让我们假设 n
+in this network setting let's suppose
+
+327
+00:11:36,078 --> 00:11:36,720
+在这个网络设置中，让我们假设 n
+that n
+
+328
+00:11:36,720 --> 00:11:39,600
+对于电路切换的情况下是 35 个用户，计算很容易
+is 35 users for the case of circuit
+
+329
+00:11:39,600 --> 00:11:42,000
+对于电路切换的情况下是 35 个用户，计算很容易
+switching the calculation is easy
+
+330
+00:11:42,000 --> 00:11:44,480
+每个用户在电路交换下需要每秒 100 兆比特
+each user needs 100 megabits per second
+
+331
+00:11:44,480 --> 00:11:45,760
+每个用户在电路交换下需要每秒 100 兆比特
+under circuit switching
+
+332
+00:11:45,760 --> 00:11:47,679
+所以一个电路交换网络最多可以支持
+and so a circuit switch network can
+
+333
+00:11:47,679 --> 00:11:49,279
+所以一个电路交换网络最多可以支持
+support at most
+
+334
+00:11:49,279 --> 00:11:52,559
+一次 10 个用户 现在让我们来看看数据包交换
+10 users at a time now let's take a look
+
+335
+00:11:52,559 --> 00:11:53,920
+一次 10 个用户 现在让我们来看看数据包交换
+at packet switching
+
+336
+00:11:53,920 --> 00:11:55,760
+请记住，每个用户每秒需要 100 兆比特，因此我们可以支持
+remember each user needs a hundred
+
+337
+00:11:55,760 --> 00:11:57,760
+请记住，每个用户每秒需要 100 兆比特，因此我们可以支持
+megabits per second so we can support
+
+338
+00:11:57,760 --> 00:12:00,078
+10个分组交换用户就像我们可以支持10个电路交换用户
+10 packet switched users just like we
+
+339
+00:12:00,078 --> 00:12:02,399
+10个分组交换用户就像我们可以支持10个电路交换用户
+can support 10 circuit switch users
+
+340
+00:12:02,399 --> 00:12:05,839
+没问题，但请记住，每个用户只有 10 次忙，如果
+no problem but remember each user is
+
+341
+00:12:05,839 --> 00:12:09,200
+没问题，但请记住，每个用户只有 10 次忙，如果
+only busy 10 of the time what happens if
+
+342
+00:12:09,200 --> 00:12:10,000
+我们允许所有 35 个用户进入系统
+we allow
+
+343
+00:12:10,000 --> 00:12:12,958
+我们允许所有 35 个用户进入系统
+all 35 users into the system what's the
+
+344
+00:12:12,958 --> 00:12:14,958
+其中超过 10 个处于活动状态的概率
+probability that more than 10 of these
+
+345
+00:12:14,958 --> 00:12:16,000
+其中超过 10 个处于活动状态的概率
+are active
+
+346
+00:12:16,000 --> 00:12:18,480
+在给定时间有超过 10 个活跃用户
+at a given time with more than 10 active
+
+347
+00:12:18,480 --> 00:12:19,040
+在给定时间有超过 10 个活跃用户
+users
+
+348
+00:12:19,040 --> 00:12:21,200
+这是队列形成和增长的唯一时间
+that's the only time queues are going to
+
+349
+00:12:21,200 --> 00:12:22,639
+这是队列形成和增长的唯一时间
+form and grow
+
+350
+00:12:22,639 --> 00:12:24,958
+可以用一些不需要的基本概率和组合来表示
+one can show with some basic probability
+
+351
+00:12:24,958 --> 00:12:27,040
+可以用一些不需要的基本概率和组合来表示
+and combinatorics which are not required
+
+352
+00:12:27,040 --> 00:12:28,880
+对于这个类，所以我们不会在这里进行计算
+for this class and so we won't go into
+
+353
+00:12:28,880 --> 00:12:30,480
+对于这个类，所以我们不会在这里进行计算
+this calculation here
+
+354
+00:12:30,480 --> 00:12:33,279
+35 个用户中有 10 个以上处于活动状态的时间比例
+that the fraction of time that more than
+
+355
+00:12:33,279 --> 00:12:35,519
+35 个用户中有 10 个以上处于活动状态的时间比例
+10 of the 35 users are active
+
+356
+00:12:35,519 --> 00:12:38,639
+零点 0 0 4 即如果我们让所有 35 个用户进入
+is point zero 0 0
+
+357
+00:12:38,639 --> 00:12:42,320
+零点 0 0 4 即如果我们让所有 35 个用户进入
+4 that is if we let all 35 users into
+
+358
+00:12:42,320 --> 00:12:44,240
+系统处于数据包交换状态，然后排队的时间百分比
+the system under packet switching
+
+359
+00:12:44,240 --> 00:12:46,160
+系统处于数据包交换状态，然后排队的时间百分比
+then the percentage of time when queues
+
+360
+00:12:46,160 --> 00:12:47,519
+将开始增长小于百分之四
+will start to grow
+
+361
+00:12:47,519 --> 00:12:50,559
+将开始增长小于百分之四
+is less than four one hundredths of one
+
+362
+00:12:50,559 --> 00:12:52,160
+百分比的时间这是一个非常小的数字，也许我们是
+percent of the time
+
+363
+00:12:52,160 --> 00:12:54,800
+百分比的时间这是一个非常小的数字，也许我们是
+that's a pretty small number maybe we're
+
+364
+00:12:54,800 --> 00:12:56,240
+愿意忍受一些非常偶然的延迟和损失
+willing to put up with some
+
+365
+00:12:56,240 --> 00:12:59,120
+愿意忍受一些非常偶然的延迟和损失
+very occasional delay and loss in order
+
+366
+00:12:59,120 --> 00:12:59,839
+允许所有 35 个，而不仅仅是 10 个
+to allow
+
+367
+00:12:59,839 --> 00:13:03,279
+允许所有 35 个，而不仅仅是 10 个
+all 35 rather than just 10
+
+368
+00:13:03,279 --> 00:13:05,679
+用户进入系统时，这种在数据包交换下的性能增益称为
+users into the system this performance
+
+369
+00:13:05,679 --> 00:13:07,760
+用户进入系统时，这种在数据包交换下的性能增益称为
+gain under packet switching is known as
+
+370
+00:13:07,760 --> 00:13:10,320
+分组交换的统计复用增益，这是一个关键
+the statistical multiplexing gain
+
+371
+00:13:10,320 --> 00:13:12,399
+分组交换的统计复用增益，这是一个关键
+of packet switching and it was a key
+
+372
+00:13:12,399 --> 00:13:14,559
+发明分组交换时使用分组交换的论据 60
+argument for using packet switching
+
+373
+00:13:14,559 --> 00:13:16,720
+发明分组交换时使用分组交换的论据 60
+when packet switching was invented 60
+
+374
+00:13:16,720 --> 00:13:20,320
+多年前现在你觉得那个包
+years ago
+
+375
+00:13:20,320 --> 00:13:22,240
+多年前现在你觉得那个包
+it may seem to you now that packet
+
+376
+00:13:22,240 --> 00:13:24,160
+自切片面包以来，切换几乎是最好的事情
+switching is just about the best thing
+
+377
+00:13:24,160 --> 00:13:25,600
+自切片面包以来，切换几乎是最好的事情
+since sliced bread
+
+378
+00:13:25,600 --> 00:13:28,240
+它是灌篮冠军吗？看起来是这样
+is it a slam dunk winner it might seem
+
+379
+00:13:28,240 --> 00:13:28,639
+它是灌篮冠军吗？看起来是这样
+so
+
+380
+00:13:28,639 --> 00:13:30,958
+甚至今天的电话网络实际上也承载着数据
+and even today's telephone networks
+
+381
+00:13:30,958 --> 00:13:32,480
+甚至今天的电话网络实际上也承载着数据
+actually carry data
+
+382
+00:13:32,480 --> 00:13:34,880
+这些天在包里所以在某种意义上我们可以声明
+in packets these days so in some sense
+
+383
+00:13:34,880 --> 00:13:35,920
+这些天在包里所以在某种意义上我们可以声明
+we could declare
+
+384
+00:13:35,920 --> 00:13:38,240
+数据包交换获胜者 数据包交换特别适用于
+packet switching a winner package
+
+385
+00:13:38,240 --> 00:13:40,320
+数据包交换获胜者 数据包交换特别适用于
+switching is particularly great for
+
+386
+00:13:40,320 --> 00:13:41,360
+当源只是偶尔有数据时的突发数据
+bursty data
+
+387
+00:13:41,360 --> 00:13:43,519
+当源只是偶尔有数据时的突发数据
+when a source only occasionally has data
+
+388
+00:13:43,519 --> 00:13:44,399
+发送很简单，没有呼叫设置
+to send
+
+389
+00:13:44,399 --> 00:13:46,160
+发送很简单，没有呼叫设置
+it's simple there's no call setup
+
+390
+00:13:46,160 --> 00:13:48,320
+没有资源预留主机只是开始发送它的数据
+there's no resource reservation
+
+391
+00:13:48,320 --> 00:13:50,480
+没有资源预留主机只是开始发送它的数据
+a host just starts sending data that it
+
+392
+00:13:50,480 --> 00:13:51,760
+必须发送我们已经看到拥塞数据包延迟
+has to send
+
+393
+00:13:51,760 --> 00:13:53,839
+必须发送我们已经看到拥塞数据包延迟
+we've seen that congestion packet delay
+
+394
+00:13:53,839 --> 00:13:55,279
+损失可能会发生，但我们也会看到互联网
+and loss can happen
+
+395
+00:13:55,279 --> 00:13:57,199
+损失可能会发生，但我们也会看到互联网
+but we'll also see that internet
+
+396
+00:13:57,199 --> 00:13:58,639
+协议 tcp 尤其会对拥塞做出反应
+protocols tcp
+
+397
+00:13:58,639 --> 00:14:01,360
+协议 tcp 尤其会对拥塞做出反应
+in particular will react to congestion
+
+398
+00:14:01,360 --> 00:14:01,760
+通过降低发送方的发送速率
+by
+
+399
+00:14:01,760 --> 00:14:04,078
+通过降低发送方的发送速率
+decreasing the sender's sending rate in
+
+400
+00:14:04,078 --> 00:14:05,519
+面对拥塞所以拥塞和损失在某种意义上可以
+the face of congestion
+
+401
+00:14:05,519 --> 00:14:08,240
+面对拥塞所以拥塞和损失在某种意义上可以
+so congestion and loss can in some sense
+
+402
+00:14:08,240 --> 00:14:10,559
+避免或至少减轻是否有可能提供类似电路的
+be avoided or at least mitigated
+
+403
+00:14:10,559 --> 00:14:12,720
+避免或至少减轻是否有可能提供类似电路的
+is it possible to provide circuit-like
+
+404
+00:14:12,720 --> 00:14:14,800
+包交换的行为以及俗话说它很复杂
+behavior with packet switching
+
+405
+00:14:14,800 --> 00:14:17,040
+包交换的行为以及俗话说它很复杂
+well as the saying goes it's complicated
+
+406
+00:14:17,040 --> 00:14:19,199
+但我们将研究各种尝试尽可能像电路一样的技术
+but we'll study various techniques that
+
+407
+00:14:19,199 --> 00:14:23,839
+但我们将研究各种尝试尽可能像电路一样的技术
+try to be as circuit-like as possible
+
+408
+00:14:23,839 --> 00:14:24,069
+好吧，让我们回到网络核心来结束我们对网络核心的介绍
+try to be as circuit-like as possible
+
+409
+00:14:24,069 --> 00:14:25,839
+好吧，让我们回到网络核心来结束我们对网络核心的介绍
+well let's wrap up our introduction to
+
+410
+00:14:25,839 --> 00:14:28,240
+好吧，让我们回到网络核心来结束我们对网络核心的介绍
+the network core by coming back to a phrase that i've mentioned a couple
+
+411
+00:14:28,240 --> 00:14:30,000
+我在说互联网时曾多次提到的一句话
+the network core by coming back to a phrase that i've mentioned a couple
+
+412
+00:14:30,000 --> 00:14:32,240
+我在说互联网时曾多次提到的一句话
+of times when i've said the internet as a network of networks what does
+
+413
+00:14:32,240 --> 00:14:34,560
+作为一个网络网络，这到底意味着什么？
+of times when i've said the internet as a network of networks what does
+
+414
+00:14:34,560 --> 00:14:36,480
+作为一个网络网络，这到底意味着什么？
+that really mean and how is that  actually reflected in the structure of  the internet
+
+415
+00:14:36,480 --> 00:14:41,680
+实际上反映在互联网的结构上
+that really mean and how is that  actually reflected in the structure of  the internet
+
+416
+00:14:41,680 --> 00:14:43,269
+是的，就像我被困在互联网上一样
+that really mean and how is that  actually reflected in the structure of  the internet
+
+417
+00:14:43,269 --> 00:14:45,519
+是的，就像我被困在互联网上一样
+yikes it's like i'm stuck inside the
+
+418
+00:14:45,519 --> 00:14:46,720
+是的，就像我被困在互联网上一样
+internet here well what we've seen so far is that the users at the
+
+419
+00:14:46,720 --> 00:14:50,480
+到目前为止，我们所看到的是网络边缘的用户
+internet here well what we've seen so far is that the users at the
+
+420
+00:14:50,480 --> 00:14:51,199
+连接到接入网络，无论是在家
+internet here well what we've seen so far is that the users at the
+
+421
+00:14:51,199 --> 00:14:53,199
+连接到接入网络，无论是在家
+edge of the network are attached to access networks whether that be home networks
+
+422
+00:14:53,199 --> 00:14:54,800
+网络移动网络机构网络和某种方式我们
+edge of the network are attached to access networks whether that be home networks
+
+423
+00:14:54,800 --> 00:14:57,600
+网络移动网络机构网络和某种方式我们
+mobile networks institutional networks and some way we need a way to connect these
+
+424
+00:14:57,600 --> 00:15:02,079
+需要一种方法将这数以百万计的接入网络连接在一起
+mobile networks institutional networks and some way we need a way to connect these
+
+425
+00:15:02,079 --> 00:15:05,600
+彼此获得用户之间的端到端路径如何可能
+millions of access networks together to each other to get end to end paths
+
+426
+00:15:05,600 --> 00:15:10,079
+我们做得很好，我们可以连接每个线
+between users how might we do that well we could connect that is wire
+
+427
+00:15:10,079 --> 00:15:15,519
+访问每个其他访问 isp 的 isp 但这需要 n 阶平方
+each access isp to every other access isp but this would require order n
+
+428
+00:15:15,519 --> 00:15:20,560
+连接数，当 n 为数百万时，这种方法不会扩展
+squared connections and when n is many millions this approach isn't going to scale
+
+429
+00:15:20,560 --> 00:15:26,000
+考虑到数以百万计的接入互联网服务提供商，我们可能会创建一个全球中转互联网服务提供商
+so given the millions of access isps we might create one global transit isp
+
+430
+00:15:26,000 --> 00:15:28,079
+然后，边缘的每个互联网服务提供商将连接到全球传输网络
+each isp at the edge would then connect
+
+431
+00:15:28,079 --> 00:15:29,839
+然后，边缘的每个互联网服务提供商将连接到全球传输网络
+to the global transit network
+
+432
+00:15:29,839 --> 00:15:32,240
+一个主干网络，如果你愿意，一个访问 isp 将到达另一个访问
+a backbone network if you will and one
+
+433
+00:15:32,240 --> 00:15:34,720
+一个主干网络，如果你愿意，一个访问 isp 将到达另一个访问
+access isp would reach another access
+
+434
+00:15:34,720 --> 00:15:35,360
+isp 通过这个骨干网络并在
+isp
+
+435
+00:15:35,360 --> 00:15:37,279
+isp 通过这个骨干网络并在
+through this backbone network and in the
+
+436
+00:15:37,279 --> 00:15:39,040
+早期的计算机网络确实如此
+early days of computer networking this
+
+437
+00:15:39,040 --> 00:15:40,160
+早期的计算机网络确实如此
+was indeed how
+
+438
+00:15:40,160 --> 00:15:42,160
+边缘网络相互连接
+edge networks were interconnected to
+
+439
+00:15:42,160 --> 00:15:43,279
+边缘网络相互连接
+each other
+
+440
+00:15:43,279 --> 00:15:45,600
+但当然，如果一个全球互联网服务提供商是一项可行的业务
+but of course if one global isp is a
+
+441
+00:15:45,600 --> 00:15:46,720
+但当然，如果一个全球互联网服务提供商是一项可行的业务
+viable business
+
+442
+00:15:46,720 --> 00:15:48,480
+他们将成为骨干网服务和这些全球
+they'll be competitors for backbone
+
+443
+00:15:48,480 --> 00:15:50,639
+他们将成为骨干网服务和这些全球
+network service and these global
+
+444
+00:15:50,639 --> 00:15:52,240
+骨干网将需要相互互连
+backbone networks will need to be
+
+445
+00:15:52,240 --> 00:15:54,079
+骨干网将需要相互互连
+interconnected to each other
+
+446
+00:15:54,079 --> 00:15:56,880
+我们说当一个网络直接与另一个网络对等时
+we say that a network peers with another
+
+447
+00:15:56,880 --> 00:15:58,399
+我们说当一个网络直接与另一个网络对等时
+network when they're directly
+
+448
+00:15:58,399 --> 00:15:59,600
+互连多个网络的位置
+interconnected
+
+449
+00:15:59,600 --> 00:16:01,519
+互连多个网络的位置
+the locations at which multiple networks
+
+450
+00:16:01,519 --> 00:16:02,800
+可以互相对等有时称为互联网交换
+can peer with each other
+
+451
+00:16:02,800 --> 00:16:04,959
+可以互相对等有时称为互联网交换
+are sometimes called internet exchange
+
+452
+00:16:04,959 --> 00:16:07,120
+点或对等点区域网络可能会形成
+points or peering points
+
+453
+00:16:07,120 --> 00:16:08,639
+点或对等点区域网络可能会形成
+regional networks might form
+
+454
+00:16:08,639 --> 00:16:10,480
+离家更近的互联接入网络
+interconnect access network closer to
+
+455
+00:16:10,480 --> 00:16:10,959
+离家更近的互联接入网络
+home
+
+456
+00:16:10,959 --> 00:16:13,440
+并连接到纽约州的全球骨干网
+and also connect to the global backbone
+
+457
+00:16:13,440 --> 00:16:14,560
+并连接到纽约州的全球骨干网
+in the state of new york
+
+458
+00:16:14,560 --> 00:16:16,880
+nisernet 纽约州教育和研究网络
+nisernet the new york state education
+
+459
+00:16:16,880 --> 00:16:18,079
+nisernet 纽约州教育和研究网络
+and research networks
+
+460
+00:16:18,079 --> 00:16:20,320
+是为大学提供互联网访问的区域网络的一个例子
+is an example of a regional network that
+
+461
+00:16:20,320 --> 00:16:22,560
+是为大学提供互联网访问的区域网络的一个例子
+provides internet access to universities
+
+462
+00:16:22,560 --> 00:16:24,160
+大学 博物馆 医疗保健设施和 k-12 学校
+colleges museums
+
+463
+00:16:24,160 --> 00:16:27,199
+大学 博物馆 医疗保健设施和 k-12 学校
+healthcare facilities and k-12 schools
+
+464
+00:16:27,199 --> 00:16:29,120
+然后是 google 或 microsoft amazon akamai 等内容提供商
+and then content providers like google
+
+465
+00:16:29,120 --> 00:16:31,360
+然后是 google 或 microsoft amazon akamai 等内容提供商
+or microsoft amazon akamai
+
+466
+00:16:31,360 --> 00:16:33,040
+可能想要运行他们自己的全球网络，事实上他们确实这样做了
+might want to run their own global
+
+467
+00:16:33,040 --> 00:16:35,519
+可能想要运行他们自己的全球网络，事实上他们确实这样做了
+networks which in fact they do
+
+468
+00:16:35,519 --> 00:16:37,759
+使他们的服务和内容贴近最终用户
+to bring their services and content
+
+469
+00:16:37,759 --> 00:16:39,680
+使他们的服务和内容贴近最终用户
+close to the end users
+
+470
+00:16:39,680 --> 00:16:41,440
+我们在这里看到的这张图片非常接近今天的结构
+and this picture that we see here is
+
+471
+00:16:41,440 --> 00:16:43,440
+我们在这里看到的这张图片非常接近今天的结构
+pretty close to the structure of today's
+
+472
+00:16:43,440 --> 00:16:44,399
+互联网我们说互联网是一个网络 ，现在您已经了解它的真正含义
+internet
+
+473
+00:16:44,399 --> 00:16:46,560
+互联网我们说互联网是一个网络 ，现在您已经了解它的真正含义
+we said that the internet is a network
+
+474
+00:16:46,560 --> 00:16:48,639
+互联网我们说互联网是一个网络 ，现在您已经了解它的真正含义
+of networks and now you've got a sense
+
+475
+00:16:48,639 --> 00:16:50,880
+互联网我们说互联网是一个网络 ，现在您已经了解它的真正含义
+of what that really means
+
+476
+00:16:50,880 --> 00:16:52,639
+在互联网的中心，我们拥有相对较少的
+at the center of the internet we have a
+
+477
+00:16:52,639 --> 00:16:54,079
+在互联网的中心，我们拥有相对较少的
+relatively small number of
+
+478
+00:16:54,079 --> 00:16:54,959
+连接良好的大型网络，这些有时是
+well-connected
+
+479
+00:16:54,959 --> 00:16:57,040
+连接良好的大型网络，这些有时是
+large networks these are sometimes
+
+480
+00:16:57,040 --> 00:16:58,240
+称为 1 级商业 isps，例如 3 级冲刺
+called tier 1
+
+481
+00:16:58,240 --> 00:17:01,759
+称为 1 级商业 isps，例如 3 级冲刺
+commercial isps such as level 3 sprint
+
+482
+00:17:01,759 --> 00:17:05,039
+在 t ntt 有国内和国际覆盖
+at t ntt that have national and
+
+483
+00:17:05,039 --> 00:17:06,480
+在 t ntt 有国内和国际覆盖
+international coverage
+
+484
+00:17:06,480 --> 00:17:08,240
+靠近边缘的是区域网络，所有这些网络
+moving closer to the edge there are the
+
+485
+00:17:08,240 --> 00:17:10,000
+靠近边缘的是区域网络，所有这些网络
+regional networks all of which
+
+486
+00:17:10,000 --> 00:17:12,480
+互连，也就是说彼此对等
+interconnect that's to say peer with
+
+487
+00:17:12,480 --> 00:17:13,359
+互连，也就是说彼此对等
+each other
+
+488
+00:17:13,359 --> 00:17:15,520
+并与一级供应商并在网络的最边缘
+and with tier one providers and at the
+
+489
+00:17:15,520 --> 00:17:17,439
+并与一级供应商并在网络的最边缘
+very edge of the network then
+
+490
+00:17:17,439 --> 00:17:20,079
+是接入网络本身，当然还有内容
+are the access networks themselves and
+
+491
+00:17:20,079 --> 00:17:21,520
+是接入网络本身，当然还有内容
+then of course there are the content
+
+492
+00:17:21,520 --> 00:17:23,199
+供应商网络，如 google 和 facebook
+provider networks like google and
+
+493
+00:17:23,199 --> 00:17:24,000
+供应商网络，如 google 和 facebook
+facebook
+
+494
+00:17:24,000 --> 00:17:25,919
+将其数据中心和服务连接到
+the private networks that connect their
+
+495
+00:17:25,919 --> 00:17:27,760
+将其数据中心和服务连接到
+data centers and services to the
+
+496
+00:17:27,760 --> 00:17:28,480
+互联网，有时绕过第一层和
+internet
+
+497
+00:17:28,480 --> 00:17:31,280
+互联网，有时绕过第一层和
+and sometimes bypassing tier one and
+
+498
+00:17:31,280 --> 00:17:33,280
+区域互联网服务提供商，只是为了让您了解什么是
+regional isps
+
+499
+00:17:33,280 --> 00:17:35,200
+区域互联网服务提供商，只是为了让您了解什么是
+and just to give you an idea of what a
+
+500
+00:17:35,200 --> 00:17:37,280
+1 级互联网服务供应商实际上看起来像是最近的 sprint 我们的地图
+tier 1 isp actually looks like
+
+501
+00:17:37,280 --> 00:17:39,679
+1 级互联网服务供应商实际上看起来像是最近的 sprint 我们的地图
+here's a recent map of sprint's u.s
+
+502
+00:17:39,679 --> 00:17:40,559
+网络你可以看到各种国际
+network
+
+503
+00:17:40,559 --> 00:17:42,240
+网络你可以看到各种国际
+you can see the various international
+
+504
+00:17:42,240 --> 00:17:43,840
+此处显示的每个冲刺节点的边缘连接
+connections around the edge
+
+505
+00:17:43,840 --> 00:17:46,000
+此处显示的每个冲刺节点的边缘连接
+each of these sprint nodes shown here is
+
+506
+00:17:46,000 --> 00:17:47,919
+实际上是一组路由器，它们一起形成了一个所谓的点
+actually a collection of routers
+
+507
+00:17:47,919 --> 00:17:50,400
+实际上是一组路由器，它们一起形成了一个所谓的点
+that together form a so-called point of
+
+508
+00:17:50,400 --> 00:17:52,240
+在场或流行音乐这里是流行音乐的爆发，你可以
+presence or a pop
+
+509
+00:17:52,240 --> 00:17:54,080
+在场或流行音乐这里是流行音乐的爆发，你可以
+here's a blow up of a pop where you can
+
+510
+00:17:54,080 --> 00:17:55,679
+查看一组将流行路由器连接到客户网络的链接
+see a set of links that connect
+
+511
+00:17:55,679 --> 00:17:58,400
+查看一组将流行路由器连接到客户网络的链接
+pop routers down to customer networks
+
+512
+00:17:58,400 --> 00:18:00,160
+另一组连接到其他冲刺的链接
+another set of links that connect to
+
+513
+00:18:00,160 --> 00:18:00,960
+另一组连接到其他冲刺的链接
+other sprint
+
+514
+00:18:00,960 --> 00:18:03,280
+弹出，最后是一组连接到对等网络的路由器，例如
+pops and finally a set of routers that
+
+515
+00:18:03,280 --> 00:18:05,359
+弹出，最后是一组连接到对等网络的路由器，例如
+connect to peering networks for example
+
+516
+00:18:05,359 --> 00:18:07,919
+其他一级网络以及我们对网络的概述
+other tier one networks well that
+
+517
+00:18:07,919 --> 00:18:10,240
+其他一级网络以及我们对网络的概述
+concludes our overview of the network
+
+518
+00:18:10,240 --> 00:18:12,400
+核心，我们在这里介绍了许多非常重要的概念
+core and we've introduced a number of
+
+519
+00:18:12,400 --> 00:18:14,320
+核心，我们在这里介绍了许多非常重要的概念
+really important concepts here
+
+520
+00:18:14,320 --> 00:18:16,240
+我们讲了我们讲的数据包转发过程
+we talked about the packet forwarding
+
+521
+00:18:16,240 --> 00:18:17,679
+我们讲了我们讲的数据包转发过程
+process we talked about
+
+522
+00:18:17,679 --> 00:18:19,760
+存储和转发网络我们谈到了排队延迟
+store and forward networks we talked
+
+523
+00:18:19,760 --> 00:18:21,440
+存储和转发网络我们谈到了排队延迟
+about queuing delays
+
+524
+00:18:21,440 --> 00:18:23,760
+丢包的可能性，我们区分
+the possibility for packet loss and we
+
+525
+00:18:23,760 --> 00:18:25,039
+丢包的可能性，我们区分
+distinguished between
+
+526
+00:18:25,039 --> 00:18:28,160
+数据包转发和数据包路由我们还讨论了一个替代方案
+packet forwarding and packet routing
+
+527
+00:18:28,160 --> 00:18:30,160
+数据包转发和数据包路由我们还讨论了一个替代方案
+we also talked about an alternative to
+
+528
+00:18:30,160 --> 00:18:31,919
+称为电路交换网络的分组交换网络
+packet switch networks known as circuit
+
+529
+00:18:31,919 --> 00:18:32,960
+称为电路交换网络的分组交换网络
+switch networks
+
+530
+00:18:32,960 --> 00:18:34,720
+我们讨论了各自的优缺点，最后我们讨论了
+and we talked about the pros and cons of
+
+531
+00:18:34,720 --> 00:18:37,280
+我们讨论了各自的优缺点，最后我们讨论了
+each and we finished up by talking about
+
+532
+00:18:37,280 --> 00:18:38,720
+那么我们所说的互联网是一个网络的概念是什么意思
+well what we mean by that
+
+533
+00:18:38,720 --> 00:18:41,600
+那么我们所说的互联网是一个网络的概念是什么意思
+concept of the internet being a network
+
+534
+00:18:41,600 --> 00:18:42,880
+在接下来的网络中，我们将采取
+of networks
+
+535
+00:18:42,880 --> 00:18:44,320
+在接下来的网络中，我们将采取
+coming up next we're going to take a  look at network performance
+
+536
+00:18:44,320 --> 00:19:03,510
+查看网络性能 你
+coming up next we're going to take a  look at network performance
+
+537
+00:18:44,320 --> 00:19:04,000
+查看网络性能 你
+

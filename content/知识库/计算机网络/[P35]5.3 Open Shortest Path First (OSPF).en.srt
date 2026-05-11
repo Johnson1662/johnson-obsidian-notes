@@ -1,0 +1,1124 @@
+﻿1
+00:00:10,629 --> 00:00:10,639
+[Music]
+
+2
+00:00:10,639 --> 00:00:16,400
+in the last section our study of routing was primarily theoretical took a look
+
+3
+00:00:16,400 --> 00:00:22,320
+at routing algorithms both centralized and distributed for computing minimum cost paths from source
+
+4
+00:00:22,320 --> 00:00:26,320
+to destination in this section and the next we're going to look at putting
+
+5
+00:00:26,320 --> 00:00:33,120
+these principles into practice i'm going to start by looking at two particular considerations
+
+6
+00:00:33,120 --> 00:00:36,479
+scale and autonomy that are really important in putting these principles into practice for
+
+7
+00:00:36,479 --> 00:00:38,709
+scale how do we do routing when
+
+8
+00:00:38,709 --> 00:00:38,719
+for scale how do we do routing when
+
+9
+00:00:38,719 --> 00:00:45,680
+there are literally billions of endpoints to be routed to autonomy has to do
+
+10
+00:00:45,680 --> 00:00:50,960
+with allowing network managers and operators to choose how routing's done both within their
+
+11
+00:00:50,960 --> 00:00:54,879
+own network and how routing is done to distant networks as well we're going
+
+12
+00:00:54,879 --> 00:01:03,920
+to cover two routing protocols here the open shortest path first ospf routing algorithm
+
+13
+00:01:03,920 --> 00:01:07,680
+routing protocol for controlling routing within a network then we're also going to cover
+
+14
+00:01:07,680 --> 00:01:13,920
+in the following section the border gateway protocol bgp for routing among networks so
+
+15
+00:01:13,920 --> 00:01:20,479
+why don't we get started and we're going to start with looking at this
+
+16
+00:01:20,479 --> 00:01:23,840
+issue of scale and also autonomy our study of routing algorithms so far has
+
+17
+00:01:23,840 --> 00:01:30,959
+been pretty idealized we've considered the network as sort of a sea of indistinguishable
+
+18
+00:01:30,959 --> 00:01:33,438
+routers that were connected by links we simply wanted to find a shortest path
+
+19
+00:01:33,438 --> 00:01:35,360
+from a source router to a destination
+
+20
+00:01:35,360 --> 00:01:36,078
+router
+
+21
+00:01:36,078 --> 00:01:37,759
+well in practice things are a little bit
+
+22
+00:01:37,759 --> 00:01:39,520
+more complicated than that
+
+23
+00:01:39,520 --> 00:01:41,759
+and they're complicated primarily by the
+
+24
+00:01:41,759 --> 00:01:43,200
+issue of scale
+
+25
+00:01:43,200 --> 00:01:46,319
+how is it that we can route to literally
+
+26
+00:01:46,319 --> 00:01:48,799
+billions of n-hosts and hundreds of
+
+27
+00:01:48,799 --> 00:01:49,600
+thousands
+
+28
+00:01:49,600 --> 00:01:51,840
+of destination networks if you think
+
+29
+00:01:51,840 --> 00:01:53,759
+about it a router's forwarding table
+
+30
+00:01:53,759 --> 00:01:55,920
+couldn't possibly hold a billion
+
+31
+00:01:55,920 --> 00:01:57,520
+forwarding entries for all of the
+
+32
+00:01:57,520 --> 00:01:59,040
+destination hosts
+
+33
+00:01:59,040 --> 00:02:00,799
+and similarly when we think about a
+
+34
+00:02:00,799 --> 00:02:02,640
+routing algorithm exchanging
+
+35
+00:02:02,640 --> 00:02:04,479
+distance vector or link state
+
+36
+00:02:04,479 --> 00:02:06,159
+information literally with
+
+37
+00:02:06,159 --> 00:02:08,479
+millions of other entities just isn't
+
+38
+00:02:08,479 --> 00:02:10,560
+scalable use up all the bend within the
+
+39
+00:02:10,560 --> 00:02:11,120
+network
+
+40
+00:02:11,120 --> 00:02:14,160
+just for control purposes
+
+41
+00:02:14,160 --> 00:02:16,160
+and then there's the issue of autonomy
+
+42
+00:02:16,160 --> 00:02:17,840
+and this might be a little less
+
+43
+00:02:17,840 --> 00:02:20,560
+obvious remember the internet is a
+
+44
+00:02:20,560 --> 00:02:22,239
+network of networks and
+
+45
+00:02:22,239 --> 00:02:25,040
+each network has an owner operator to
+
+46
+00:02:25,040 --> 00:02:25,840
+what extent
+
+47
+00:02:25,840 --> 00:02:28,400
+can or should that network owner
+
+48
+00:02:28,400 --> 00:02:29,200
+operator be
+
+49
+00:02:29,200 --> 00:02:31,919
+told how to route traffic what autonomy
+
+50
+00:02:31,919 --> 00:02:33,760
+does a network have with respect to its
+
+51
+00:02:33,760 --> 00:02:34,400
+routing
+
+52
+00:02:34,400 --> 00:02:36,400
+we'll see that the internet approach is
+
+53
+00:02:36,400 --> 00:02:37,680
+twofold first
+
+54
+00:02:37,680 --> 00:02:39,519
+a network can choose to use whatever
+
+55
+00:02:39,519 --> 00:02:41,200
+routing protocol it wants
+
+56
+00:02:41,200 --> 00:02:43,840
+in its own network and secondly a
+
+57
+00:02:43,840 --> 00:02:45,519
+network will be able to control how
+
+58
+00:02:45,519 --> 00:02:47,680
+traffic from its customer networks
+
+59
+00:02:47,680 --> 00:02:50,480
+is routed towards a destination and how
+
+60
+00:02:50,480 --> 00:02:51,919
+it as a network
+
+61
+00:02:51,919 --> 00:02:54,160
+routes traffic that it carries that's
+
+62
+00:02:54,160 --> 00:02:56,160
+sent to it by other networks
+
+63
+00:02:56,160 --> 00:02:58,000
+well let's begin with the issue of
+
+64
+00:02:58,000 --> 00:03:00,239
+scaling
+
+65
+00:03:00,239 --> 00:03:02,480
+the internet approach to scaling routing
+
+66
+00:03:02,480 --> 00:03:04,239
+begins with the notion of
+
+67
+00:03:04,239 --> 00:03:06,879
+aggregating routers into networks or
+
+68
+00:03:06,879 --> 00:03:08,959
+into regions that are sometimes called
+
+69
+00:03:08,959 --> 00:03:11,840
+autonomous systems or domains and as
+
+70
+00:03:11,840 --> 00:03:12,480
+we'll see
+
+71
+00:03:12,480 --> 00:03:14,639
+there's basically two types of routing
+
+72
+00:03:14,639 --> 00:03:16,480
+there's routing protocols for routing
+
+73
+00:03:16,480 --> 00:03:17,760
+within a domain
+
+74
+00:03:17,760 --> 00:03:19,360
+and there are routing protocols for
+
+75
+00:03:19,360 --> 00:03:21,280
+routing among domains
+
+76
+00:03:21,280 --> 00:03:23,040
+and as we'll see there are different
+
+77
+00:03:23,040 --> 00:03:24,400
+protocols for each
+
+78
+00:03:24,400 --> 00:03:26,000
+and let's start with the notion of
+
+79
+00:03:26,000 --> 00:03:28,239
+routing within a network within
+
+80
+00:03:28,239 --> 00:03:30,639
+an autonomous system this is known as
+
+81
+00:03:30,639 --> 00:03:31,599
+intra
+
+82
+00:03:31,599 --> 00:03:34,239
+domain routing and in in trunk domain
+
+83
+00:03:34,239 --> 00:03:35,040
+routing
+
+84
+00:03:35,040 --> 00:03:37,200
+all routers within the domain within the
+
+85
+00:03:37,200 --> 00:03:39,280
+autonomous system within the network
+
+86
+00:03:39,280 --> 00:03:41,680
+are all executing the same routing
+
+87
+00:03:41,680 --> 00:03:42,560
+protocols
+
+88
+00:03:42,560 --> 00:03:44,239
+but different networks different
+
+89
+00:03:44,239 --> 00:03:46,319
+autonomous systems can choose
+
+90
+00:03:46,319 --> 00:03:49,599
+their own intra domain routing protocol
+
+91
+00:03:49,599 --> 00:03:51,599
+and as we'll see the edge of every
+
+92
+00:03:51,599 --> 00:03:52,720
+autonomous system
+
+93
+00:03:52,720 --> 00:03:55,040
+is a specialized type of router known as
+
+94
+00:03:55,040 --> 00:03:55,840
+a gateway
+
+95
+00:03:55,840 --> 00:03:58,000
+that will connect one autonomous system
+
+96
+00:03:58,000 --> 00:04:00,080
+to another
+
+97
+00:04:00,080 --> 00:04:02,720
+and then there's inter-as otherwise
+
+98
+00:04:02,720 --> 00:04:03,280
+known as
+
+99
+00:04:03,280 --> 00:04:06,239
+inter domain routing for routing among
+
+100
+00:04:06,239 --> 00:04:07,840
+autonomous systems
+
+101
+00:04:07,840 --> 00:04:09,840
+here a network's gateway is going to
+
+102
+00:04:09,840 --> 00:04:12,159
+perform inter domain routing
+
+103
+00:04:12,159 --> 00:04:14,959
+as well as participate in intra domain
+
+104
+00:04:14,959 --> 00:04:15,599
+routing
+
+105
+00:04:15,599 --> 00:04:18,799
+within its own autonomous system here's
+
+106
+00:04:18,799 --> 00:04:21,120
+a network with three autonomous systems
+
+107
+00:04:21,120 --> 00:04:24,240
+as1 as2 and as3
+
+108
+00:04:24,240 --> 00:04:27,199
+three interconnected networks each as
+
+109
+00:04:27,199 --> 00:04:28,120
+has its own
+
+110
+00:04:28,120 --> 00:04:30,960
+intra-domain routing protocol each as
+
+111
+00:04:30,960 --> 00:04:31,600
+could use a
+
+112
+00:04:31,600 --> 00:04:33,520
+different intra-domain routing protocol
+
+113
+00:04:33,520 --> 00:04:35,040
+it doesn't really matter
+
+114
+00:04:35,040 --> 00:04:38,080
+to the other asses since that as is
+
+115
+00:04:38,080 --> 00:04:42,320
+just routing within intra-domain and we
+
+116
+00:04:42,320 --> 00:04:43,919
+see here the inter
+
+117
+00:04:43,919 --> 00:04:46,080
+autonomous system routing protocol
+
+118
+00:04:46,080 --> 00:04:48,240
+that's responsible for routing between
+
+119
+00:04:48,240 --> 00:04:48,479
+and
+
+120
+00:04:48,479 --> 00:04:51,360
+among domains the intra domain routing
+
+121
+00:04:51,360 --> 00:04:53,680
+protocol will be used to populate
+
+122
+00:04:53,680 --> 00:04:55,440
+a router's forwarding table for
+
+123
+00:04:55,440 --> 00:04:58,080
+destinations within the network
+
+124
+00:04:58,080 --> 00:04:59,839
+but what about traffic destined to
+
+125
+00:04:59,839 --> 00:05:01,440
+outside the network
+
+126
+00:05:01,440 --> 00:05:05,039
+it's here that the inter-as inter-domain
+
+127
+00:05:05,039 --> 00:05:06,240
+routing protocol
+
+128
+00:05:06,240 --> 00:05:08,240
+and a bit of the intra-as routing
+
+129
+00:05:08,240 --> 00:05:10,560
+protocol will be used to populate a
+
+130
+00:05:10,560 --> 00:05:12,080
+router's forwarding table
+
+131
+00:05:12,080 --> 00:05:14,639
+for destinations outside the network but
+
+132
+00:05:14,639 --> 00:05:16,560
+let's start with the case of routing and
+
+133
+00:05:16,560 --> 00:05:18,880
+forwarding to destinations within
+
+134
+00:05:18,880 --> 00:05:21,919
+the as since that's a bit easier there
+
+135
+00:05:21,919 --> 00:05:22,720
+have only been
+
+136
+00:05:22,720 --> 00:05:25,440
+three intra domain routing protocols
+
+137
+00:05:25,440 --> 00:05:27,520
+that have been adopted in practice
+
+138
+00:05:27,520 --> 00:05:29,520
+the first is the routing information
+
+139
+00:05:29,520 --> 00:05:32,400
+protocol simply known as rip rip
+
+140
+00:05:32,400 --> 00:05:35,360
+was invented in the early 1980s and
+
+141
+00:05:35,360 --> 00:05:37,160
+standardized in rfc
+
+142
+00:05:37,160 --> 00:05:40,479
+1723 it's a classic distance vector
+
+143
+00:05:40,479 --> 00:05:42,880
+protocol where distance vector protocols
+
+144
+00:05:42,880 --> 00:05:45,279
+are exchanged periodically every 30
+
+145
+00:05:45,279 --> 00:05:46,000
+seconds
+
+146
+00:05:46,000 --> 00:05:48,400
+it was used widely in the 80s the 90s
+
+147
+00:05:48,400 --> 00:05:50,000
+and into the oos
+
+148
+00:05:50,000 --> 00:05:52,479
+but rip was eventually overtaken as an
+
+149
+00:05:52,479 --> 00:05:54,479
+intra-domain routing protocol
+
+150
+00:05:54,479 --> 00:05:57,839
+by the open shortest path first or ospf
+
+151
+00:05:57,839 --> 00:06:01,919
+protocol ospf is a classic link state
+
+152
+00:06:01,919 --> 00:06:03,919
+protocol that uses dijkstra's algorithm
+
+153
+00:06:03,919 --> 00:06:06,000
+to compute shortest paths
+
+154
+00:06:06,000 --> 00:06:09,360
+there's a related protocol known as isis
+
+155
+00:06:09,360 --> 00:06:11,440
+intermediate system to intermediate
+
+156
+00:06:11,440 --> 00:06:12,960
+system routing that's
+
+157
+00:06:12,960 --> 00:06:15,839
+very similar almost identical to ospf
+
+158
+00:06:15,839 --> 00:06:17,759
+but standardized by the international
+
+159
+00:06:17,759 --> 00:06:19,360
+standards organization
+
+160
+00:06:19,360 --> 00:06:22,560
+iso rather than the ietf and in just a
+
+161
+00:06:22,560 --> 00:06:24,080
+second we're going to take a little bit
+
+162
+00:06:24,080 --> 00:06:25,039
+closer look
+
+163
+00:06:25,039 --> 00:06:27,600
+at ospf because really right now it's
+
+164
+00:06:27,600 --> 00:06:28,080
+the most
+
+165
+00:06:28,080 --> 00:06:30,880
+widely deployed intra domain routing
+
+166
+00:06:30,880 --> 00:06:33,120
+protocol in practice
+
+167
+00:06:33,120 --> 00:06:35,919
+the third commonly deployed intra-as
+
+168
+00:06:35,919 --> 00:06:37,199
+routing protocol
+
+169
+00:06:37,199 --> 00:06:40,800
+is eigrp the enhanced interior gateway
+
+170
+00:06:40,800 --> 00:06:42,080
+routing protocol
+
+171
+00:06:42,080 --> 00:06:44,240
+it's also distance vector based and
+
+172
+00:06:44,240 --> 00:06:45,120
+actually it was
+
+173
+00:06:45,120 --> 00:06:47,919
+formerly proprietary within cisco for
+
+174
+00:06:47,919 --> 00:06:49,199
+decades you couldn't actually
+
+175
+00:06:49,199 --> 00:06:52,639
+figure out exactly what was in eigrp
+
+176
+00:06:52,639 --> 00:06:56,960
+however in 2013 cisco open sourced eigrp
+
+177
+00:06:56,960 --> 00:06:59,680
+and it became an open protocol now let's
+
+178
+00:06:59,680 --> 00:07:01,520
+take a look at the ospf
+
+179
+00:07:01,520 --> 00:07:03,919
+open shortest path first routing
+
+180
+00:07:03,919 --> 00:07:04,800
+protocol
+
+181
+00:07:04,800 --> 00:07:07,839
+on ospf stands for open meaning that the
+
+182
+00:07:07,839 --> 00:07:08,960
+specifications
+
+183
+00:07:08,960 --> 00:07:12,240
+publicly available ospf is a classic
+
+184
+00:07:12,240 --> 00:07:14,880
+link state protocol each router is going
+
+185
+00:07:14,880 --> 00:07:16,720
+to flood ospf
+
+186
+00:07:16,720 --> 00:07:18,720
+link state advertisements across the
+
+187
+00:07:18,720 --> 00:07:21,120
+entire autonomous system
+
+188
+00:07:21,120 --> 00:07:23,759
+that is each ospf router is going to
+
+189
+00:07:23,759 --> 00:07:24,240
+flood
+
+190
+00:07:24,240 --> 00:07:26,400
+information about each of its attached
+
+191
+00:07:26,400 --> 00:07:28,240
+links that will propagate to
+
+192
+00:07:28,240 --> 00:07:30,479
+all other routers in the autonomous
+
+193
+00:07:30,479 --> 00:07:31,840
+system and so
+
+194
+00:07:31,840 --> 00:07:34,000
+as in a classic link state algorithm
+
+195
+00:07:34,000 --> 00:07:35,120
+each router has
+
+196
+00:07:35,120 --> 00:07:39,039
+full topology information ospf then uses
+
+197
+00:07:39,039 --> 00:07:41,360
+dijkstra-like algorithm to compute each
+
+198
+00:07:41,360 --> 00:07:42,880
+forwarding table
+
+199
+00:07:42,880 --> 00:07:45,280
+multiple link cost metrics are possible
+
+200
+00:07:45,280 --> 00:07:46,960
+the amount of bandwidth available the
+
+201
+00:07:46,960 --> 00:07:49,039
+delay associated with the link are two
+
+202
+00:07:49,039 --> 00:07:51,360
+examples of link cost metrics
+
+203
+00:07:51,360 --> 00:07:53,360
+and finally one of the most recent
+
+204
+00:07:53,360 --> 00:07:54,879
+innovations in ospf
+
+205
+00:07:54,879 --> 00:07:57,599
+really a needed innovation is that all
+
+206
+00:07:57,599 --> 00:07:58,960
+ospf messages
+
+207
+00:07:58,960 --> 00:08:02,400
+are authenticated ospf can also
+
+208
+00:08:02,400 --> 00:08:04,560
+operate in what's called a hierarchical
+
+209
+00:08:04,560 --> 00:08:06,960
+mode ospf hierarchies have
+
+210
+00:08:06,960 --> 00:08:09,440
+two levels there's a local area you can
+
+211
+00:08:09,440 --> 00:08:10,800
+see here in the figure
+
+212
+00:08:10,800 --> 00:08:13,840
+three areas area one two and three as
+
+213
+00:08:13,840 --> 00:08:15,280
+well as a backbone
+
+214
+00:08:15,280 --> 00:08:17,280
+and ling state advertisements as part of
+
+215
+00:08:17,280 --> 00:08:19,120
+the classic link state algorithm
+
+216
+00:08:19,120 --> 00:08:21,599
+are now only going to be flooded within
+
+217
+00:08:21,599 --> 00:08:22,400
+an area
+
+218
+00:08:22,400 --> 00:08:25,120
+or within a backbone so you can see how
+
+219
+00:08:25,120 --> 00:08:27,199
+this hierarchical structure is going to
+
+220
+00:08:27,199 --> 00:08:29,840
+scope the amount of information that
+
+221
+00:08:29,840 --> 00:08:30,720
+flows
+
+222
+00:08:30,720 --> 00:08:32,479
+among the routers in the entire
+
+223
+00:08:32,479 --> 00:08:34,399
+hierarchical network
+
+224
+00:08:34,399 --> 00:08:36,399
+each node is going to have detailed
+
+225
+00:08:36,399 --> 00:08:37,599
+information about the
+
+226
+00:08:37,599 --> 00:08:40,880
+full topology within its area or within
+
+227
+00:08:40,880 --> 00:08:42,000
+its backbone
+
+228
+00:08:42,000 --> 00:08:44,240
+so the question is how do you know how
+
+229
+00:08:44,240 --> 00:08:45,200
+to route to
+
+230
+00:08:45,200 --> 00:08:47,200
+other nodes that are not part of your
+
+231
+00:08:47,200 --> 00:08:49,360
+area or not in the backbone
+
+232
+00:08:49,360 --> 00:08:51,519
+this is the role of the area border
+
+233
+00:08:51,519 --> 00:08:53,519
+routers an area border router is going
+
+234
+00:08:53,519 --> 00:08:55,120
+to summarize distances
+
+235
+00:08:55,120 --> 00:08:57,679
+to other destinations in its own area
+
+236
+00:08:57,679 --> 00:08:59,760
+and advertise this to other nodes in the
+
+237
+00:08:59,760 --> 00:09:00,720
+backbone
+
+238
+00:09:00,720 --> 00:09:02,480
+the local routers in an area are going
+
+239
+00:09:02,480 --> 00:09:04,559
+to perform just like classic
+
+240
+00:09:04,559 --> 00:09:06,080
+link state algorithms they're going to
+
+241
+00:09:06,080 --> 00:09:07,760
+flood link state information
+
+242
+00:09:07,760 --> 00:09:09,920
+within the area they're going to compute
+
+243
+00:09:09,920 --> 00:09:11,600
+routing within the area
+
+244
+00:09:11,600 --> 00:09:13,040
+and they're going to forward packets
+
+245
+00:09:13,040 --> 00:09:15,200
+that need to go outside the area
+
+246
+00:09:15,200 --> 00:09:17,920
+to the area border router in the
+
+247
+00:09:17,920 --> 00:09:18,880
+backbone we see
+
+248
+00:09:18,880 --> 00:09:20,720
+two types of routers we see a boundary
+
+249
+00:09:20,720 --> 00:09:23,120
+router that's going to connect this
+
+250
+00:09:23,120 --> 00:09:26,399
+hierarchical ospf network to the larger
+
+251
+00:09:26,399 --> 00:09:28,240
+outside world to connect to other
+
+252
+00:09:28,240 --> 00:09:30,480
+autonomous systems and then within the
+
+253
+00:09:30,480 --> 00:09:32,399
+backbone there are backbone routers that
+
+254
+00:09:32,399 --> 00:09:34,320
+are going to run ospf they're going to
+
+255
+00:09:34,320 --> 00:09:36,720
+flood link state information but will do
+
+256
+00:09:36,720 --> 00:09:39,440
+so only within the backbone
+
+257
+00:09:39,440 --> 00:09:41,440
+well that wraps up the first of our two
+
+258
+00:09:41,440 --> 00:09:43,200
+sections on the practice of
+
+259
+00:09:43,200 --> 00:09:45,839
+internet routing protocols we saw how
+
+260
+00:09:45,839 --> 00:09:46,640
+the issues of
+
+261
+00:09:46,640 --> 00:09:49,519
+scale and autonomy are really important
+
+262
+00:09:49,519 --> 00:09:51,440
+considerations in designing
+
+263
+00:09:51,440 --> 00:09:53,920
+how internet routing works we took a
+
+264
+00:09:53,920 --> 00:09:54,720
+look at one
+
+265
+00:09:54,720 --> 00:09:57,440
+in tri domain routing protocol the open
+
+266
+00:09:57,440 --> 00:09:58,559
+shortest path first
+
+267
+00:09:58,559 --> 00:10:01,440
+ospf protocol that's widely used in the
+
+268
+00:10:01,440 --> 00:10:02,559
+internet today
+
+269
+00:10:02,559 --> 00:10:04,000
+coming up in the next section we're
+
+270
+00:10:04,000 --> 00:10:06,240
+going to take a look at an inter
+
+271
+00:10:06,240 --> 00:10:08,720
+domain routing protocol the border
+
+272
+00:10:08,720 --> 00:10:10,078
+gateway protocol
+
+273
+00:10:10,078 --> 00:10:13,839
+bgp there's only one inter domain
+
+274
+00:10:13,839 --> 00:10:14,800
+routing protocol
+
+275
+00:10:14,800 --> 00:10:16,399
+in use in the internet and for that
+
+276
+00:10:16,399 --> 00:10:19,040
+reason bgp is sometimes referred to as
+
+277
+00:10:19,040 --> 00:10:19,920
+the glue
+
+278
+00:10:19,920 --> 00:10:22,078
+that holds the internet together because
+
+279
+00:10:22,078 --> 00:10:23,279
+it's bgp
+
+280
+00:10:23,279 --> 00:10:25,600
+that determines how routing is done
+
+281
+00:10:25,600 --> 00:10:44,790
+among  separate autonomous systems
+

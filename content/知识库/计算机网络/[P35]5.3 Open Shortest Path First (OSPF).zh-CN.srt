@@ -1,0 +1,1484 @@
+﻿1
+00:00:00,000 --> 00:00:10,639
+【音乐】上一节我们学习路由
+[Music]
+
+2
+00:00:10,639 --> 00:00:12,559
+【音乐】上一节我们学习路由
+in the last section our study of routing was primarily theoretical took a look
+
+3
+00:00:12,559 --> 00:00:16,400
+主要是理论性的研究了路由算法
+in the last section our study of routing was primarily theoretical took a look
+
+4
+00:00:16,400 --> 00:00:20,640
+集中式和分布式计算最小成本路径
+at routing algorithms both centralized and distributed for computing minimum cost paths from source
+
+5
+00:00:20,640 --> 00:00:22,320
+本节中的源到目的地，下一节我们将进行
+at routing algorithms both centralized and distributed for computing minimum cost paths from source
+
+6
+00:00:22,320 --> 00:00:24,079
+本节中的源到目的地，下一节我们将进行
+to destination in this section and the next we're going to look at putting
+
+7
+00:00:24,079 --> 00:00:26,320
+考虑将这些原则付诸实践，我将开始
+to destination in this section and the next we're going to look at putting
+
+8
+00:00:26,320 --> 00:00:28,480
+考虑将这些原则付诸实践，我将开始
+these principles into practice i'm going to start by looking at two particular considerations
+
+9
+00:00:28,480 --> 00:00:33,120
+着眼于规模和自主权的两个特定考虑因素
+these principles into practice i'm going to start by looking at two particular considerations
+
+10
+00:00:33,120 --> 00:00:36,479
+这对于将这些原则付诸实践非常重要
+scale and autonomy that are really important in putting these principles into practice for
+
+11
+00:00:36,479 --> 00:00:38,709
+为了规模，当字面上存在时，我们如何进行路由
+scale how do we do routing when
+
+12
+00:00:38,709 --> 00:00:38,719
+为了规模，当字面上存在时，我们如何进行路由
+for scale how do we do routing when
+
+13
+00:00:38,719 --> 00:00:39,680
+为了规模，当字面上存在时，我们如何进行路由
+there are literally billions of endpoints to be routed to autonomy has to do
+
+14
+00:00:39,680 --> 00:00:44,800
+要路由到自治的数十亿端点与允许网络有关
+there are literally billions of endpoints to be routed to autonomy has to do
+
+15
+00:00:44,800 --> 00:00:45,680
+经理和操作员选择路由的完成方式
+there are literally billions of endpoints to be routed to autonomy has to do
+
+16
+00:00:45,680 --> 00:00:48,000
+经理和操作员选择路由的完成方式
+with allowing network managers and operators to choose how routing's done both within their
+
+17
+00:00:48,000 --> 00:00:50,960
+在他们自己的网络内以及如何路由
+with allowing network managers and operators to choose how routing's done both within their
+
+18
+00:00:50,960 --> 00:00:54,879
+对远程网络也完成了我们将介绍两个路由
+own network and how routing is done to distant networks as well we're going
+
+19
+00:00:54,879 --> 00:00:59,600
+此处的协议开放最短路径优先 ospf 路由
+to cover two routing protocols here the open shortest path first ospf routing algorithm
+
+20
+00:00:59,600 --> 00:01:03,199
+控制路由的算法路由协议
+to cover two routing protocols here the open shortest path first ospf routing algorithm
+
+21
+00:01:03,199 --> 00:01:03,920
+在一个网络中，我们还将介绍
+to cover two routing protocols here the open shortest path first ospf routing algorithm
+
+22
+00:01:03,920 --> 00:01:06,319
+在一个网络中，我们还将介绍
+routing protocol for controlling routing within a network then we're also going to cover
+
+23
+00:01:06,319 --> 00:01:07,680
+在下一节中，边界网关协议 bgp 用于
+routing protocol for controlling routing within a network then we're also going to cover
+
+24
+00:01:07,680 --> 00:01:10,720
+在下一节中，边界网关协议 bgp 用于
+in the following section the border gateway protocol bgp for routing among networks so
+
+25
+00:01:10,720 --> 00:01:13,920
+在网络之间路由，所以我们为什么不得到
+in the following section the border gateway protocol bgp for routing among networks so
+
+26
+00:01:13,920 --> 00:01:17,280
+开始，我们将开始研究这个问题
+why don't we get started and we're going to start with looking at this
+
+27
+00:01:17,280 --> 00:01:20,479
+规模和自治我们迄今为止对路由算法的研究
+why don't we get started and we're going to start with looking at this
+
+28
+00:01:20,479 --> 00:01:22,640
+规模和自治我们迄今为止对路由算法的研究
+issue of scale and also autonomy our study of routing algorithms so far has
+
+29
+00:01:22,640 --> 00:01:23,840
+已经非常理想化了我们已经考虑了网络
+issue of scale and also autonomy our study of routing algorithms so far has
+
+30
+00:01:23,840 --> 00:01:26,240
+已经非常理想化了我们已经考虑了网络
+been pretty idealized we've considered the network as sort of a sea of indistinguishable
+
+31
+00:01:26,240 --> 00:01:29,759
+就像一片难以区分的路由器的海洋
+been pretty idealized we've considered the network as sort of a sea of indistinguishable
+
+32
+00:01:29,759 --> 00:01:30,959
+通过链接连接我们只是想找到最短路径
+been pretty idealized we've considered the network as sort of a sea of indistinguishable
+
+33
+00:01:30,959 --> 00:01:33,438
+通过链接连接我们只是想找到最短路径
+routers that were connected by links we simply wanted to find a shortest path
+
+34
+00:01:33,438 --> 00:01:35,360
+从源路由器到目的路由器
+from a source router to a destination
+
+35
+00:01:35,360 --> 00:01:36,078
+从源路由器到目的路由器
+router
+
+36
+00:01:36,078 --> 00:01:37,759
+实际上，事情比那要复杂一点
+well in practice things are a little bit
+
+37
+00:01:37,759 --> 00:01:39,520
+实际上，事情比那要复杂一点
+more complicated than that
+
+38
+00:01:39,520 --> 00:01:41,759
+它们主要因规模问题而变得复杂
+and they're complicated primarily by the
+
+39
+00:01:41,759 --> 00:01:43,200
+它们主要因规模问题而变得复杂
+issue of scale
+
+40
+00:01:43,200 --> 00:01:46,319
+我们如何能够路由到数十亿个 n 主机和数百个
+how is it that we can route to literally
+
+41
+00:01:46,319 --> 00:01:48,799
+我们如何能够路由到数十亿个 n 主机和数百个
+billions of n-hosts and hundreds of
+
+42
+00:01:48,799 --> 00:01:49,600
+数以千计的目标网络，如果你认为
+thousands
+
+43
+00:01:49,600 --> 00:01:51,840
+数以千计的目标网络，如果你认为
+of destination networks if you think
+
+44
+00:01:51,840 --> 00:01:53,759
+关于它，路由器的转发表不可能容纳十亿
+about it a router's forwarding table
+
+45
+00:01:53,759 --> 00:01:55,920
+关于它，路由器的转发表不可能容纳十亿
+couldn't possibly hold a billion
+
+46
+00:01:55,920 --> 00:01:57,520
+转发所有目标主机的条目
+forwarding entries for all of the
+
+47
+00:01:57,520 --> 00:01:59,040
+转发所有目标主机的条目
+destination hosts
+
+48
+00:01:59,040 --> 00:02:00,799
+类似地，当我们考虑路由算法交换时
+and similarly when we think about a
+
+49
+00:02:00,799 --> 00:02:02,640
+类似地，当我们考虑路由算法交换时
+routing algorithm exchanging
+
+50
+00:02:02,640 --> 00:02:04,479
+距离向量或链接状态信息字面上与
+distance vector or link state
+
+51
+00:02:04,479 --> 00:02:06,159
+距离向量或链接状态信息字面上与
+information literally with
+
+52
+00:02:06,159 --> 00:02:08,479
+数以百万计的其他实体是不可扩展的，用完所有的弯曲
+millions of other entities just isn't
+
+53
+00:02:08,479 --> 00:02:10,560
+数以百万计的其他实体是不可扩展的，用完所有的弯曲
+scalable use up all the bend within the
+
+54
+00:02:10,560 --> 00:02:11,120
+网络仅用于控制目的
+network
+
+55
+00:02:11,120 --> 00:02:14,160
+网络仅用于控制目的
+just for control purposes
+
+56
+00:02:14,160 --> 00:02:16,160
+然后是自治的问题，这可能会少一点
+and then there's the issue of autonomy
+
+57
+00:02:16,160 --> 00:02:17,840
+然后是自治的问题，这可能会少一点
+and this might be a little less
+
+58
+00:02:17,840 --> 00:02:20,560
+显然，请记住互联网是一个由网络组成的网络，
+obvious remember the internet is a
+
+59
+00:02:20,560 --> 00:02:22,239
+显然，请记住互联网是一个由网络组成的网络，
+network of networks and
+
+60
+00:02:22,239 --> 00:02:25,040
+每个网络都有一个所有者运营商到什么程度
+each network has an owner operator to
+
+61
+00:02:25,040 --> 00:02:25,840
+每个网络都有一个所有者运营商到什么程度
+what extent
+
+62
+00:02:25,840 --> 00:02:28,400
+该网络所有者运营商可以或应该是
+can or should that network owner
+
+63
+00:02:28,400 --> 00:02:29,200
+该网络所有者运营商可以或应该是
+operator be
+
+64
+00:02:29,200 --> 00:02:31,919
+告诉如何路由流量 网络相对于它的自主权
+told how to route traffic what autonomy
+
+65
+00:02:31,919 --> 00:02:33,760
+告诉如何路由流量 网络相对于它的自主权
+does a network have with respect to its
+
+66
+00:02:33,760 --> 00:02:34,400
+路由我们会看到互联网方法是
+routing
+
+67
+00:02:34,400 --> 00:02:36,400
+路由我们会看到互联网方法是
+we'll see that the internet approach is
+
+68
+00:02:36,400 --> 00:02:37,680
+首先网络可以选择使用任何东西
+twofold first
+
+69
+00:02:37,680 --> 00:02:39,519
+首先网络可以选择使用任何东西
+a network can choose to use whatever
+
+70
+00:02:39,519 --> 00:02:41,200
+它在自己的网络中想要的路由协议，其次是一个
+routing protocol it wants
+
+71
+00:02:41,200 --> 00:02:43,840
+它在自己的网络中想要的路由协议，其次是一个
+in its own network and secondly a
+
+72
+00:02:43,840 --> 00:02:45,519
+网络将能够控制来自其客户网络的流量
+network will be able to control how
+
+73
+00:02:45,519 --> 00:02:47,680
+网络将能够控制来自其客户网络的流量
+traffic from its customer networks
+
+74
+00:02:47,680 --> 00:02:50,480
+路由到目的地以及它如何作为网络
+is routed towards a destination and how
+
+75
+00:02:50,480 --> 00:02:51,919
+路由到目的地以及它如何作为网络
+it as a network
+
+76
+00:02:51,919 --> 00:02:54,160
+路由它承载的由其他网络发送给它的流量
+routes traffic that it carries that's
+
+77
+00:02:54,160 --> 00:02:56,160
+路由它承载的由其他网络发送给它的流量
+sent to it by other networks
+
+78
+00:02:56,160 --> 00:02:58,000
+好吧，让我们从缩放问题开始
+well let's begin with the issue of
+
+79
+00:02:58,000 --> 00:03:00,239
+好吧，让我们从缩放问题开始
+scaling
+
+80
+00:03:00,239 --> 00:03:02,480
+互联网扩展路由的方法始于
+the internet approach to scaling routing
+
+81
+00:03:02,480 --> 00:03:04,239
+互联网扩展路由的方法始于
+begins with the notion of
+
+82
+00:03:04,239 --> 00:03:06,879
+将路由器聚合到网络或有时称为的区域中
+aggregating routers into networks or
+
+83
+00:03:06,879 --> 00:03:08,959
+将路由器聚合到网络或有时称为的区域中
+into regions that are sometimes called
+
+84
+00:03:08,959 --> 00:03:11,840
+自治系统或域，正如我们将看到的
+autonomous systems or domains and as
+
+85
+00:03:11,840 --> 00:03:12,480
+自治系统或域，正如我们将看到的
+we'll see
+
+86
+00:03:12,480 --> 00:03:14,639
+基本上有两种类型的路由 有用于路由的路由协议
+there's basically two types of routing
+
+87
+00:03:14,639 --> 00:03:16,480
+基本上有两种类型的路由 有用于路由的路由协议
+there's routing protocols for routing
+
+88
+00:03:16,480 --> 00:03:17,760
+在一个域内，并且有路由协议
+within a domain
+
+89
+00:03:17,760 --> 00:03:19,360
+在一个域内，并且有路由协议
+and there are routing protocols for
+
+90
+00:03:19,360 --> 00:03:21,280
+域之间的路由，正如我们将看到的那样
+routing among domains
+
+91
+00:03:21,280 --> 00:03:23,040
+域之间的路由，正如我们将看到的那样
+and as we'll see there are different
+
+92
+00:03:23,040 --> 00:03:24,400
+每个协议，让我们从概念开始
+protocols for each
+
+93
+00:03:24,400 --> 00:03:26,000
+每个协议，让我们从概念开始
+and let's start with the notion of
+
+94
+00:03:26,000 --> 00:03:28,239
+在自治系统内的网络内路由，这称为
+routing within a network within
+
+95
+00:03:28,239 --> 00:03:30,639
+在自治系统内的网络内路由，这称为
+an autonomous system this is known as
+
+96
+00:03:30,639 --> 00:03:31,599
+域内路由和中继域内
+intra
+
+97
+00:03:31,599 --> 00:03:34,239
+域内路由和中继域内
+domain routing and in in trunk domain
+
+98
+00:03:34,239 --> 00:03:35,040
+路由域内的所有路由器
+routing
+
+99
+00:03:35,040 --> 00:03:37,200
+路由域内的所有路由器
+all routers within the domain within the
+
+100
+00:03:37,200 --> 00:03:39,280
+网络内的自治系统都在执行相同的路由
+autonomous system within the network
+
+101
+00:03:39,280 --> 00:03:41,680
+网络内的自治系统都在执行相同的路由
+are all executing the same routing
+
+102
+00:03:41,680 --> 00:03:42,560
+协议不同但网络不同
+protocols
+
+103
+00:03:42,560 --> 00:03:44,239
+协议不同但网络不同
+but different networks different
+
+104
+00:03:44,239 --> 00:03:46,319
+自治系统可以选择自己的域内路由协议
+autonomous systems can choose
+
+105
+00:03:46,319 --> 00:03:49,599
+自治系统可以选择自己的域内路由协议
+their own intra domain routing protocol
+
+106
+00:03:49,599 --> 00:03:51,599
+正如我们将看到的每个自治系统的边缘
+and as we'll see the edge of every
+
+107
+00:03:51,599 --> 00:03:52,720
+正如我们将看到的每个自治系统的边缘
+autonomous system
+
+108
+00:03:52,720 --> 00:03:55,040
+是一种特殊类型的路由器，称为网关
+is a specialized type of router known as
+
+109
+00:03:55,040 --> 00:03:55,840
+是一种特殊类型的路由器，称为网关
+a gateway
+
+110
+00:03:55,840 --> 00:03:58,000
+将一个自治系统连接到另一个
+that will connect one autonomous system
+
+111
+00:03:58,000 --> 00:04:00,080
+将一个自治系统连接到另一个
+to another
+
+112
+00:04:00,080 --> 00:04:02,720
+然后就是所谓的内部
+and then there's inter-as otherwise
+
+113
+00:04:02,720 --> 00:04:03,280
+然后就是所谓的内部
+known as
+
+114
+00:04:03,280 --> 00:04:06,239
+自治系统间路由的域间路由
+inter domain routing for routing among
+
+115
+00:04:06,239 --> 00:04:07,840
+自治系统间路由的域间路由
+autonomous systems
+
+116
+00:04:07,840 --> 00:04:09,840
+这里网络的网关将执行域间路由
+here a network's gateway is going to
+
+117
+00:04:09,840 --> 00:04:12,159
+这里网络的网关将执行域间路由
+perform inter domain routing
+
+118
+00:04:12,159 --> 00:04:14,959
+以及参与域内路由
+as well as participate in intra domain
+
+119
+00:04:14,959 --> 00:04:15,599
+以及参与域内路由
+routing
+
+120
+00:04:15,599 --> 00:04:18,799
+在它自己的自治系统中，这是一个具有三个自治系统的网络
+within its own autonomous system here's
+
+121
+00:04:18,799 --> 00:04:21,120
+在它自己的自治系统中，这是一个具有三个自治系统的网络
+a network with three autonomous systems
+
+122
+00:04:21,120 --> 00:04:24,240
+as1 as2 和 as3 三个相互连接的网络
+as1 as2 and as3
+
+123
+00:04:24,240 --> 00:04:27,199
+as1 as2 和 as3 三个相互连接的网络
+three interconnected networks each as
+
+124
+00:04:27,199 --> 00:04:28,120
+每个都有自己的域内路由协议
+has its own
+
+125
+00:04:28,120 --> 00:04:30,960
+每个都有自己的域内路由协议
+intra-domain routing protocol each as
+
+126
+00:04:30,960 --> 00:04:31,600
+可以使用不同的域内路由协议
+could use a
+
+127
+00:04:31,600 --> 00:04:33,520
+可以使用不同的域内路由协议
+different intra-domain routing protocol
+
+128
+00:04:33,520 --> 00:04:35,040
+这对其他驴来说并不重要，因为它是
+it doesn't really matter
+
+129
+00:04:35,040 --> 00:04:38,080
+这对其他驴来说并不重要，因为它是
+to the other asses since that as is
+
+130
+00:04:38,080 --> 00:04:42,320
+只是在域内路由，我们在这里看到了内部
+just routing within intra-domain and we
+
+131
+00:04:42,320 --> 00:04:43,919
+只是在域内路由，我们在这里看到了内部
+see here the inter
+
+132
+00:04:43,919 --> 00:04:46,080
+自治系统路由协议，负责在
+autonomous system routing protocol
+
+133
+00:04:46,080 --> 00:04:48,240
+自治系统路由协议，负责在
+that's responsible for routing between
+
+134
+00:04:48,240 --> 00:04:48,479
+域之间的域内路由
+and
+
+135
+00:04:48,479 --> 00:04:51,360
+域之间的域内路由
+among domains the intra domain routing
+
+136
+00:04:51,360 --> 00:04:53,680
+协议将用于填充路由器的转发表
+protocol will be used to populate
+
+137
+00:04:53,680 --> 00:04:55,440
+协议将用于填充路由器的转发表
+a router's forwarding table for
+
+138
+00:04:55,440 --> 00:04:58,080
+网络内的目的地，但目的地的流量呢？
+destinations within the network
+
+139
+00:04:58,080 --> 00:04:59,839
+网络内的目的地，但目的地的流量呢？
+but what about traffic destined to
+
+140
+00:04:59,839 --> 00:05:01,440
+在网络之外，这里是域间的域间
+outside the network
+
+141
+00:05:01,440 --> 00:05:05,039
+在网络之外，这里是域间的域间
+it's here that the inter-as inter-domain
+
+142
+00:05:05,039 --> 00:05:06,240
+路由协议和一些内部路由
+routing protocol
+
+143
+00:05:06,240 --> 00:05:08,240
+路由协议和一些内部路由
+and a bit of the intra-as routing
+
+144
+00:05:08,240 --> 00:05:10,560
+协议将用于填充路由器的转发表
+protocol will be used to populate a
+
+145
+00:05:10,560 --> 00:05:12,080
+协议将用于填充路由器的转发表
+router's forwarding table
+
+146
+00:05:12,080 --> 00:05:14,639
+对于网络外的目的地，但让我们从路由和
+for destinations outside the network but
+
+147
+00:05:14,639 --> 00:05:16,560
+对于网络外的目的地，但让我们从路由和
+let's start with the case of routing and
+
+148
+00:05:16,560 --> 00:05:18,880
+转发到目的地，因为那里更容易
+forwarding to destinations within
+
+149
+00:05:18,880 --> 00:05:21,919
+转发到目的地，因为那里更容易
+the as since that's a bit easier there
+
+150
+00:05:21,919 --> 00:05:22,720
+只有三个域内路由协议
+have only been
+
+151
+00:05:22,720 --> 00:05:25,440
+只有三个域内路由协议
+three intra domain routing protocols
+
+152
+00:05:25,440 --> 00:05:27,520
+在实践中已经采用的第一个是路由信息
+that have been adopted in practice
+
+153
+00:05:27,520 --> 00:05:29,520
+在实践中已经采用的第一个是路由信息
+the first is the routing information
+
+154
+00:05:29,520 --> 00:05:32,400
+简单地称为 rip rip 的协议是在 1980 年代早期发明的，并且
+protocol simply known as rip rip
+
+155
+00:05:32,400 --> 00:05:35,360
+简单地称为 rip rip 的协议是在 1980 年代早期发明的，并且
+was invented in the early 1980s and
+
+156
+00:05:35,360 --> 00:05:37,160
+在 RFC 1723 中标准化，这是一个经典的距离向量
+standardized in rfc
+
+157
+00:05:37,160 --> 00:05:40,479
+在 RFC 1723 中标准化，这是一个经典的距离向量
+1723 it's a classic distance vector
+
+158
+00:05:40,479 --> 00:05:42,880
+每 30 次定期交换距离矢量协议的协议
+protocol where distance vector protocols
+
+159
+00:05:42,880 --> 00:05:45,279
+每 30 次定期交换距离矢量协议的协议
+are exchanged periodically every 30
+
+160
+00:05:45,279 --> 00:05:46,000
+秒 它在 80 年代 90 年代被广泛使用
+seconds
+
+161
+00:05:46,000 --> 00:05:48,400
+秒 它在 80 年代 90 年代被广泛使用
+it was used widely in the 80s the 90s
+
+162
+00:05:48,400 --> 00:05:50,000
+并进入 oos 但 rip 最终被超越
+and into the oos
+
+163
+00:05:50,000 --> 00:05:52,479
+并进入 oos 但 rip 最终被超越
+but rip was eventually overtaken as an
+
+164
+00:05:52,479 --> 00:05:54,479
+开放最短路径优先或ospf的域内路由协议  ospf 是使用 dijkstra 算法的经典链路状态协议
+intra-domain routing protocol
+
+165
+00:05:54,479 --> 00:05:57,839
+开放最短路径优先或ospf的域内路由协议  ospf 是使用 dijkstra 算法的经典链路状态协议
+by the open shortest path first or ospf
+
+166
+00:05:57,839 --> 00:06:01,919
+开放最短路径优先或ospf的域内路由协议  ospf 是使用 dijkstra 算法的经典链路状态协议
+protocol ospf is a classic link state
+
+167
+00:06:01,919 --> 00:06:03,919
+开放最短路径优先或ospf的域内路由协议  ospf 是使用 dijkstra 算法的经典链路状态协议
+protocol that uses dijkstra's algorithm
+
+168
+00:06:03,919 --> 00:06:06,000
+为了计算最短路径，有一个称为 isis 的相关协议
+to compute shortest paths
+
+169
+00:06:06,000 --> 00:06:09,360
+为了计算最短路径，有一个称为 isis 的相关协议
+there's a related protocol known as isis
+
+170
+00:06:09,360 --> 00:06:11,440
+中间系统到中间系统路由
+intermediate system to intermediate
+
+171
+00:06:11,440 --> 00:06:12,960
+中间系统到中间系统路由
+system routing that's
+
+172
+00:06:12,960 --> 00:06:15,839
+非常相似，几乎与 ospf 相同，但由国际标准化
+very similar almost identical to ospf
+
+173
+00:06:15,839 --> 00:06:17,759
+非常相似，几乎与 ospf 相同，但由国际标准化
+but standardized by the international
+
+174
+00:06:17,759 --> 00:06:19,360
+标准组织 iso 而不是 ietf 并且只是一个
+standards organization
+
+175
+00:06:19,360 --> 00:06:22,560
+标准组织 iso 而不是 ietf 并且只是一个
+iso rather than the ietf and in just a
+
+176
+00:06:22,560 --> 00:06:24,080
+其次，我们要仔细看看
+second we're going to take a little bit
+
+177
+00:06:24,080 --> 00:06:25,039
+其次，我们要仔细看看
+closer look
+
+178
+00:06:25,039 --> 00:06:27,600
+在 ospf 因为现在它是最
+at ospf because really right now it's
+
+179
+00:06:27,600 --> 00:06:28,080
+在 ospf 因为现在它是最
+the most
+
+180
+00:06:28,080 --> 00:06:30,880
+在实践中广泛部署的域内路由协议
+widely deployed intra domain routing
+
+181
+00:06:30,880 --> 00:06:33,120
+在实践中广泛部署的域内路由协议
+protocol in practice
+
+182
+00:06:33,120 --> 00:06:35,919
+第三个常用的内部路由协议
+the third commonly deployed intra-as
+
+183
+00:06:35,919 --> 00:06:37,199
+第三个常用的内部路由协议
+routing protocol
+
+184
+00:06:37,199 --> 00:06:40,800
+eigrp 是增强型内部网关路由协议吗
+is eigrp the enhanced interior gateway
+
+185
+00:06:40,800 --> 00:06:42,080
+eigrp 是增强型内部网关路由协议吗
+routing protocol
+
+186
+00:06:42,080 --> 00:06:44,240
+它也是基于距离向量的，实际上它是
+it's also distance vector based and
+
+187
+00:06:44,240 --> 00:06:45,120
+它也是基于距离向量的，实际上它是
+actually it was
+
+188
+00:06:45,120 --> 00:06:47,919
+几十年来，您实际上无法在 cisco 内部专有
+formerly proprietary within cisco for
+
+189
+00:06:47,919 --> 00:06:49,199
+几十年来，您实际上无法在 cisco 内部专有
+decades you couldn't actually
+
+190
+00:06:49,199 --> 00:06:52,639
+弄清楚 eigrp 到底是什么，但是在 2013 年 cisco 开源了 eigrp
+figure out exactly what was in eigrp
+
+191
+00:06:52,639 --> 00:06:56,960
+弄清楚 eigrp 到底是什么，但是在 2013 年 cisco 开源了 eigrp
+however in 2013 cisco open sourced eigrp
+
+192
+00:06:56,960 --> 00:06:59,680
+它变成了一个开放的协议 现在让我们来看看 ospf
+and it became an open protocol now let's
+
+193
+00:06:59,680 --> 00:07:01,520
+它变成了一个开放的协议 现在让我们来看看 ospf
+take a look at the ospf
+
+194
+00:07:01,520 --> 00:07:03,919
+开放最短路径优先路由协议
+open shortest path first routing
+
+195
+00:07:03,919 --> 00:07:04,800
+开放最短路径优先路由协议
+protocol
+
+196
+00:07:04,800 --> 00:07:07,839
+on ospf 代表开放意味着规范
+on ospf stands for open meaning that the
+
+197
+00:07:07,839 --> 00:07:08,960
+on ospf 代表开放意味着规范
+specifications
+
+198
+00:07:08,960 --> 00:07:12,240
+公开可用的 ospf 是每个路由器都在使用的经典链路状态协议
+publicly available ospf is a classic
+
+199
+00:07:12,240 --> 00:07:14,880
+公开可用的 ospf 是每个路由器都在使用的经典链路状态协议
+link state protocol each router is going
+
+200
+00:07:14,880 --> 00:07:16,720
+泛滥 ospf 链接状态广告
+to flood ospf
+
+201
+00:07:16,720 --> 00:07:18,720
+泛滥 ospf 链接状态广告
+link state advertisements across the
+
+202
+00:07:18,720 --> 00:07:21,120
+每个 ospf 路由器将要访问的整个自治系统
+entire autonomous system
+
+203
+00:07:21,120 --> 00:07:23,759
+每个 ospf 路由器将要访问的整个自治系统
+that is each ospf router is going to
+
+204
+00:07:23,759 --> 00:07:24,240
+关于每个附加的洪水信息
+flood
+
+205
+00:07:24,240 --> 00:07:26,400
+关于每个附加的洪水信息
+information about each of its attached
+
+206
+00:07:26,400 --> 00:07:28,240
+将传播到自治中的所有其他路由器的链接
+links that will propagate to
+
+207
+00:07:28,240 --> 00:07:30,479
+将传播到自治中的所有其他路由器的链接
+all other routers in the autonomous
+
+208
+00:07:30,479 --> 00:07:31,840
+系统等在一个经典的链接状态算法
+system and so
+
+209
+00:07:31,840 --> 00:07:34,000
+系统等在一个经典的链接状态算法
+as in a classic link state algorithm
+
+210
+00:07:34,000 --> 00:07:35,120
+每个路由器都有完整的拓扑信息 ospf 然后使用
+each router has
+
+211
+00:07:35,120 --> 00:07:39,039
+每个路由器都有完整的拓扑信息 ospf 然后使用
+full topology information ospf then uses
+
+212
+00:07:39,039 --> 00:07:41,360
+计算每个转发表的类似 dijkstra 的算法
+dijkstra-like algorithm to compute each
+
+213
+00:07:41,360 --> 00:07:42,880
+计算每个转发表的类似 dijkstra 的算法
+forwarding table
+
+214
+00:07:42,880 --> 00:07:45,280
+多个链路成本指标是可能的 可用带宽量
+multiple link cost metrics are possible
+
+215
+00:07:45,280 --> 00:07:46,960
+多个链路成本指标是可能的 可用带宽量
+the amount of bandwidth available the
+
+216
+00:07:46,960 --> 00:07:49,039
+与链路相关的延迟是链路成本度量的两个示例
+delay associated with the link are two
+
+217
+00:07:49,039 --> 00:07:51,360
+与链路相关的延迟是链路成本度量的两个示例
+examples of link cost metrics
+
+218
+00:07:51,360 --> 00:07:53,360
+最后是 ospf 中的最新创新之一
+and finally one of the most recent
+
+219
+00:07:53,360 --> 00:07:54,879
+最后是 ospf 中的最新创新之一
+innovations in ospf
+
+220
+00:07:54,879 --> 00:07:57,599
+真正需要的创新是所有 ospf 消息
+really a needed innovation is that all
+
+221
+00:07:57,599 --> 00:07:58,960
+真正需要的创新是所有 ospf 消息
+ospf messages
+
+222
+00:07:58,960 --> 00:08:02,400
+经过身份验证的 ospf 也可以在所谓的层次结构中运行
+are authenticated ospf can also
+
+223
+00:08:02,400 --> 00:08:04,560
+经过身份验证的 ospf 也可以在所谓的层次结构中运行
+operate in what's called a hierarchical
+
+224
+00:08:04,560 --> 00:08:06,960
+模式 ospf 层次结构有两个级别，您可以在本地区域
+mode ospf hierarchies have
+
+225
+00:08:06,960 --> 00:08:09,440
+模式 ospf 层次结构有两个级别，您可以在本地区域
+two levels there's a local area you can
+
+226
+00:08:09,440 --> 00:08:10,800
+在图中看到这里的三个区域区域一二和三
+see here in the figure
+
+227
+00:08:10,800 --> 00:08:13,840
+在图中看到这里的三个区域区域一二和三
+three areas area one two and three as
+
+228
+00:08:13,840 --> 00:08:15,280
+以及骨干和岭州广告作为
+well as a backbone
+
+229
+00:08:15,280 --> 00:08:17,280
+以及骨干和岭州广告作为
+and ling state advertisements as part of
+
+230
+00:08:17,280 --> 00:08:19,120
+经典的链接状态算法现在只会被淹没在
+the classic link state algorithm
+
+231
+00:08:19,120 --> 00:08:21,599
+经典的链接状态算法现在只会被淹没在
+are now only going to be flooded within
+
+232
+00:08:21,599 --> 00:08:22,400
+一个区域或主干内，这样您就可以看到如何
+an area
+
+233
+00:08:22,400 --> 00:08:25,120
+一个区域或主干内，这样您就可以看到如何
+or within a backbone so you can see how
+
+234
+00:08:25,120 --> 00:08:27,199
+这种层次结构将限制信息量
+this hierarchical structure is going to
+
+235
+00:08:27,199 --> 00:08:29,840
+这种层次结构将限制信息量
+scope the amount of information that
+
+236
+00:08:29,840 --> 00:08:30,720
+在整个路由器之间流动
+flows
+
+237
+00:08:30,720 --> 00:08:32,479
+在整个路由器之间流动
+among the routers in the entire
+
+238
+00:08:32,479 --> 00:08:34,399
+分层网络每个节点都会有详细的
+hierarchical network
+
+239
+00:08:34,399 --> 00:08:36,399
+分层网络每个节点都会有详细的
+each node is going to have detailed
+
+240
+00:08:36,399 --> 00:08:37,599
+有关其区域内或内部的完整拓扑的信息
+information about the
+
+241
+00:08:37,599 --> 00:08:40,880
+有关其区域内或内部的完整拓扑的信息
+full topology within its area or within
+
+242
+00:08:40,880 --> 00:08:42,000
+它的骨干所以问题是你怎么知道
+its backbone
+
+243
+00:08:42,000 --> 00:08:44,240
+它的骨干所以问题是你怎么知道
+so the question is how do you know how
+
+244
+00:08:44,240 --> 00:08:45,200
+路由到不属于您的其他节点
+to route to
+
+245
+00:08:45,200 --> 00:08:47,200
+路由到不属于您的其他节点
+other nodes that are not part of your
+
+246
+00:08:47,200 --> 00:08:49,360
+区域或不在主干中 这是区域边界的作用
+area or not in the backbone
+
+247
+00:08:49,360 --> 00:08:51,519
+区域或不在主干中 这是区域边界的作用
+this is the role of the area border
+
+248
+00:08:51,519 --> 00:08:53,519
+路由器区域边界路由器将汇总距离
+routers an area border router is going
+
+249
+00:08:53,519 --> 00:08:55,120
+路由器区域边界路由器将汇总距离
+to summarize distances
+
+250
+00:08:55,120 --> 00:08:57,679
+到自己区域内的其他目的地，并将其通告给其他节点
+to other destinations in its own area
+
+251
+00:08:57,679 --> 00:08:59,760
+到自己区域内的其他目的地，并将其通告给其他节点
+and advertise this to other nodes in the
+
+252
+00:08:59,760 --> 00:09:00,720
+区域中的本地路由器正在运行的骨干网
+backbone
+
+253
+00:09:00,720 --> 00:09:02,480
+区域中的本地路由器正在运行的骨干网
+the local routers in an area are going
+
+254
+00:09:02,480 --> 00:09:04,559
+就像他们将要执行的经典链接状态算法一样执行
+to perform just like classic
+
+255
+00:09:04,559 --> 00:09:06,080
+就像他们将要执行的经典链接状态算法一样执行
+link state algorithms they're going to
+
+256
+00:09:06,080 --> 00:09:07,760
+他们将要计算的区域内的洪水链接状态信息
+flood link state information
+
+257
+00:09:07,760 --> 00:09:09,920
+他们将要计算的区域内的洪水链接状态信息
+within the area they're going to compute
+
+258
+00:09:09,920 --> 00:09:11,600
+在区域内路由，他们将转发数据包
+routing within the area
+
+259
+00:09:11,600 --> 00:09:13,040
+在区域内路由，他们将转发数据包
+and they're going to forward packets
+
+260
+00:09:13,040 --> 00:09:15,200
+需要到区域外的区域边界路由器
+that need to go outside the area
+
+261
+00:09:15,200 --> 00:09:17,920
+需要到区域外的区域边界路由器
+to the area border router in the
+
+262
+00:09:17,920 --> 00:09:18,880
+骨干网 我们看到了两种类型的路由器 我们看到了一个边界
+backbone we see
+
+263
+00:09:18,880 --> 00:09:20,720
+骨干网 我们看到了两种类型的路由器 我们看到了一个边界
+two types of routers we see a boundary
+
+264
+00:09:20,720 --> 00:09:23,120
+将这个分层 ospf 网络连接到更大的路由器
+router that's going to connect this
+
+265
+00:09:23,120 --> 00:09:26,399
+将这个分层 ospf 网络连接到更大的路由器
+hierarchical ospf network to the larger
+
+266
+00:09:26,399 --> 00:09:28,240
+外部世界连接到其他自治系统，然后在
+outside world to connect to other
+
+267
+00:09:28,240 --> 00:09:30,480
+外部世界连接到其他自治系统，然后在
+autonomous systems and then within the
+
+268
+00:09:30,480 --> 00:09:32,399
+骨干 有骨干路由器将运行 ospf 他们将要
+backbone there are backbone routers that
+
+269
+00:09:32,399 --> 00:09:34,320
+骨干 有骨干路由器将运行 ospf 他们将要
+are going to run ospf they're going to
+
+270
+00:09:34,320 --> 00:09:36,720
+泛洪链路状态信息，但只会在骨干网内这样做
+flood link state information but will do
+
+271
+00:09:36,720 --> 00:09:39,440
+泛洪链路状态信息，但只会在骨干网内这样做
+so only within the backbone
+
+272
+00:09:39,440 --> 00:09:41,440
+好吧，这结束了我们关于实践的两个部分中的第一部分
+well that wraps up the first of our two
+
+273
+00:09:41,440 --> 00:09:43,200
+好吧，这结束了我们关于实践的两个部分中的第一部分
+sections on the practice of
+
+274
+00:09:43,200 --> 00:09:45,839
+我们看到了互联网路由协议的问题
+internet routing protocols we saw how
+
+275
+00:09:45,839 --> 00:09:46,640
+我们看到了互联网路由协议的问题
+the issues of
+
+276
+00:09:46,640 --> 00:09:49,519
+规模和自主性是设计中真正重要的考虑因素
+scale and autonomy are really important
+
+277
+00:09:49,519 --> 00:09:51,440
+规模和自主性是设计中真正重要的考虑因素
+considerations in designing
+
+278
+00:09:51,440 --> 00:09:53,920
+互联网路由是如何工作的 我们看了一下
+how internet routing works we took a
+
+279
+00:09:53,920 --> 00:09:54,720
+互联网路由是如何工作的 我们看了一下
+look at one
+
+280
+00:09:54,720 --> 00:09:57,440
+三域路由协议中开放最短路径优先
+in tri domain routing protocol the open
+
+281
+00:09:57,440 --> 00:09:58,559
+三域路由协议中开放最短路径优先
+shortest path first
+
+282
+00:09:58,559 --> 00:10:01,440
+当今互联网上广泛使用的 ospf 协议
+ospf protocol that's widely used in the
+
+283
+00:10:01,440 --> 00:10:02,559
+当今互联网上广泛使用的 ospf 协议
+internet today
+
+284
+00:10:02,559 --> 00:10:04,000
+在下一节中，我们将看看国际米兰
+coming up in the next section we're
+
+285
+00:10:04,000 --> 00:10:06,240
+在下一节中，我们将看看国际米兰
+going to take a look at an inter
+
+286
+00:10:06,240 --> 00:10:08,720
+域路由协议边界网关协议
+domain routing protocol the border
+
+287
+00:10:08,720 --> 00:10:10,078
+域路由协议边界网关协议
+gateway protocol
+
+288
+00:10:10,078 --> 00:10:13,839
+bgp 只有一种域间路由协议
+bgp there's only one inter domain
+
+289
+00:10:13,839 --> 00:10:14,800
+bgp 只有一种域间路由协议
+routing protocol
+
+290
+00:10:14,800 --> 00:10:16,399
+在互联网中使用，因此 bgp 有时被称为
+in use in the internet and for that
+
+291
+00:10:16,399 --> 00:10:19,040
+在互联网中使用，因此 bgp 有时被称为
+reason bgp is sometimes referred to as
+
+292
+00:10:19,040 --> 00:10:19,920
+将互联网连接在一起的粘合剂，因为
+the glue
+
+293
+00:10:19,920 --> 00:10:22,078
+将互联网连接在一起的粘合剂，因为
+that holds the internet together because
+
+294
+00:10:22,078 --> 00:10:23,279
+bgp 决定路由是如何完成的
+it's bgp
+
+295
+00:10:23,279 --> 00:10:25,600
+bgp 决定路由是如何完成的
+that determines how routing is done
+
+296
+00:10:25,600 --> 00:10:44,790
+在独立的自治系统之间 你
+among  separate autonomous systems
+
+297
+00:10:25,600 --> 00:10:46,000
+在独立的自治系统之间 你
+
