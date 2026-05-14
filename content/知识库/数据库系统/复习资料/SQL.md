@@ -72,6 +72,13 @@ DROP TABLE R;
 | 时间 | `TIME` | `TIME '15:00:02.5'` |
 | 时间戳 | `TIMESTAMP` | `TIMESTAMP '1984-05-14 12:00:00'` |
 
+> **日期/时间操作：**
+>
+> - 日期文字必须用单引号 + 关键字：`DATE '2024-01-01'`，不能写 `'2024-01-01'`（会被当字符串）
+> - 日期可做算术：`DATE '2024-01-10' - DATE '2024-01-01'` → 9（天）
+> - 提取分量：`EXTRACT(YEAR FROM DATE '2024-01-10')` → 2024
+> - 当前时间：`CURRENT_DATE`、`CURRENT_TIME`、`CURRENT_TIMESTAMP`
+
 ---
 
 ## 三、DML — 数据操作语言
@@ -88,6 +95,27 @@ SELECT title, year
 FROM Movies
 WHERE length >= 100 AND studioName = 'Fox';
 ```
+
+### 3.1a SELECT 逻辑执行顺序
+
+理解 SQL 的关键是知道查询各子句的**逻辑执行顺序**（而非书写顺序）：
+
+```
+FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY → LIMIT
+```
+
+| 步骤 | 子句 | 作用 |
+|------|------|------|
+| 1 | FROM | 笛卡尔积生成中间表 |
+| 2 | WHERE | 逐行过滤中间表 |
+| 3 | GROUP BY | 分组 |
+| 4 | HAVING | 逐组过滤（此时可用聚合函数） |
+| 5 | SELECT | 投影列 + 计算表达式 |
+| 6 | ORDER BY | 排序（此时可引用 SELECT 中的别名） |
+| 7 | LIMIT/OFFSET | 截取部分行 |
+
+> 这就是为什么 `WHERE` 中不能用聚合函数（聚合在 GROUP BY 才发生），
+> 而 `ORDER BY` 可以用 SELECT 中的别名（这是唯一后于 SELECT 的子句）。
 
 ### 3.2 排序（ORDER BY）
 
@@ -115,6 +143,7 @@ SELECT title FROM Movies WHERE title LIKE 'x%%x%' ESCAPE 'x';  -- 转义
 - `%` 匹配任意长度（含零长度）的字符串
 - `_` 匹配单个任意字符
 - `ESCAPE` 指定转义字符
+- 单引号转义用两个单引号 `''`（不是反斜杠）
 
 ### 3.5 空值处理
 
@@ -178,6 +207,8 @@ WHERE Star1.address = Star2.address AND Star1.name < Star2.name;
 
 ## 四、连接（JOIN）
 
+### 4.1 连接类型
+
 ```sql
 -- 笛卡尔积
 SELECT * FROM R CROSS JOIN S;
@@ -192,6 +223,33 @@ SELECT * FROM U INNER JOIN V ON A < D;
 -- 带条件 + WHERE 过滤
 SELECT * FROM U INNER JOIN V ON A < D WHERE U.B <> V.B;
 ```
+
+### 4.2 INNER JOIN vs OUTER JOIN
+
+| 类型 | 保留行 | 不匹配时 |
+|------|--------|---------|
+| `INNER JOIN` | 仅匹配成功的行 | 丢弃 |
+| `LEFT OUTER JOIN` | 左表全部保留 | 右表列填 NULL |
+| `RIGHT OUTER JOIN` | 右表全部保留 | 左表列填 NULL |
+| `FULL OUTER JOIN` | 两表全部保留 | 缺失列填 NULL |
+
+> 自然连接（NATURAL JOIN）自动按同名属性匹配，**不需要写 ON**。但要注意：
+> 如果两表有多个同名属性，会全部用于匹配，可能导致意外的结果，生产环境慎用。
+
+### 4.3 JOIN 的执行语义
+
+JOIN 在逻辑上等价于：
+1. **FROM 多表** → 笛卡尔积（CROSS JOIN）
+2. **ON/WHERE 过滤** → 逐行检查条件
+
+```sql
+-- 以下三种写法结果等价（但可读性不同）：
+SELECT * FROM R, S WHERE R.x = S.x;                    -- 隐式连接
+SELECT * FROM R INNER JOIN S ON R.x = S.x;             -- 显式连接（推荐）
+SELECT * FROM R NATURAL JOIN S;                        -- 自然连接（有坑）
+```
+
+> 显式 JOIN + ON 是最推荐的写法：条件与过滤分离，可读性高，不易出错。
 
 ---
 
@@ -225,6 +283,23 @@ WHERE cert# = (
 | `s NOT IN R` | s 不等于 R 中任何值 |
 | `s > ALL R` | s 大于 R 中所有值 |
 | `s > ANY R` | s 大于 R 中至少一个值 |
+
+> **⚠️ NOT IN 的 NULL 陷阱：**
+>
+> ```sql
+> -- 如果子查询结果集中包含 NULL，NOT IN 会返回空集！
+> SELECT name FROM MovieExec
+> WHERE cert NOT IN (SELECT presC FROM Studio);  -- ⚠️ 若 presC 有 NULL，结果恒空
+> ```
+>
+> 原因：`x NOT IN (1, 2, NULL)` 等价于 `x <> 1 AND x <> 2 AND x <> NULL`。
+> 而 `x <> NULL` 结果为 UNKNOWN，AND 短路导致整体为 UNKNOWN。
+>
+> **安全的替代方案：** 使用 `NOT EXISTS`
+> ```sql
+> SELECT name FROM MovieExec
+> WHERE NOT EXISTS (SELECT 1 FROM Studio WHERE presC = cert);
+> ```
 
 ```sql
 SELECT name FROM MovieExec
@@ -279,6 +354,21 @@ SELECT COUNT(*) FROM StarsIn;
 SELECT COUNT(DISTINCT starName) FROM StarsIn;
 ```
 
+> **COUNT 的 NULL 行为（常见面试坑）：**
+>
+> | 写法 | 行为 |
+> |------|------|
+> | `COUNT(*)` | 统计所有行，无论是否全 NULL |
+> | `COUNT(col)` | 统计该列非 NULL 的行数 |
+> | `COUNT(DISTINCT col)` | 统计该列非 NULL 的去重值个数 |
+> | `AVG(col)` | `SUM(col) / COUNT(col)`，即分母排除了 NULL 行 |
+>
+> ```sql
+> SELECT COUNT(*) FROM R;        -- 结果：5
+> SELECT COUNT(A) FROM R;        -- 结果：3（A 列有 2 个 NULL，不计）
+> SELECT AVG(A) FROM R;          -- SUM(A) / COUNT(A)，分母是 3 不是 5
+> ```
+
 ### 7.2 GROUP BY
 
 ```sql
@@ -298,7 +388,25 @@ GROUP BY name
 HAVING MIN(year) < 1930;
 ```
 
-HAVING 在分组后筛选组，可引用聚合函数。
+**HAVING vs WHERE 的区别：**
+
+| 特性 | WHERE | HAVING |
+|------|-------|--------|
+| 执行时机 | GROUP BY **之前**，逐行过滤 | GROUP BY **之后**，逐组过滤 |
+| 可用聚合函数 | 否（聚合未发生） | 是 |
+| 可用列别名 | 否（SELECT 未计算） | 否（同上） |
+| 引用非分组列 | 可以 | 不可以（除非在聚合函数中） |
+
+**逻辑上等价于（伪代码）：**
+```python
+result = []
+for row in table:                  # WHERE 逐行过滤
+    if where_condition(row):
+        groups[row.group_key].append(row)
+for group_key, rows in groups:     # HAVING 逐组过滤
+    if having_condition(rows):
+        result.append(aggregate(rows))
+```
 
 ---
 
@@ -415,6 +523,23 @@ END;
 **触发时机：** `BEFORE` / `AFTER` / `INSTEAD OF`
 **触发粒度：** `FOR EACH ROW`（行级）/ `FOR EACH STATEMENT`（语句级）
 **引用对象：** `OLD ROW` / `NEW ROW` / `OLD TABLE` / `NEW TABLE`
+
+> **触发执行模型：**
+>
+> 如果一个 `UPDATE` 影响了 3 行，触发器行为如下：
+>
+> ```
+> FOR EACH STATEMENT（语句级）：触发 1 次
+>   └─ OLD TABLE = 修改前的 3 行快照
+>   └─ NEW TABLE = 修改后的 3 行快照
+>
+> FOR EACH ROW（行级）：触发 3 次，每次处理一行
+>   ├─ 第 1 次：OLD ROW = 修改前第 1 行，NEW ROW = 修改后第 1 行
+>   ├─ 第 2 次：OLD ROW = 修改前第 2 行，NEW ROW = 修改后第 2 行
+>   └─ 第 3 次：OLD ROW = 修改前第 3 行，NEW ROW = 修改后第 3 行
+> ```
+>
+> `BEFORE` 在修改前执行（可修改 NEW ROW 的值），`AFTER` 在修改后执行（可读取修改结果）。
 
 ---
 
@@ -628,8 +753,10 @@ SELECT name, addr FROM Emps;
 
 ## 十四、SQL 三值逻辑
 
+SQL 使用三值逻辑：TRUE、FALSE、UNKNOWN（NULL 参与比较的结果）。
+
 | x | y | x AND y | x OR y | NOT x |
-|---|---|---------|--------|-------|
+|---|---|---|---------|--------|
 | T | T | T | T | F |
 | T | U | U | T | F |
 | T | F | F | T | F |
@@ -637,7 +764,18 @@ SELECT name, addr FROM Emps;
 | U | F | F | U | U |
 | F | F | F | F | T |
 
-> WHERE 只接受 TRUE，UNKNOWN 和 FALSE 都不通过。
+> **关键规则：** WHERE 只接受 TRUE，UNKNOWN 和 FALSE 都不通过。
+
+### 三值逻辑的实践影响
+
+| 场景 | 问题 | 正确写法 |
+|------|------|---------|
+| `x = NULL` | 永远返回 UNKNOWN，不会选出任何行 | 应写 `x IS NULL` |
+| `NOT IN` 含 NULL | 结果恒为空（见 §6.2） | 用 `NOT EXISTS` 替代 |
+| `WHERE x <> 10` | NULL 行会被排除（`NULL <> 10` = UNKNOWN） | 如需保留：`x <> 10 OR x IS NULL` |
+| CHECK 约束 | CHECK 中 UNKNOWN 视同通过（不违规），与 WHERE 相反 | 设计约束时要注意 NULL 行为 |
+
+> **记忆口诀：** NULL 参与比较 → 结果 UNKNOWN。UNKNOWN 在 WHERE 中被拒，在 CHECK 中被放行。
 
 ---
 
