@@ -96,7 +96,7 @@ FROM Movies
 WHERE length >= 100 AND studioName = 'Fox';
 ```
 
-### 3.1a SELECT 逻辑执行顺序
+### 3.1 SELECT 逻辑执行顺序
 
 理解 SQL 的关键是知道查询各子句的**逻辑执行顺序**（而非书写顺序）：
 
