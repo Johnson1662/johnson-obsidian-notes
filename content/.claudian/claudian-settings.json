@@ -3,7 +3,7 @@
   "permissionMode": "yolo",
   "model": "sonnet",
   "thinkingBudget": "low",
-  "effortLevel": "max",
+  "effortLevel": "high",
   "serviceTier": "default",
   "enableAutoTitleGeneration": true,
   "titleGenerationModel": "",
@@ -19,7 +19,6 @@
     "scrollDownKey": "s",
     "focusInputKey": "i"
   },
-  "requireCommandOrControlEnterToSend": false,
   "locale": "zh-CN",
   "providerConfigs": {
     "claude": {
@@ -46,7 +45,7 @@
       "environmentVariables": "",
       "environmentHash": "",
       "installationMethodsByHost": {
-        "device:86e4c867-3556-40de-a81d-07e04daa8867": "native-windows"
+        "LAPTOP-3FLH46E9": "native-windows"
       },
       "wslDistroOverridesByHost": {}
     },
@@ -71,7 +70,7 @@
     "codex": "gpt-5.5"
   },
   "savedProviderEffort": {
-    "claude": "max",
+    "claude": "high",
     "opencode": "default",
     "codex": "medium"
   },
