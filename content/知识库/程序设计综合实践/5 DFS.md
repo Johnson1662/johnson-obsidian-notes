@@ -88,7 +88,7 @@ vector<string> field;
 // 深度优先搜索，将属于同一个水池的所有 'W' 替换为 '.'
 void dfs(int x, int y)
 {
-    // 将当前位置标记为已访问（通过把 W 变成 . 来实现，避免使用额外的 visited 数组）
+    // 将当前位置标记为已访问（把 W 变成 . ，避免使用额外数组）
     field[x][y] = '.';
 
     // 遍历周围 8 个方向
@@ -104,31 +104,22 @@ void dfs(int x, int y)
             int ny = y + dy;
 
             // 越界检查以及是否为水域检查
-            if (nx >= 0 && nx < N && ny >= 0 && ny < M && field[nx][ny] == 'W')
-            {
-                dfs(nx, ny);
-            }
+            if (nx >= 0 && nx < N && ny >= 0 && ny < M && field[nx][ny] == 'W') dfs(nx, ny);
+            
         }
     }
 }
 
 int main()
 {
-    // 基础输入处理
-    if (!(cin >> N >> M))
-        return 0;
+    cin >> N >> M;
 
     field.resize(N);
-    for (int i = 0; i < N; ++i)
-    {
-        cin >> field[i];
-    }
-
+    for (int i = 0; i < N; ++i) cin >> field[i];
+    
     int count = 0;
     for (int i = 0; i < N; ++i)
-    {
         for (int j = 0; j < M; ++j)
-        {
             // 只要遇到 'W'，就意味着发现了一个新的水池
             if (field[i][j] == 'W')
             {
@@ -136,17 +127,12 @@ int main()
                 // 搜索并标记所有连通的 'W'
                 dfs(i, j);
             }
-        }
-    }
 
     cout << count << endl;
 
     return 0;
 }
 ```
-
-> Submitted by 3024205103 @ 2026-04-19 16:29:15
-
 ---
 
 ## 2. 正方形
@@ -254,37 +240,33 @@ bool dfs(int count, int current_len, int index) {
     return false;
 }
 
-void solve() {
-    cin >> n;
-    int sum = 0;
-    for (int i = 0; i < n; i++) {
-        cin >> sticks[i];
-        sum += sticks[i];
-        used[i] = false;
-    }
-
-    // 基本可行性判断
-    if (sum % 4 != 0) {
-        cout << "no" << endl;
-        return;
-    }
-    side_len = sum / 4;
-    sort(sticks, sticks + n, greater<int>()); // 从大到小排序
-
-    if (sticks[0] > side_len) {
-        cout << "no" << endl;
-        return;
-    }
-
-    if (dfs(0, 0, 0)) cout << "yes" << endl;
-    else cout << "no" << endl;
-}
-
 int main() {
     int T;
     cin >> T;
     while (T--) {
-        solve();
+	    cin >> n;
+	    int sum = 0;
+	    for (int i = 0; i < n; i++) {
+	        cin >> sticks[i];
+	        sum += sticks[i];
+	        used[i] = false;
+	    }
+	
+	    // 基本可行性判断
+	    if (sum % 4 != 0) {
+	        cout << "no" << endl;
+	        return;
+	    }
+	    side_len = sum / 4;
+	    sort(sticks, sticks + n, greater<int>()); // 从大到小排序
+	
+	    if (sticks[0] > side_len) {
+	        cout << "no" << endl;
+	        return;
+	    }
+	
+	    if (dfs(0, 0, 0)) cout << "yes" << endl;
+	    else cout << "no" << endl;
     }
     return 0;
 }
