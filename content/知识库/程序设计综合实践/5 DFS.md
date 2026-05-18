@@ -1,43 +1,43 @@
-# DFS（深度优先搜索）
+---
+title: 5 DFS
+tags:
+  - DFS
+  - 算法
+  - 程序设计综合实践
+---
 
-## 数池塘（Lake Counting）
+## 1. 数池塘
 
-### 题目描述
-
-由于近期的降雨，农夫约翰的田地（一个 $N \times M$ 的矩形，1 ≤ N ≤ 100；1 ≤ M ≤ 100）中积攒了许多水洼。每个格子要么是水（'W'），要么是旱地（'.'）。农夫约翰想知道他的田里形成了多少个池塘。池塘定义为一组相连的水洼，每个格子与其八个方向的邻居相邻。
-
-给定农夫约翰田地的示意图，请计算出他有多少个池塘。
-
-### 输入格式
-
-- 第 1 行：两个空格分隔的整数 N 和 M
-- 第 2…N+1 行：每行 M 个字符，表示田地的一行。每个字符是 'W' 或 '.'，字符之间没有空格。
-
-### 输出格式
-
-- 第 1 行：田中池塘的数量
-
-### 样例输入
-
-```
-10 12
-W........WW.
-.WWW.....WWW
-....WW...WW.
-.........WW.
-.........W..
-..W......W..
-.W.W.....WW.
-W.W.W.....W.
-.W.W......W.
-..W.......W.
-```
-
-### 样例输出
-
-```
-3
-```
+> [!abstract] Contest Problem
+> **Description**
+> 由于近期的降雨，农夫约翰的田地（一个 $N \times M$ 的矩形，1 ≤ N ≤ 100；1 ≤ M ≤ 100）中积攒了许多水洼。每个格子要么是水（'W'），要么是旱地（'.'）。农夫约翰想知道他的田里形成了多少个池塘。池塘定义为一组相连的水洼，每个格子与其八个方向的邻居相邻。
+> 
+> 给定农夫约翰田地的示意图，请计算出他有多少个池塘。
+> 
+> **Input**
+> 第 1 行：两个空格分隔的整数 N 和 M。
+> 第 2…N+1 行：每行 M 个字符，表示田地的一行。每个字符是 'W' 或 '.'，字符之间没有空格。
+> 
+> **Output**
+> 第 1 行：田中池塘的数量。
+> 
+> **Sample Input 1**
+> ```text
+> 10 12
+> W........WW.
+> .WWW.....WWW
+> ....WW...WW.
+> .........WW.
+> .........W..
+> ..W......W..
+> .W.W.....WW.
+> W.W.W.....W.
+> .W.W......W.
+> ..W.......W.
+> ```
+> 
+> **Sample Output 1**
+> `3`
 
 ### 问题分析
 
@@ -149,41 +149,35 @@ int main()
 
 ---
 
-## 正方形（拼棒问题）
+## 2. 正方形
 
-### 题目描述
-
-有 n 个木棒，需要用上所有木棒，围成一个正方形。如果可以围成正方形，则输出 "yes"，否则输出 "no"。
-
-### 输入格式
-
-第一行输入一个整数 T 表示样例个数。对于每个样例：
-- 第一行输入一个整数 N 表示木棍的个数
-- 第二行输入 N 个数字表示木棒的长度
-
-### 输出格式
-
-对于每个样例，如果可以则输出 "yes"，否则输出 "no"。
-
-### 样例输入
-
-```
-3
-4
-1 1 1 1
-5
-10 20 30 40 50
-8
-1 7 2 6 4 4 3 5
-```
-
-### 样例输出
-
-```
-yes
-no
-yes
-```
+> [!abstract] Contest Problem
+> **Description**
+> 有 n 个木棒，需要用上所有木棒，围成一个正方形。如果可以围成正方形，则输出 "yes"，否则输出 "no"。
+> 
+> **Input**
+> 第一行输入一个整数 T 表示样例个数。对于每个样例：第一行输入一个整数 N 表示木棍的个数，第二行输入 N 个数字表示木棒的长度。
+> 
+> **Output**
+> 对于每个样例，如果可以则输出 "yes"，否则输出 "no"。
+> 
+> **Sample Input 1**
+> ```text
+> 3
+> 4
+> 1 1 1 1
+> 5
+> 10 20 30 40 50
+> 8
+> 1 7 2 6 4 4 3 5
+> ```
+> 
+> **Sample Output 1**
+> ```text
+> yes
+> no
+> yes
+> ```
 
 ### 问题分析
 
@@ -298,43 +292,39 @@ int main() {
 
 ---
 
-## 素数环（Prime Circle）
+## 3. 素数环
 
-### 题目描述
-
-如图所示，由 $n$ 个圆圈组成一个环。在每个圆圈中填入一个自然数，要求相邻两个圆圈中的数字之和必须为素数。
-
-注意：第一个圆圈中的数字必须始终为 1。
-
-### 输入格式
-
-多组测试数据，每行一个 $n$，输入以 0 结束。
-
-### 输出格式
-
-对于每个测试用例，按字典序输出所有可能的序列，每个用例后输出一个空行。
-
-### 样例输入
-
-```
-6
-8
-0
-```
-
-### 样例输出
-
-```
-Case 1:
-1 4 3 2 5 6
-1 6 5 2 3 4
-
-Case 2:
-1 2 3 8 5 6 7 4
-1 2 5 8 3 4 7 6
-1 4 7 6 5 8 3 2
-1 6 7 4 3 8 5 2
-```
+> [!abstract] Contest Problem
+> **Description**
+> 如图所示，由 $n$ 个圆圈组成一个环。在每个圆圈中填入一个自然数，要求相邻两个圆圈中的数字之和必须为素数。
+> 
+> 注意：第一个圆圈中的数字必须始终为 1。
+> 
+> **Input**
+> 多组测试数据，每行一个 $n$，输入以 0 结束。
+> 
+> **Output**
+> 对于每个测试用例，按字典序输出所有可能的序列，每个用例后输出一个空行。
+> 
+> **Sample Input 1**
+> ```text
+> 6
+> 8
+> 0
+> ```
+> 
+> **Sample Output 1**
+> ```text
+> Case 1:
+> 1 4 3 2 5 6
+> 1 6 5 2 3 4
+> 
+> Case 2:
+> 1 2 3 8 5 6 7 4
+> 1 2 5 8 3 4 7 6
+> 1 4 7 6 5 8 3 2
+> 1 6 7 4 3 8 5 2
+> ```
 
 ### 问题分析
 
@@ -432,33 +422,32 @@ int main() {
 
 ---
 
-## Sticks
-### 问题描述
+## 4. 木棒
 
-Description
-
-George took sticks of the same length and cut them randomly until all parts became at most 50 units long. Now he wants to return sticks to the original state, but he forgot how many sticks he had originally and how long they were originally. Please help him and design a program which computes the smallest possible original length of those sticks. All lengths expressed in units are integers greater than zero.
-
-Input
-
-The input contains blocks of 2 lines. The first line contains the number of sticks parts after cutting, there are at most 64 sticks. The second line contains the lengths of those parts separated by the space. The last line of the file contains zero.
-
-Output
-
-The output should contains the smallest possible length of original sticks, one per line.
-
-Sample Input 1 
-
-9
-5 2 1 5 2 1 5 2 1
-4
-1 2 3 4
-0
-
-Sample Output 1 
-
-6
-5
+> [!abstract] Contest Problem
+> **Description**
+> George 拿了一些长度相同的木棒，随机将它们切割，直到所有小段的长度都不超过 50。现在他想要将这些木棒恢复原状，但他忘记了原来有多少根木棒以及每根的长度。请帮助他设计一个程序，计算出这些原始木棒可能的最小长度。所有长度均为大于零的整数。
+> 
+> **Input**
+> 输入包含若干组数据，每组两行。第一行包含切割后的小段木棒数量，最多 64 根。第二行包含这些木棒的长度，用空格分隔。输入文件的最后一行包含 0。
+> 
+> **Output**
+> 输出每组的原始木棒可能的最小长度，每行一个。
+> 
+> **Sample Input 1**
+> ```text
+> 9
+> 5 2 1 5 2 1 5 2 1
+> 4
+> 1 2 3 4
+> 0
+> ```
+> 
+> **Sample Output 1**
+> ```text
+> 6
+> 5
+> ```
 
 ### 算法分析
 
