@@ -505,7 +505,9 @@ bool dfs(int cnt, int cur_sum, int last_idx) {
     return false;
 }
 
-void solve() {
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
     while (cin >> n && n != 0) {
         total_len = 0;
         int max_len = 0;
@@ -531,12 +533,6 @@ void solve() {
             }
         }
     }
-}
-
-int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(0);
-    solve();
     return 0;
 }
 ```
