@@ -215,12 +215,7 @@ bool dfs(int index) {
     if (index == n) return true; // 能走到这一步说明所有木棒都合法放好了
 
     for (int i = 0; i < 4; i++) {
-        if (sides[i] + sticks[index] > sideLen) continue;
-        
-        // 关键剪枝：如果当前边和前一边长度相同，换到下一条边尝试结果也是一样的
-        int j = i;
-        while (--j >= 0) if (sides[i] == sides[j]) break;
-        if (j != -1) continue;
+        if (sides[i] + sticks[index] > sideLen) continue
 
         sides[i] += sticks[index];
         if (dfs(index + 1)) return true;
