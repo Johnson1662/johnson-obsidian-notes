@@ -209,33 +209,22 @@ int main()
 
 using namespace std;
 
-int sticks[25];
-bool used[25];
-int n, side_len;
+int sticks[25], sides[4], n, sideLen;
 
-// count: 当前已经拼凑好的边数
-// current_len: 当前正在拼凑的边的长度
-// index: 从第几个木棒开始尝试
-bool dfs(int count, int current_len, int index) {
-    if (count == 3) return true; // 只要拼好了3条边，第4条必然自动成立
+bool dfs(int index) {
+    if (index == n) return true; // 能走到这一步说明所有木棒都合法放好了
 
-    for (int i = index; i < n; i++) {
-        if (used[i] || current_len + sticks[i] > side_len) continue;
+    for (int i = 0; i < 4; i++) {
+        if (sides[i] + sticks[index] > sideLen) continue;
+        
+        // 关键剪枝：如果当前边和前一边长度相同，换到下一条边尝试结果也是一样的
+        int j = i;
+        while (--j >= 0) if (sides[i] == sides[j]) break;
+        if (j != -1) continue;
 
-        used[i] = true;
-        if (current_len + sticks[i] == side_len) {
-            // 拼好了一条完整边，开始拼下一条（从头开始找木棒）
-            if (dfs(count + 1, 0, 0)) return true;
-        } else {
-            // 继续拼当前边
-            if (dfs(count, current_len + sticks[i], i + 1)) return true;
-        }
-        used[i] = false; // 回溯
-
-        // 剪枝优化：如果当前尝试失败，且它是该边的第一根或刚好凑满，
-        // 或者后续有相同长度的，则都不必再试。
-        if (current_len == 0 || current_len + sticks[i] == side_len) return false;
-        while (i + 1 < n && sticks[i+1] == sticks[i]) i++;
+        sides[i] += sticks[index];
+        if (dfs(index + 1)) return true;
+        sides[i] -= sticks[index];
     }
     return false;
 }
@@ -244,29 +233,27 @@ int main() {
     int T;
     cin >> T;
     while (T--) {
-	    cin >> n;
-	    int sum = 0;
-	    for (int i = 0; i < n; i++) {
-	        cin >> sticks[i];
-	        sum += sticks[i];
-	        used[i] = false;
-	    }
-	
-	    // 基本可行性判断
-	    if (sum % 4 != 0) {
-	        cout << "no" << endl;
-	        return;
-	    }
-	    side_len = sum / 4;
-	    sort(sticks, sticks + n, greater<int>()); // 从大到小排序
-	
-	    if (sticks[0] > side_len) {
-	        cout << "no" << endl;
-	        return;
-	    }
-	
-	    if (dfs(0, 0, 0)) cout << "yes" << endl;
-	    else cout << "no" << endl;
+        int sum = 0;
+        cin >> n;
+        for (int i = 0; i < n; i++) {
+            cin >> sticks[i];
+            sum += sticks[i];
+        }
+
+        sideLen = sum / 4;
+        // 基础判定：总长能被4整除 且 木棒数不少于4 且 最大木棒不超过边长
+        sort(sticks, sticks + n, greater<int>());
+        
+        if (sum % 4 != 0 || n < 4 || sticks[0] > sideLen) {
+            cout << "no" << endl;
+            continue;
+        }
+
+        // 在这里初始化/重置 sides 数组
+        for(int i = 0; i < 4; i++) sides[i] = 0;
+
+        if (dfs(0)) cout << "yes" << endl;
+        else cout << "no" << endl;
     }
     return 0;
 }
