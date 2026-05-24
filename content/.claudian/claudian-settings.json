@@ -19,6 +19,7 @@
     "scrollDownKey": "s",
     "focusInputKey": "i"
   },
+  "requireCommandOrControlEnterToSend": false,
   "locale": "zh-CN",
   "providerConfigs": {
     "claude": {
@@ -45,7 +46,7 @@
       "environmentVariables": "",
       "environmentHash": "",
       "installationMethodsByHost": {
-        "LAPTOP-3FLH46E9": "native-windows"
+        "device:86e4c867-3556-40de-a81d-07e04daa8867": "native-windows"
       },
       "wslDistroOverridesByHost": {}
     },
@@ -58,6 +59,7 @@
       "modelAliases": {},
       "preferredThinkingByModel": {},
       "selectedMode": "claudian-yolo",
+      "thinkingOptionsByModel": {},
       "visibleModels": [
         "opencode/big-pickle"
       ]
