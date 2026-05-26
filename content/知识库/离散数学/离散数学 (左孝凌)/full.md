@@ -2879,6 +2879,7 @@ a）所有有理数是实数，某些有理数是整数，因此某些实数是�
 b）任何人如果他喜欢步行，他就不喜欢乘汽车，每一个人或者喜欢乘汽车或者喜欢骑自行车。有的人不爱骑自行车，因而有的人不爱步行。  
 c）每个大学生不是文科学生就是理工科学生，有的大学生是优等生，小张不是理工科学生，但他是优等生，因而如果小张是大学生，他就是文科学生。
 
+---------------
 # 第二篇 集合论
 
 集合论是现代各科数学的基础，它的起源可以追溯到十六世纪末期。开始时为了追寻微积分的坚实的基础，人们仅进行了有关数集的研究。直到 $1876\sim 1883$ 年，康托尔(Georg Cantor)发表了一系列有关集合论的文章，对任意元素的集合进行了深入的探讨，提出了关于基数、序数和良序集等理论，奠定了集合论的深厚基础。但是随着集合论的发展，以及它与数学哲学密切联系所作的讨论，在1900年前后出现了各种悖论，使集合论的发展一度陷入僵滞的局面。 $1904\sim 1908$ 年，策墨罗(Zermelo)列出了第一个集合论的公理系统，他的公理，使数学哲学中产生的一些矛盾基本上得到统一，在此基础上以后就逐步形成了公理化集合论和抽象集合论，使该学科成为在数学中发展最为迅速的一个分支。现在集合论观点已渗透到古典分析、泛函、概率、函数论以及信息论、排队论等现代数学各个领域。本篇介绍集合论的基础知识如集合运算、性质、序偶、关系、函数、基数等。
@@ -6657,8 +6658,7 @@ b）如果 $a \leqslant b$ ，则 $a + d \leqslant b + d$ 。
 
 c）如果 $a \leqslant b$ ，则 $ad \leqslant bd$ 。
 
-![](images/c940cf6a3a99945a0d72058085712672e8e1c2f578974bdaf1cee3574a3281aa.jpg)
-
+---------------
 # 第三篇 代数系统
 
 人们研究和考察现实世界中的各种现象或过程，往往要借助某些数学工具。譬如，在微积分学中，可以用导数来描述质点运动的速度，可以用定积分来计算面积、体积等；在代数学中，可以用正整数集合上的加法运算来描述工厂产品的累计数，可以用集合之间的“并”、“交”运算来描述单位与单位之间的关系等。针对某个具体问题选用适宜的数学结构去进行较为确切的描述，这就是所谓的“数学模型”。可见，数学结构在数学模型中占有极为重要的位置。我们这里所要研究的是一类特殊的数学结构——由集合上定义若干个运算而组成的系统。我们通常称它为代数系统。它在计算机科学中有着广泛的应用。
@@ -10643,6 +10643,8 @@ $$
 图论是近年来发展迅速而又应用广泛的一门新兴学科。它最早起源于一些数学游戏的难题研究，如1736年欧拉(L. Euler)所解决的哥尼斯堡(Königsberg)七桥问题，以及在民间广泛流传的一些游戏难题，如迷宫问题，匿门博奕问题，棋盘上马的行走路线问题等。这些古老的难题，当时吸引了很多学者的注意，在这些问题研究的基础上又继续提出了著名的四色猜想，汉密尔顿(环游世界)数学难题。
 
 1847年，克希霍夫(Kirchhoff)用图论分析电路网络，这是图论最早应用于工程科学，以后随着科学的发展，图论在解决运筹学，网络理论，信息论，控制论，博奕论以及计算机科学等各个领域的问题时，显示出越来越大的效果。图论在各种物理学科，工程领域，社会科学和经济问题的广泛应用，使它受到数学界和工程界的特别重视。对于这样一门应用广泛的学科，其包含的内容当然是浩瀚如海，我们这里只准备介绍一些基本概念和定理，以及一些典型的应用实例，目的是在今后对计算机有关学科的学习研究时，可以图论的基本知识作为工具。
+
+---------------
 
 # 第七章 图论
 
@@ -16694,40 +16696,3 @@ Z
 
 zero 零元
 
-# 参考文献
-
-[1] Abbott, J.C., “Set, Lattices, and Boolean Algebras”, Allyn and Bacon, Inc., Boston, 1969   
-[2] Aho, A. V., J. E. Hopcroft, and J. D. Ullman “The Design and Analysis of Computer Algorithms”. Reading, Mass.: Addison-Wesley, 1974   
-[3] Bellman, Richard, Kenneth L. Cooke, and Jo Ann Lockett, “Algorithms, Graphs and Computers”, New York: Academic Press, 1970   
-[4] Bondy, J. A., and U. S. R. Murty, “Graph Theory with Applications”, Am. Elsevier New York, 1976   
-[5] Brualdi, Richard A., “Introduction to Error-Correcting Codes”, Prentice-Hall, Inc., 1970   
-[6] Denning, Peter J., Jack B. Dennis, Joseph E. Qualitz, “Machines, Languages, and Computation”, Prentice-Hall, Inc., Englewood Cliffs, New Jersey, 1978   
-[7] Deo, Narsingh, “Graph Theory with Applications to Engineering and Computer Science”, Englewood Cliffs, N.J.: Prentice-Hall, Inc., 1974   
-[8] Gilbert, William J., “Mordern Algebra with Applications”, John wiley & Sons. Inc., 1976   
-[9] Gill, Arthur, “Applied Algebra for the Computer Sciences”, Englewood Cliffs, N. J.: Prentice-Hall, Inc., 1976   
-[10] Harary Frank, “Graph Theory”. New York Addison-Wesley, 1969   
-[11] Hennie, Fred, “Introduction to Computability”, Addison-Wesley Publishing Company, Inc., 1977   
-[12] Hopcroft, J. E., J. D. Ullman, “Introduction to Automata Theory, Languages, and Computation”, Addison-Wesley Publishing Company, Inc., 1979   
-[13] Kohavi, Zvi, and Azaria Paz, “Theory of Machines and Computations”, Academic Press New York and London, 1971   
-[14] Lin, Shu, “An Introduction to Error-Correcting Codes”, Prentice-Hall, In., 1970   
-[15] Liu, C. L., “Elements of Discrete Mathematics”, McGraw-Hill Book Company, New York, 1968   
-[16] Malitz, Jerome, “Introduction to Mathematical Logic”, Springer-Verlag New York, Inc., 1979   
-[17] Manna, Zohar, “Mathematical Theory of Computation”, McGraw-Hill, 1974   
-[18] Marcus, Marvin, “Introduction to Modern Algebra”, Marcel Dekker, Inc., 1978
-
-[19] Preparata, Franco P., Raymond T. Yeh, “Introduction to Discrete Structures for Computer Science and Engineering”, Addison-Wesley Publishing Company, 1973   
-[20] Stoll, Robert R., “Set Theory and Logic”, San Fransisco: W. H. Freeman and Co., 1963   
-[21] Stone, Harold S., “Discrete Mathematical Structures”, Chicago: Science Research Associates, 1973   
-[22] Tremblay, J. P., and R. Manohar, “Discrete Mathematical Structures with Applications to Computer Science”, McGraw-Hill Book Company, New York, 1975   
-[23] 希尔柏脱，阿克曼著.《数理逻辑基础》.莫绍揆译.北京：科学出版社。  
-[24] F. 豪斯道夫著. 《集论》. 张义良, 颜家驹译. 北京: 科学出版社。
-
-# 向您推荐
-
-离散数学 理论·分析·题解
-
-左孝凌 李为鉴 刘永才编著
-
-本书系沪科文献版《离散数学》一书的姐妹篇。它涵盖了《离散数学》教材全部章节内容，包括理论提要，例题分析，习题解答等部分。
-
-该书于1988年出版，同教材一样属国内最早的题解分析类参考书，有一定的理论、创新水平。
