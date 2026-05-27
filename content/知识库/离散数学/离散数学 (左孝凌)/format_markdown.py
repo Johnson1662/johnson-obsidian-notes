@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
 Format discrete mathematics Markdown files for Obsidian:
-1. Convert HTML <table> tags to Markdown tables (NO blank lines between rows)
-2. Wrap definitions, theorems, examples in Obsidian callouts
+1. Convert HTML <table> tags to Markdown tables (no blank lines between rows)
+2. Wrap definitions, theorems, examples AND their body content in Obsidian callouts
 3. Add frontmatter properties
-4. Improve spacing/formatting
+4. Improve spacing and readability
 """
 
 import re
@@ -42,14 +42,12 @@ FILES = [
 def html_table_to_markdown(table_html):
     """Convert HTML table to Markdown table format."""
     table_html = table_html.strip()
-    
+
     # Extract all rows
     rows = re.findall(r'<tr>(.*?)</tr>', table_html, re.DOTALL)
     if not rows:
         return table_html
-    
-    has_rowspan = 'rowspan' in table_html
-    
+
     markdown_rows = []
     for row in rows:
         cells = re.findall(r'<td[^>]*>(.*?)</td>', row, re.DOTALL)
@@ -59,19 +57,18 @@ def html_table_to_markdown(table_html):
             cell = re.sub(r'\s+', ' ', cell)
             cell = cell.replace('|', '\\|')
             cleaned_cells.append(cell)
-        
+
         if cleaned_cells:
             markdown_rows.append('| ' + ' | '.join(cleaned_cells) + ' |')
-    
+
     if not markdown_rows:
         return table_html
-    
-    # Build result WITHOUT blank lines between rows
+
     result_lines = [markdown_rows[0]]
     num_cols = markdown_rows[0].count('|') - 1
     result_lines.append('|' + '|'.join([' --- '] * num_cols) + '|')
     result_lines.extend(markdown_rows[1:])
-    
+
     return '\n'.join(result_lines)
 
 
@@ -81,39 +78,90 @@ def convert_html_tables(content):
     return table_pattern.sub(lambda m: html_table_to_markdown(m.group(0)), content)
 
 
-def add_callouts(content):
-    """Wrap definitions, theorems, examples in Obsidian callouts."""
-    # Definitions
-    content = re.sub(
-        r'(^|\n)(定义[\d\-\.]+[^\n]*)',
-        r'\n> [!definition] \2',
-        content
-    )
-    
-    # Theorems
-    content = re.sub(
-        r'(^|\n)(定理[\d\-\.]+[^\n]*)',
-        r'\n> [!theorem] \2',
-        content
-    )
-    
-    # Examples
-    content = re.sub(
-        r'(^|\n)(例题[\d]+[^\n]*)',
-        r'\n> [!example] \2',
-        content
-    )
-    
-    # Clean up extra blank lines
-    content = re.sub(r'\n{4,}', '\n\n\n', content)
-    
-    return content
+def wrap_callouts(content):
+    """
+    Line-by-line processing to wrap definitions, theorems, examples in callouts.
+    The callout extends until the next heading, next callout item, or end of file.
+    """
+    lines = content.split('\n')
+    result = []
+    i = 0
+
+    # Patterns for starting a callout
+    def_pattern = re.compile(r'^(定义[\d\-\.]+)\s*(.*)')
+    theorem_pattern = re.compile(r'^(定理[\d\-\.]+)\s*(.*)')
+    example_pattern = re.compile(r'^(例题[\d\-\.]+)\s*(.*)')
+    exercise_pattern = re.compile(r'^(习题[\d\-\.]+)\s*(.*)')
+    # Pattern for "解" (solution to examples)
+    solution_pattern = re.compile(r'^(解[\d\-\.]*)\s*(.*)')
+
+    # Patterns for ending a callout
+    heading_pattern = re.compile(r'^#{1,6}\s')
+    # Also end at another callout-starting line
+
+    def is_callout_starter(line):
+        m = def_pattern.match(line)
+        if m: return 'definition', m.group(1), m.group(2)
+        m = theorem_pattern.match(line)
+        if m: return 'theorem', m.group(1), m.group(2)
+        m = example_pattern.match(line)
+        if m: return 'example', m.group(1), m.group(2)
+        m = exercise_pattern.match(line)
+        if m: return 'exercise', m.group(1), m.group(2)
+        return None
+
+    while i < len(lines):
+        line = lines[i]
+        match = is_callout_starter(line)
+
+        if match:
+            callout_type, title, rest = match
+            callout_lines = []
+
+            # Map callout types to Obsidian callout types
+            type_map = {
+                'definition': 'definition',
+                'theorem': 'theorem',
+                'example': 'example',
+                'exercise': 'example'
+            }
+            obsidian_type = type_map.get(callout_type, 'note')
+
+            # Add the title line to callout
+            full_title = f"{title} {rest}".strip()
+            callout_lines.append(f"> [!{obsidian_type}] {full_title}")
+
+            i += 1
+
+            # Collect body content until the next heading or next callout starter or end
+            while i < len(lines):
+                next_line = lines[i]
+                next_match = is_callout_starter(next_line)
+                is_heading = heading_pattern.match(next_line)
+
+                if next_match or is_heading:
+                    break
+
+                # Add the body line with > prefix
+                if next_line.strip() == '':
+                    callout_lines.append('>')
+                else:
+                    callout_lines.append(f"> {next_line}")
+                i += 1
+
+            result.append('\n'.join(callout_lines))
+        else:
+            result.append(line)
+            i += 1
+
+    return '\n'.join(result)
 
 
 def add_frontmatter(content, config):
-    """Add Obsidian frontmatter."""
+    """Add Obsidian frontmatter, replacing any existing one."""
+    # Remove existing frontmatter
     content = re.sub(r'^---\n.*?\n---\n', '', content, flags=re.DOTALL)
-    
+
     tags_yaml = '\n'.join(f'  - {tag}' for tag in config['tags'])
     frontmatter = f"""---
 title: {config['title']}
@@ -123,79 +171,106 @@ subject: 离散数学
 ---
 
 """
-    
+
     return frontmatter + content.lstrip()
 
 
 def improve_formatting(content):
-    """Improve formatting without breaking tables."""
+    """
+    Improve formatting carefully:
+    - Ensure blank line before headings (but not inside callouts)
+    - Ensure blank line before tables (first row with |)
+    - Clean up excessive blank lines
+    - Don't break table formatting
+    """
     lines = content.split('\n')
     result = []
     i = 0
+    in_callout = False
     in_table = False
-    
+
     while i < len(lines):
         line = lines[i]
-        
-        # Detect if we're in a Markdown table
+
+        # Track callout state
+        if line.strip().startswith('>'):
+            in_callout = True
+        else:
+            if line.strip() == '':
+                pass  # could still be in callout (blank line inside callout)
+            else:
+                in_callout = False
+
+        # Reset callout if we hit a non-callout, non-empty line
+        if not line.startswith('>') and line.strip() != '' and in_callout:
+            in_callout = False
+
+        # Track table state - a line that looks like a table row
         if line.strip().startswith('|') and line.strip().endswith('|'):
+            if not in_table and not in_callout:
+                # This is the first row of a table - add blank line before if needed
+                if result and result[-1].strip() != '':
+                    result.append('')
             in_table = True
             result.append(line)
-        elif in_table:
-            in_table = False
-            result.append(line)
         else:
-            result.append(line)
-        
+            if in_table:
+                in_table = False
+
+            # For headings, ensure blank line before
+            is_heading = re.match(r'^#{1,6}\s', line)
+            if is_heading and not in_callout:
+                if result and result[-1].strip() != '':
+                    result.append('')
+                result.append(line)
+            else:
+                result.append(line)
+
         i += 1
-    
+
     content = '\n'.join(result)
-    
-    # Ensure blank lines before headings
-    content = re.sub(r'\n(#+[^\n]+)(?:\n(?!#))', r'\n\n\1\n\n', content)
-    
-    # Clean up excessive blank lines (more than 2)
+
+    # Clean up excessive blank lines (3+ -> 2)
     content = re.sub(r'\n{3,}', '\n\n', content)
-    
-    # Ensure blank line before tables (but NOT inside them)
-    # Use a marker-based approach
-    content = re.sub(r'([^\n])\n(\|[^\n]+\|)', r'\1\n\n\2', content)
-    
+
+    # Ensure file ends with a single newline
+    content = content.rstrip('\n') + '\n'
+
     return content
 
 
 def process_file(config):
     """Process a single markdown file."""
     filepath = config['path']
-    
+
     if not os.path.exists(filepath):
         print(f"  ✗ File not found: {filepath}")
         return False
-    
+
     print(f"  Reading {filepath}...")
     with open(filepath, 'r', encoding='utf-8') as f:
         content = f.read()
-    
+
     original_len = len(content)
-    
+
     print(f"  Converting HTML tables to Markdown...")
     content = convert_html_tables(content)
-    
-    print(f"  Adding callouts...")
-    content = add_callouts(content)
-    
+
+    print(f"  Wrapping callouts...")
+    content = wrap_callouts(content)
+
     print(f"  Improving formatting...")
     content = improve_formatting(content)
-    
+
     print(f"  Adding frontmatter...")
     content = add_frontmatter(content, config)
-    
+
     new_len = len(content)
     print(f"  Writing {filepath} ({original_len} -> {new_len} chars)...")
-    
+
     with open(filepath, 'w', encoding='utf-8') as f:
         f.write(content)
-    
+
     return True
 
 
@@ -203,11 +278,11 @@ def main():
     print("=" * 50)
     print("Formatting Discrete Mathematics Markdown Files")
     print("=" * 50)
-    
+
     for config in FILES:
         print(f"\nProcessing: {config['path']}")
         process_file(config)
-    
+
     print(f"\n{'=' * 50}")
     print("All files processed successfully!")
     print("=" * 50)
