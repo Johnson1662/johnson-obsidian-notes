@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Format discrete mathematics Markdown files for Obsidian:
-1. Convert HTML <table> tags to Markdown tables
+1. Convert HTML <table> tags to Markdown tables (NO blank lines between rows)
 2. Wrap definitions, theorems, examples in Obsidian callouts
 3. Add frontmatter properties
 4. Improve spacing/formatting
@@ -10,7 +10,6 @@ Format discrete mathematics Markdown files for Obsidian:
 import re
 import os
 
-# File processing configuration
 FILES = [
     {
         "path": "1 数理逻辑.md",
@@ -42,7 +41,6 @@ FILES = [
 
 def html_table_to_markdown(table_html):
     """Convert HTML table to Markdown table format."""
-    # Remove newlines within the table for easier processing
     table_html = table_html.strip()
     
     # Extract all rows
@@ -50,27 +48,15 @@ def html_table_to_markdown(table_html):
     if not rows:
         return table_html
     
-    # Check for rowspan
     has_rowspan = 'rowspan' in table_html
     
-    if has_rowspan:
-        # For tables with rowspan, convert to a simpler representation
-        # Extract all cells with their rowspan info
-        return html_table_with_rowspan_to_markdown(table_html, rows)
-    
-    # Process each row
     markdown_rows = []
     for row in rows:
         cells = re.findall(r'<td[^>]*>(.*?)</td>', row, re.DOTALL)
-        # Clean cell content: remove extra whitespace, preserve LaTeX
         cleaned_cells = []
         for cell in cells:
             cell = cell.strip()
             cell = re.sub(r'\s+', ' ', cell)
-            # Replace LaTeX \(...\) with $...$ if present
-            cell = re.sub(r'\\\(', '$', cell)
-            cell = re.sub(r'\\\)', '$', cell)
-            # Escape pipe characters in cell content
             cell = cell.replace('|', '\\|')
             cleaned_cells.append(cell)
         
@@ -80,149 +66,100 @@ def html_table_to_markdown(table_html):
     if not markdown_rows:
         return table_html
     
-    # Add header separator (first row becomes header)
-    result = []
-    for i, row in enumerate(markdown_rows):
-        result.append(row)
-        if i == 0:
-            # Add separator row
-            num_cols = row.count('|') - 1
-            separator = '|' + '|'.join([' --- '] * num_cols) + '|'
-            result.append(separator)
+    # Build result WITHOUT blank lines between rows
+    result_lines = [markdown_rows[0]]
+    num_cols = markdown_rows[0].count('|') - 1
+    result_lines.append('|' + '|'.join([' --- '] * num_cols) + '|')
+    result_lines.extend(markdown_rows[1:])
     
-    return '\n'.join(result)
-
-
-def html_table_with_rowspan_to_markdown(table_html, rows):
-    """Handle tables with rowspan attribute."""
-    # For complex tables with rowspan, we'll extract a simplified representation
-    # that preserves the content
-    all_cells = []
-    for row in rows:
-        cells = re.findall(r'<td[^>]*>(.*?)</td>', row, re.DOTALL)
-        row_cells = []
-        for cell in cells:
-            cell = cell.strip()
-            cell = re.sub(r'\s+', ' ', cell)
-            cell = cell.replace('|', '\\|')
-            row_cells.append(cell)
-        if row_cells:
-            all_cells.append(row_cells)
-    
-    if not all_cells:
-        return table_html
-    
-    # Find max columns
-    max_cols = max(len(r) for r in all_cells)
-    
-    markdown_rows = []
-    for i, row_cells in enumerate(all_cells):
-        # Pad with empty cells if needed
-        while len(row_cells) < max_cols:
-            row_cells.append('')
-        markdown_rows.append('| ' + ' | '.join(row_cells) + ' |')
-        if i == 0:
-            separator = '|' + '|'.join([' --- '] * max_cols) + '|'
-            markdown_rows.append(separator)
-    
-    return '\n'.join(markdown_rows)
+    return '\n'.join(result_lines)
 
 
 def convert_html_tables(content):
     """Find and convert all HTML tables in content."""
-    # Match <table>...</table> blocks (may span multiple lines)
     table_pattern = re.compile(r'<table>(.*?)</table>', re.DOTALL)
-    
-    def replace_table(match):
-        return html_table_to_markdown(match.group(0))
-    
-    return table_pattern.sub(replace_table, content)
+    return table_pattern.sub(lambda m: html_table_to_markdown(m.group(0)), content)
 
 
 def add_callouts(content):
     """Wrap definitions, theorems, examples in Obsidian callouts."""
-    
-    # 1. Definitions: "定义X-X.X" or "定义X-X" at start of a paragraph
-    def wrap_definition(match):
-        prefix = match.group(1) or ''
-        def_text = match.group(2)
-        rest = match.group(3) or ''
-        return f'{prefix}> [!definition] {def_text}{rest}'
-    
-    # Match definition lines
+    # Definitions
     content = re.sub(
         r'(^|\n)(定义[\d\-\.]+[^\n]*)',
         r'\n> [!definition] \2',
         content
     )
     
-    # 2. Theorems: "定理X-X.X" or "定理X-X" at start of a paragraph
+    # Theorems
     content = re.sub(
         r'(^|\n)(定理[\d\-\.]+[^\n]*)',
         r'\n> [!theorem] \2',
         content
     )
     
-    # 3. Examples: "例题X" at start of a paragraph
-    # Be careful: some "例" words are just regular text like "例1" inside explanations
+    # Examples
     content = re.sub(
         r'(^|\n)(例题[\d]+[^\n]*)',
         r'\n> [!example] \2',
         content
     )
     
-    # 4. Proof sections: "证明"
-    content = re.sub(
-        r'(^|\n)(证明[\s\S]*?)(?=\n\n|\n(?:定义|定理|例题|解|$)|\Z)',
-        lambda m: m.group(0),  # Keep proofs as-is for now
-        content
-    )
-    
-    # 5. "解" at start of paragraph in examples
-    content = re.sub(
-        r'(^|\n)(解[\s\S]*?)(?=\n\n|\n(?:定义|定理|例题|$)|\Z)',
-        lambda m: m.group(0),  # Keep solutions as-is
-        content
-    )
-    
-    # Remove extra blank lines created by callout wrapping
-    content = re.sub(r'\n{3,}', '\n\n', content)
+    # Clean up extra blank lines
+    content = re.sub(r'\n{4,}', '\n\n\n', content)
     
     return content
 
 
 def add_frontmatter(content, config):
-    """Add Obsidian frontmatter to the beginning of content."""
-    # Remove existing frontmatter if any
+    """Add Obsidian frontmatter."""
     content = re.sub(r'^---\n.*?\n---\n', '', content, flags=re.DOTALL)
     
+    tags_yaml = '\n'.join(f'  - {tag}' for tag in config['tags'])
     frontmatter = f"""---
 title: {config['title']}
 tags:
+{tags_yaml}
+subject: 离散数学
+---
+
 """
-    for tag in config['tags']:
-        frontmatter += f"  - {tag}\n"
-    frontmatter += f"subject: 离散数学\n---\n\n"
     
     return frontmatter + content.lstrip()
 
 
 def improve_formatting(content):
-    """Improve overall formatting and readability."""
-    # Ensure proper spacing around headings
-    content = re.sub(r'\n(#+[^\n]+)\n(?!\n)', r'\n\n\1\n\n', content)
+    """Improve formatting without breaking tables."""
+    lines = content.split('\n')
+    result = []
+    i = 0
+    in_table = False
     
-    # Ensure blank line before tables
-    content = re.sub(r'([^\n])\n(\|)', r'\1\n\n\2', content)
+    while i < len(lines):
+        line = lines[i]
+        
+        # Detect if we're in a Markdown table
+        if line.strip().startswith('|') and line.strip().endswith('|'):
+            in_table = True
+            result.append(line)
+        elif in_table:
+            in_table = False
+            result.append(line)
+        else:
+            result.append(line)
+        
+        i += 1
     
-    # Ensure blank line after tables
-    content = re.sub(r'(\|[^\n]*)\n([^\n|])', r'\1\n\n\2', content)
+    content = '\n'.join(result)
     
-    # Clean up excessive blank lines
-    content = re.sub(r'\n{4,}', '\n\n\n', content)
+    # Ensure blank lines before headings
+    content = re.sub(r'\n(#+[^\n]+)(?:\n(?!#))', r'\n\n\1\n\n', content)
     
-    # Fix table spacing: ensure blank lines around tables
-    content = re.sub(r'\n{2,}(\|[^\n]*\|)\n{2,}', r'\n\n\1\n\n', content)
+    # Clean up excessive blank lines (more than 2)
+    content = re.sub(r'\n{3,}', '\n\n', content)
+    
+    # Ensure blank line before tables (but NOT inside them)
+    # Use a marker-based approach
+    content = re.sub(r'([^\n])\n(\|[^\n]+\|)', r'\1\n\n\2', content)
     
     return content
 
@@ -241,7 +178,7 @@ def process_file(config):
     
     original_len = len(content)
     
-    print(f"  Converting HTML tables...")
+    print(f"  Converting HTML tables to Markdown...")
     content = convert_html_tables(content)
     
     print(f"  Adding callouts...")
@@ -271,7 +208,7 @@ def main():
         print(f"\nProcessing: {config['path']}")
         process_file(config)
     
-    print("\n" + "=" * 50)
+    print(f"\n{'=' * 50}")
     print("All files processed successfully!")
     print("=" * 50)
 
