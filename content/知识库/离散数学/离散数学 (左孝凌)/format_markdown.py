@@ -92,8 +92,6 @@ def wrap_callouts(content):
     theorem_pattern = re.compile(r'^(定理[\d\-\.]+)\s*(.*)')
     example_pattern = re.compile(r'^(例题[\d\-\.]+)\s*(.*)')
     exercise_pattern = re.compile(r'^(习题[\d\-\.]+)\s*(.*)')
-    # Pattern for "解" (solution to examples)
-    solution_pattern = re.compile(r'^(解[\d\-\.]*)\s*(.*)')
 
     # Patterns for ending a callout
     heading_pattern = re.compile(r'^#{1,6}\s')
@@ -179,6 +177,7 @@ def improve_formatting(content):
     """
     Improve formatting carefully:
     - Ensure blank line before headings (but not inside callouts)
+    - Ensure blank line before callout blocks
     - Ensure blank line before tables (first row with |)
     - Clean up excessive blank lines
     - Don't break table formatting
@@ -189,42 +188,48 @@ def improve_formatting(content):
     in_callout = False
     in_table = False
 
+    callout_starter = re.compile(r'^> \[!')
+
     while i < len(lines):
         line = lines[i]
+        next_in_callout = False
 
-        # Track callout state
-        if line.strip().startswith('>'):
+        # Check if this line starts a callout
+        is_callout_start = callout_starter.match(line)
+
+        if is_callout_start:
+            # Ensure blank line before callout if needed
+            if result and result[-1].strip() != '':
+                result.append('')
             in_callout = True
-        else:
-            if line.strip() == '':
-                pass  # could still be in callout (blank line inside callout)
-            else:
-                in_callout = False
-
-        # Reset callout if we hit a non-callout, non-empty line
-        if not line.startswith('>') and line.strip() != '' and in_callout:
-            in_callout = False
-
-        # Track table state - a line that looks like a table row
-        if line.strip().startswith('|') and line.strip().endswith('|'):
-            if not in_table and not in_callout:
-                # This is the first row of a table - add blank line before if needed
-                if result and result[-1].strip() != '':
-                    result.append('')
-            in_table = True
+            result.append(line)
+        elif line.strip().startswith('>') and in_callout:
             result.append(line)
         else:
-            if in_table:
-                in_table = False
+            # Exiting callout
+            if in_callout and line.strip() != '':
+                in_callout = False
 
-            # For headings, ensure blank line before
-            is_heading = re.match(r'^#{1,6}\s', line)
-            if is_heading and not in_callout:
-                if result and result[-1].strip() != '':
-                    result.append('')
+            # Track table state - a line that looks like a table row
+            if line.strip().startswith('|') and line.strip().endswith('|'):
+                if not in_table and not in_callout:
+                    # This is the first row of a table - add blank line before if needed
+                    if result and result[-1].strip() != '':
+                        result.append('')
+                in_table = True
                 result.append(line)
             else:
-                result.append(line)
+                if in_table:
+                    in_table = False
+
+                # For headings, ensure blank line before
+                is_heading = re.match(r'^#{1,6}\s', line)
+                if is_heading and not in_callout:
+                    if result and result[-1].strip() != '':
+                        result.append('')
+                    result.append(line)
+                else:
+                    result.append(line)
 
         i += 1
 
