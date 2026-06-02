@@ -65,7 +65,7 @@ sequential implementation
 各个不同名称的指令一般具有不同的 `icode`，但是也有可能共享相同的 `icode`，然后通过 `ifun` 区分。
 
 
-![fetch](/05-Arch-Sequential-and-Pipelined/fetch.png)
+![fetch](assets/05-Arch-Sequential-and-Pipelined/fetch.png)
 
 
 ---
@@ -86,7 +86,7 @@ sequential implementation
 - `valC` 为 8 字节常数，可能代表立即数（`irmovq`），偏移量（`rmmovq` `mrmovq`）或地址（`call` `jmp`）。`valC` 也不是每条指令都有的，这在 HCL 中通过 `need_valC` 来控制
 
 
-![fetch](/05-Arch-Sequential-and-Pipelined/fetch.png)
+![fetch](assets/05-Arch-Sequential-and-Pipelined/fetch.png)
 
 
 ---
