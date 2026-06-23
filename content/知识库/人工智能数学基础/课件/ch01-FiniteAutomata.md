@@ -203,7 +203,7 @@ $$
 \therefore L(M_1) = L_1
 $$
 
-**FA \$M_2\$ 接受 \$L_2\$：**
+**FA $M_2$ 接受 $L_2$：**
 
 ```mermaid
 graph LR
