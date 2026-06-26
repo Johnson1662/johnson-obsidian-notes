@@ -54,7 +54,7 @@
     "opencode": {
       "cliPath": "",
       "cliPathsByHost": {},
-      "enabled": true,
+      "enabled": false,
       "environmentHash": "",
       "environmentVariables": "",
       "modelAliases": {},
