@@ -1,0 +1,590 @@
+{
+  "nodes": [
+    {
+      "id": "group-logic",
+      "type": "group",
+      "x": 20,
+      "y": 20,
+      "width": 380,
+      "height": 700,
+      "label": "📐 数理逻辑",
+      "color": "6"
+    },
+    {
+      "id": "group-set",
+      "type": "group",
+      "x": 420,
+      "y": 20,
+      "width": 380,
+      "height": 700,
+      "label": "🔢 集合论",
+      "color": "5"
+    },
+    {
+      "id": "group-algebra",
+      "type": "group",
+      "x": 820,
+      "y": 20,
+      "width": 380,
+      "height": 700,
+      "label": "⚙ 代数系统",
+      "color": "4"
+    },
+    {
+      "id": "group-graph",
+      "type": "group",
+      "x": 1220,
+      "y": 20,
+      "width": 380,
+      "height": 700,
+      "label": "🌐 图论",
+      "color": "3"
+    },
+    {
+      "id": "n1",
+      "type": "text",
+      "x": 35,
+      "y": 60,
+      "width": 350,
+      "height": 140,
+      "text": "## 命题逻辑\n- 命题、联结词 (¬∧∨→↔)\n- 合式公式 wff (递归定义)\n- 真值表 (2ⁿ种指派)\n- 等价式与命题定律 (表1-4.8)",
+      "color": "6"
+    },
+    {
+      "id": "n2",
+      "type": "text",
+      "x": 35,
+      "y": 230,
+      "width": 350,
+      "height": 140,
+      "text": "## 等价·范式·对偶\n- 等价置换定理 (子公式替换)\n- 对偶式与对偶定理 (∧↔∨, T↔F)\n- 合取/析取范式\n- 主析取/主合取范式 (小项/大项)",
+      "color": "6"
+    },
+    {
+      "id": "n3",
+      "type": "text",
+      "x": 35,
+      "y": 400,
+      "width": 350,
+      "height": 140,
+      "text": "## 重言式与推理\n- 重言式封闭性 (∧∨保持真)\n- 重言式置换 (变元→公式)\n- 蕴含式与传递性\n- 有效结论、P/T/CP规则",
+      "color": "6"
+    },
+    {
+      "id": "n4",
+      "type": "text",
+      "x": 35,
+      "y": 560,
+      "width": 350,
+      "height": 140,
+      "text": "## 谓词逻辑\n- 量词 (∀∃) 与特性谓词\n- 前束范式与量词转化\n- UG/US/EG/ES推理规则\n- 多元量词排序不可交换",
+      "color": "6"
+    },
+    {
+      "id": "n5",
+      "type": "text",
+      "x": 435,
+      "y": 60,
+      "width": 350,
+      "height": 140,
+      "text": "## 集合基本运算\n- 子集、空集、幂集 (|𝒫(A)|=2ⁿ)\n- 并交差补运算\n- De Morgan律 (∼(A∪B)=∼A∩∼B)\n- 分配律、吸收律、对称差",
+      "color": "5"
+    },
+    {
+      "id": "n6",
+      "type": "text",
+      "x": 435,
+      "y": 230,
+      "width": 350,
+      "height": 140,
+      "text": "## 关系与闭包\n- 关系性质 (自反/对称/传递/反自反/反对称)\n- 复合关系 R∘S\n- 闭包构造: r(R)=R∪Iₓ, s(R)=R∪Rᶜ, t(R)=∪Rⁱ\n- 闭包交换性: rs=sr, rt=tr",
+      "color": "5"
+    },
+    {
+      "id": "n7",
+      "type": "text",
+      "x": 435,
+      "y": 400,
+      "width": 350,
+      "height": 140,
+      "text": "## 等价关系·划分·偏序\n- 等价关系 ⟺ 划分 (商集 A/R)\n- 交叉划分、加细\n- 偏序集、Hasse图\n- 极大/小元、上/下界、良序",
+      "color": "5"
+    },
+    {
+      "id": "n8",
+      "type": "text",
+      "x": 435,
+      "y": 560,
+      "width": 350,
+      "height": 140,
+      "text": "## 函数与映射\n- 函数定义 (关系特例)\n- 满射/入射/双射\n- 复合函数与逆函数\n- 双射 ⟺ 逆函数存在",
+      "color": "5"
+    },
+    {
+      "id": "n9",
+      "type": "text",
+      "x": 835,
+      "y": 60,
+      "width": 350,
+      "height": 140,
+      "text": "## 运算性质\n- 封闭/交换/结合/分配/吸收/等幂\n- 幺元 (唯一) / 零元 (唯一)\n- 逆元 (结合⇒唯一)\n- 广群→半群→独异点 (含幺半群)",
+      "color": "4"
+    },
+    {
+      "id": "n10",
+      "type": "text",
+      "x": 835,
+      "y": 230,
+      "width": 350,
+      "height": 140,
+      "text": "## 群与子群\n- 群定义 (封闭+结合+幺元+逆元)\n- 群无零元、消去律、方程可解\n- 有限子群判定 (封闭⇒子群)\n- 子群判定: a∘b⁻¹∈S",
+      "color": "4"
+    },
+    {
+      "id": "n11",
+      "type": "text",
+      "x": 835,
+      "y": 400,
+      "width": 350,
+      "height": 140,
+      "text": "## 循环群·拉格朗日\n- 阿贝尔群 ⟺ (ab)(ab)=(aa)(bb)\n- 循环群必是阿贝尔群\n- 有限循环群: G={a, a², …, aⁿ=e}\n- **拉格朗日**: |H|∣|G|, 质数阶⇒循环群",
+      "color": "4"
+    },
+    {
+      "id": "n12",
+      "type": "text",
+      "x": 835,
+      "y": 560,
+      "width": 350,
+      "height": 140,
+      "text": "## 同态·环·域\n- 同态 f(a⋆b)=f(a)*f(b)\n- 同态保持半群/独异点/群结构\n- 同态核 Ker(f) 是子群\n- 环: (阿贝尔群+半群+分配) → 整环 → 域",
+      "color": "4"
+    },
+    {
+      "id": "n13",
+      "type": "text",
+      "x": 1235,
+      "y": 60,
+      "width": 350,
+      "height": 140,
+      "text": "## 图的基本概念\n- 图定义 (V,E,φ), 有向/无向\n- **握手定理**: Σdeg(v)=2|E|\n- 奇度结点偶数个\n- 完全图 Kₙ 边数 = n(n-1)/2",
+      "color": "3"
+    },
+    {
+      "id": "n14",
+      "type": "text",
+      "x": 1235,
+      "y": 230,
+      "width": 350,
+      "height": 140,
+      "text": "## 连通·矩阵·欧拉\n- 连通性 (等价关系)\n- 邻接矩阵 A(G)ⁱ 计路径数\n- 关联矩阵秩 = r-1 (连通)\n- **欧拉路**: 连通常数∧(0或2个奇度)\n- 汉密尔顿: δ(u)+δ(v)≥n-1⇒路",
+      "color": "3"
+    },
+    {
+      "id": "n15",
+      "type": "text",
+      "x": 1235,
+      "y": 400,
+      "width": 350,
+      "height": 140,
+      "text": "## 平面图与对偶\n- 欧拉公式: v-e+r=2\n- 简单平面图: e≤3v-6\n- **Kuratowski**: 平面图 ⇔ 不含 K₅/K₃,₃\n- 对偶图  G*（面→结点）\n- 五色定理 (归纳+Kempe链)",
+      "color": "3"
+    },
+    {
+      "id": "n16",
+      "type": "text",
+      "x": 1235,
+      "y": 560,
+      "width": 350,
+      "height": 140,
+      "text": "## 树·生成树·Huffman\n- 树 ⇔ 无回连通 ⇔ e=v-1 (6等价定义)\n- 连通图必有生成树\n- Kruskal最小生成树\n- 最优二叉树 (Huffman)\n- 二叉树 ⟺ 前缀码",
+      "color": "3"
+    },
+    {
+      "id": "cross-duality",
+      "type": "text",
+      "x": 105,
+      "y": 760,
+      "width": 620,
+      "height": 130,
+      "text": "## ⚡ 对偶性 — 贯穿四章\n| 逻辑对偶 (∧↔∨, T↔F) | 集合De Morgan (∪↔∩, ∅↔E) | 代数运算对偶 (分配/吸收对称) | 图论对偶 (面↔结点) |\n|---|---|---|---|\n| 定理1-7.1: ¬A(Pᵢ)⇔A*(¬Pᵢ) | 定理3-2.4: ∼(A∪B)=∼A∩∼B | 定义5-2.5: 吸收律对称 | 定义7-6.1: 对偶图 G* |",
+      "color": "5"
+    },
+    {
+      "id": "cross-equiv",
+      "type": "text",
+      "x": 785,
+      "y": 760,
+      "width": 620,
+      "height": 130,
+      "text": "## ⚡ 等价关系与分类 — 结构统一\n| 逻辑等价 (⇔) | 集合等价/同构 | 代数同构/同余 | 图同构 |\n|---|---|---|---|\n| 等价置换定理 | 等价关系→划分→商集 | 同构是等价关系 (5-8.1) | 图同构必要: 点数=边数=度数列同 |\n| 双向蕴含 ⇔ 等价 | 偏序≤（反对称+传递） | 拉格朗日: 陪集划分群 | 连通分支是等价类 |",
+      "color": "6"
+    },
+    {
+      "id": "cross-map",
+      "type": "text",
+      "x": 430,
+      "y": 930,
+      "width": 400,
+      "height": 170,
+      "text": "## ⚡ 映射与结构保持\n\n**置换定理**: 子公式等价→整体等价 (1-4.1)\n\n**函数**: 满射/入射/双射 (4-1)\n\n**同态**: f(a⋆b)=f(a)*f(b) → 保持代数结构 (5-8.1)\n\n**同构**: 双射+保持运算 (代数)/保持边关系 (图论)\n\n**同态核**: Ker(f) 是子群 (5-8.3)\n\n**闭包**: 自反/对称/传递闭包保持关系最小扩张",
+      "color": "4"
+    },
+    {
+      "id": "cross-count",
+      "type": "text",
+      "x": 940,
+      "y": 930,
+      "width": 400,
+      "height": 170,
+      "text": "## ⚡ 计数与结构定理\n\n**握手定理**: Σdeg(v)=2|E| (7-1.1)\n\n**完全图边数**: |E(Kₙ)|=n(n-1)/2 (7-1.4)\n\n**幂集基数**: |𝒫(A)|=2ⁿ (3-1.3)\n\n**拉格朗日**: 子群阶整除群阶 |H|∣|G| (5-7.1)\n\n**欧拉公式**: v-e+r=2 (7-5.2)\n\n**树的边数**: e=v-1 (7-7.1)\n\n**完全m叉树**: (m-1)i=t-1 (7-8.1)",
+      "color": "3"
+    },
+    {
+      "id": "cross-recursion",
+      "type": "text",
+      "x": 100,
+      "y": 930,
+      "width": 260,
+      "height": 170,
+      "text": "## ⚡ 递归定义\n\nwff (1-3.1)\n根树 (7-8.3)\nHuffman树\n前束范式",
+      "color": "6"
+    },
+    {
+      "id": "cross-closure",
+      "type": "text",
+      "x": 1410,
+      "y": 930,
+      "width": 180,
+      "height": 170,
+      "text": "## ⚡ 闭包\n\n关系闭包 (3-8)\n\n图闭包→汉密尔顿 (7-4.6)",
+      "color": "5"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "fromNode": "n1",
+      "fromSide": "right",
+      "toNode": "n2",
+      "toSide": "left",
+      "label": "等价→范式",
+      "color": "6"
+    },
+    {
+      "id": "e2",
+      "fromNode": "n2",
+      "fromSide": "right",
+      "toNode": "n3",
+      "toSide": "left",
+      "label": "重言式是等价特例",
+      "color": "6"
+    },
+    {
+      "id": "e3",
+      "fromNode": "n3",
+      "fromSide": "right",
+      "toNode": "n4",
+      "toSide": "left",
+      "label": "推理扩张到谓词",
+      "color": "6"
+    },
+    {
+      "id": "e4",
+      "fromNode": "n5",
+      "fromSide": "right",
+      "toNode": "n6",
+      "toSide": "left",
+      "label": "笛卡尔积→关系",
+      "color": "5"
+    },
+    {
+      "id": "e5",
+      "fromNode": "n6",
+      "fromSide": "right",
+      "toNode": "n7",
+      "toSide": "left",
+      "label": "关系性质→等价/偏序",
+      "color": "5"
+    },
+    {
+      "id": "e6",
+      "fromNode": "n7",
+      "fromSide": "right",
+      "toNode": "n8",
+      "toSide": "left",
+      "label": "函数是关系特例",
+      "color": "5"
+    },
+    {
+      "id": "e7",
+      "fromNode": "n9",
+      "fromSide": "right",
+      "toNode": "n10",
+      "toSide": "left",
+      "label": "群是半群+幺元+逆元",
+      "color": "4"
+    },
+    {
+      "id": "e8",
+      "fromNode": "n10",
+      "fromSide": "right",
+      "toNode": "n11",
+      "toSide": "left",
+      "label": "循环群是阿贝尔群",
+      "color": "4"
+    },
+    {
+      "id": "e9",
+      "fromNode": "n11",
+      "fromSide": "right",
+      "toNode": "n12",
+      "toSide": "left",
+      "label": "环=阿贝尔群+半群",
+      "color": "4"
+    },
+    {
+      "id": "e10",
+      "fromNode": "n13",
+      "fromSide": "right",
+      "toNode": "n14",
+      "toSide": "left",
+      "label": "连通是路存在",
+      "color": "3"
+    },
+    {
+      "id": "e11",
+      "fromNode": "n14",
+      "fromSide": "right",
+      "toNode": "n15",
+      "toSide": "left",
+      "label": "欧拉公式联系面边点",
+      "color": "3"
+    },
+    {
+      "id": "e12",
+      "fromNode": "n15",
+      "fromSide": "right",
+      "toNode": "n16",
+      "toSide": "left",
+      "label": "树是图特例",
+      "color": "3"
+    },
+    {
+      "id": "c01",
+      "fromNode": "n5",
+      "fromSide": "left",
+      "toNode": "n1",
+      "toSide": "right",
+      "label": "命题逻辑指导集合推理",
+      "color": "6"
+    },
+    {
+      "id": "c02",
+      "fromNode": "n5",
+      "fromSide": "bottom",
+      "toNode": "cross-duality",
+      "toSide": "top",
+      "label": "De Morgan律",
+      "color": "5"
+    },
+    {
+      "id": "c03",
+      "fromNode": "n2",
+      "fromSide": "left",
+      "toNode": "cross-duality",
+      "toSide": "top",
+      "label": "对偶定理",
+      "color": "6"
+    },
+    {
+      "id": "c04",
+      "fromNode": "n15",
+      "fromSide": "left",
+      "toNode": "cross-duality",
+      "toSide": "right",
+      "label": "对偶图",
+      "color": "3"
+    },
+    {
+      "id": "c05",
+      "fromNode": "n7",
+      "fromSide": "bottom",
+      "toNode": "cross-equiv",
+      "toSide": "top",
+      "label": "等价关系→划分",
+      "color": "5"
+    },
+    {
+      "id": "c06",
+      "fromNode": "n11",
+      "fromSide": "left",
+      "toNode": "cross-equiv",
+      "toSide": "top",
+      "label": "陪集划分群",
+      "color": "4"
+    },
+    {
+      "id": "c07",
+      "fromNode": "n14",
+      "fromSide": "left",
+      "toNode": "cross-equiv",
+      "toSide": "right",
+      "label": "连通是等价关系",
+      "color": "3"
+    },
+    {
+      "id": "c08",
+      "fromNode": "n1",
+      "fromSide": "left",
+      "toNode": "cross-equiv",
+      "toSide": "top",
+      "label": "等价(⇔)",
+      "color": "6"
+    },
+    {
+      "id": "c09",
+      "fromNode": "n3",
+      "fromSide": "bottom",
+      "toNode": "cross-map",
+      "toSide": "top",
+      "label": "置换定理",
+      "color": "6"
+    },
+    {
+      "id": "c10",
+      "fromNode": "n6",
+      "fromSide": "bottom",
+      "toNode": "cross-map",
+      "toSide": "top",
+      "label": "闭包构造",
+      "color": "5"
+    },
+    {
+      "id": "c11",
+      "fromNode": "n12",
+      "fromSide": "left",
+      "toNode": "cross-map",
+      "toSide": "top",
+      "label": "同态→保持结构",
+      "color": "4"
+    },
+    {
+      "id": "c12",
+      "fromNode": "n8",
+      "fromSide": "bottom",
+      "toNode": "cross-map",
+      "toSide": "top",
+      "label": "函数(映射基础)",
+      "color": "5"
+    },
+    {
+      "id": "c13",
+      "fromNode": "n13",
+      "fromSide": "bottom",
+      "toNode": "cross-count",
+      "toSide": "top",
+      "label": "握手定理",
+      "color": "3"
+    },
+    {
+      "id": "c14",
+      "fromNode": "n5",
+      "fromSide": "bottom",
+      "toNode": "cross-count",
+      "toSide": "top",
+      "label": "幂集 2ⁿ",
+      "color": "5"
+    },
+    {
+      "id": "c15",
+      "fromNode": "n11",
+      "fromSide": "bottom",
+      "toNode": "cross-count",
+      "toSide": "top",
+      "label": "拉格朗日",
+      "color": "4"
+    },
+    {
+      "id": "c16",
+      "fromNode": "n16",
+      "fromSide": "left",
+      "toNode": "cross-count",
+      "toSide": "top",
+      "label": "e=v-1",
+      "color": "3"
+    },
+    {
+      "id": "c17",
+      "fromNode": "n4",
+      "fromSide": "bottom",
+      "toNode": "cross-duality",
+      "toSide": "left",
+      "label": "量词转化中的对偶",
+      "color": "6"
+    },
+    {
+      "id": "c18",
+      "fromNode": "n16",
+      "fromSide": "bottom",
+      "toNode": "cross-recursion",
+      "toSide": "right",
+      "label": "递归树定义",
+      "color": "3"
+    },
+    {
+      "id": "c19",
+      "fromNode": "n1",
+      "fromSide": "bottom",
+      "toNode": "cross-recursion",
+      "toSide": "top",
+      "label": "wff递归定义",
+      "color": "6"
+    },
+    {
+      "id": "c20",
+      "fromNode": "n4",
+      "fromSide": "left",
+      "toNode": "cross-recursion",
+      "toSide": "top",
+      "label": "前束范式递归",
+      "color": "6"
+    },
+    {
+      "id": "c21",
+      "fromNode": "n6",
+      "fromSide": "bottom",
+      "toNode": "cross-closure",
+      "toSide": "top",
+      "label": "传递闭包 t(R)",
+      "color": "5"
+    },
+    {
+      "id": "c22",
+      "fromNode": "n14",
+      "fromSide": "bottom",
+      "toNode": "cross-closure",
+      "toSide": "top",
+      "label": "图闭包→汉密尔顿",
+      "color": "3"
+    },
+    {
+      "id": "c23",
+      "fromNode": "n13",
+      "fromSide": "right",
+      "toNode": "n8",
+      "toSide": "bottom",
+      "label": "图的同构概念映射",
+      "color": "3"
+    },
+    {
+      "id": "c24",
+      "fromNode": "n12",
+      "fromSide": "right",
+      "toNode": "n15",
+      "toSide": "left",
+      "label": "同构与代数→图同构",
+      "color": "4"
+    }
+  ]
+}
