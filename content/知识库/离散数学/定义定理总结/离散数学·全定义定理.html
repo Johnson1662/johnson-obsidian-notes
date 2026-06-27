@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>离散数学·定义与定理大全</title>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" defer></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', sans-serif; background: #f5f5f5; color: #222; line-height: 1.7; }
+header { background: linear-gradient(135deg, #1a237e, #283593); color: #fff; padding: 32px 24px; text-align: center; }
+header h1 { font-size: 28px; margin-bottom: 8px; }
+header p { opacity: .8; font-size: 14px; }
+
+/* Tabs */
+.tab-bar { display: flex; background: #fff; border-bottom: 2px solid #e0e0e0; position: sticky; top: 0; z-index: 100; overflow-x: auto; }
+.tab { padding: 14px 24px; cursor: pointer; font-size: 15px; font-weight: 600; color: #666; border-bottom: 3px solid transparent; transition: all .2s; white-space: nowrap; }
+.tab:hover { color: #333; background: #fafafa; }
+.tab.active { color: #1a237e; border-bottom-color: #1a237e; }
+.tab .badge { display: inline-block; margin-left: 6px; padding: 1px 8px; border-radius: 10px; font-size: 11px; color: #fff; }
+
+/* Panels */
+.panel { display: none; max-width: 960px; margin: 0 auto; padding: 24px 16px 60px; }
+.panel.active { display: block; }
+
+/* Sections */
+.subject-title { font-size: 24px; margin: 8px 0 24px; padding-bottom: 12px; border-bottom: 3px solid; }
+.chapter { background: #fff; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 1px 4px rgba(0,0,0,.08); overflow: hidden; }
+.chapter-header { padding: 16px 20px; font-size: 18px; font-weight: 700; cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none; }
+.chapter-header:hover { filter: brightness(.97); }
+.chapter-header .arrow { transition: transform .3s; font-size: 12px; }
+.chapter.collapsed .chapter-body { display: none; }
+.chapter.collapsed .arrow { transform: rotate(-90deg); }
+.chapter-body { padding: 4px 20px 20px; }
+
+/* Items */
+.def, .thm { padding: 10px 14px; margin: 8px 0; border-radius: 6px; position: relative; }
+.def { background: #e8f5e9; border-left: 4px solid #43a047; }
+.thm { background: #e3f2fd; border-left: 4px solid #1e88e5; }
+.def .label, .thm .label { font-weight: 700; margin-right: 6px; }
+.def .label { color: #2e7d32; }
+.thm .label { color: #1565c0; }
+.prop { background: #fff3e0; border-left: 4px solid #fb8c00; padding: 10px 14px; margin: 8px 0; border-radius: 6px; }
+.prop .label { color: #e65100; font-weight: 700; margin-right: 6px; }
+.note { background: #f3e5f5; border-left: 4px solid #8e24aa; padding: 10px 14px; margin: 8px 0; border-radius: 6px; font-size: 14px; }
+.note .label { color: #6a1b9a; font-weight: 700; margin-right: 6px; }
+code { background: #f0f0f0; padding: 2px 6px; border-radius: 3px; font-size: .9em; }
+table { border-collapse: collapse; margin: 8px 0; width: 100%; font-size: 14px; }
+td, th { border: 1px solid #ddd; padding: 6px 10px; text-align: center; }
+th { background: #f5f5f5; font-weight: 600; }
+
+/* Cross links */
+.cross-links { background: #fff; border-radius: 10px; margin-bottom: 20px; padding: 16px 20px; box-shadow: 0 1px 4px rgba(0,0,0,.08); }
+.cross-links h3 { font-size: 16px; margin-bottom: 12px; color: #1a237e; }
+.cross-link-item { display: inline-block; margin: 4px 6px 4px 0; padding: 4px 12px; border-radius: 16px; font-size: 13px; text-decoration: none; color: #fff; }
+.cross-link-item:hover { opacity: .8; }
+
+.color-logic { color: #6a1b9a; }
+.bg-logic { background: #6a1b9a; }
+.border-logic { border-color: #6a1b9a; }
+.color-set { color: #00838f; }
+.bg-set { background: #00838f; }
+.border-set { border-color: #00838f; }
+.color-algebra { color: #2e7d32; }
+.bg-algebra { background: #2e7d32; }
+.border-algebra { border-color: #2e7d32; }
+.color-graph { color: #e65100; }
+.bg-graph { background: #e65100; }
+.border-graph { border-color: #e65100; }
+
+#count-panel { text-align: center; color: #888; font-size: 13px; margin-top: 8px; }
+
+@media (max-width: 640px) {
+  .tab { padding: 10px 14px; font-size: 13px; }
+  .panel { padding: 12px 8px; }
+  .chapter-body { padding: 4px 12px 16px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>📐 离散数学 · 定义与定理大全</h1>
+  <p>数理逻辑 · 集合论 · 代数系统 · 图论 — 全部编号定义与定理完整收录</p>
+</header>
+
+<div class="tab-bar" id="tabBar">
+  <div class="tab active" data-panel="logic"><span class="color-logic">■</span> 数理逻辑 <span class="badge bg-logic">65</span></div>
+  <div class="tab" data-panel="set"><span class="color-set">■</span> 集合论 <span class="badge bg-set">54</span></div>
+  <div class="tab" data-panel="algebra"><span class="color-algebra">■</span> 代数系统 <span class="badge bg-algebra">40</span></div>
+  <div class="tab" data-panel="graph"><span class="color-graph">■</span> 图论 <span class="badge bg-graph">47</span></div>
+</div>
+
+<!-- ==================== 数理逻辑 ==================== -->
+<div class="panel active" id="panel-logic">
+  <h2 class="subject-title" style="color:#6a1b9a;">📐 数理逻辑 · 定义与定理</h2>
+
+  <div class="cross-links">
+    <h3>⚡ 跨章连接</h3>
+    <a class="cross-link-item bg-logic" href="#logic-equiv">等价关系 → 集合论</a>
+    <a class="cross-link-item bg-logic" href="#logic-dual">对偶定理 → De Morgan</a>
+    <a class="cross-link-item bg-logic" href="#logic-wff">递归 wff → 根树</a>
+    <a class="cross-link-item bg-set" href="#panel-set" onclick="switchTab('set')">→ 集合论</a>
+    <a class="cross-link-item bg-algebra" href="#panel-algebra" onclick="switchTab('algebra')">→ 代数系统</a>
+    <a class="cross-link-item bg-graph" href="#panel-graph" onclick="switchTab('graph')">→ 图论</a>
+  </div>
+
+  <div class="chapter" id="logic-ch1">
+    <div class="chapter-header" style="background:#f3e5f5;" onclick="toggleChapter(this)">
+      <span>第一章 命题逻辑</span><span class="arrow">▼</span>
+    </div>
+    <div class="chapter-body">
+
+      <h4>§1-1 命题及其表示法</h4>
+      <div class="note"><span class="label">📖 概念</span> <b>命题</b>：具有确切真值（真/假）的陈述句。<b>命题标识符</b>：表示命题的符号（P,Q,R,…）。<b>命题常量</b>：表示确定命题的标识符。<b>命题变元</b>：表示任意命题位置的标识符，指派后确定真值。<b>原子命题</b>：不含联结词的命题。</div>
+
+      <h4 style="margin-top:16px;">§1-2 联结词</h4>
+      <div class="def"><span class="label">D1-2.1 否定</span> $\neg P$，真值表：$P$=T→$F$，$P$=F→$T$。</div>
+      <div class="def"><span class="label">D1-2.2 合取</span> $P\land Q$，真 当且仅当 $P,Q$ 都真。</div>
+      <div class="def"><span class="label">D1-2.3 析取</span> $P\lor Q$，假 当且仅当 $P,Q$ 都假（可兼或）。</div>
+      <div class="def"><span class="label">D1-2.4 条件</span> $P\rightarrow Q$，假 当且仅当 $P$ 真 $Q$ 假。$P$=前件，$Q$=后件。</div>
+      <div class="def"><span class="label">D1-2.5 双条件</span> $P\leftrightarrow Q$，真 当且仅当 $P,Q$ 同真值。</div>
+
+      <div class="note"><span class="label">📖 优先序</span> $\neg > \land > \lor > \rightarrow > \leftrightarrow$</div>
+
+      <h4 style="margin-top:16px;">§1-3 合式公式</h4>
+      <div class="def"><span class="label">D1-3.1 wff</span> ①单个命题变元是wff；②若A是wff则$\neg$A是wff；③若A,B是wff则$(A\land B),(A\lor B),(A\rightarrow B),(A\leftrightarrow B)$是wff；④有限次应用①②③。</div>
+
+      <h4 style="margin-top:16px;">§1-4 真值表与等价公式</h4>
+      <div class="def"><span class="label">D1-4.1 真值表</span> 对分量指派真值的各种可能组合汇列成表。n个变元共$2^n$种情况。</div>
+      <div class="def"><span class="label">D1-4.2 等价</span> 任一组指派真值相同 $\Leftrightarrow$ $A\Leftrightarrow B$。</div>
+      <div class="def"><span class="label">D1-4.3 子公式</span> wff的一部分仍为wff。</div>
+      <div class="thm"><span class="label">T1-4.1 等价置换</span> X是A的子公式，X⇔Y，则A中X换Y得B⇔A。</div>
+
+      <div class="def"><span class="label">表1-4.8 基本等价式</span></div>
+      <table>
+        <tr><th>定律</th><th>表达式</th></tr>
+        <tr><td>对合律</td><td>$\neg\neg P\Leftrightarrow P$</td></tr>
+        <tr><td>幂等律</td><td>$P\lor P\Leftrightarrow P$，$P\land P\Leftrightarrow P$</td></tr>
+        <tr><td>结合律</td><td>$(P\lor Q)\lor R\Leftrightarrow P\lor(Q\lor R)$；$\land$同理</td></tr>
+        <tr><td>交换律</td><td>$P\lor Q\Leftrightarrow Q\lor P$；$\land$同理</td></tr>
+        <tr><td>分配律</td><td>$P\lor(Q\land R)\Leftrightarrow(P\lor Q)\land(P\lor R)$；$\land$对$\lor$同理</td></tr>
+        <tr><td>吸收律</td><td>$P\lor(P\land Q)\Leftrightarrow P$；$P\land(P\lor Q)\Leftrightarrow P$</td></tr>
+        <tr><td>De Morgan</td><td>$\neg(P\lor Q)\Leftrightarrow\neg P\land\neg Q$；$\neg(P\land Q)\Leftrightarrow\neg P\lor\neg Q$</td></tr>
+        <tr><td>同一律</td><td>$P\lor F\Leftrightarrow P$，$P\land T\Leftrightarrow P$</td></tr>
+        <tr><td>零律</td><td>$P\lor T\Leftrightarrow T$，$P\land F\Leftrightarrow F$</td></tr>
+        <tr><td>否定律</td><td>$P\lor\neg P\Leftrightarrow T$，$P\land\neg P\Leftrightarrow F$</td></tr>
+      </table>
+
+      <h4 style="margin-top:16px;">§1-5 重言式与蕴含式</h4>
+      <div class="def"><span class="label">D1-5.1 重言式</span> 所有指派真值为T。</div>
+      <div class="def"><span class="label">D1-5.2 矛盾式</span> 所有指派真值为F。</div>
+      <div class="thm"><span class="label">T1-5.1 重言封闭</span> 两重言式∧/∨仍重言。</div>
+      <div class="thm"><span class="label">T1-5.2 重言置换</span> 重言式分量→任意wff仍重言。</div>
+      <div class="thm"><span class="label">T1-5.3</span> $A\Leftrightarrow B$ 当且仅当 $A\leftrightarrow B$ 重言。</div>
+      <div class="def"><span class="label">D1-5.3 蕴含</span> $P\rightarrow Q$重言 $\Rightarrow$ $P\Rightarrow Q$。</div>
+      <div class="thm"><span class="label">T1-5.4</span> $P\Leftrightarrow Q \iff (P\Rightarrow Q)\land(Q\Rightarrow P)$。</div>
+
+      <div class="prop"><span class="label">蕴含性质</span> ①若A⇒B且A重言则B重言；②传递：A⇒B,B⇒C⇒A⇒C；③A⇒B且A⇒C⇒A⇒(B∧C)；④A⇒B且C⇒B⇒A∨C⇒B。</div>
+
+      <div class="def"><span class="label">表1-5.2 常用蕴含式（14条）</span></div>
+      <table>
+        <tr><th>#</th><th>蕴含式</th></tr>
+        <tr><td>1</td><td>$P\land Q\Rightarrow P$</td></tr>
+        <tr><td>2</td><td>$P\land Q\Rightarrow Q$</td></tr>
+        <tr><td>3</td><td>$P\Rightarrow P\lor Q$</td></tr>
+        <tr><td>4</td><td>$\neg P\Rightarrow P\rightarrow Q$</td></tr>
+        <tr><td>5</td><td>$Q\Rightarrow P\rightarrow Q$</td></tr>
+        <tr><td>6</td><td>$\neg(P\rightarrow Q)\Rightarrow P$</td></tr>
+        <tr><td>7</td><td>$\neg(P\rightarrow Q)\Rightarrow\neg Q$</td></tr>
+        <tr><td>8</td><td>$P\land(P\rightarrow Q)\Rightarrow Q$（假言推理）</td></tr>
+        <tr><td>9</td><td>$\neg Q\land(P\rightarrow Q)\Rightarrow\neg P$（拒取式）</td></tr>
+        <tr><td>10</td><td>$\neg P\land(P\lor Q)\Rightarrow Q$（析取三段论）</td></tr>
+        <tr><td>11</td><td>$(P\rightarrow Q)\land(Q\rightarrow R)\Rightarrow P\rightarrow R$（假言三段论）</td></tr>
+        <tr><td>12</td><td>$(P\lor Q)\land(P\rightarrow R)\land(Q\rightarrow R)\Rightarrow R$（二难推论）</td></tr>
+        <tr><td>13</td><td>$(P\rightarrow Q)\land(R\rightarrow S)\Rightarrow(P\land R)\rightarrow(Q\land S)$</td></tr>
+        <tr><td>14</td><td>$(P\leftrightarrow Q)\land(Q\leftrightarrow R)\Rightarrow(P\leftrightarrow R)$</td></tr>
+      </table>
+
+      <h4 style="margin-top:16px;">§1-7 对偶与范式</h4>
+      <div class="def"><span class="label">D1-7.1 对偶式 $A^*$</span> ∧↔∨，T↔F互换。</div>
+      <div class="thm"><span class="label">T1-7.1 对偶定理</span> $\neg A(P_1,\dots,P_n)\Leftrightarrow A^*(\neg P_1,\dots,\neg P_n)$；$A(\neg P_i)\Leftrightarrow\neg A^*(P_i)$。</div>
+      <div class="thm"><span class="label">T1-7.2 对偶等价</span> $A\Leftrightarrow B$ 则 $A^*\Leftrightarrow B^*$。</div>
+      <div class="def"><span class="label">D1-7.2 合取范式</span> $A_1\land\cdots\land A_n$，$A_i$是析取式。</div>
+      <div class="def"><span class="label">D1-7.3 析取范式</span> $A_1\lor\cdots\lor A_n$，$A_i$是合取式。</div>
+      <div class="def"><span class="label">D1-7.4 小项</span> n个变元各出现一次（或其否定）的合取式，共$2^n$个。$m_i\land m_j\Leftrightarrow F(i\neq j)$；$\sum m_i\Leftrightarrow T$。</div>
+      <div class="def"><span class="label">D1-7.5 主析取范式</span> 小项析取。</div>
+      <div class="thm"><span class="label">T1-7.3 主析取</span> 真值T指派对应小项析取。</div>
+      <div class="def"><span class="label">D1-7.6 大项</span> n个变元各出现一次的析取式，共$2^n$个。$M_i\lor M_j\Leftrightarrow T(i\neq j)$；$\prod M_i\Leftrightarrow F$。</div>
+      <div class="def"><span class="label">D1-7.7 主合取范式</span> 大项合取。</div>
+      <div class="thm"><span class="label">T1-7.4 主合取</span> 真值F指派对应大项合取。若主析取为$\sum i_1,\dots,i_k$则主合取为$\prod 0,\dots,i_1-1,i_1+1,\dots,2^n-1$。</div>
+
+      <h4 style="margin-top:16px;">§1-8 推理理论</h4>
+      <div class="def"><span class="label">D1-8.1 有效结论</span> $H_1\land\cdots\land H_n\Rightarrow C$。</div>
+      <div class="def"><span class="label">D1-8.2 相容</span> $\exists$指派使 $H_1\land\cdots\land H_m$ 真。</div>
+      <div class="prop"><span class="label">推理规则</span> <b>P规则</b>：前提可引入；<b>T规则</b>：蕴含可引入；<b>CP规则</b>：附加前提。</div>
+
+      <div class="def"><span class="label">推理常用等价式 E1-E22</span></div>
+      <table>
+        <tr><th>#</th><th>等价式</th></tr>
+        <tr><td>E1</td><td>$\neg\neg P\Leftrightarrow P$</td></tr>
+        <tr><td>E2-3</td><td>$P\land Q\Leftrightarrow Q\land P$；$P\lor Q\Leftrightarrow Q\lor P$</td></tr>
+        <tr><td>E4-5</td><td>结合律（$\land$/$\lor$）</td></tr>
+        <tr><td>E6-7</td><td>分配律（$\land$对$\lor$/$\lor$对$\land$）</td></tr>
+        <tr><td>E8-9</td><td>De Morgan</td></tr>
+        <tr><td>E10-11</td><td>幂等律</td></tr>
+        <tr><td>E12-15</td><td>同一/零律（与T/F运算）</td></tr>
+        <tr><td>E16</td><td>$P\rightarrow Q\Leftrightarrow\neg P\lor Q$</td></tr>
+        <tr><td>E17</td><td>$\neg(P\rightarrow Q)\Leftrightarrow P\land\neg Q$</td></tr>
+        <tr><td>E18</td><td>$P\rightarrow Q\Leftrightarrow\neg Q\rightarrow\neg P$（逆否）</td></tr>
+        <tr><td>E19</td><td>$P\rightarrow(Q\rightarrow R)\Leftrightarrow(P\land Q)\rightarrow R$</td></tr>
+        <tr><td>E20</td><td>$P\leftrightarrow Q\Leftrightarrow(P\rightarrow Q)\land(Q\rightarrow P)$</td></tr>
+        <tr><td>E21</td><td>$P\leftrightarrow Q\Leftrightarrow(P\land Q)\lor(\neg P\land\neg Q)$</td></tr>
+        <tr><td>E22</td><td>$\neg(P\leftrightarrow Q)\Leftrightarrow P\leftrightarrow\neg Q$</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="chapter" id="logic-ch2">
+    <div class="chapter-header" style="background:#f3e5f5;" onclick="toggleChapter(this)">
+      <span>第二章 谓词逻辑</span><span class="arrow">▼</span>
+    </div>
+    <div class="chapter-body">
+      <h4>§2-1 谓词的概念与表示</h4>
+      <div class="note"><span class="label">📖 概念</span> <b>客体</b>：独立存在的对象。<b>谓词</b>：刻划客体性质或关系。n元谓词表明n个客体间关系。</div>
+
+      <h4 style="margin-top:16px;">§2-2 命题函数与量词</h4>
+      <div class="def"><span class="label">D2-2.1 简单命题函数</span> 谓词+客体变元。0元谓词=命题。</div>
+      <div class="note"><span class="label">📖 量词</span> <b>全称量词</b>$(\forall x)$：所有/每一个。<b>存在量词</b>$(\exists x)$：存在/至少一个。<b>特性谓词</b>：∀用→限制，∃用∧限制（全总个体域时）。</div>
+
+      <h4 style="margin-top:16px;">§2-3 谓词公式</h4>
+      <div class="def"><span class="label">D2-3.1 谓词wff</span> ①原子谓词公式；②¬A；③A∧B,A∨B,A→B,A↔B；④(∀x)A,(∃x)A；⑤有限次。</div>
+
+      <h4 style="margin-top:16px;">§2-4 变元的约束</h4>
+      <div class="note"><span class="label">📖 约束/自由</span> <b>指导变元</b>：量词后变元。<b>作用域(辖域)</b>：量词所作用公式。作用域内出现=约束变元；其余=自由变元。<b>换名规则</b>：约束变元可改名，不冲突即可。<b>代入规则</b>：自由变元可全部替换。</div>
+      <div class="note"><span class="label">📖 有限论域</span> 论域$\{a_1,\dots,a_n\}$，$(\forall x)A(x)\Leftrightarrow A(a_1)\land\cdots\land A(a_n)$；$(\exists x)A(x)\Leftrightarrow A(a_1)\lor\cdots\lor A(a_n)$。</div>
+
+      <h4 style="margin-top:16px;">§2-5 谓词演算等价式与蕴含式</h4>
+      <div class="def"><span class="label">D2-5.1 谓词等价</span> 任一组赋值真值相同。</div>
+      <div class="def"><span class="label">D2-5.2 有效(永真)</span> 所有赋值真。</div>
+      <div class="def"><span class="label">D2-5.3 不可满足</span> 所有赋值假。</div>
+      <div class="def"><span class="label">D2-5.4 可满足</span> 至少一种赋值真。</div>
+
+      <div class="def"><span class="label">表2-5.1 谓词等价式 E23-E33</span></div>
+      <table>
+        <tr><th>#</th><th>等价式</th></tr>
+        <tr><td>E23</td><td>$(\exists x)(A(x)\lor B(x))\Leftrightarrow (\exists x)A(x)\lor(\exists x)B(x)$</td></tr>
+        <tr><td>E24</td><td>$(\forall x)(A(x)\land B(x))\Leftrightarrow (\forall x)A(x)\land(\forall x)B(x)$</td></tr>
+        <tr><td>E25</td><td>$\neg(\exists x)A(x)\Leftrightarrow(\forall x)\neg A(x)$</td></tr>
+        <tr><td>E26</td><td>$\neg(\forall x)A(x)\Leftrightarrow(\exists x)\neg A(x)$</td></tr>
+        <tr><td>E27</td><td>$(\forall x)(A\lor B(x))\Leftrightarrow A\lor(\forall x)B(x)$</td></tr>
+        <tr><td>E28</td><td>$(\exists x)(A\land B(x))\Leftrightarrow A\land(\exists x)B(x)$</td></tr>
+        <tr><td>E29</td><td>$(\exists x)(A(x)\rightarrow B(x))\Leftrightarrow (\forall x)A(x)\rightarrow(\exists x)B(x)$</td></tr>
+        <tr><td>E30</td><td>$(\forall x)A(x)\rightarrow B\Leftrightarrow(\exists x)(A(x)\rightarrow B)$</td></tr>
+        <tr><td>E31</td><td>$(\exists x)A(x)\rightarrow B\Leftrightarrow(\forall x)(A(x)\rightarrow B)$</td></tr>
+        <tr><td>E32</td><td>$A\rightarrow(\forall x)B(x)\Leftrightarrow(\forall x)(A\rightarrow B(x))$</td></tr>
+        <tr><td>E33</td><td>$A\rightarrow(\exists x)B(x)\Leftrightarrow(\exists x)(A\rightarrow B(x))$</td></tr>
+      </table>
+
+      <div class="note"><span class="label">量词转化律</span> $\neg(\forall x)P(x)\Leftrightarrow(\exists x)\neg P(x)$；$\neg(\exists x)P(x)\Leftrightarrow(\forall x)\neg P(x)$。</div>
+      <div class="note"><span class="label">量词作用域扩张/收缩（8式）</span> $(\forall x)(A(x)\lor B)\Leftrightarrow(\forall x)A(x)\lor B$；$(\forall x)(A(x)\land B)\Leftrightarrow(\forall x)A(x)\land B$；$(\exists x)(A(x)\lor B)\Leftrightarrow(\exists x)A(x)\lor B$；$(\exists x)(A(x)\land B)\Leftrightarrow(\exists x)A(x)\land B$；$(\forall x)A(x)\rightarrow B\Leftrightarrow(\exists x)(A(x)\rightarrow B)$；$(\exists x)A(x)\rightarrow B\Leftrightarrow(\forall x)(A(x)\rightarrow B)$；$B\rightarrow(\forall x)A(x)\Leftrightarrow(\forall x)(B\rightarrow A(x))$；$B\rightarrow(\exists x)A(x)\Leftrightarrow(\exists x)(B\rightarrow A(x))$。</div>
+
+      <div class="def"><span class="label">多元量词关系</span></div>
+      <table>
+        <tr><th>关系</th><th>式</th></tr>
+        <tr><td>等价</td><td>$(\forall x)(\forall y)A\Leftrightarrow(\forall y)(\forall x)A$；$(\exists x)(\exists y)A\Leftrightarrow(\exists y)(\exists x)A$</td></tr>
+        <tr><td>蕴含</td><td>$(\forall x)(\forall y)A\Rightarrow(\exists y)(\forall x)A$；$(\exists y)(\forall x)A\Rightarrow(\forall x)(\exists y)A$；$(\forall x)(\exists y)A\Rightarrow(\exists y)(\exists x)A$ 等6条</td></tr>
+      </table>
+
+      <h4 style="margin-top:16px;">§2-6 前束范式</h4>
+      <div class="def"><span class="label">D2-6.1 前束范式</span> 量词全在开头，作用域到末尾。形式$(\square v_1)\cdots(\square v_n)A$。</div>
+      <div class="thm"><span class="label">T2-6.1</span> 任意谓词公式等价于前束范式。</div>
+      <div class="def"><span class="label">D2-6.2 前束合取范式</span> 前束+合取范式。</div>
+      <div class="thm"><span class="label">T2-6.2</span> 任意wff→前束合取范式。</div>
+      <div class="def"><span class="label">D2-6.3 前束析取范式</span> 前束+析取范式。</div>
+      <div class="thm"><span class="label">T2-6.3</span> 任意wff→前束析取范式。</div>
+
+      <h4 style="margin-top:16px;">§2-7 谓词推理</h4>
+      <div class="prop"><span class="label">推理规则</span> <b>US</b>：$(\forall x)P(x)\Rightarrow P(c)$（任意c）；<b>UG</b>：$P(x)\Rightarrow(\forall x)P(x)$（需对每个x真）；<b>ES</b>：$(\exists x)P(x)\Rightarrow P(c)$（c非任意）；<b>EG</b>：$P(c)\Rightarrow(\exists x)P(x)$。</div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== 集合论 ==================== -->
+<div class="panel" id="panel-set">
+  <h2 class="subject-title" style="color:#00838f;">🔢 集合论 · 定义与定理</h2>
+
+  <div class="cross-links">
+    <h3>⚡ 跨章连接</h3>
+    <a class="cross-link-item bg-set" href="#set-rel">关系/闭包 → 图论邻接矩阵</a>
+    <a class="cross-link-item bg-set" href="#set-equiv">等价关系/划分 → 陪集</a>
+    <a class="cross-link-item bg-set" href="#set-func">函数/映射 → 同态</a>
+    <a class="cross-link-item bg-logic" href="#panel-logic" onclick="switchTab('logic')">← 数理逻辑</a>
+    <a class="cross-link-item bg-algebra" href="#panel-algebra" onclick="switchTab('algebra')">→ 代数系统</a>
+  </div>
+
+  <div class="chapter">
+    <div class="chapter-header" style="background:#e0f7fa;" onclick="toggleChapter(this)">
+      <span>第三章 集合与关系 · §3-1 至 §3-4</span><span class="arrow">▼</span>
+    </div>
+    <div class="chapter-body">
+      <h4>§3-1 集合的概念</h4>
+      <div class="def"><span class="label">D3-1.1 子集</span> $A\subseteq B\iff\forall x(x\in A\rightarrow x\in B)$。</div>
+      <div class="thm"><span class="label">T3-1.1</span> $A=B\iff A\subseteq B\land B\subseteq A$。</div>
+      <div class="def"><span class="label">D3-1.2 真子集</span> $A\subset B\iff A\subseteq B\land A\neq B$。</div>
+      <div class="def"><span class="label">D3-1.3 空集</span> $\varnothing=\{x\mid p(x)\land\neg p(x)\}$。</div>
+      <div class="thm"><span class="label">T3-1.2</span> $\varnothing\subseteq A$。</div>
+      <div class="def"><span class="label">D3-1.4 全集</span> $E=\{x\mid p(x)\lor\neg p(x)\}$。</div>
+      <div class="def"><span class="label">D3-1.5 幂集</span> $\mathcal{P}(A)$ = A的所有子集。</div>
+      <div class="thm"><span class="label">T3-1.3</span> $|\mathcal{P}(A)|=2^{|A|}$。</div>
+
+      <h4 style="margin-top:16px;">§3-2 集合的运算</h4>
+      <div class="def"><span class="label">D3-2.1 交集</span> $A\cap B=\{x\mid x\in A\land x\in B\}$。</div>
+      <div class="def"><span class="label">D3-2.2 并集</span> $A\cup B=\{x\mid x\in A\lor x\in B\}$。</div>
+      <div class="thm"><span class="label">T3-2.1 分配律</span> $A\cap(B\cup C)=(A\cap B)\cup(A\cap C)$；$A\cup(B\cap C)=(A\cup B)\cap(A\cup C)$。</div>
+      <div class="thm"><span class="label">T3-2.2 吸收律</span> $A\cup(A\cap B)=A$；$A\cap(A\cup B)=A$。</div>
+      <div class="thm"><span class="label">T3-2.3</span> $A\subseteq B\iff A\cup B=B\iff A\cap B=A$。</div>
+      <div class="def"><span class="label">D3-2.3 差集</span> $A-B=\{x\mid x\in A\land x\notin B\}$。</div>
+      <div class="def"><span class="label">D3-2.4 绝对补</span> $\sim A=E-A$。</div>
+      <div class="thm"><span class="label">T3-2.4 De Morgan</span> $\sim(A\cup B)=\sim A\cap\sim B$；$\sim(A\cap B)=\sim A\cup\sim B$。</div>
+      <div class="thm"><span class="label">T3-2.5</span> $A-B=A\cap\sim B$；$A-B=A-(A\cap B)$。</div>
+      <div class="thm"><span class="label">T3-2.6</span> $A\cap(B-C)=(A\cap B)-(A\cap C)$。</div>
+      <div class="thm"><span class="label">T3-2.7</span> $A\subseteq B\Rightarrow\sim B\subseteq\sim A$且$(B-A)\cup A=B$。</div>
+      <div class="def"><span class="label">D3-2.5 对称差</span> $A\oplus B=(A-B)\cup(B-A)=\{x\mid x\in A\;\overline{\lor}\;x\in B\}$。</div>
+
+      <h4 style="margin-top:16px;">§3-4 序偶与笛卡尔积</h4>
+      <div class="def"><span class="label">D3-4.1 序偶</span> $\langle x,y\rangle=\langle u,v\rangle\iff x=u\land y=v$。</div>
+      <div class="def"><span class="label">D3-4.2 笛卡尔积</span> $A\times B=\{\langle x,y\rangle\mid x\in A, y\in B\}$。</div>
+      <div class="thm"><span class="label">T3-4.1</span> $A\times(B\cup C)=(A\times B)\cup(A\times C)$；$A\times(B\cap C)=(A\times B)\cap(A\times C)$；$(A\cup B)\times C=(A\times C)\cup(B\times C)$；$(A\cap B)\times C=(A\times C)\cap(B\times C)$。</div>
+      <div class="thm"><span class="label">T3-4.2</span> $C\neq\varnothing$，$A\subseteq B\iff A\times C\subseteq B\times C\iff C\times A\subseteq C\times B$。</div>
+      <div class="thm"><span class="label">T3-4.3</span> $A,B,C,D$非空，$A\times B\subseteq C\times D\iff A\subseteq C\land B\subseteq D$。</div>
+    </div>
+  </div>
+
+  <div class="chapter">
+    <div class="chapter-header" style="background:#e0f7fa;" onclick="toggleChapter(this)">
+      <span>§3-5 至 §3-8 · 关系、性质与闭包</span><span class="arrow">▼</span>
+    </div>
+    <div class="chapter-body">
+      <h4>§3-5 关系及其表示</h4>
+      <div class="def"><span class="label">D3-5.1 二元关系</span> 序偶集合。$\langle x,y\rangle\in R$或$xRy$。</div>
+      <div class="def"><span class="label">D3-5.2 前域/值域/域</span> $\operatorname{dom}R=\{x\mid\exists y\langle x,y\rangle\in R\}$；$\operatorname{ran}R=\{y\mid\exists x\langle x,y\rangle\in R\}$；$\operatorname{FLD}R=\operatorname{dom}R\cup\operatorname{ran}R$。</div>
+      <div class="def"><span class="label">D3-5.3 X到Y关系</span> $X\times Y$的子集。</div>
+      <div class="def"><span class="label">D3-5.4 恒等关系</span> $I_X=\{\langle x,x\rangle\mid x\in X\}$。</div>
+      <div class="thm"><span class="label">T3-5.1</span> 关系Z,S的并交补差仍是X到Y关系。</div>
+
+      <h4 style="margin-top:16px;">§3-6 关系的性质</h4>
+      <div class="def"><span class="label">D3-6.1 自反</span> $\forall x\in X, xRx$。</div>
+      <div class="def"><span class="label">D3-6.2 对称</span> $\forall x,y, xRy\rightarrow yRx$。</div>
+      <div class="def"><span class="label">D3-6.3 传递</span> $\forall x,y,z, xRy\land yRz\rightarrow xRz$。</div>
+      <div class="def"><span class="label">D3-6.4 反自反</span> $\forall x, \langle x,x\rangle\notin R$。</div>
+      <div class="def"><span class="label">D3-6.5 反对称</span> $\forall x,y, xRy\land yRx\rightarrow x=y$。</div>
+
+      <h4 style="margin-top:16px;">§3-7 复合关系和逆关系</h4>
+      <div class="def"><span class="label">D3-7.1 复合关系</span> $R\circ S=\{\langle x,z\rangle\mid\exists y(\langle x,y\rangle\in R\land\langle y,z\rangle\in S)\}$。</div>
+      <div class="def"><span class="label">D3-7.2 逆关系</span> $R^c=\{\langle y,x\rangle\mid\langle x,y\rangle\in R\}$。</div>
+      <div class="thm"><span class="label">T3-7.1</span> $(R_1\cup R_2)^c=R_1^c\cup R_2^c$；$(R_1\cap R_2)^c=R_1^c\cap R_2^c$；$(A\times B)^c=B\times A$；$(\overline{R})^c=\overline{R^c}$；$(R_1-R_2)^c=R_1^c-R_2^c$。</div>
+      <div class="thm"><span class="label">T3-7.2</span> $(T\circ S)^c=S^c\circ T^c$。</div>
+      <div class="thm"><span class="label">T3-7.3</span> R对称 $\iff R=R^c$；R反对称 $\iff R\cap R^c\subseteq I_X$。</div>
+
+      <h4 style="margin-top:16px;">§3-8 关系的闭包</h4>
+      <div class="def"><span class="label">D3-8.1 闭包</span> 最小扩张关系满足自反/对称/传递：$r(R)$/$s(R)$/$t(R)$。</div>
+      <div class="thm"><span class="label">T3-8.1</span> R自反 $\iff r(R)=R$；对称$\iff s(R)=R$；传递$\iff t(R)=R$。</div>
+      <div class="thm"><span class="label">T3-8.2</span> $r(R)=R\cup I_X$。</div>
+      <div class="thm"><span class="label">T3-8.3</span> $s(R)=R\cup R^c$。</div>
+      <div class="thm"><span class="label">T3-8.4</span> $t(R)=\bigcup_{i=1}^\infty R^i=R\cup R^2\cup R^3\cup\cdots$。</div>
+      <div class="thm"><span class="label">T3-8.5</span> $|X|=n$，则$\exists k\leq n$使$t(R)=\bigcup_{i=1}^k R^i$。</div>
+      <div class="thm"><span class="label">T3-8.6</span> $rs(R)=sr(R)$；$rt(R)=tr(R)$；$ts(R)\supseteq st(R)$。</div>
+    </div>
+  </div>
+
+  <div class="chapter">
+    <div class="chapter-header" style="background:#e0f7fa;" onclick="toggleChapter(this)">
+      <span>§3-9 至 §3-12 · 划分·等价·偏序</span><span class="arrow">▼</span>
+    </div>
+    <div class="chapter-body">
+      <h4>§3-9 划分和覆盖</h4>
+      <div class="def"><span class="label">D3-9.1 覆盖/划分</span> $S_i\neq\varnothing$，$\cup S_i=A$为覆盖；$S_i\cap S_j=\varnothing(i\neq j)$为划分。</div>
+      <div class="def"><span class="label">D3-9.2 交叉划分</span> $A_i\cap B_j\neq\varnothing$组成的集合。</div>
+      <div class="thm"><span class="label">T3-9.1</span> 交叉划分是划分。</div>
+      <div class="def"><span class="label">D3-9.3 加细</span> $\forall A_j\exists B_k$ 使 $A_j\subseteq B_k$。</div>
+      <div class="thm"><span class="label">T3-9.2</span> 交叉划分是原划分的加细。</div>
+
+      <h4 style="margin-top:16px;">§3-10 等价关系</h4>
+      <div class="def"><span class="label">D3-10.1 等价关系</span> 自反+对称+传递。</div>
+      <div class="def"><span class="label">D3-10.2 等价类</span> $[a]_R=\{x\mid aRx\}$。</div>
+      <div class="thm"><span class="label">T3-10.1</span> $aRb\iff[a]_R=[b]_R$。</div>
+      <div class="def"><span class="label">D3-10.3 商集</span> $A/R=\{[a]_R\mid a\in A\}$。</div>
+      <div class="thm"><span class="label">T3-10.2</span> 等价关系决定划分（商集）。</div>
+      <div class="thm"><span class="label">T3-10.3</span> 划分确定等价关系。</div>
+      <div class="thm"><span class="label">T3-10.4</span> $R_1=R_2\iff A/R_1=A/R_2$。</div>
+
+      <h4 style="margin-top:16px;">§3-11 相容关系</h4>
+      <div class="def"><span class="label">D3-11.1 相容关系</span> 自反+对称。</div>
+      <div class="def"><span class="label">D3-11.2 相容类</span> 全连通子集。</div>
+      <div class="def"><span class="label">D3-11.3 最大相容类</span> 不能真包含。</div>
+      <div class="thm"><span class="label">T3-11.1</span> 有限集上相容类$\subseteq$某最大相容类。</div>
+      <div class="def"><span class="label">D3-11.4 完全覆盖</span> 最大相容类集合。</div>
+      <div class="thm"><span class="label">T3-11.2</span> 覆盖$R=\cup(A_i\times A_i)$是相容关系。</div>
+      <div class="thm"><span class="label">T3-11.3</span> 相容关系与完全覆盖一一对应。</div>
+
+      <h4 style="margin-top:16px;">§3-12 序关系</h4>
+      <div class="def"><span class="label">D3-12.1 偏序</span> 自反+反对称+传递。$\langle A,\leq\rangle$偏序集。</div>
+      <div class="def"><span class="label">D3-12.2 盖住</span> $x<y$且无$z$使$x<z<y$。</div>
+      <div class="def"><span class="label">D3-12.3 链/反链</span> 全有序/全无关。</div>
+      <div class="def"><span class="label">D3-12.4 全序</span> 任意$x,y$可比。</div>
+      <div class="def"><span class="label">D3-12.5 极大/极小元</span> B中无更大/更小。</div>
+      <div class="def"><span class="label">D3-12.6 最大/最小元</span> B中所有元素≤/≥它。</div>
+      <div class="thm"><span class="label">T3-12.1</span> 最大(小)元唯一。</div>
+      <div class="def"><span class="label">D3-12.7 上/下界</span> A中元素≥/≤B中所有。</div>
+      <div class="def"><span class="label">D3-12.8 LUB/GLB</span> 最小上界/最大下界。</div>
+      <div class="def"><span class="label">D3-12.9 良序</span> 每个非空子集有最小元。</div>
+      <div class="thm"><span class="label">T3-12.2</span> 良序$\Rightarrow$全序。</div>
+      <div class="thm"><span class="label">T3-12.3</span> 有限全序$\Rightarrow$良序。</div>
+    </div>
+  </div>
+
+  <div class="chapter">
+    <div class="chapter-header" style="background:#e0f7fa;" onclick="toggleChapter(this)">
+      <span>第四章 函数</span><span class="arrow">▼</span>
+    </div>
+    <div class="chapter-body">
+      <h4>§4-1 函数的概念</h4>
+      <div class="def"><span class="label">D4-1.1 函数</span> $f:X\to Y$，$\forall x\in X$有唯一$y$使$\langle x,y\rangle\in f$。</div>
+      <div class="def"><span class="label">D4-1.2 函数相等</span> $A=C,B=D,\forall x f(x)=g(x)$。</div>
+      <div class="def"><span class="label">D4-1.3 满射</span> $\operatorname{ran}f=Y$。</div>
+      <div class="def"><span class="label">D4-1.4 入射</span> $x_1\neq x_2\Rightarrow f(x_1)\neq f(x_2)$。</div>
+      <div class="def"><span class="label">D4-1.5 双射</span> 满射+入射。</div>
+      <div class="thm"><span class="label">T4-1.1</span> 有限集$|X|=|Y|$，入射$\iff$满射。</div>
+
+      <h4 style="margin-top:16px;">§4-2 逆函数和复合函数</h4>
+      <div class="thm"><span class="label">T4-2.1</span> 双射$f$的$f^c$是双射。</div>
+      <div class="def"><span class="label">D4-2.1 逆函数</span> 双射$f$的$f^c$记作$f^{-1}$。</div>
+      <div class="def"><span class="label">D4-2.2 复合函数</span> $(g\circ f)(x)=g(f(x))$。</div>
+      <div class="thm"><span class="label">T4-2.2</span> 两函数复合仍是函数。</div>
+      <div class="thm"><span class="label">T4-2.3</span> 满射∘满射=满射；入射∘入射=入射；双射∘双射=双射。</div>
+      <div class="thm"><span class="label">T4-2.4</span> $f=f\circ I_X=I_Y\circ f$。</div>
+      <div class="thm"><span class="label">T4-2.5</span> $f^{-1}\circ f=I_X$；$f\circ f^{-1}=I_Y$。</div>
+      <div class="thm"><span class="label">T4-2.6</span> $(f^{-1})^{-1}=f$。</div>
+      <div class="thm"><span class="label">T4-2.7</span> $(g\circ f)^{-1}=f^{-1}\circ g^{-1}$。</div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== 代数系统 ==================== -->
+<div class="panel" id="panel-algebra">
+  <h2 class="subject-title" style="color:#2e7d32;">⚙ 代数系统 · 定义与定理</h2>
+
+  <div class="cross-links">
+    <h3>⚡ 跨章连接</h3>
+    <a class="cross-link-item bg-algebra" href="#alg-group">群/子群 → 图论置换</a>
+    <a class="cross-link-item bg-algebra" href="#alg-homo">同态 → 逻辑置换定理</a>
+    <a class="cross-link-item bg-algebra" href="#alg-lagrange">拉格朗日 → 计数公式</a>
+    <a class="cross-link-item bg-logic" href="#panel-logic" onclick="switchTab('logic')">← 逻辑</a>
+    <a class="cross-link-item bg-set" href="#panel-set" onclick="switchTab('set')">← 集合</a>
+    <a class="cross-link-item bg-graph" href="#panel-graph" onclick="switchTab('graph')">→ 图论</a>
+  </div>
+
+  <div class="chapter">
+    <div class="chapter-header" style="background:#e8f5e9;" onclick="toggleChapter(this)">
+      <span>§5-1 至 §5-2 · 运算及其性质</span><span class="arrow">▼</span>
+    </div>
+    <div class="chapter-body">
+      <div class="def"><span class="label">D5-1.1 n元运算</span> $A^n\to B$的映射。$B\subseteq A$则封闭。</div>
+      <div class="def"><span class="label">D5-1.2 代数系统</span> $\langle A,f_1,\dots,f_k\rangle$。</div>
+      <div class="def"><span class="label">D5-2.1 封闭</span> $\forall x,y\in A, x*y\in A$。</div>
+      <div class="def"><span class="label">D5-2.2 交换</span> $\forall x,y, x*y=y*x$。</div>
+      <div class="def"><span class="label">D5-2.3 结合</span> $\forall x,y,z, (x*y)*z=x*(y*z)$。</div>
+      <div class="def"><span class="label">D5-2.4 分配</span> $x*(y\triangle z)=(x*y)\triangle(x*z)$；$(y\triangle z)*x=(y*x)\triangle(z*x)$。</div>
+      <div class="def"><span class="label">D5-2.5 吸收</span> $x*(x\triangle y)=x$；$x\triangle(x*y)=x$。</div>
+      <div class="def"><span class="label">D5-2.6 等幂</span> $\forall x, x*x=x$。</div>
+      <div class="def"><span class="label">D5-2.7 幺元</span> $e*x=x*e=x$。左/右幺元（唯一T5-2.1）。</div>
+      <div class="def"><span class="label">D5-2.8 零元</span> $\theta*x=x*\theta=\theta$。左/右零元（唯一T5-2.2）。</div>
+      <div class="def"><span class="label">D5-2.9 逆元</span> $x*x^{-1}=x^{-1}*x=e$。左/右逆元。</div>
+      <div class="thm"><span class="label">T5-2.1</span> $e_l=e_r=e$且唯一。</div>
+      <div class="thm"><span class="label">T5-2.2</span> $\theta_l=\theta_r=\theta$且唯一。</div>
+      <div class="thm"><span class="label">T5-2.3</span> $|A|>1\Rightarrow\theta\neq e$。</div>
+      <div class="thm"><span class="label">T5-2.4</span> 结合$\Rightarrow$左逆=右逆, 逆元唯一。</div>
+    </div>
+  </div>
+
+  <div class="chapter">
+    <div class="chapter-header" style="background:#e8f5e9;" onclick="toggleChapter(this)">
+      <span>§5-3 至 §5-4 · 半群·群·子群</span><span class="arrow">▼</span>
+    </div>
+    <div class="chapter-body">
+      <div class="def"><span class="label">D5-3.1 广群</span> 封闭的$\langle S,*\rangle$。</div>
+      <div class="def"><span class="label">D5-3.2 半群</span> 封闭+结合。</div>
+      <div class="thm"><span class="label">T5-3.1</span> 半群中B封闭⇒子半群。</div>
+      <div class="thm"><span class="label">T5-3.2</span> 有限半群$\exists a$使$a*a=a$（等幂元）。</div>
+      <div class="def"><span class="label">D5-3.3 独异点</span> 含幺半群。</div>
+      <div class="thm"><span class="label">T5-3.3</span> 独异点运算表行/列互异。</div>
+      <div class="thm"><span class="label">T5-3.4</span> $(a^{-1})^{-1}=a$；$(a*b)^{-1}=b^{-1}*a^{-1}$。</div>
+
+      <h4 style="margin-top:16px;">群</h4>
+      <div class="def"><span class="label">D5-4.1 群</span> ①封闭②结合③幺元④每个元素有逆元。</div>
+      <div class="def"><span class="label">D5-4.2 有限/无限群</span> $|G|$有限=有限群，|G|=阶数。</div>
+      <div class="thm"><span class="label">T5-4.1</span> 群中无零元。</div>
+      <div class="thm"><span class="label">T5-4.2</span> $a*x=b$有唯一解。</div>
+      <div class="thm"><span class="label">T5-4.3 消去律</span> $a*b=a*c$或$b*a=c*a\Rightarrow b=c$。</div>
+      <div class="def"><span class="label">D5-4.3 置换</span> $S\to S$的双射。</div>
+      <div class="thm"><span class="label">T5-4.4</span> 群运算表每行/列是G的置换。</div>
+      <div class="def"><span class="label">D5-4.4 等幂元</span> $a*a=a$。</div>
+      <div class="thm"><span class="label">T5-4.5</span> 群中除幺元外无等幂元。</div>
+      <div class="def"><span class="label">D5-4.5 子群</span> G的非空子集也构成群。</div>
+      <div class="thm"><span class="label">T5-4.6</span> 子群幺元=群幺元。</div>
+      <div class="def"><span class="label">D5-4.6 平凡子群</span> $\{e\}$或$G$。</div>
+      <div class="thm"><span class="label">T5-4.7</span> 有限集B在G中*封闭⇒子群。</div>
+      <div class="thm"><span class="label">T5-4.8</span> $S\neq\varnothing$，$a\triangle b^{-1}\in S$⇒子群。</div>
+    </div>
+  </div>
+
+  <div class="chapter">
+    <div class="chapter-header" style="background:#e8f5e9;" onclick="toggleChapter(this)">
+      <span>§5-5 至 §5-7 · 阿贝尔群·循环群·拉格朗日</span><span class="arrow">▼</span>
+    </div>
+    <div class="chapter-body">
+      <div class="def"><span class="label">D5-5.1 阿贝尔群</span> 运算可交换的群。</div>
+      <div class="thm"><span class="label">T5-5.1</span> 阿贝尔群$\iff(ab)(ab)=(aa)(bb)$。</div>
+      <div class="def"><span class="label">D5-5.2 循环群/生成元</span> $\exists a\in G$使$G=\{a^n\mid n\in\mathbb Z\}$。</div>
+      <div class="thm"><span class="label">T5-5.2</span> 循环群$\Rightarrow$阿贝尔群。</div>
+      <div class="thm"><span class="label">T5-5.3</span> $|G|=n\Rightarrow a^n=e$，$G=\{a,a^2,\dots,a^{n-1},a^n=e\}$。$n$是$a$的阶。</div>
+
+      <h4 style="margin-top:16px;">陪集与拉格朗日</h4>
+      <div class="def"><span class="label">D5-7.1 子集积/逆</span> $AB=\{a*b\mid a\in A,b\in B\}$；$A^{-1}=\{a^{-1}\mid a\in A\}$。</div>
+      <div class="def"><span class="label">D5-7.2 陪集</span> $aH$(左), $Ha$(右)。$a$=代表元。</div>
+      <div class="thm"><span class="label">T5-7.1 拉格朗日</span> ①$R=\{\langle a,b\rangle\mid a^{-1}b\in H\}$是等价关系，$[a]_R=aH$。②$|G|=n,|H|=m\Rightarrow m\mid n$。<br><b>推论1</b>：质数阶群无非平凡子群。<br><b>推论2</b>：$a$的阶$\mid n$，$a^n=e$；质数阶$\Rightarrow$循环群。</div>
+    </div>
+  </div>
+
+  <div class="chapter">
+    <div class="chapter-header" style="background:#e8f5e9;" onclick="toggleChapter(this)">
+      <span>§5-8 至 §5-9 · 同态·同构·环·域</span><span class="arrow">▼</span>
+    </div>
+    <div class="chapter-body">
+      <h4>同态与同构</h4>
+      <div class="def"><span class="label">D5-8.1 同态</span> $f(a\star b)=f(a)*f(b)$。$f(A)$=同态象。</div>
+      <div class="def"><span class="label">D5-8.2 满同态/单一同态/同构</span> 满射/入射/双射的同态。</div>
+      <div class="def"><span class="label">D5-8.3 自同态/自同构</span> $A\to A$的同态/同构。</div>
+      <div class="thm"><span class="label">T5-8.1</span> 同构是等价关系。</div>
+      <div class="thm"><span class="label">T5-8.2</span> 同态保持半群/独异点/群结构。</div>
+      <div class="def"><span class="label">D5-8.4 同态核</span> $\operatorname{Ker}(f)=\{x\mid f(x)=e'\}$。</div>
+      <div class="thm"><span class="label">T5-8.3</span> $\operatorname{Ker}(f)$是子群。</div>
+      <div class="thm"><span class="label">T5-8.4</span> 同余关系诱导划分→同态象。</div>
+      <div class="thm"><span class="label">T5-8.5</span> 同态$f$诱导同余关系$\langle a,b\rangle\in R\iff f(a)=f(b)$。</div>
+
+      <h4 style="margin-top:16px;">环与域</h4>
+      <div class="def"><span class="label">D5-9.1 环</span> ①$\langle A,+\rangle$阿贝尔群②$\langle A,\cdot\rangle$半群③$\cdot$对$+$分配。</div>
+      <div class="thm"><span class="label">T5-9.1</span> $a\cdot\theta=\theta\cdot a=\theta$；$a\cdot(-b)=(-a)\cdot b=-(a\cdot b)$；$(-a)\cdot(-b)=a\cdot b$；$a\cdot(b-c)=a\cdot b-a\cdot c$。</div>
+      <div class="def"><span class="label">D5-9.2 交换环/含幺环</span> $\cdot$可交换/含幺元。</div>
+      <div class="def"><span class="label">D5-9.3 整环</span> 阿贝尔群+可交换独异点+无零因子+分配。</div>
+      <div class="thm"><span class="label">T5-9.2</span> 整环无零因子$\iff$乘法消去律。</div>
+      <div class="def"><span class="label">D5-9.4 域</span> ①$\langle A,+\rangle$阿贝尔群②$\langle A-\{\theta\},\cdot\rangle$阿贝尔群③分配。</div>
+      <div class="thm"><span class="label">T5-9.3</span> 域$\Rightarrow$整环。</div>
+      <div class="thm"><span class="label">T5-9.4</span> 有限整环$\Rightarrow$域。</div>
+      <div class="def"><span class="label">D5-9.5 环同态</span> $f(a+b)=f(a)\triangle f(b)$且$f(a\cdot b)=f(a)\bigtriangleup f(b)$。</div>
+      <div class="thm"><span class="label">T5-9.5</span> 环的同态象是环。</div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== 图论 ==================== -->
+<div class="panel" id="panel-graph">
+  <h2 class="subject-title" style="color:#e65100;">🌐 图论 · 定义与定理</h2>
+
+  <div class="cross-links">
+    <h3>⚡ 跨章连接</h3>
+    <a class="cross-link-item bg-graph" href="#graph-tree">树 → Huffman → 前缀码</a>
+    <a class="cross-link-item bg-graph" href="#graph-planar">对偶图 → 逻辑对偶</a>
+    <a class="cross-link-item bg-graph" href="#graph-matrix">邻接矩阵 → 关系矩阵</a>
+    <a class="cross-link-item bg-logic" href="#panel-logic" onclick="switchTab('logic')">← 逻辑</a>
+    <a class="cross-link-item bg-set" href="#panel-set" onclick="switchTab('set')">← 集合</a>
+    <a class="cross-link-item bg-algebra" href="#panel-algebra" onclick="switchTab('algebra')">← 代数</a>
+  </div>
+
+  <div class="chapter">
+    <div class="chapter-header" style="background:#fff3e0;" onclick="toggleChapter(this)">
+      <span>§7-1 至 §7-2 · 图的基本概念</span><span class="arrow">▼</span>
+    </div>
+    <div class="chapter-body">
+      <div class="def"><span class="label">D7-1.1 图</span> $G=\langle V,E\rangle$，$V$非空结点集，$E$边集。无向边$(v_j,v_k)$，有向边$\langle v_j,v_k\rangle$。</div>
+      <div class="def"><span class="label">D7-1.2 度数</span> $\deg(v)$=关联边数。环$\deg+2$。$\Delta(G)$最大度，$\delta(G)$最小度。</div>
+      <div class="thm"><span class="label">T7-1.1 握手</span> $\sum_{v\in V}\deg(v)=2|E|$。</div>
+      <div class="thm"><span class="label">T7-1.2</span> 奇度结点偶数个。</div>
+      <div class="def"><span class="label">D7-1.3 入度/出度</span> 有向图射入/射出的边数。</div>
+      <div class="thm"><span class="label">T7-1.3</span> 有向图入度和=出度和。</div>
+      <div class="def"><span class="label">D7-1.4 多重图/简单图</span> 含平行边/不含平行边和环。</div>
+      <div class="def"><span class="label">D7-1.5 完全图 $K_n$</span> 每对结点有边。</div>
+      <div class="thm"><span class="label">T7-1.4</span> $|E(K_n)|=n(n-1)/2$。</div>
+      <div class="def"><span class="label">D7-1.6 补图 $\overline{G}$</span> 使$G$成完全图的添加边。</div>
+      <div class="def"><span class="label">D7-1.7 子图/生成子图</span> $V'\subseteq V,E'\subseteq E$；生成子图含所有结点。</div>
+      <div class="def"><span class="label">D7-1.8 子图补</span> $E''=E-E'$。</div>
+      <div class="def"><span class="label">D7-1.9 图同构</span> $g:V\to V'$双射且保边关系。必要条件：点数=边数=度数列相同。</div>
+
+      <h4 style="margin-top:16px;">§7-2 路与回路</h4>
+      <div class="def"><span class="label">D7-2.1 路/回路/迹/通路/圈</span> 交替序列$v_0e_1v_1\cdots e_nv_n$。$v_0=v_n$回路。边不同=迹。结点不同=通路。闭通路=圈。</div>
+      <div class="thm"><span class="label">T7-2.1</span> n结点图，$v_j\to v_k$有路⇒有$\leq n-1$边路。</div>
+      <div class="def"><span class="label">D7-2.2 连通</span> 存在路。连通是等价关系。</div>
+      <div class="def"><span class="label">D7-2.3 连通图/分支</span> 1个分支=连通图。$W(G)$=分支数。</div>
+      <div class="def"><span class="label">D7-2.4 点割集/连通度</span> $V_1$删后不连。割点。$k(G)=\min|V_1|$，$k(K_p)=p-1$。</div>
+      <div class="def"><span class="label">D7-2.5 边割集/边连通度</span> $E_1$删后不连。桥(割边)。$\lambda(G)=\min|E_1|$。</div>
+      <div class="thm"><span class="label">T7-2.2</span> $k(G)\leq\lambda(G)\leq\delta(G)$。</div>
+      <div class="thm"><span class="label">T7-2.3</span> v割点$\iff\exists u,w$每一条路都通过v。</div>
+      <div class="def"><span class="label">D7-2.6 有向连通</span> 单侧(单向可达)/强(双向可达)/弱(忽略方向连通)。</div>
+      <div class="thm"><span class="label">T7-2.4</span> 强连通$\iff$有含所有结点的回路。</div>
+      <div class="def"><span class="label">D7-2.7 分图</span> 最大强/单侧/弱连通子图。</div>
+      <div class="thm"><span class="label">T7-2.5</span> 每个结点在唯一强分图中。</div>
+    </div>
+  </div>
+
+  <div class="chapter">
+    <div class="chapter-header" style="background:#fff3e0;" onclick="toggleChapter(this)">
+      <span>§7-3 至 §7-4 · 矩阵·欧拉·汉密尔顿</span><span class="arrow">▼</span>
+    </div>
+    <div class="chapter-body">
+      <h4>§7-3 图的矩阵表示</h4>
+      <div class="def"><span class="label">D7-3.1 邻接矩阵</span> $A(G)=(a_{ij})$，$a_{ij}=1$若$v_i$邻接$v_j$。</div>
+      <div class="thm"><span class="label">T7-3.1</span> $(A(G))^l$中$(i,j)$=$v_i\to v_j$长$l$的路数。</div>
+      <div class="def"><span class="label">D7-3.2 可达性矩阵</span> $P=(p_{ij})$，$p_{ij}=1$若有路。</div>
+      <div class="def"><span class="label">D7-3.3 无向完全关联矩阵</span> $M(G)=(m_{ij})$，$m_{ij}=1$若$v_i$关联$e_j$。</div>
+      <div class="def"><span class="label">D7-3.4 有向完全关联矩阵</span> $m_{ij}=1/ -1/0$ (起点/终点/无关)。</div>
+      <div class="thm"><span class="label">T7-3.2</span> 连通图$\operatorname{rank} M(G)=r-1$。推论：r结点w分支⇒秩=r-w。</div>
+
+      <h4 style="margin-top:16px;">§7-4 欧拉图与汉密尔顿图</h4>
+      <div class="def"><span class="label">D7-4.1 欧拉路/图</span> 每边一次的路/有欧拉回路。</div>
+      <div class="thm"><span class="label">T7-4.1 欧拉路判定</span> 无向图有欧拉路⇔连通∧0/2奇度。欧拉回路⇔连通∧全偶度。</div>
+      <div class="def"><span class="label">D7-4.2 单向欧拉路</span> 有向每边一次。</div>
+      <div class="thm"><span class="label">T7-4.2 有向欧拉</span> 回路⇔连通∧入=出。路⇔连通∧除2点外入=出(入大1/小1各一个)。</div>
+      <div class="def"><span class="label">D7-4.3 汉密尔顿路/图</span> 每结点一次的路/有回路。</div>
+      <div class="thm"><span class="label">T7-4.3 必要</span> 有汉密尔顿回路⇒$\forall S\subset V$，$W(G-S)\leq|S|$。</div>
+      <div class="thm"><span class="label">T7-4.4 充分(路)</span> $\delta(u)+\delta(v)\geq n-1$⇒存在汉密尔顿路。</div>
+      <div class="thm"><span class="label">T7-4.5 充分(回路)</span> $\delta(u)+\delta(v)\geq n$⇒存在汉密尔顿回路。</div>
+      <div class="def"><span class="label">D7-4.4 闭包 $C(G)$</span> 反复连接度和≥n的非邻接点。</div>
+      <div class="thm"><span class="label">T7-4.6</span> G是汉密尔顿图$\iff C(G)$是汉密尔顿图。</div>
+    </div>
+  </div>
+
+  <div class="chapter">
+    <div class="chapter-header" style="background:#fff3e0;" onclick="toggleChapter(this)">
+      <span>§7-5 至 §7-6 · 平面图·着色·对偶</span><span class="arrow">▼</span>
+    </div>
+    <div class="chapter-body">
+      <div class="def"><span class="label">D7-5.1 平面图</span> 可画在平面上边不相交。</div>
+      <div class="def"><span class="label">D7-5.2 面/边界</span> $\deg(r)$=边界长度。无限面=外部。</div>
+      <div class="thm"><span class="label">T7-5.1</span> $\sum\deg(r_i)=2|E|$。</div>
+      <div class="thm"><span class="label">T7-5.2 欧拉公式</span> $v-e+r=2$。</div>
+      <div class="thm"><span class="label">T7-5.3</span> 连通简单平面($v\geq3$)⇒$e\leq 3v-6$。</div>
+      <div class="def"><span class="label">D7-5.3 2度内同构</span> 插入/删除2度结点后同构。</div>
+      <div class="thm"><span class="label">T7-5.4 Kuratowski</span> 平面图$\iff$不含与$K_5$或$K_{3,3}$在2度内同构的子图。</div>
+
+      <h4 style="margin-top:16px;">§7-6 对偶图与着色</h4>
+      <div class="def"><span class="label">D7-6.1 对偶图 $G^*$</span> 面$F_i$→结点$v_i^*$；公共边界$e_k$→边$e_k^*$；单面边界→环。</div>
+      <div class="def"><span class="label">D7-6.2 自对偶图</span> $G^*\cong G$。</div>
+      <div class="thm"><span class="label">T7-6.1</span> $\chi(K_n)=n$。</div>
+      <div class="thm"><span class="label">T7-6.2</span> 连通平面图($\geq3$结点) $\exists\deg(u)\leq5$。</div>
+      <div class="thm"><span class="label">T7-6.3 五色定理</span> 任意平面图最多5-色。</div>
+    </div>
+  </div>
+
+  <div class="chapter">
+    <div class="chapter-header" style="background:#fff3e0;" onclick="toggleChapter(this)">
+      <span>§7-7 至 §7-8 · 树·生成树·根树·Huffman</span><span class="arrow">▼</span>
+    </div>
+    <div class="chapter-body">
+      <h4>§7-7 树与生成树</h4>
+      <div class="def"><span class="label">D7-7.1 树</span> 连通无回。叶$\deg=1$，分枝点$\deg>1$。森林=每个分图是树。</div>
+      <div class="thm"><span class="label">T7-7.1 6等价定义</span> ①无回连通 ②无回$e=v-1$ ③连通$e=v-1$ ④无回+1边得回路 ⑤连通去一边不连 ⑥每对结点唯一路。</div>
+      <div class="thm"><span class="label">T7-7.2</span> 树至少2片树叶。</div>
+      <div class="def"><span class="label">D7-7.2 生成树</span> 生成子图是树。树枝/弦。</div>
+      <div class="thm"><span class="label">T7-7.3</span> 连通图有生成树。</div>
+      <div class="thm"><span class="label">T7-7.4</span> 回路与生成树补至少共一边。</div>
+      <div class="thm"><span class="label">T7-7.5</span> 边割集与生成树至少共一边。</div>
+      <div class="def"><span class="label">D7-7.3 最小生成树</span> 权最小。</div>
+      <div class="thm"><span class="label">T7-7.6 Kruskal</span> 贪心选最小权无回边，$n-1$条止。</div>
+
+      <h4 style="margin-top:16px;">§7-8 根树与应用</h4>
+      <div class="def"><span class="label">D7-8.1 有向树</span> 忽略方向成树。</div>
+      <div class="def"><span class="label">D7-8.2 根树</span> 恰一入度0(根)，余入度1。出度0=叶。</div>
+      <div class="def"><span class="label">D7-8.3 递归定义</span> 根+有限子根树。</div>
+      <div class="def"><span class="label">D7-8.4 m叉树</span> 出度≤m/出度=m或0(完全)/叶同层(正则)。m=2=二叉树。</div>
+      <div class="thm"><span class="label">T7-8.1</span> 完全m叉树$(m-1)i=t-1$。</div>
+      <div class="def"><span class="label">D7-8.5 通路长度</span> 根到此结点边数。内/外部=分枝点/叶通路长。</div>
+      <div class="thm"><span class="label">T7-8.2</span> 完全二叉树$E=I+2n$。</div>
+      <div class="def"><span class="label">D7-8.6 带权/最优树</span> $w(T)=\sum w_iL(w_i)$最小=最优树。</div>
+      <div class="thm"><span class="label">T7-8.3</span> 最优树中$w_1,w_2$叶是兄弟且路径最长。</div>
+      <div class="thm"><span class="label">T7-8.4</span> 最优树$T$中$w_1+w_2$替$w_1,w_2$得$T'$仍最优。</div>
+      <div class="def"><span class="label">D7-8.7 前缀码</span> 无序列是另一序列前缀。</div>
+      <div class="thm"><span class="label">T7-8.5</span> 二叉树→前缀码。</div>
+      <div class="thm"><span class="label">T7-8.6</span> 前缀码→二叉树。</div>
+    </div>
+  </div>
+</div>
+
+<div id="count-panel"></div>
+
+<script>
+function toggleChapter(el) {
+  el.closest('.chapter').classList.toggle('collapsed');
+}
+
+function switchTab(name) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelector(`.tab[data-panel="${name}"]`).classList.add('active');
+  document.getElementById(`panel-${name}`).classList.add('active');
+}
+
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => switchTab(tab.dataset.panel));
+});
+
+// Count items
+(function() {
+  let total = 0;
+  document.querySelectorAll('.def, .thm').forEach(el => total++);
+  document.getElementById('count-panel').textContent = `共收录 ${total} 条定义与定理（数理逻辑:18+12+18+17 / 集合论:28+14+13+13 / 代数系统:17+14+9+17 / 图论:19+7+11+12 章）`;
+})();
+</script>
+
+</body>
+</html>
