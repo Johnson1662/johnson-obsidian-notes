@@ -1226,7 +1226,9 @@
       "environmentHash": "",
       "environmentVariables": "",
       "modelAliases": {},
-      "preferredThinkingByModel": {},
+      "preferredThinkingByModel": {
+        "pi:opencode/deepseek-v4-flash-free": "xhigh"
+      },
       "toolMode": "all",
       "visibleModels": [
         "pi:opencode/big-pickle",
@@ -1245,7 +1247,7 @@
     "claude": "high",
     "opencode": "default",
     "codex": "medium",
-    "pi": "off"
+    "pi": "xhigh"
   },
   "savedProviderServiceTier": {
     "codex": "default"
