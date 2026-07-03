@@ -1,8 +1,8 @@
 {
   "userName": "",
-  "permissionMode": "yolo",
+  "permissionMode": "normal",
   "model": "sonnet",
-  "thinkingBudget": "low",
+  "thinkingBudget": "default",
   "effortLevel": "high",
   "serviceTier": "default",
   "enableAutoTitleGeneration": true,
@@ -1236,38 +1236,42 @@
       ]
     }
   },
-  "settingsProvider": "claude",
+  "settingsProvider": "omp",
   "savedProviderModel": {
     "claude": "sonnet",
     "opencode": "opencode:opencode/big-pickle",
     "codex": "gpt-5.5",
-    "pi": "pi:opencode/deepseek-v4-flash-free"
+    "pi": "pi:opencode/deepseek-v4-flash-free",
+    "omp": "sonnet"
   },
   "savedProviderEffort": {
     "claude": "high",
     "opencode": "default",
     "codex": "medium",
-    "pi": "xhigh"
+    "pi": "xhigh",
+    "omp": "high"
   },
   "savedProviderServiceTier": {
     "codex": "default"
   },
   "savedProviderThinkingBudget": {
     "opencode": "default",
-    "codex": "low"
+    "codex": "low",
+    "omp": "default"
   },
   "savedProviderPermissionMode": {
     "claude": "yolo",
     "opencode": "yolo",
     "codex": "yolo",
-    "pi": "yolo"
+    "pi": "yolo",
+    "omp": "normal"
   },
   "lastCustomModel": "",
   "maxTabs": 3,
-  "tabBarPosition": "input",
   "enableAutoScroll": true,
   "deferMathRenderingDuringStreaming": true,
   "expandFileEditsByDefault": false,
   "chatViewPlacement": "right-sidebar",
-  "hiddenProviderCommands": {}
+  "hiddenProviderCommands": {},
+  "tabBarPosition": "input"
 }
