@@ -1,7 +1,7 @@
 {
   "userName": "",
   "permissionMode": "normal",
-  "model": "sonnet",
+  "model": "",
   "thinkingBudget": "default",
   "effortLevel": "high",
   "serviceTier": "default",
@@ -1256,8 +1256,7 @@
   },
   "savedProviderThinkingBudget": {
     "opencode": "default",
-    "codex": "low",
-    "omp": "default"
+    "codex": "low"
   },
   "savedProviderPermissionMode": {
     "claude": "yolo",
