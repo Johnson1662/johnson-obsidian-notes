@@ -1,8 +1,8 @@
 {
   "userName": "",
-  "permissionMode": "yolo",
+  "permissionMode": "normal",
   "model": "sonnet",
-  "thinkingBudget": "default",
+  "thinkingBudget": "off",
   "effortLevel": "high",
   "serviceTier": "default",
   "enableAutoTitleGeneration": true,
@@ -1234,21 +1234,3397 @@
         "pi:opencode/big-pickle",
         "pi:opencode/deepseek-v4-flash-free"
       ]
+    },
+    "omp": {
+      "cliPath": "",
+      "cliPathsByHost": {},
+      "discoveredModels": [
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 1000000,
+          "encodedId": "pi:google/gemini-1.5-flash",
+          "id": "gemini-1.5-flash",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Gemini 1.5 Flash",
+          "maxTokens": 8192,
+          "provider": "google",
+          "reasoning": false,
+          "thinkingLevels": [
+            "off"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 1000000,
+          "encodedId": "pi:google/gemini-1.5-flash-8b",
+          "id": "gemini-1.5-flash-8b",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Gemini 1.5 Flash-8B",
+          "maxTokens": 8192,
+          "provider": "google",
+          "reasoning": false,
+          "thinkingLevels": [
+            "off"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 1000000,
+          "encodedId": "pi:google/gemini-1.5-pro",
+          "id": "gemini-1.5-pro",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Gemini 1.5 Pro",
+          "maxTokens": 8192,
+          "provider": "google",
+          "reasoning": false,
+          "thinkingLevels": [
+            "off"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 1048576,
+          "encodedId": "pi:google/gemini-2.0-flash",
+          "id": "gemini-2.0-flash",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Gemini 2.0 Flash",
+          "maxTokens": 8192,
+          "provider": "google",
+          "reasoning": false,
+          "thinkingLevels": [
+            "off"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 1048576,
+          "encodedId": "pi:google/gemini-2.0-flash-lite",
+          "id": "gemini-2.0-flash-lite",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Gemini 2.0 Flash-Lite",
+          "maxTokens": 8192,
+          "provider": "google",
+          "reasoning": false,
+          "thinkingLevels": [
+            "off"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 1048576,
+          "encodedId": "pi:google/gemini-2.5-flash",
+          "id": "gemini-2.5-flash",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Gemini 2.5 Flash",
+          "maxTokens": 65536,
+          "provider": "google",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 1048576,
+          "encodedId": "pi:google/gemini-2.5-flash-lite",
+          "id": "gemini-2.5-flash-lite",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Gemini 2.5 Flash-Lite",
+          "maxTokens": 65536,
+          "provider": "google",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 1048576,
+          "encodedId": "pi:google/gemini-2.5-flash-lite-preview-06-17",
+          "id": "gemini-2.5-flash-lite-preview-06-17",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Gemini 2.5 Flash Lite Preview 06-17",
+          "maxTokens": 65536,
+          "provider": "google",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 1048576,
+          "encodedId": "pi:google/gemini-2.5-flash-lite-preview-09-2025",
+          "id": "gemini-2.5-flash-lite-preview-09-2025",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Gemini 2.5 Flash Lite Preview (09/2025)",
+          "maxTokens": 65536,
+          "provider": "google",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 1048576,
+          "encodedId": "pi:google/gemini-2.5-flash-preview-04-17",
+          "id": "gemini-2.5-flash-preview-04-17",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Gemini 2.5 Flash Preview 04-17",
+          "maxTokens": 65536,
+          "provider": "google",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 1048576,
+          "encodedId": "pi:google/gemini-2.5-flash-preview-05-20",
+          "id": "gemini-2.5-flash-preview-05-20",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Gemini 2.5 Flash Preview 05-20",
+          "maxTokens": 65536,
+          "provider": "google",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 1048576,
+          "encodedId": "pi:google/gemini-2.5-flash-preview-09-2025",
+          "id": "gemini-2.5-flash-preview-09-2025",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Gemini 2.5 Flash Preview (09/2025)",
+          "maxTokens": 65536,
+          "provider": "google",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 1048576,
+          "encodedId": "pi:google/gemini-2.5-pro",
+          "id": "gemini-2.5-pro",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Gemini 2.5 Pro",
+          "maxTokens": 65536,
+          "provider": "google",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 1048576,
+          "encodedId": "pi:google/gemini-2.5-pro-preview-05-06",
+          "id": "gemini-2.5-pro-preview-05-06",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Gemini 2.5 Pro Preview 05-06",
+          "maxTokens": 65536,
+          "provider": "google",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 1048576,
+          "encodedId": "pi:google/gemini-2.5-pro-preview-06-05",
+          "id": "gemini-2.5-pro-preview-06-05",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Gemini 2.5 Pro Preview 06-05",
+          "maxTokens": 65536,
+          "provider": "google",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 1048576,
+          "encodedId": "pi:google/gemini-3-flash-preview",
+          "id": "gemini-3-flash-preview",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Gemini 3 Flash Preview",
+          "maxTokens": 65536,
+          "provider": "google",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 1048576,
+          "encodedId": "pi:google/gemini-3-pro-preview",
+          "id": "gemini-3-pro-preview",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Gemini 3 Pro Preview",
+          "maxTokens": 65536,
+          "provider": "google",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 1048576,
+          "encodedId": "pi:google/gemini-3.1-flash-lite",
+          "id": "gemini-3.1-flash-lite",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Gemini 3.1 Flash Lite",
+          "maxTokens": 65536,
+          "provider": "google",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 1048576,
+          "encodedId": "pi:google/gemini-3.1-flash-lite-preview",
+          "id": "gemini-3.1-flash-lite-preview",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Gemini 3.1 Flash Lite Preview",
+          "maxTokens": 65536,
+          "provider": "google",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 1048576,
+          "encodedId": "pi:google/gemini-3.1-pro-preview",
+          "id": "gemini-3.1-pro-preview",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Gemini 3.1 Pro Preview",
+          "maxTokens": 65536,
+          "provider": "google",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 1048576,
+          "encodedId": "pi:google/gemini-3.1-pro-preview-customtools",
+          "id": "gemini-3.1-pro-preview-customtools",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Gemini 3.1 Pro Preview Custom Tools",
+          "maxTokens": 65536,
+          "provider": "google",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 1048576,
+          "encodedId": "pi:google/gemini-3.5-flash",
+          "id": "gemini-3.5-flash",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Gemini 3.5 Flash",
+          "maxTokens": 65536,
+          "provider": "google",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 1048576,
+          "encodedId": "pi:google/gemini-flash-latest",
+          "id": "gemini-flash-latest",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Gemini Flash Latest",
+          "maxTokens": 65536,
+          "provider": "google",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 1048576,
+          "encodedId": "pi:google/gemini-flash-lite-latest",
+          "id": "gemini-flash-lite-latest",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Gemini Flash-Lite Latest",
+          "maxTokens": 65536,
+          "provider": "google",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 128000,
+          "encodedId": "pi:google/gemini-live-2.5-flash",
+          "id": "gemini-live-2.5-flash",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Gemini Live 2.5 Flash",
+          "maxTokens": 8000,
+          "provider": "google",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 131072,
+          "encodedId": "pi:google/gemini-live-2.5-flash-preview-native-audio",
+          "id": "gemini-live-2.5-flash-preview-native-audio",
+          "input": [
+            "text"
+          ],
+          "label": "Gemini Live 2.5 Flash Preview Native Audio",
+          "maxTokens": 65536,
+          "provider": "google",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 131072,
+          "encodedId": "pi:google/gemma-3-27b-it",
+          "id": "gemma-3-27b-it",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Gemma 3 27B",
+          "maxTokens": 8192,
+          "provider": "google",
+          "reasoning": false,
+          "thinkingLevels": [
+            "off"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 256000,
+          "encodedId": "pi:google/gemma-4-26b",
+          "id": "gemma-4-26b",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Gemma 4 26B",
+          "maxTokens": 8192,
+          "provider": "google",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 262144,
+          "encodedId": "pi:google/gemma-4-26b-a4b-it",
+          "id": "gemma-4-26b-a4b-it",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Gemma 4 26B A4B IT",
+          "maxTokens": 32768,
+          "provider": "google",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 256000,
+          "encodedId": "pi:google/gemma-4-26b-it",
+          "id": "gemma-4-26b-it",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Gemma 4 26B",
+          "maxTokens": 8192,
+          "provider": "google",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 256000,
+          "encodedId": "pi:google/gemma-4-31b",
+          "id": "gemma-4-31b",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Gemma 4 31B IT",
+          "maxTokens": 8192,
+          "provider": "google",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 262144,
+          "encodedId": "pi:google/gemma-4-31b-it",
+          "id": "gemma-4-31b-it",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Gemma 4 31B IT",
+          "maxTokens": 32768,
+          "provider": "google",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 131072,
+          "encodedId": "pi:google/gemma-4-E2B-it",
+          "id": "gemma-4-E2B-it",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Gemma 4 E2B IT",
+          "maxTokens": 8192,
+          "provider": "google",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 131072,
+          "encodedId": "pi:google/gemma-4-E4B-it",
+          "id": "gemma-4-E4B-it",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Gemma 4 E4B IT",
+          "maxTokens": 8192,
+          "provider": "google",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 131072,
+          "encodedId": "pi:google/antigravity-preview-05-2026",
+          "id": "antigravity-preview-05-2026",
+          "input": [
+            "text"
+          ],
+          "label": "Antigravity Agent Preview",
+          "maxTokens": 65536,
+          "provider": "google",
+          "reasoning": false,
+          "thinkingLevels": [
+            "off"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 131072,
+          "encodedId": "pi:google/deep-research-max-preview-04-2026",
+          "id": "deep-research-max-preview-04-2026",
+          "input": [
+            "text"
+          ],
+          "label": "Deep Research Max Preview (Apr-21-2026)",
+          "maxTokens": 65536,
+          "provider": "google",
+          "reasoning": false,
+          "thinkingLevels": [
+            "off"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 131072,
+          "encodedId": "pi:google/deep-research-preview-04-2026",
+          "id": "deep-research-preview-04-2026",
+          "input": [
+            "text"
+          ],
+          "label": "Deep Research Preview (Apr-21-2026)",
+          "maxTokens": 65536,
+          "provider": "google",
+          "reasoning": false,
+          "thinkingLevels": [
+            "off"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 131072,
+          "encodedId": "pi:google/deep-research-pro-preview-12-2025",
+          "id": "deep-research-pro-preview-12-2025",
+          "input": [
+            "text"
+          ],
+          "label": "Deep Research Pro Preview (Dec-12-2025)",
+          "maxTokens": 65536,
+          "provider": "google",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 1048576,
+          "encodedId": "pi:google/gemini-2.0-flash-001",
+          "id": "gemini-2.0-flash-001",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Gemini 2.0 Flash 001",
+          "maxTokens": 8192,
+          "provider": "google",
+          "reasoning": false,
+          "thinkingLevels": [
+            "off"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 1048576,
+          "encodedId": "pi:google/gemini-2.0-flash-lite-001",
+          "id": "gemini-2.0-flash-lite-001",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Gemini 2.0 Flash-Lite 001",
+          "maxTokens": 8192,
+          "provider": "google",
+          "reasoning": false,
+          "thinkingLevels": [
+            "off"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 131072,
+          "encodedId": "pi:google/gemini-2.5-computer-use-preview-10-2025",
+          "id": "gemini-2.5-computer-use-preview-10-2025",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Gemini 2.5 Computer Use Preview 10-2025",
+          "maxTokens": 65536,
+          "provider": "google",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 32768,
+          "encodedId": "pi:google/gemini-2.5-flash-image",
+          "id": "gemini-2.5-flash-image",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Nano Banana",
+          "maxTokens": 32768,
+          "provider": "google",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 8192,
+          "encodedId": "pi:google/gemini-2.5-flash-preview-tts",
+          "id": "gemini-2.5-flash-preview-tts",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Gemini 2.5 Flash Preview TTS",
+          "maxTokens": 16384,
+          "provider": "google",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 8192,
+          "encodedId": "pi:google/gemini-2.5-pro-preview-tts",
+          "id": "gemini-2.5-pro-preview-tts",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Gemini 2.5 Pro Preview TTS",
+          "maxTokens": 16384,
+          "provider": "google",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 131072,
+          "encodedId": "pi:google/gemini-3-pro-image",
+          "id": "gemini-3-pro-image",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Nano Banana Pro",
+          "maxTokens": 32768,
+          "provider": "google",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 131072,
+          "encodedId": "pi:google/gemini-3-pro-image-preview",
+          "id": "gemini-3-pro-image-preview",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Nano Banana Pro",
+          "maxTokens": 32768,
+          "provider": "google",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 65536,
+          "encodedId": "pi:google/gemini-3.1-flash-image",
+          "id": "gemini-3.1-flash-image",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Nano Banana 2",
+          "maxTokens": 65536,
+          "provider": "google",
+          "reasoning": false,
+          "thinkingLevels": [
+            "off"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 65536,
+          "encodedId": "pi:google/gemini-3.1-flash-image-preview",
+          "id": "gemini-3.1-flash-image-preview",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Nano Banana 2",
+          "maxTokens": 65536,
+          "provider": "google",
+          "reasoning": false,
+          "thinkingLevels": [
+            "off"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 65536,
+          "encodedId": "pi:google/gemini-3.1-flash-lite-image",
+          "id": "gemini-3.1-flash-lite-image",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Nano Banana 2 Lite",
+          "maxTokens": 65536,
+          "provider": "google",
+          "reasoning": false,
+          "thinkingLevels": [
+            "off"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 8192,
+          "encodedId": "pi:google/gemini-3.1-flash-tts-preview",
+          "id": "gemini-3.1-flash-tts-preview",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Gemini 3.1 Flash TTS Preview",
+          "maxTokens": 16384,
+          "provider": "google",
+          "reasoning": false,
+          "thinkingLevels": [
+            "off"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 131072,
+          "encodedId": "pi:google/gemini-omni-flash-preview",
+          "id": "gemini-omni-flash-preview",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Gemini Omni Flash Preview",
+          "maxTokens": 65536,
+          "provider": "google",
+          "reasoning": false,
+          "thinkingLevels": [
+            "off"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 1048576,
+          "encodedId": "pi:google/gemini-pro-latest",
+          "id": "gemini-pro-latest",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Gemini Pro Latest",
+          "maxTokens": 65536,
+          "provider": "google",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 1048576,
+          "encodedId": "pi:google/gemini-robotics-er-1.5-preview",
+          "id": "gemini-robotics-er-1.5-preview",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Gemini Robotics-ER 1.5 Preview",
+          "maxTokens": 65536,
+          "provider": "google",
+          "reasoning": false,
+          "thinkingLevels": [
+            "off"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 131072,
+          "encodedId": "pi:google/gemini-robotics-er-1.6-preview",
+          "id": "gemini-robotics-er-1.6-preview",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Gemini Robotics-ER 1.6 Preview",
+          "maxTokens": 65536,
+          "provider": "google",
+          "reasoning": false,
+          "thinkingLevels": [
+            "off"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 1048576,
+          "encodedId": "pi:google/lyria-3-clip-preview",
+          "id": "lyria-3-clip-preview",
+          "input": [
+            "text"
+          ],
+          "label": "Lyria 3 Clip Preview",
+          "maxTokens": 65536,
+          "provider": "google",
+          "reasoning": false,
+          "thinkingLevels": [
+            "off"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 1048576,
+          "encodedId": "pi:google/lyria-3-pro-preview",
+          "id": "lyria-3-pro-preview",
+          "input": [
+            "text"
+          ],
+          "label": "Lyria 3 Pro Preview",
+          "maxTokens": 65536,
+          "provider": "google",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 131072,
+          "encodedId": "pi:google/nano-banana-pro-preview",
+          "id": "nano-banana-pro-preview",
+          "input": [
+            "text"
+          ],
+          "label": "Nano Banana Pro",
+          "maxTokens": 32768,
+          "provider": "google",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "google-gemini-cli",
+          "contextWindow": 200000,
+          "encodedId": "pi:google-antigravity/claude-opus-4-5",
+          "id": "claude-opus-4-5",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Claude Opus 4.5",
+          "maxTokens": 64000,
+          "provider": "google-antigravity",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "google-gemini-cli",
+          "contextWindow": 250000,
+          "encodedId": "pi:google-antigravity/claude-opus-4-6",
+          "id": "claude-opus-4-6",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Claude Opus 4.6",
+          "maxTokens": 64000,
+          "provider": "google-antigravity",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "google-gemini-cli",
+          "contextWindow": 1000000,
+          "encodedId": "pi:google-antigravity/claude-sonnet-4-5",
+          "id": "claude-sonnet-4-5",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Claude Sonnet 4.5",
+          "maxTokens": 64000,
+          "provider": "google-antigravity",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "google-gemini-cli",
+          "contextWindow": 250000,
+          "encodedId": "pi:google-antigravity/claude-sonnet-4-6",
+          "id": "claude-sonnet-4-6",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Claude Sonnet 4.6",
+          "maxTokens": 64000,
+          "provider": "google-antigravity",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "google-gemini-cli",
+          "contextWindow": 1048576,
+          "encodedId": "pi:google-antigravity/gemini-2.5-flash",
+          "id": "gemini-2.5-flash",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Gemini 2.5 Flash",
+          "maxTokens": 65535,
+          "provider": "google-antigravity",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "google-gemini-cli",
+          "contextWindow": 1048576,
+          "encodedId": "pi:google-antigravity/gemini-2.5-flash-lite",
+          "id": "gemini-2.5-flash-lite",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Gemini 3.1 Flash Lite",
+          "maxTokens": 65535,
+          "provider": "google-antigravity",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "google-gemini-cli",
+          "contextWindow": 1048576,
+          "encodedId": "pi:google-antigravity/gemini-2.5-pro",
+          "id": "gemini-2.5-pro",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Gemini 2.5 Pro",
+          "maxTokens": 65536,
+          "provider": "google-antigravity",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "google-gemini-cli",
+          "contextWindow": 1048576,
+          "encodedId": "pi:google-antigravity/gemini-3-flash",
+          "id": "gemini-3-flash",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Gemini 3 Flash",
+          "maxTokens": 65536,
+          "provider": "google-antigravity",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "google-gemini-cli",
+          "contextWindow": 1048576,
+          "encodedId": "pi:google-antigravity/gemini-3-pro",
+          "id": "gemini-3-pro",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Gemini 3 Pro",
+          "maxTokens": 65535,
+          "provider": "google-antigravity",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "google-gemini-cli",
+          "contextWindow": 200000,
+          "encodedId": "pi:google-antigravity/gemini-3.1-flash-image",
+          "id": "gemini-3.1-flash-image",
+          "input": [
+            "text"
+          ],
+          "label": "Gemini 3.1 Flash Image",
+          "maxTokens": 64000,
+          "provider": "google-antigravity",
+          "reasoning": false,
+          "thinkingLevels": [
+            "off"
+          ]
+        },
+        {
+          "api": "google-gemini-cli",
+          "contextWindow": 1048576,
+          "encodedId": "pi:google-antigravity/gemini-3.1-flash-lite",
+          "id": "gemini-3.1-flash-lite",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Gemini 3.1 Flash Lite",
+          "maxTokens": 65535,
+          "provider": "google-antigravity",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "google-gemini-cli",
+          "contextWindow": 1048576,
+          "encodedId": "pi:google-antigravity/gemini-3.1-pro",
+          "id": "gemini-3.1-pro",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Gemini 3.1 Pro",
+          "maxTokens": 65535,
+          "provider": "google-antigravity",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "google-gemini-cli",
+          "contextWindow": 1048576,
+          "encodedId": "pi:google-antigravity/gemini-3.5-flash",
+          "id": "gemini-3.5-flash",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Gemini 3.5 Flash",
+          "maxTokens": 65536,
+          "provider": "google-antigravity",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "google-gemini-cli",
+          "contextWindow": 131072,
+          "encodedId": "pi:google-antigravity/gpt-oss-120b",
+          "id": "gpt-oss-120b",
+          "input": [
+            "text"
+          ],
+          "label": "GPT-OSS 120B",
+          "maxTokens": 32768,
+          "provider": "google-antigravity",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "google-gemini-cli",
+          "contextWindow": 16384,
+          "encodedId": "pi:google-antigravity/tab_flash_lite_preview",
+          "id": "tab_flash_lite_preview",
+          "input": [
+            "text"
+          ],
+          "label": "tab_flash_lite_preview",
+          "maxTokens": 4096,
+          "provider": "google-antigravity",
+          "reasoning": false,
+          "thinkingLevels": [
+            "off"
+          ]
+        },
+        {
+          "api": "google-gemini-cli",
+          "contextWindow": 16384,
+          "encodedId": "pi:google-antigravity/tab_jump_flash_lite_preview",
+          "id": "tab_jump_flash_lite_preview",
+          "input": [
+            "text"
+          ],
+          "label": "tab_jump_flash_lite_preview",
+          "maxTokens": 4096,
+          "provider": "google-antigravity",
+          "reasoning": false,
+          "thinkingLevels": [
+            "off"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 1000000,
+          "encodedId": "pi:opencode-go/deepseek-v4-flash",
+          "id": "deepseek-v4-flash",
+          "input": [
+            "text"
+          ],
+          "label": "DeepSeek V4 Flash",
+          "maxTokens": 384000,
+          "provider": "opencode-go",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 1000000,
+          "encodedId": "pi:opencode-go/deepseek-v4-pro",
+          "id": "deepseek-v4-pro",
+          "input": [
+            "text"
+          ],
+          "label": "DeepSeek V4 Pro",
+          "maxTokens": 384000,
+          "provider": "opencode-go",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 202752,
+          "encodedId": "pi:opencode-go/glm-5",
+          "id": "glm-5",
+          "input": [
+            "text"
+          ],
+          "label": "GLM-5",
+          "maxTokens": 32768,
+          "provider": "opencode-go",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 202752,
+          "encodedId": "pi:opencode-go/glm-5.1",
+          "id": "glm-5.1",
+          "input": [
+            "text"
+          ],
+          "label": "GLM-5.1",
+          "maxTokens": 32768,
+          "provider": "opencode-go",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 1000000,
+          "encodedId": "pi:opencode-go/glm-5.2",
+          "id": "glm-5.2",
+          "input": [
+            "text"
+          ],
+          "label": "GLM-5.2",
+          "maxTokens": 131072,
+          "provider": "opencode-go",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 262144,
+          "encodedId": "pi:opencode-go/kimi-k2.5",
+          "id": "kimi-k2.5",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Kimi K2.5",
+          "maxTokens": 65536,
+          "provider": "opencode-go",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 262144,
+          "encodedId": "pi:opencode-go/kimi-k2.6",
+          "id": "kimi-k2.6",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Kimi K2.6",
+          "maxTokens": 65536,
+          "provider": "opencode-go",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 262144,
+          "encodedId": "pi:opencode-go/kimi-k2.7-code",
+          "id": "kimi-k2.7-code",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Kimi K2.7 Code",
+          "maxTokens": 262144,
+          "provider": "opencode-go",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 262144,
+          "encodedId": "pi:opencode-go/mimo-v2-omni",
+          "id": "mimo-v2-omni",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "MiMo-V2-Omni",
+          "maxTokens": 128000,
+          "provider": "opencode-go",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 1048576,
+          "encodedId": "pi:opencode-go/mimo-v2-pro",
+          "id": "mimo-v2-pro",
+          "input": [
+            "text"
+          ],
+          "label": "MiMo-V2-Pro",
+          "maxTokens": 128000,
+          "provider": "opencode-go",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 1000000,
+          "encodedId": "pi:opencode-go/mimo-v2.5",
+          "id": "mimo-v2.5",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "MiMo V2.5",
+          "maxTokens": 128000,
+          "provider": "opencode-go",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 1048576,
+          "encodedId": "pi:opencode-go/mimo-v2.5-pro",
+          "id": "mimo-v2.5-pro",
+          "input": [
+            "text"
+          ],
+          "label": "MiMo V2.5 Pro",
+          "maxTokens": 128000,
+          "provider": "opencode-go",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "anthropic-messages",
+          "contextWindow": 204800,
+          "encodedId": "pi:opencode-go/minimax-m2.5",
+          "id": "minimax-m2.5",
+          "input": [
+            "text"
+          ],
+          "label": "MiniMax-M2.5",
+          "maxTokens": 65536,
+          "provider": "opencode-go",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 204800,
+          "encodedId": "pi:opencode-go/minimax-m2.7",
+          "id": "minimax-m2.7",
+          "input": [
+            "text"
+          ],
+          "label": "MiniMax-M2.7",
+          "maxTokens": 131072,
+          "provider": "opencode-go",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 1000000,
+          "encodedId": "pi:opencode-go/minimax-m3",
+          "id": "minimax-m3",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "MiniMax-M3",
+          "maxTokens": 131072,
+          "provider": "opencode-go",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 262144,
+          "encodedId": "pi:opencode-go/qwen3.5-plus",
+          "id": "qwen3.5-plus",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Qwen3.5 Plus",
+          "maxTokens": 65536,
+          "provider": "opencode-go",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 1000000,
+          "encodedId": "pi:opencode-go/qwen3.6-plus",
+          "id": "qwen3.6-plus",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Qwen3.6 Plus",
+          "maxTokens": 65536,
+          "provider": "opencode-go",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "anthropic-messages",
+          "contextWindow": 1000000,
+          "encodedId": "pi:opencode-go/qwen3.7-max",
+          "id": "qwen3.7-max",
+          "input": [
+            "text"
+          ],
+          "label": "Qwen3.7 Max",
+          "maxTokens": 65536,
+          "provider": "opencode-go",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "anthropic-messages",
+          "contextWindow": 1000000,
+          "encodedId": "pi:opencode-go/qwen3.7-plus",
+          "id": "qwen3.7-plus",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Qwen3.7 Plus",
+          "maxTokens": 65536,
+          "provider": "opencode-go",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "encodedId": "pi:opencode-go/hy3-preview",
+          "id": "hy3-preview",
+          "input": [
+            "text"
+          ],
+          "label": "hy3-preview",
+          "provider": "opencode-go",
+          "reasoning": false,
+          "thinkingLevels": [
+            "off"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 200000,
+          "encodedId": "pi:opencode-zen/big-pickle",
+          "id": "big-pickle",
+          "input": [
+            "text"
+          ],
+          "label": "Big Pickle",
+          "maxTokens": 32000,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "anthropic-messages",
+          "contextWindow": 200000,
+          "encodedId": "pi:opencode-zen/claude-3-5-haiku",
+          "id": "claude-3-5-haiku",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Claude Haiku 3.5",
+          "maxTokens": 8192,
+          "provider": "opencode-zen",
+          "reasoning": false,
+          "thinkingLevels": [
+            "off"
+          ]
+        },
+        {
+          "api": "anthropic-messages",
+          "contextWindow": 1000000,
+          "encodedId": "pi:opencode-zen/claude-fable-5",
+          "id": "claude-fable-5",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Claude Fable 5",
+          "maxTokens": 128000,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "anthropic-messages",
+          "contextWindow": 200000,
+          "encodedId": "pi:opencode-zen/claude-haiku-4-5",
+          "id": "claude-haiku-4-5",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Claude Haiku 4.5",
+          "maxTokens": 64000,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "anthropic-messages",
+          "contextWindow": 200000,
+          "encodedId": "pi:opencode-zen/claude-opus-4-1",
+          "id": "claude-opus-4-1",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Claude Opus 4.1",
+          "maxTokens": 32000,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "anthropic-messages",
+          "contextWindow": 200000,
+          "encodedId": "pi:opencode-zen/claude-opus-4-5",
+          "id": "claude-opus-4-5",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Claude Opus 4.5",
+          "maxTokens": 64000,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "anthropic-messages",
+          "contextWindow": 1000000,
+          "encodedId": "pi:opencode-zen/claude-opus-4-6",
+          "id": "claude-opus-4-6",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Claude Opus 4.6",
+          "maxTokens": 128000,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "anthropic-messages",
+          "contextWindow": 1000000,
+          "encodedId": "pi:opencode-zen/claude-opus-4-7",
+          "id": "claude-opus-4-7",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Claude Opus 4.7",
+          "maxTokens": 128000,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "anthropic-messages",
+          "contextWindow": 1000000,
+          "encodedId": "pi:opencode-zen/claude-opus-4-8",
+          "id": "claude-opus-4-8",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Claude Opus 4.8",
+          "maxTokens": 128000,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "anthropic-messages",
+          "contextWindow": 1000000,
+          "encodedId": "pi:opencode-zen/claude-sonnet-4",
+          "id": "claude-sonnet-4",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Claude Sonnet 4",
+          "maxTokens": 64000,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "anthropic-messages",
+          "contextWindow": 1000000,
+          "encodedId": "pi:opencode-zen/claude-sonnet-4-5",
+          "id": "claude-sonnet-4-5",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Claude Sonnet 4.5",
+          "maxTokens": 64000,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "anthropic-messages",
+          "contextWindow": 1000000,
+          "encodedId": "pi:opencode-zen/claude-sonnet-4-6",
+          "id": "claude-sonnet-4-6",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Claude Sonnet 4.6",
+          "maxTokens": 64000,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "anthropic-messages",
+          "contextWindow": 1000000,
+          "encodedId": "pi:opencode-zen/claude-sonnet-5",
+          "id": "claude-sonnet-5",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Claude Sonnet 5",
+          "maxTokens": 128000,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 1000000,
+          "encodedId": "pi:opencode-zen/deepseek-v4-flash",
+          "id": "deepseek-v4-flash",
+          "input": [
+            "text"
+          ],
+          "label": "DeepSeek V4 Flash",
+          "maxTokens": 384000,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 200000,
+          "encodedId": "pi:opencode-zen/deepseek-v4-flash-free",
+          "id": "deepseek-v4-flash-free",
+          "input": [
+            "text"
+          ],
+          "label": "DeepSeek V4 Flash Free",
+          "maxTokens": 128000,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 1000000,
+          "encodedId": "pi:opencode-zen/deepseek-v4-pro",
+          "id": "deepseek-v4-pro",
+          "input": [
+            "text"
+          ],
+          "label": "DeepSeek V4 Pro",
+          "maxTokens": 384000,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 1048576,
+          "encodedId": "pi:opencode-zen/gemini-3-flash",
+          "id": "gemini-3-flash",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Gemini 3 Flash",
+          "maxTokens": 65536,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 1048576,
+          "encodedId": "pi:opencode-zen/gemini-3-pro",
+          "id": "gemini-3-pro",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Gemini 3 Pro",
+          "maxTokens": 65536,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 1048576,
+          "encodedId": "pi:opencode-zen/gemini-3.1-pro",
+          "id": "gemini-3.1-pro",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Gemini 3.1 Pro Preview",
+          "maxTokens": 65536,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "google-generative-ai",
+          "contextWindow": 1048576,
+          "encodedId": "pi:opencode-zen/gemini-3.5-flash",
+          "id": "gemini-3.5-flash",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Gemini 3.5 Flash",
+          "maxTokens": 65536,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 204800,
+          "encodedId": "pi:opencode-zen/glm-4.6",
+          "id": "glm-4.6",
+          "input": [
+            "text"
+          ],
+          "label": "glm-4.6",
+          "maxTokens": 131072,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 204800,
+          "encodedId": "pi:opencode-zen/glm-4.7",
+          "id": "glm-4.7",
+          "input": [
+            "text"
+          ],
+          "label": "GLM-4.7",
+          "maxTokens": 131072,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 204800,
+          "encodedId": "pi:opencode-zen/glm-5",
+          "id": "glm-5",
+          "input": [
+            "text"
+          ],
+          "label": "GLM-5",
+          "maxTokens": 131072,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 204800,
+          "encodedId": "pi:opencode-zen/glm-5.1",
+          "id": "glm-5.1",
+          "input": [
+            "text"
+          ],
+          "label": "GLM-5.1",
+          "maxTokens": 131072,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 1000000,
+          "encodedId": "pi:opencode-zen/glm-5.2",
+          "id": "glm-5.2",
+          "input": [
+            "text"
+          ],
+          "label": "GLM-5.2",
+          "maxTokens": 131072,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-responses",
+          "contextWindow": 400000,
+          "encodedId": "pi:opencode-zen/gpt-5",
+          "id": "gpt-5",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "GPT-5",
+          "maxTokens": 128000,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-responses",
+          "contextWindow": 272000,
+          "encodedId": "pi:opencode-zen/gpt-5-codex",
+          "id": "gpt-5-codex",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "GPT-5 Codex",
+          "maxTokens": 128000,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-responses",
+          "contextWindow": 400000,
+          "encodedId": "pi:opencode-zen/gpt-5-nano",
+          "id": "gpt-5-nano",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "GPT-5 Nano",
+          "maxTokens": 128000,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-responses",
+          "contextWindow": 400000,
+          "encodedId": "pi:opencode-zen/gpt-5.1",
+          "id": "gpt-5.1",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "GPT-5.1",
+          "maxTokens": 128000,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-responses",
+          "contextWindow": 272000,
+          "encodedId": "pi:opencode-zen/gpt-5.1-codex",
+          "id": "gpt-5.1-codex",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "GPT-5.1 Codex",
+          "maxTokens": 128000,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-responses",
+          "contextWindow": 272000,
+          "encodedId": "pi:opencode-zen/gpt-5.1-codex-max",
+          "id": "gpt-5.1-codex-max",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "GPT-5.1 Codex Max",
+          "maxTokens": 128000,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-responses",
+          "contextWindow": 272000,
+          "encodedId": "pi:opencode-zen/gpt-5.1-codex-mini",
+          "id": "gpt-5.1-codex-mini",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "GPT-5.1 Codex Mini",
+          "maxTokens": 128000,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-responses",
+          "contextWindow": 400000,
+          "encodedId": "pi:opencode-zen/gpt-5.2",
+          "id": "gpt-5.2",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "GPT-5.2",
+          "maxTokens": 128000,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-responses",
+          "contextWindow": 272000,
+          "encodedId": "pi:opencode-zen/gpt-5.2-codex",
+          "id": "gpt-5.2-codex",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "GPT-5.2 Codex",
+          "maxTokens": 128000,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-responses",
+          "contextWindow": 272000,
+          "encodedId": "pi:opencode-zen/gpt-5.3-codex",
+          "id": "gpt-5.3-codex",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "GPT-5.3 Codex",
+          "maxTokens": 128000,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-responses",
+          "contextWindow": 128000,
+          "encodedId": "pi:opencode-zen/gpt-5.3-codex-spark",
+          "id": "gpt-5.3-codex-spark",
+          "input": [
+            "text"
+          ],
+          "label": "GPT-5.3 Codex Spark",
+          "maxTokens": 128000,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-responses",
+          "contextWindow": 1000000,
+          "encodedId": "pi:opencode-zen/gpt-5.4",
+          "id": "gpt-5.4",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "GPT-5.4",
+          "maxTokens": 128000,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-responses",
+          "contextWindow": 400000,
+          "encodedId": "pi:opencode-zen/gpt-5.4-mini",
+          "id": "gpt-5.4-mini",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "GPT-5.4 Mini",
+          "maxTokens": 128000,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-responses",
+          "contextWindow": 400000,
+          "encodedId": "pi:opencode-zen/gpt-5.4-nano",
+          "id": "gpt-5.4-nano",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "GPT-5.4 Nano",
+          "maxTokens": 128000,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-responses",
+          "contextWindow": 1050000,
+          "encodedId": "pi:opencode-zen/gpt-5.4-pro",
+          "id": "gpt-5.4-pro",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "GPT-5.4 Pro",
+          "maxTokens": 128000,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-responses",
+          "contextWindow": 1050000,
+          "encodedId": "pi:opencode-zen/gpt-5.5",
+          "id": "gpt-5.5",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "GPT-5.5",
+          "maxTokens": 128000,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-responses",
+          "contextWindow": 1050000,
+          "encodedId": "pi:opencode-zen/gpt-5.5-pro",
+          "id": "gpt-5.5-pro",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "GPT-5.5 Pro",
+          "maxTokens": 128000,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 256000,
+          "encodedId": "pi:opencode-zen/grok-build-0.1",
+          "id": "grok-build-0.1",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Grok Build 0.1",
+          "maxTokens": 256000,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 256000,
+          "encodedId": "pi:opencode-zen/hy3-preview-free",
+          "id": "hy3-preview-free",
+          "input": [
+            "text"
+          ],
+          "label": "Hy3 preview Free",
+          "maxTokens": 64000,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 262144,
+          "encodedId": "pi:opencode-zen/kimi-k2",
+          "id": "kimi-k2",
+          "input": [
+            "text"
+          ],
+          "label": "Kimi K2",
+          "maxTokens": 262144,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 262144,
+          "encodedId": "pi:opencode-zen/kimi-k2.5",
+          "id": "kimi-k2.5",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Kimi K2.5",
+          "maxTokens": 65536,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 262144,
+          "encodedId": "pi:opencode-zen/kimi-k2.6",
+          "id": "kimi-k2.6",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Kimi K2.6",
+          "maxTokens": 65536,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 262144,
+          "encodedId": "pi:opencode-zen/kimi-k2.7-code",
+          "id": "kimi-k2.7-code",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Kimi K2.7 Code",
+          "maxTokens": 262144,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 262100,
+          "encodedId": "pi:opencode-zen/ling-2.6-flash-free",
+          "id": "ling-2.6-flash-free",
+          "input": [
+            "text"
+          ],
+          "label": "Ling 2.6 Flash Free",
+          "maxTokens": 32800,
+          "provider": "opencode-zen",
+          "reasoning": false,
+          "thinkingLevels": [
+            "off"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 262144,
+          "encodedId": "pi:opencode-zen/mimo-v2-flash-free",
+          "id": "mimo-v2-flash-free",
+          "input": [
+            "text"
+          ],
+          "label": "MiMo V2 Flash Free",
+          "maxTokens": 65536,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 262144,
+          "encodedId": "pi:opencode-zen/mimo-v2-omni-free",
+          "id": "mimo-v2-omni-free",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "MiMo V2 Omni Free",
+          "maxTokens": 64000,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 1048576,
+          "encodedId": "pi:opencode-zen/mimo-v2-pro-free",
+          "id": "mimo-v2-pro-free",
+          "input": [
+            "text"
+          ],
+          "label": "MiMo V2 Pro Free",
+          "maxTokens": 64000,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 200000,
+          "encodedId": "pi:opencode-zen/mimo-v2.5-free",
+          "id": "mimo-v2.5-free",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "MiMo V2.5 Free",
+          "maxTokens": 32000,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 204800,
+          "encodedId": "pi:opencode-zen/minimax-m2.1",
+          "id": "minimax-m2.1",
+          "input": [
+            "text"
+          ],
+          "label": "minimax-m2.1",
+          "maxTokens": 131072,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 204800,
+          "encodedId": "pi:opencode-zen/minimax-m2.5",
+          "id": "minimax-m2.5",
+          "input": [
+            "text"
+          ],
+          "label": "MiniMax-M2.5",
+          "maxTokens": 131072,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "anthropic-messages",
+          "contextWindow": 204800,
+          "encodedId": "pi:opencode-zen/minimax-m2.5-free",
+          "id": "minimax-m2.5-free",
+          "input": [
+            "text"
+          ],
+          "label": "MiniMax M2.5 Free",
+          "maxTokens": 131072,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 204800,
+          "encodedId": "pi:opencode-zen/minimax-m2.7",
+          "id": "minimax-m2.7",
+          "input": [
+            "text"
+          ],
+          "label": "MiniMax-M2.7",
+          "maxTokens": 131072,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 512000,
+          "encodedId": "pi:opencode-zen/minimax-m3",
+          "id": "minimax-m3",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "MiniMax-M3",
+          "maxTokens": 128000,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 200000,
+          "encodedId": "pi:opencode-zen/minimax-m3-free",
+          "id": "minimax-m3-free",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "MiniMax M3 Free",
+          "maxTokens": 32000,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 204800,
+          "encodedId": "pi:opencode-zen/nemotron-3-super-free",
+          "id": "nemotron-3-super-free",
+          "input": [
+            "text"
+          ],
+          "label": "Nemotron 3 Super Free",
+          "maxTokens": 128000,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 1000000,
+          "encodedId": "pi:opencode-zen/nemotron-3-ultra-free",
+          "id": "nemotron-3-ultra-free",
+          "input": [
+            "text"
+          ],
+          "label": "Nemotron 3 Ultra Free",
+          "maxTokens": 128000,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 256000,
+          "encodedId": "pi:opencode-zen/north-mini-code-free",
+          "id": "north-mini-code-free",
+          "input": [
+            "text"
+          ],
+          "label": "North Mini Code Free",
+          "maxTokens": 64000,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "anthropic-messages",
+          "contextWindow": 262144,
+          "encodedId": "pi:opencode-zen/qwen3.5-plus",
+          "id": "qwen3.5-plus",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Qwen3.5 Plus",
+          "maxTokens": 65536,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "anthropic-messages",
+          "contextWindow": 262144,
+          "encodedId": "pi:opencode-zen/qwen3.6-plus",
+          "id": "qwen3.6-plus",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Qwen3.6 Plus",
+          "maxTokens": 65536,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 1048576,
+          "encodedId": "pi:opencode-zen/qwen3.6-plus-free",
+          "id": "qwen3.6-plus-free",
+          "input": [
+            "text"
+          ],
+          "label": "Qwen3.6 Plus Free",
+          "maxTokens": 64000,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 262000,
+          "encodedId": "pi:opencode-zen/ring-2.6-1t-free",
+          "id": "ring-2.6-1t-free",
+          "input": [
+            "text"
+          ],
+          "label": "Ring 2.6 1T Free",
+          "maxTokens": 66000,
+          "provider": "opencode-zen",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 131072,
+          "encodedId": "pi:opencode-zen/trinity-large-preview-free",
+          "id": "trinity-large-preview-free",
+          "input": [
+            "text"
+          ],
+          "label": "Trinity Large Preview",
+          "maxTokens": 131072,
+          "provider": "opencode-zen",
+          "reasoning": false,
+          "thinkingLevels": [
+            "off"
+          ]
+        },
+        {
+          "api": "openai-responses",
+          "contextWindow": 2000000,
+          "encodedId": "pi:xai-oauth/grok-4.20-0309-non-reasoning",
+          "id": "grok-4.20-0309-non-reasoning",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Grok 4.20 (Non-Reasoning)",
+          "maxTokens": 2000000,
+          "provider": "xai-oauth",
+          "reasoning": false,
+          "thinkingLevels": [
+            "off"
+          ]
+        },
+        {
+          "api": "openai-responses",
+          "contextWindow": 2000000,
+          "encodedId": "pi:xai-oauth/grok-4.20-0309-reasoning",
+          "id": "grok-4.20-0309-reasoning",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Grok 4.20 (Reasoning)",
+          "maxTokens": 2000000,
+          "provider": "xai-oauth",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-responses",
+          "contextWindow": 2000000,
+          "encodedId": "pi:xai-oauth/grok-4.20-multi-agent-0309",
+          "id": "grok-4.20-multi-agent-0309",
+          "input": [
+            "text"
+          ],
+          "label": "Grok 4.20 (Multi-Agent)",
+          "maxTokens": 2000000,
+          "provider": "xai-oauth",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-responses",
+          "contextWindow": 1000000,
+          "encodedId": "pi:xai-oauth/grok-4.3",
+          "id": "grok-4.3",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Grok 4.3",
+          "maxTokens": 1000000,
+          "provider": "xai-oauth",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-responses",
+          "contextWindow": 512000,
+          "encodedId": "pi:xai-oauth/grok-build",
+          "id": "grok-build",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Grok Build",
+          "maxTokens": 512000,
+          "provider": "xai-oauth",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-responses",
+          "contextWindow": 256000,
+          "encodedId": "pi:xai-oauth/grok-build-0.1",
+          "id": "grok-build-0.1",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Grok Build 0.1",
+          "maxTokens": 256000,
+          "provider": "xai-oauth",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-responses",
+          "contextWindow": 200000,
+          "encodedId": "pi:xai-oauth/grok-composer-2.5-fast",
+          "id": "grok-composer-2.5-fast",
+          "input": [
+            "text"
+          ],
+          "label": "Grok Composer 2.5 Fast",
+          "maxTokens": 200000,
+          "provider": "xai-oauth",
+          "reasoning": false,
+          "thinkingLevels": [
+            "off"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 128000,
+          "encodedId": "pi:tju/tju-llm",
+          "id": "tju-llm",
+          "input": [
+            "text"
+          ],
+          "label": "Qwen3.6-35B-A3B",
+          "maxTokens": 16384,
+          "provider": "tju",
+          "reasoning": false,
+          "thinkingLevels": [
+            "off"
+          ]
+        }
+      ],
+      "enabled": true,
+      "environmentHash": "",
+      "environmentVariables": "",
+      "modelAliases": {},
+      "preferredThinkingByModel": {},
+      "toolMode": "all",
+      "visibleModels": [
+        "pi:tju/tju-llm",
+        "pi:opencode-zen/big-pickle",
+        "pi:opencode-zen/deepseek-v4-flash-free"
+      ]
     }
   },
-  "settingsProvider": "claude",
+  "settingsProvider": "omp",
   "savedProviderModel": {
     "claude": "sonnet",
     "opencode": "opencode:opencode/big-pickle",
     "codex": "gpt-5.5",
-    "pi": "pi:opencode/deepseek-v4-flash-free",
+    "pi": "pi:tju/tju-llm",
     "omp": "sonnet"
   },
   "savedProviderEffort": {
     "claude": "high",
     "opencode": "default",
     "codex": "medium",
-    "pi": "xhigh",
+    "pi": "medium",
     "omp": "high"
   },
   "savedProviderServiceTier": {
@@ -1256,7 +4632,8 @@
   },
   "savedProviderThinkingBudget": {
     "opencode": "default",
-    "codex": "low"
+    "codex": "low",
+    "omp": "off"
   },
   "savedProviderPermissionMode": {
     "claude": "yolo",
