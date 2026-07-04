@@ -1,7 +1,7 @@
 {
   "userName": "",
-  "permissionMode": "normal",
-  "model": "",
+  "permissionMode": "yolo",
+  "model": "sonnet",
   "thinkingBudget": "default",
   "effortLevel": "high",
   "serviceTier": "default",
@@ -1236,7 +1236,7 @@
       ]
     }
   },
-  "settingsProvider": "omp",
+  "settingsProvider": "claude",
   "savedProviderModel": {
     "claude": "sonnet",
     "opencode": "opencode:opencode/big-pickle",
