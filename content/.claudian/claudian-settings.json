@@ -1,9 +1,9 @@
 {
   "userName": "",
   "permissionMode": "normal",
-  "model": "sonnet",
+  "model": "pi:opencode-zen/deepseek-v4-flash-free",
   "thinkingBudget": "off",
-  "effortLevel": "high",
+  "effortLevel": "medium",
   "serviceTier": "default",
   "enableAutoTitleGeneration": true,
   "titleGenerationModel": "",
@@ -4617,23 +4617,22 @@
     "claude": "sonnet",
     "opencode": "opencode:opencode/big-pickle",
     "codex": "gpt-5.5",
-    "pi": "pi:tju/tju-llm",
-    "omp": "sonnet"
+    "pi": "pi:opencode/big-pickle",
+    "omp": "pi:opencode-zen/deepseek-v4-flash-free"
   },
   "savedProviderEffort": {
     "claude": "high",
     "opencode": "default",
     "codex": "medium",
     "pi": "medium",
-    "omp": "high"
+    "omp": "medium"
   },
   "savedProviderServiceTier": {
     "codex": "default"
   },
   "savedProviderThinkingBudget": {
     "opencode": "default",
-    "codex": "low",
-    "omp": "off"
+    "codex": "low"
   },
   "savedProviderPermissionMode": {
     "claude": "yolo",
