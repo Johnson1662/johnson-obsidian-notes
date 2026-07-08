@@ -3,7 +3,7 @@
   "permissionMode": "normal",
   "model": "pi:opencode-zen/deepseek-v4-flash-free",
   "thinkingBudget": "off",
-  "effortLevel": "medium",
+  "effortLevel": "high",
   "serviceTier": "default",
   "enableAutoTitleGeneration": true,
   "titleGenerationModel": "",
@@ -4603,7 +4603,9 @@
       "environmentHash": "",
       "environmentVariables": "",
       "modelAliases": {},
-      "preferredThinkingByModel": {},
+      "preferredThinkingByModel": {
+        "pi:opencode-zen/deepseek-v4-flash-free": "high"
+      },
       "toolMode": "all",
       "visibleModels": [
         "pi:tju/tju-llm",
@@ -4625,7 +4627,7 @@
     "opencode": "default",
     "codex": "medium",
     "pi": "medium",
-    "omp": "medium"
+    "omp": "high"
   },
   "savedProviderServiceTier": {
     "codex": "default"
