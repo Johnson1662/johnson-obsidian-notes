@@ -105,7 +105,7 @@ $$
 | **KV Heads ($H_{KV}$)** | 8 (GQA) | 8 (GQA) | 8 (GQA) | MLA (低秩 Latent 512) |
 | **Head 维度 $d_k$** | 128 | 128 | 128 | 128 |
 | **FFN 维度 $d_{\text{ffn}}$** | 14,336 ($\approx 3.5d$) | 28,672 ($\approx 3.5d$) | 29,568 | 2,048 / 专家 (共 256 专家) |
-| **词表大小 $|V|$** | 128,256 | 128,256 | 152,064 | 129,280 |
+| **词表大小 $\vert V \vert$** | 128,256 | 128,256 | 152,064 | 129,280 |
 | **RoPE Base** | 500,000 | 500,000 | 1,000,000 | 10,000 (配合 YaRN 扩展) |
 | **Norm 类型** | RMSNorm (No Bias) | RMSNorm (No Bias) | RMSNorm (No Bias) | RMSNorm (No Bias) |
 
