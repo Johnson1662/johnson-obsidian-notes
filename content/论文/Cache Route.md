@@ -136,4 +136,3 @@ CacheRoute **不是普遍优于负载均衡**。
 
 因此作者建议上线前用 **Shadow Replay（影子流量回放）**真实测量缓存命中、负载和 p99，确认性能改善后再启用。([arXiv][1])
 
-[1]: https://arxiv.org/html/2608.19677v1 "CacheRoute: Planned Prefix-Affinity Routingfor Large-Scale LLM Serving"
