@@ -1,5 +1,3 @@
-**一句话：CacheRoute 通过“稳定的前缀亲和路由 + 按流量规划的均衡放置”，同时提高 Prefix KV Cache（前缀 KV 缓存）复用率并避免热点服务器，从而提升大规模 LLM Serving（大模型在线推理服务）的尾延迟和吞吐。**
-
 ### 1. 背景
 
 相同 business（业务租户）的请求往往共享稳定 prefix（前缀），复用其 KV Cache 可以省掉重复 Prefill（预填充计算）。
