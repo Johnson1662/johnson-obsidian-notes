@@ -189,7 +189,7 @@ Flat-LB → affinity → replication → LPT。
 
 **Affinity 负责找回可以复用的计算，而 Placement 负责让这些收益在高负载时真正转化为吞吐能力。**
 
-而且这里的 replication 是因为作者**人工注入 whale** 才真正触发的，不能拿来解释 70B 主实验。 ([arXiv][1])
+而且这里的 replication 是因为作者**人工注入 whale** 才真正触发的，不能拿来解释 70B 主实验。
 
 ## 5.3 Operating envelope and negative results
 
