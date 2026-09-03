@@ -297,9 +297,9 @@ CacheRoute 的区别是：
 
 论文最后把结论压缩成两句话：
 
-**正面结果：**在特定 70B/60-H100/Top-K128 实验中，CacheRoute 达到 93.2% KV Hit，并在 3.5 秒 p99 SLO 下比最强 baseline 提高 2.3× capacity。
+**正面结果：** 在特定 70B/60-H100/Top-K128 实验中，CacheRoute 达到 93.2% KV Hit，并在 3.5 秒 p99 SLO 下比最强 baseline 提高 2.3× capacity。
 
-**同样重要的负面结果：**如果可挽回的 Prefix 计算量太少，亲和性路由反而会降低性能。
+**同样重要的负面结果：** 如果可挽回的 Prefix 计算量太少，亲和性路由反而会降低性能。
 
 因此作者没有说“CacheRoute 应该普遍替代负载均衡”，而是说：
 
@@ -375,5 +375,3 @@ CacheRoute 可能赢、可能平、也可能输。 ([arXiv][1])
 * 32B 实验确实存在输和平的情况。
 
 也就是说，作者自己对 **2.3× 的适用范围限制得非常严格**。 ([arXiv][1])
-
-[1]: https://arxiv.org/pdf/2608.19677 "CacheRoute: Planned Prefix-Affinity Routing for Large-Scale LLM Serving"
