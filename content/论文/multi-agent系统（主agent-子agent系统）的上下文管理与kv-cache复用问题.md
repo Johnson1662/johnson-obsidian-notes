@@ -1,10 +1,15 @@
+## 一般工程上subagent的实现
+
+- 主agent主动调用工具派发subagent
+- subagent一开始的上下文窗口是空的，只有主agent给他的指令（要做什么、在哪些文件里做、验收标准等等）
+- 
 ## 子agent上下文管理/继承
 
-|论文|时间|核心问题|方法|和你想法的关系|
-|---|---|---|---|---|
-|**AOrchestra: Automating Sub-Agent Creation for Agentic Orchestration**|2026.02|主 Agent 分配任务时，子 Agent 应该拿到什么能力和上下文？|把子 Agent 抽象成 `(Instruction, Context, Tools, Model)`；主 Orchestrator（编排器）动态选择任务相关 Context、工具和模型|**最接近你原始想法**：不是只传任务提示，而是把相关 Context 一并交给子 Agent。它明确做 Context Curating（上下文筛选） ([arXiv](https://arxiv.org/abs/2602.03786?utm_source=chatgpt.com "AOrchestra: Automating Sub-Agent Creation for Agentic Orchestration"))|
-|**DeLM: Decentralized Multi-Agent Systems with Shared Context**|2026.06|多 Agent 如何避免每个 Agent 都重复探索、重复读取已有进展？|维护一个 **shared verified context（共享且经过验证的上下文）**；Agent 异步读取别人已经确认的进展，并写入紧凑更新|更偏“共享黑板/共享状态”，不是 Parent→Child 定向继承，但同样解决**重复探索**问题；SWE-bench Verified 上报告最高约 +10.5 个百分点，同时成本约减半 ([arXiv](https://arxiv.org/abs/2606.10662?utm_source=chatgpt.com "Decentralized Multi-Agent Systems with Shared Context"))|
-|**AOrchestra 的 Context Ablation**|2026.02|到底是不给 Context、全给 Context，还是筛选 Context 更好？|对比 No-Context / Full-Context / Curated-Context|直接支持你的直觉：**不是越多越好，而是应该选择性继承**；主 Agent 的作用不仅是分任务，还包括过滤对子任务真正有用的信息 ([arXiv](https://arxiv.org/abs/2602.03786?utm_source=chatgpt.com "AOrchestra: Automating Sub-Agent Creation for Agentic Orchestration"))|
+| 论文                                                                      | 时间      | 核心问题                                      | 方法                                                                                            | 和你想法的关系                                                                                                                                                                                                                    |
+| ----------------------------------------------------------------------- | ------- | ----------------------------------------- | --------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **AOrchestra: Automating Sub-Agent Creation for Agentic Orchestration** | 2026.02 | 主 Agent 分配任务时，子 Agent 应该拿到什么能力和上下文？       | 把子 Agent 抽象成 `(Instruction, Context, Tools, Model)`；主 Orchestrator（编排器）动态选择任务相关 Context、工具和模型 | **最接近你原始想法**：不是只传任务提示，而是把相关 Context 一并交给子 Agent。它明确做 Context Curating（上下文筛选） ([arXiv](https://arxiv.org/abs/2602.03786?utm_source=chatgpt.com "AOrchestra: Automating Sub-Agent Creation for Agentic Orchestration"))      |
+| **DeLM: Decentralized Multi-Agent Systems with Shared Context**         | 2026.06 | 多 Agent 如何避免每个 Agent 都重复探索、重复读取已有进展？      | 维护一个 **shared verified context（共享且经过验证的上下文）**；Agent 异步读取别人已经确认的进展，并写入紧凑更新                     | 更偏“共享黑板/共享状态”，不是 Parent→Child 定向继承，但同样解决**重复探索**问题；SWE-bench Verified 上报告最高约 +10.5 个百分点，同时成本约减半 ([arXiv](https://arxiv.org/abs/2606.10662?utm_source=chatgpt.com "Decentralized Multi-Agent Systems with Shared Context")) |
+| **AOrchestra 的 Context Ablation**                                       | 2026.02 | 到底是不给 Context、全给 Context，还是筛选 Context 更好？ | 对比 No-Context / Full-Context / Curated-Context                                                | 直接支持你的直觉：**不是越多越好，而是应该选择性继承**；主 Agent 的作用不仅是分任务，还包括过滤对子任务真正有用的信息 ([arXiv](https://arxiv.org/abs/2602.03786?utm_source=chatgpt.com "AOrchestra: Automating Sub-Agent Creation for Agentic Orchestration"))                  |
 
 ## kv-cache复用
 
