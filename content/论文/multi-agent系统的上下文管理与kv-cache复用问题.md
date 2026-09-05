@@ -1,8 +1,30 @@
-|工作|选择 Context|跨 Agent|不同模型|复用计算|
-|---|--:|--:|--:|--:|
-|AOrchestra|✅|✅|✅|❌|
-|DeLM|✅/共享状态|✅|✅|❌|
-|DroidSpeak|❌|✅场景|同源|✅|
-|Cross-model KV|❌|可用于 Agent|✅|✅|
-|Universal Context Reuse|❌|提及 Agent|✅|✅|
-|**你可以考虑的方向**|**✅**|**✅**|**✅**|**✅**|
+## 子agent上下文管理/继承
+
+|论文|时间|核心问题|方法|和你想法的关系|
+|---|---|---|---|---|
+|**AOrchestra: Automating Sub-Agent Creation for Agentic Orchestration**|2026.02|主 Agent 分配任务时，子 Agent 应该拿到什么能力和上下文？|把子 Agent 抽象成 `(Instruction, Context, Tools, Model)`；主 Orchestrator（编排器）动态选择任务相关 Context、工具和模型|**最接近你原始想法**：不是只传任务提示，而是把相关 Context 一并交给子 Agent。它明确做 Context Curating（上下文筛选） ([arXiv](https://arxiv.org/abs/2602.03786?utm_source=chatgpt.com "AOrchestra: Automating Sub-Agent Creation for Agentic Orchestration"))|
+|**DeLM: Decentralized Multi-Agent Systems with Shared Context**|2026.06|多 Agent 如何避免每个 Agent 都重复探索、重复读取已有进展？|维护一个 **shared verified context（共享且经过验证的上下文）**；Agent 异步读取别人已经确认的进展，并写入紧凑更新|更偏“共享黑板/共享状态”，不是 Parent→Child 定向继承，但同样解决**重复探索**问题；SWE-bench Verified 上报告最高约 +10.5 个百分点，同时成本约减半 ([arXiv](https://arxiv.org/abs/2606.10662?utm_source=chatgpt.com "Decentralized Multi-Agent Systems with Shared Context"))|
+|**AOrchestra 的 Context Ablation**|2026.02|到底是不给 Context、全给 Context，还是筛选 Context 更好？|对比 No-Context / Full-Context / Curated-Context|直接支持你的直觉：**不是越多越好，而是应该选择性继承**；主 Agent 的作用不仅是分任务，还包括过滤对子任务真正有用的信息 ([arXiv](https://arxiv.org/abs/2602.03786?utm_source=chatgpt.com "AOrchestra: Automating Sub-Agent Creation for Agentic Orchestration"))|
+
+## kv-cache复用
+
+| 论文                                                | 时间         | 模型关系                                   | 核心方法                                                            | 主要解决什么                                                                                                                                                                                                                                                                                           |
+| ------------------------------------------------- | ---------- | -------------------------------------- | --------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **DroidSpeak**                                    | NSDI 2026  | **同架构、不同微调模型**                         | 大部分 Layer 直接复用 Sender KV；少数 Critical Layer（关键层）重新计算             | 首次系统化证明同源微调模型之间可以部分共享 KV；Prefill 最快约 3.1×，吞吐最高约 4× ([Microsoft](https://www.microsoft.com/en-us/research/publication/droidspeak-kv-cache-sharing-for-efficient-multi-llm-serving/?utm_source=chatgpt.com "DroidSpeak: KV Cache Sharing Across Fine-tuned Model Variants - Microsoft Research"))  |
+| **ICaRus: Identical Cache Reuse**                 | ICLR 2026  | 多个专用模型，但需要按它的方法训练                      | 冻结负责产生 KV 的“逻辑 Encoder”，只微调后续部分，使不同专用模型天然产生**完全相同 KV**          | 从训练阶段直接消灭跨模型 KV 不一致；可全层共享，而不是事后翻译 ([ICLR Proceedings](https://proceedings.iclr.cc/paper_files/paper/2026/hash/37f6be32f832caf0f7980469fb06165b-Abstract-Conference.html?utm_source=chatgpt.com "ICaRus: Identical Cache Reuse for Efficient Multi-Model Inference"))                             |
+| **Cache-to-Cache (C2C)**                          | ICLR 2026  | 异构模型                                   | 用 Neural Projector（神经投影器）把 Source KV 投影并融合进 Target KV；学习选择哪些层受益 | 更强调**模型之间直接传递内部语义**，避免先生成文本再让另一个模型重新读；平均延迟约 2.5× 加速 ([ICLR Proceedings](https://proceedings.iclr.cc/paper_files/paper/2026/hash/474ada926b331d78f06d95e8913111cc-Abstract-Conference.html?utm_source=chatgpt.com "Cache-to-Cache: Direct Semantic Communication Between Large Language Models")) |
+| **Mixture-of-Translators (MoT)**                  | 2026.07    | **异构 LLM**，如 Qwen / GPT-2 / OPT        | 多个 Translator（翻译器）把 `KV_A → KV_B`，再做 Context Correction         | 非常接近“不同模型继承对方 Context KV”；还专门做了 Multi-Agent Reasoning 场景 ([arXiv](https://arxiv.org/abs/2607.28979?utm_source=chatgpt.com "Mixture-of-Translators: Translating KV Caches Across Heterogeneous Large Language Models"))                                                                           |
+| **Cross-Model KV Cache Transfer in LLM Families** | 2026.08    | 同模型家族、不同尺寸，如 Qwen3 14B→32B             | 不训练复杂网络，直接用 closed-form ridge regression（闭式岭回归）拟合 KV 映射         | 发现不同尺寸模型 KV 之间存在很强线性结构；部分模型对保留目标模型 73–98% 准确率，映射比重新 Prefill 快约 2.7–25× ([Hugging Face](https://huggingface.co/papers/2608.03893?utm_source=chatgpt.com "Paper page - Cross-Model KV Cache Transfer in LLM Families: A Closed-Form Linear Mapping for Prefill Reuse"))                            |
+| **Universal Context-Reuse Layer**                 | 2026.08.31 | **跨尺寸、跨架构、跨 tokenizer、跨 model family** | 学习通用 cross-model KV translation（跨模型 KV 翻译）                      | 把这个问题正式抽象为 **Context Mobility（上下文可迁移性）**；例如 Llama-3.1-70B→Qwen2.5-7B，44.0% vs 原生 45.7%，延迟 138ms vs 899ms ([arXiv](https://arxiv.org/abs/2608.30963?utm_source=chatgpt.com "A Universal Context-Reuse Layer for Cross-Model KV Sharing"))                                                         |
+| **CacheBridge**                                   | 2026.09    | 异构模型                                   | 优化已有线性 KV Mapper：按 attention 对齐 KV head，减少 mapper 大小和计算         | 已经进入“怎么把跨模型 KV transfer 工程化”的阶段；Qwen3 14B→32B mapper 存储减少 8×，应用最高快 3× ([arXiv](https://arxiv.org/abs/2609.00891?utm_source=chatgpt.com "CacheBridge: Efficient Cross-Model KV Cache Transfer"))                                                                                                  |
+
+## 方向
+
+| 工作                      | 选择 Context |   跨 Agent |  不同模型 |  复用计算 |
+| ----------------------- | ---------: | --------: | ----: | ----: |
+| AOrchestra              |          ✅ |         ✅ |     ✅ |     ❌ |
+| DeLM                    |     ✅/共享状态 |         ✅ |     ✅ |     ❌ |
+| DroidSpeak              |          ❌ |       ✅场景 |    同源 |     ✅ |
+| Cross-model KV          |          ❌ | 可用于 Agent |     ✅ |     ✅ |
+| Universal Context Reuse |          ❌ |  提及 Agent |     ✅ |     ✅ |
+| **你可以考虑的方向**            |      **✅** |     **✅** | **✅** | **✅** |
