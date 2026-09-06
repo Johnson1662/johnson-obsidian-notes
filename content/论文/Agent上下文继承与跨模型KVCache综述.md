@@ -37,11 +37,8 @@ LLM 决策
 - Tool Use（工具调用）
 - Planning（规划）
 - Memory / Context Management（记忆与上下文管理）
-    
 - Environment Interaction（与代码库、网页、SaaS、终端等环境交互）
-    
 - Multi-Agent / Sub-Agent Delegation（多 Agent / 子 Agent 委派）
-    
 
 ---
 
