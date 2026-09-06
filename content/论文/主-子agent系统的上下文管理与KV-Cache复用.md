@@ -2,7 +2,7 @@
 - 主agent主动调用工具派发subagent
 - subagent一开始的上下文窗口是空的，只有主agent给他的指令（要做什么、在哪些文件里做、验收标准等等）
 - 因此有一些主agent已经读过的文件或者思考过的内容，子agent还要再经历一遍
-- 是否能把与子agent任务相关的context提前注入子agent（减少子agent重复探索的时间，但可能因为主agent判断错误导致行为与目标偏移）甚至是共享部分kvcache（减少prefill时间）
+- 是否能把与子agent任务相关的context提前注入子agent（减少子agent重复探索的时间，但可能因为主agent判断错误导致行为与目标偏移）甚至是共享部分KV-Cache（减少prefill时间）
 ## 相关研究
 ### 子agent上下文管理/继承
 
