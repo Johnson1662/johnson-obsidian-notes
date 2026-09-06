@@ -12,7 +12,7 @@ LLM
 输出文本
 ```
 
-Agent 则是在 LLM 外面加了一套执行循环：
+Agent 则是在 LLM 外面加了一套执行**循环**：
 
 ```
 用户目标
@@ -84,13 +84,11 @@ Main Agent
 - read middleware.ts
 - 跑过测试
 - 判断 bug 可能在 token 校验
-
         ↓ delegate
 
 Sub-Agent
 只收到：
 “修复登录 bug，重点看 auth.ts”
-
         ↓
 
 Sub-Agent 又：
