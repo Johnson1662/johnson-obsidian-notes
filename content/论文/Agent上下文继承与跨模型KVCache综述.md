@@ -439,7 +439,7 @@ https://arxiv.org/abs/2606.10662
 
 ---
 
-# 4. Context 继承真正困难的地方：不是“传不传”，而是“信不信”
+# 4. Context 继承的难点：可能继承到判断错误的context
 
 假设 Parent Agent 已经得到：
 
