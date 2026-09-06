@@ -1192,7 +1192,6 @@ Parent 的推测
 | 异构模型 KV Translator | MoT、C2C、Universal 等已经开始形成研究线 |
 | 同 family 的线性 KV Mapping | Cross-Model Transfer、CacheBridge 已研究 |
 | 从训练阶段统一 KV | ICaRus 已研究 |
-
 因此后续更有价值的方向，可能不再是：
 
 > “再设计一个新的 Context Selector 或 KV Translator”
