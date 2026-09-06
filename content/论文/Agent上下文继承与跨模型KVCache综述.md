@@ -1,91 +1,138 @@
+## 前置知识
 
-## 1. 问题背景：主 Agent 和子 Agent 为什么会重复工作
+### 普通 LLM 和 Agent 的区别
 
-现在很多 Agent 系统都会采用主 Agent + 子 Agent 的结构。
+普通 LLM 通常是：
 
-一个典型流程是：
-
-```text
-用户任务
+```
+输入 Prompt
    ↓
-Main Agent
+LLM
    ↓
-先探索任务、读取文件、搜索信息
-   ↓
-拆分子任务
-   ↓
-Sub-Agent A / B / C
+输出文本
 ```
 
-主 Agent 通常会先积累大量上下文，例如：
+Agent 则是在 LLM 外面加了一套执行循环：
 
-- 用户需求
-- 已读取的代码或文档
-- 工具调用结果
-- 搜索结果
-- 测试结果
-- 对问题的初步判断
-
-但工程上的很多 Sub-Agent 实现，在启动时上下文窗口几乎是空的，只拿到主 Agent 给出的任务描述，例如：
-
-```text
-“修复登录问题，重点检查 auth.ts，修复后运行测试。”
+```
+用户目标
+   ↓
+LLM 决策
+   ↓
+调用工具 / 读文件 / 搜索 / 执行代码
+   ↓
+获得 Observation
+   ↓
+继续决策
+   ↓
+直到完成任务
 ```
 
-于是子 Agent 往往还要重新：
+可以粗略理解为：
 
-```text
-read README
-grep auth
-read auth.ts
-read middleware.ts
-run tests
-```
+> **LLM 负责“想”，Agent runtime 负责“让它能持续观察环境并采取行动”。**
 
-即使这些内容主 Agent 刚刚已经读过。
+典型能力包括：
 
-这里其实存在两类不同的重复成本。
-
-### 1.1 重复探索
-
-子 Agent 重复进行：
-
-- 文件读取
-- 搜索
-- grep
-- Web 查询
-- 工具调用
-- 推理和定位
-
-这类问题属于 **Agent Context Management（上下文管理）**。
-
-核心问题是：
-
-> 主 Agent 已经知道的信息，哪些应该直接交给子 Agent？
+- Tool Use（工具调用）
+- Planning（规划）
+- Memory / Context Management（记忆与上下文管理）
+    
+- Environment Interaction（与代码库、网页、SaaS、终端等环境交互）
+    
+- Multi-Agent / Sub-Agent Delegation（多 Agent / 子 Agent 委派）
+    
 
 ---
 
-### 1.2 重复 Prefill
+## 1 问题背景
 
-另一种情况是，主 Agent 直接把原始上下文传给子 Agent：
+复杂任务如果完全交给一个 Agent，通常会遇到：
 
-```text
-Main Agent 已经读过 20K tokens
-          ↓
-把这些文本直接放进 Child Context
-          ↓
-Child Model 再做一次 20K-token Prefill
+- Context 越来越长；
+- 不同子任务相互干扰；
+- 一个 Agent 需要同时承担搜索、编码、测试、审查等不同角色；
+- 一些子任务可以并行。
+
+所以很多 Agent 框架支持：
+
+```
+Main Agent
+├─ Sub-Agent A：搜索资料
+├─ Sub-Agent B：修改代码
+├─ Sub-Agent C：测试
+└─ Sub-Agent D：Review
 ```
 
-这样虽然省去了重新搜索和重新读取文件，但模型计算没有真正复用。
+工程上的常见实现是：
+
+1. 主 Agent 先探索；
+2. 主 Agent 决定要拆出一个子任务；
+3. 启动一个新的 Sub-Agent；
+4. Sub-Agent 的上下文基本为空；
+5. 主 Agent 只给它要做什么、在哪做、验收标准和少量提示。
+
+因此会出现一个明显的问题：
+
+> **主 Agent 已经读过、搜过、推理过的信息，子 Agent 可能还要重新经历一遍。**
+
+例如：
+
+```
+Main Agent
+已经：
+- read README
+- grep auth
+- read auth.ts
+- read middleware.ts
+- 跑过测试
+- 判断 bug 可能在 token 校验
+
+        ↓ delegate
+
+Sub-Agent
+只收到：
+“修复登录 bug，重点看 auth.ts”
+
+        ↓
+
+Sub-Agent 又：
+- read README
+- grep auth
+- read auth.ts
+- read middleware.ts
+- 再跑一遍测试
+```
+
+这会产生两类重复成本。
+
+### 2.1 重复探索成本
+
+- 重复 read / grep / search
+- 重复 tool call
+- 重复 reasoning
+- 重复环境交互
+
+### 2.2 重复 Prefill 成本
+
+即使主 Agent 把原文直接传给子 Agent：
+
+```
+Main Agent 已经读过 20K tokens
+        ↓
+把 20K tokens 文本交给 Child
+        ↓
+Child 仍然要重新 Prefill 20K tokens
+```
 
 所以：
 
-> **文本级 Context 继承减少的是探索成本，不等于减少 Prefill 成本。**
+> **文本级 Context 继承可以减少“重新找”，但不等于减少模型计算。**
 
-这进一步引出第二条研究线：
+这正好引出后面两条研究线：
 
-> 已经决定交给子 Agent 的上下文，能不能连模型内部已经算好的 KV-Cache 一起复用？
+1. **子 Agent 应该继承什么 Context？**
+2. **决定继承以后，能不能连已经算过的 KV-Cache 一起复用？**
 
 ---
 
