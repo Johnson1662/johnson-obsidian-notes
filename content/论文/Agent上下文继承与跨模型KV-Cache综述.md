@@ -903,7 +903,7 @@ CacheBridge 改成：
 
 > **Attention-aware Head Matching**
 
-即先寻找：
+即先寻找匹配的source head和target head
 
 ```text
 Source Head h_A
