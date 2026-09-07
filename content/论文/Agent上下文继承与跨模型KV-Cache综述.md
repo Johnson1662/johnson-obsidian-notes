@@ -1318,9 +1318,7 @@ Parent 读取 auth.ts v1
 与此同时：
 
 Agent B 把 auth.ts 修改成 v2
-
        ↓
-
 Child 仍然基于 v1 Context 继续工作
 ```
 
