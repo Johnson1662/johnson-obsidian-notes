@@ -66,19 +66,9 @@ Agent 可以读取其他 Agent 已确认的进展，再写回新的验证结果�
 
 ---
 
-## 2.3 仍未完全解决的问题
+## 2.3 还值得研究的问题
 
-已有工作主要解决：
-
-```text
-Relevant / Irrelevant
-```
-
-但真实 Agent 更需要判断：
-
-```text
-Trust / Verify / Reacquire / Drop
-```
+如何评判哪些context值得继承
 
 例如：
 
@@ -503,105 +493,11 @@ KaVa 把 Teacher 的长 CoT KV Cache 压缩，并作为监督信号训练 latent
 但它研究的是离线 Distillation，不是运行时 low → high effort escalation。
 
 ---
+## 5.7 值得研究的问题
 
-# 6. Low → High KV 转换：目前的研究空档
+当模型先以 low reasoning effort 尝试任务并失败后，如何最大程度复用已经产生的 reasoning computation，而不是以 high effort 从头重新推理？
 
-目前已有工作分别解决了：
-
-| 工作 | 解决的问题 |
-|---|---|
-| Ares | 什么时候切换 low / medium / high |
-| Beyond Speedup | 用 KV 判断 Fast / Slow |
-| Efficient Reasoning on the Edge | 训练时让两种模式共享 Prompt KV |
-| KV Cache Steering | 修改 KV 改变 reasoning behavior |
-| Memory Inception | 注入额外 KV 控制行为 |
-| KaVa | 用 reasoning KV 做蒸馏监督 |
-
-但目前还没有看到专门系统研究：
-
-$$
-T(KV_{low}(C))
-\approx
-KV_{high}(C)
-$$
-
-也就是：
-
-> **同一个预训练模型、同一个 Context，从 low effort 升级到 high effort 时，能否复用或轻量修复已有 KV，而不是完整重新 Prefill？**
-
-在设计 Translator 前，首先需要回答：
-
-1. low / medium / high 的 KV 差多少？
-2. 直接复用 low KV 给 high 模式是否掉质量？
-3. 差异是否集中在少数 Layer / Head？
-
-可能出现：
-
-```text
-几乎无差异
-→ Direct Reuse
-
-少量 Layer / Head 敏感
-→ Selective Recompute / Repair
-
-全局差异明显
-→ KV Translator
-```
-
-如果只少量 Layer 敏感，这会形成一个很自然的：
-
-> **DroidSpeak for Reasoning Effort**
-
-相比跨模型 KV Translation，这个实验条件更干净：
-
-- 同一模型权重
-- 同一 Architecture
-- 同一 Tokenizer
-- 同一 Context
-- 唯一变量是 Reasoning Effort
-
----
-
-# 7. 整体关系
-
-```text
-Agent 已获得 Context
-        ↓
-能否避免 Child 重复探索？
-        ↓
-AOrchestra / DeLM
-        ↓
-能否避免重复 Prefill？
-        ↓
-DroidSpeak / ICaRus
-        ↓
-不同模型能否复用已有 KV？
-        ↓
-MoT / Closed-form Transfer / CacheBridge
-        ↓
-跨 Family 能否迁移？
-        ↓
-Universal Context-Reuse
-        ↓
-同一模型切换 Reasoning Effort 后能否继续复用？
-        ↓
-Reasoning-Effort KV Reuse / Repair
-```
-
-可以把目前两个最值得继续追的问题概括为：
-
-1. **Cross-model KV Transferability**：哪些模型之间适合做 KV Transfer？
-2. **Reasoning-Effort KV Compatibility**：low → high 时到底需要 Direct Reuse、局部 Repair，还是完整 Translation？
-
-整体研究重点正在从：
-
-```text
-Can we reuse context?
-```
-
-转向：
-
-```text
-When is reuse valid,
-and how cheaply can we repair it when it is not?
-```
+实验设计：三组对照实验
+- 直接将思考强度从low切换到high，然后继续
+- 直接从头开始
+- 
