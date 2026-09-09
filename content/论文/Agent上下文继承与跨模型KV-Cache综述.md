@@ -250,10 +250,6 @@ CacheBridge 改为：
 2. **Attention-aligned Calibration**：更重视真正影响 Attention 的 KV 误差；
 3. **高效 Mapper Construction**：减少校准和构建开销。
 
-本质：
-
-> **把“线性 KV Transfer 可行”进一步做成更小、更快、更稳的方案。**
-
 ---
 
 ## 3.7 Universal Context-Reuse Layer：跨 Family Context Mobility
