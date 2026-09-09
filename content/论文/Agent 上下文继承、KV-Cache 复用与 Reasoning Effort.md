@@ -1,6 +1,6 @@
 ## 1. 问题背景
 
-复杂 Agent 常采用主 Agent + 子 Agent：
+复杂 Agent 系统常采用“Main Agent + Sub-Agent”的结构：
 
 ```text
 Main Agent
@@ -10,35 +10,41 @@ Main Agent
 └─ Review Agent
 ```
 
-如果子 Agent 只收到任务说明，常出现两类重复：
+如果 Sub-Agent 只收到任务说明，常出现两类重复：
 
 1. **重复探索**：重新读文件、搜索、调用工具、推理；
-2. **重复 Prefill**：即使 Parent 直接把原文传给 Child，Child 仍要重新计算这些 Token。
+2. **重复 Prefill**：即使 Main Agent 直接把原文传给 Sub-Agent，子模型仍要重新计算这些 Token。
 
-因此可以分成两类问题：
+因此可以把问题分成两条线：
 
-- **Context Management**：Child 应该看到哪些已有信息？
-- **KV-Cache Reuse**：这些信息已经被模型处理过，能否复用已有计算状态？
+- **Context Management**：Sub-Agent 应该看到哪些已有信息？
+- **KV Cache Reuse**：这些信息已经被模型处理过，能否复用已有计算状态？
 
 ---
 
-# 2. 子 Agent 的 Context 继承与选择
+# 2. Sub-Agent 的 Context 继承与选择
 
-## 2.1 AOrchestra：由 Orchestrator 生成 Curated Context
+## 2.1 AOrchestra：由 Orchestrator 筛选 Sub-Agent Context
 
 **AOrchestra: Automating Sub-Agent Creation for Agentic Orchestration**  
 来源：arXiv:2602.03786  
 https://arxiv.org/abs/2602.03786
 
-AOrchestra 把一个 Agent 抽象成：
+AOrchestra 把一个 Sub-Agent 表示为：
 
 $$
 \Phi=(Instruction,\ Context,\ Tools,\ Model)
 $$
 
-Orchestrator 每次委派时动态生成这四项，其中 Context 是经过筛选和压缩的 task-relevant history。
+也就是说，Orchestrator 不仅决定“Sub-Agent 做什么”，还动态决定：
 
-论文在 50 个 GAIA validation 样本上做了 Context ablation：
+- 给它什么 Context；
+- 给它哪些 Tools；
+- 使用哪个 Model。
+
+其中 Context 不是直接复制完整历史，而是经过筛选和压缩的任务相关信息。
+
+论文在 50 个 GAIA validation 样本上做了 Context 消融实验：
 
 | 设置 | 平均分 |
 |---|---:|
@@ -46,55 +52,56 @@ Orchestrator 每次委派时动态生成这四项，其中 Context 是经过筛�
 | Full Context | 84% |
 | Curated Context | **96%** |
 
-这个实验规模较小，但直接说明：**Full Context 不一定优于选择性继承。**
+这个实验规模较小，但至少说明：**把全部历史都交给 Sub-Agent 并不一定更好。**
 
 ---
 
-## 2.2 RCR-Router：按角色和阶段路由 Shared Memory
+## 2.2 RCR-Router：按角色和任务阶段选择 Shared Memory
 
 **RCR-Router: Efficient Role-Aware Context Routing for Multi-Agent LLM Systems with Structured Memory**  
 来源：arXiv:2508.04903  
 https://arxiv.org/abs/2508.04903
 
-RCR-Router 维护 Shared Memory，并为当前 Agent 选择一个受 Token Budget 限制的子集。
+RCR-Router 维护一份 Shared Memory，每次只为当前 Agent 选择其中一部分。
 
 主要依据包括：
 
 - Agent role；
 - 当前 task stage；
 - semantic relevance；
-- structured memory priority。
+- structured memory priority；
+- Token budget。
 
-在 HotPotQA、MuSiQue、2WikiMultihop 上，论文报告最多约 **30% Token reduction**，同时维持或提升答案质量。
+在 HotPotQA、MuSiQue、2WikiMultihop 上，论文报告最多约 **30% Token 消耗下降**，同时维持或提升答案质量。
 
 它研究的核心就是：
 
-> **当前 Agent 应该从共享历史中看到哪些信息。**
+> **当前 Agent 应该从 Shared Memory 中看到哪些信息。**
 
 ---
 
-## 2.3 AnyMAC：Next-Context Selection
+## 2.3 AnyMAC：直接学习“下一步该看哪些历史”
 
 **AnyMAC: Cascading Flexible Multi-Agent Collaboration via Next-Agent Prediction**  
 来源：EMNLP 2025  
 https://aclanthology.org/2025.emnlp-main.584/
 
-AnyMAC 同时学习：
+AnyMAC 同时学习两个决策：
 
 1. **Next-Agent Prediction**：下一步由哪个 Agent 工作；
-2. **Next-Context Selection（NCS）**：下一 Agent 应该访问哪些历史步骤。
+2. **Next-Context Selection（NCS）**：下一 Agent 应该读取哪些历史 step。
 
-NCS 可以从任意之前的 Agent step 中选择相关信息，而不是固定继承完整历史或只继承上一步输出。
+因此，下一 Agent 不必固定继承完整历史，也不必只看上一步输出，而可以从任意之前的 step 中选择相关信息。
 
 ---
 
-## 2.4 DeLM：Shared Verified Context
+## 2.4 DeLM：共享 Verified Context
 
 **Decentralized Multi-Agent Systems with Shared Context**  
 来源：arXiv:2606.10662  
 https://arxiv.org/abs/2606.10662
 
-DeLM 不依赖中央 Orchestrator，而是使用：
+DeLM 不依赖中央 Orchestrator，而是维护一份 **Shared Verified Context（共享已验证上下文）**：
 
 ```text
 Parallel Agents
@@ -104,15 +111,15 @@ Shared Verified Context
    Task Queue
 ```
 
-Agent 异步领取子任务，读取已有进展，并把**紧凑、已验证的更新**写回共享 Context。
+Agent 异步领取子任务，读取已有进展，并把紧凑、已验证的新结果写回 Shared Context。
 
-论文在 SWE-bench Verified 上报告相对最强 baseline 最高约 **+10.5 个百分点**，同时 task cost 约下降一半；在 LongBench-v2 Multi-Doc QA 上也报告了提升。
+论文在 SWE-bench Verified 上报告，相对最强 baseline 最高提升约 **10.5 个百分点**，同时 task cost 约下降一半。
 
 ---
 
-## 2.5 “相关”之外：可靠性与时效性
+## 2.5 Context 不仅要“相关”，还涉及可靠性与时效性
 
-以下工作不是专门的 Parent → Child Context Selector，但直接研究了 Context 是否可信、是否仍然有效。
+下面这些工作不专门研究“Parent 给 Child 传什么”，但直接涉及 Context 是否可信、是否已经过期。
 
 ### Hindsight
 
@@ -120,7 +127,14 @@ Agent 异步领取子任务，读取已有进展，并把**紧凑、已验证的
 来源：ACL 2026 System Demonstrations  
 https://aclanthology.org/2026.acl-demo.27/
 
-Hindsight 把 memory 分成 world、experience、observation、opinion 等逻辑网络，区分**客观事实和主观判断**，并结合 temporal filtering 和 confidence。
+Hindsight 把 Memory 区分为 world、experience、observation、opinion 等类型，并显式区分：
+
+- 客观事实；
+- 主观判断；
+- confidence；
+- 时间信息。
+
+因此它不只按“相似度”检索 Memory，还关注信息本身的性质。
 
 ### STALE
 
@@ -128,9 +142,11 @@ Hindsight 把 memory 分成 world、experience、observation、opinion 等逻辑
 来源：arXiv:2605.06527  
 https://arxiv.org/abs/2605.06527
 
-STALE 研究 later observation 已经隐式使旧 memory 失效，但没有显式否定旧事实的情况。
+STALE 研究一种更难的情况：
 
-其 benchmark 包含 400 个专家验证场景、1,200 个查询；论文报告最强被测模型整体约 **55.2%**。
+> 后续 observation 已经使旧 Memory 失效，但没有一句话显式说“旧信息错了”。
+
+它构建了 400 个专家验证场景、1,200 个查询；论文报告最强被测模型整体准确率约 **55.2%**。
 
 ### Fresh Memory, Stale Plans
 
@@ -138,52 +154,54 @@ STALE 研究 later observation 已经隐式使旧 memory 失效，但没有显�
 来源：arXiv:2609.03340  
 https://arxiv.org/abs/2609.03340
 
-论文指出：即使 Executor 已经拿到最新事实，旧 Plan 仍可能建立在过期事实上。
+这篇论文指出：
 
-PlanFence 让 Plan 记录它依赖的 public records，执行动作前只验证真正影响该动作的依赖。论文在 30 个受控 live workflows 中报告，freshness-only executor 每次都会执行旧 Plan，而 PlanFence 没有执行 invalid action。
+> 即使 Executor 已经拿到最新事实，旧 Plan 仍可能建立在过期事实上。
+
+它提出 PlanFence：让 Plan 记录自己依赖了哪些外部状态；执行动作前，只重新验证真正影响当前 Action 的依赖。
 
 ---
 
-# 3. KV-Cache 复用与转换
+# 3. KV Cache 复用与转换
 
-## 3.1 KVCOMM：同模型、不同 Prefix Context 下复用共享内容
+## 3.1 KVCOMM：同模型、不同 Prefix 下复用同一段内容
 
 **KVCOMM: Online Cross-context KV-cache Communication for Efficient LLM-based Multi-agent Systems**  
 来源：NeurIPS 2025  
 https://papers.nips.cc/paper_files/paper/2025/hash/1a074a28c3a6f2056562d00649ae6416-Abstract-Conference.html
 
-多 Agent 中，同一段共享文本可能位于不同 Agent-specific prefix 后面：
+Multi-Agent 系统里，同一段共享内容可能处在不同的 Prefix 之后：
 
 ```text
 Agent A: Prefix_A + Shared Content
 Agent B: Prefix_B + Shared Content
 ```
 
-即使模型相同，由于前缀不同：
+即使两边使用同一个模型，由于 Prefix 不同：
 
 $$
-KV_A(Shared)\neq KV_B(Shared)
+KV_A(\text{Shared})\neq KV_B(\text{Shared})
 $$
 
-KVCOMM 把差异建模为 **context-induced KV offset**，使用在线维护的 anchor pool 估计并校正共享内容的 KV。
+KVCOMM 把这种差异建模为 **context-induced KV offset（上下文引起的 KV 偏移）**，并用在线维护的 anchor pool 估计和校正这部分偏移。
 
 特点：
 
 - training-free；
-- 不要求不同模型；
-- 解决的是**同模型、同内容、不同 Prefix** 的 KV mismatch。
+- 不要求切换模型；
+- 解决的是**同模型、同内容、不同 Prefix**造成的 KV 不兼容。
 
-论文报告跨多种 multi-agent workload 的 KV reuse rate 超过 70%；在其五 Agent 指定设置下，TTFT 从约 430 ms 降到约 55 ms，最高约 7.8× speedup。
+论文报告多种 Multi-Agent workload 中的 KV reuse rate 超过 70%；在其五 Agent 实验设置中，TTFT 从约 430 ms 降到约 55 ms。
 
 ---
 
-## 3.2 DroidSpeak：同架构模型变体的选择性复用
+## 3.2 DroidSpeak：同架构模型变体之间的选择性复用
 
 **DroidSpeak: KV Cache Sharing Across Fine-tuned Model Variants**  
 来源：USENIX NSDI 2026  
 https://www.usenix.org/conference/nsdi26/presentation/liu-yuhan
 
-DroidSpeak 研究**相同 architecture** 的不同模型变体，重点包括 fine-tuned / LoRA variants。
+DroidSpeak 研究的是**架构相同**的不同模型变体，例如同一个基础模型的不同 Fine-tuning 或 LoRA 版本。
 
 对于相同 Context：
 
@@ -191,86 +209,94 @@ $$
 KV_A\neq KV_B
 $$
 
-直接完整复用会显著伤害质量。
+直接把 Sender 的全部 KV 给 Receiver，会明显损害质量。
 
-论文逐层测试后发现：只有少量 Layer 对跨模型 KV 偏差特别敏感，并称为 **Critical Layers**；测试 model pairs 中平均约 **11% Layer** 被识别为 critical。
+论文逐层测试后发现：
+
+> **只有少量 Layer 对跨模型 KV 偏差特别敏感。**
+
+这些 Layer 被称为 **Critical Layers（关键层）**。在论文测试的 model pairs 中，Critical Layers 平均约占 11%。
 
 因此：
 
 ```text
-非关键 Layer → 复用 Sender KV
+非关键 Layer → 直接复用 Sender KV
 关键 Layer   → Receiver 重算
 ```
 
-为了减少 E Cache 切换和表示误差，实际选择连续 recomputation group，并离线 profiling 不同重算区间；运行时再把 KV Transfer 与 Recomputation pipeline overlap。
+实际系统不会只重算几个离散 Layer，而是选择连续的 recomputation group，以减少 E Cache 切换和表示误差。
+
+系统还会：
+
+- 离线 profiling 不同重算区间；
+- 在线按系统负载选择配置；
+- 让 KV Transfer 和关键层 Recomputation 并行。
 
 论文报告：
 
-- Prefill 加速最高约 3.1×；
-- 在线吞吐最高约 4×；
-- 质量损失很小。
+- Prefill 最高加速约 3.1×；
+- 在线 throughput 最高约 4×；
+- 质量损失较小。
 
-限制：Sender / Receiver 需要相同 architecture。
+限制：Sender 和 Receiver 需要具有相同 architecture。
 
 ---
 
-## 3.3 ICaRus：训练时直接让不同专用模型产生相同 KV
+## 3.3 ICaRus：训练时就让不同专用模型产生相同 KV
 
 **ICaRus: Identical Cache Reuse for Efficient Multi-Model Inference**  
 来源：ICLR 2026  
 https://proceedings.iclr.cc/paper_files/paper/2026/hash/37f6be32f832caf0f7980469fb06165b-Abstract-Conference.html
 
-ICaRus 把 decoder-only Transformer 概念上拆成：
+ICaRus 把 Decoder-only Transformer 概念上拆成：
 
 ```text
 Logical Encoder → 产生 KV
-Logical Decoder → 根据 KV 预测 Token
+Logical Decoder → 基于 KV 预测 Token
 ```
 
-训练专用模型时：
+训练不同专用模型时：
 
 - 冻结 Logical Encoder；
-- 只 fine-tune Logical Decoder。
+- 只 Fine-tune Logical Decoder。
 
-于是不同专用模型对相同 Prefix 生成相同 KV：
+于是不同专用模型对同一 Prefix 产生：
 
 $$
 KV_A=KV_B=KV_C
 $$
 
-这样无需 Translator 即可完整共享 Cache。
+这样不需要额外 Translator，就能完整复用 KV。
 
-代价是：必须按这种方式构造 / fine-tune 模型，不能直接用于任意已有模型。
-
-论文在 8-model multi-agent 场景中报告最高约 11.1× 更低 P95 latency 和 3.8× 更高 throughput。
+代价是：模型必须按这种方式训练，不能直接应用到任意已经训练好的模型。
 
 ---
 
-## 3.4 C2C：跨模型 Latent Communication，不是 Receiver Prefill 替代
+## 3.4 C2C：跨模型 Latent Communication，而不是省掉 Target Prefill
 
 **Cache-to-Cache: Direct Semantic Communication Between Large Language Models**  
 来源：ICLR 2026  
 https://proceedings.iclr.cc/paper_files/paper/2026/hash/474ada926b331d78f06d95e8913111cc-Abstract-Conference.html
 
-C2C 的目标不是让 Target 完全跳过自身 Prefill，而是让两个模型通过内部 KV 表示交流。
+C2C 的目标不是让 Target 完全跳过自身 Prefill，而是让两个模型直接通过内部 KV 表示交换信息。
 
-Target 本身已有自己的 KV，Source KV 经神经网络 projection / fusion 后注入：
+Target 本身已有自己的 KV，Source KV 经过 projection 和 fusion 后注入：
 
 $$
 KV_B^{fused}=KV_B+F(KV_B,KV_A)
 $$
 
-论文还使用 learnable gate 选择哪些 Target Layer 接收通信。
+论文还使用 learnable gate 选择哪些 Target Layer 接收这部分信息。
 
 因此 C2C 更准确地属于：
 
-> **Cross-model latent semantic communication**
+> **跨模型隐空间语义通信（Cross-model Latent Semantic Communication）**
 
-而不是纯粹的 Receiver-side Prefill Reuse。
+而不是纯粹的 Prefill Reuse。
 
 ---
 
-## 3.5 MoT：训练神经 Translator 做异构 KV Translation
+## 3.5 MoT：训练神经 Translator 进行异构 KV 转换
 
 **Mixture-of-Translators: Translating KV Caches Across Heterogeneous Large Language Models**  
 来源：arXiv:2607.28979  
@@ -282,31 +308,43 @@ $$
 T_{A\rightarrow B}(KV_A)\approx KV_B
 $$
 
-它不是简单线性矩阵，而是**需要训练的神经 Translator**。
+它不是简单的线性矩阵，而是需要训练的神经 Translator。
 
-一个 backbone Translator：
+一个 Translator 大致包括：
 
 1. 分别处理 K 和 V；
-2. 把 Source cache projection 到 translator hidden space；
-3. 用 recurrent **Cross-Attention** 融合选定 Source Layer window；
-4. 再 projection 到 Target KV space。
+2. 把 Source KV 投影到 Translator hidden space；
+3. 用递归式 Cross-Attention 融合多个 Source Layer；
+4. 再投影到 Target KV space。
 
-MoT 使用多个结构相同、参数不同的 Translator，并通过**token-level learned gating / routing**选择或组合它们。
+MoT 不只使用一个 Translator，而是使用多个结构相同、参数不同的 Translator，并通过**Token-level learned routing**决定每个 Token 使用哪个 Translator。
 
-训练时 Source / Target LLM 用同一 Context 产生 paired state；Translator 使用 Prompt LM Loss 和 **Context Correction Loss** 训练。Context Correction 约束使用 translated cache replay 后的 Target trajectory 接近 native Target trajectory。
+训练时：
 
-论文还分析了两个误差：
+```text
+同一段 Context
+   ↓              ↓
+Source Model     Target Model
+   ↓              ↓
+KV_A            Native KV_B
+   ↓
+MoT Translator
+   ↓
+Predicted KV_B
+```
 
-- **Propagated Translation Shift**：注入过早，误差经过更多 Layer 放大；
-- **Last-State Shift**：注入过晚，剩余 Layer 不足以修正误差。
+训练目标不只是让 KV 数值接近，还加入 **Context Correction Loss（上下文校正损失）**，让 Target 使用 translated KV 后的运行轨迹接近正常 Prefill 时的轨迹。
 
-实验覆盖 Qwen2.5、GPT-2、OPT 的 homogeneous / heterogeneous translation。
+论文还分析了两个问题：
 
-因此 MoT 的含义是：
+- **Propagated Translation Shift（传播式翻译偏移）**：注入太早，翻译误差会经过很多 Layer 继续放大；
+- **Last-State Shift（末状态偏移）**：注入太晚，Target 剩余 Layer 不足以修正误差。
 
-> **可以针对具体 Source → Target pair 训练异构 KV Translator。**
+实验覆盖 Qwen2.5、GPT-2、OPT 的同构和异构模型组合。
 
-它并没有证明一个 Translator 可以零训练适配任意模型组合。
+需要注意：
+
+> MoT 是针对具体 Source → Target model pair 训练 Translator，并没有证明一个 Translator 可以直接适配任意模型。
 
 ---
 
@@ -316,18 +354,21 @@ MoT 使用多个结构相同、参数不同的 Translator，并通过**token-lev
 来源：arXiv:2608.03893  
 https://arxiv.org/abs/2608.03893
 
-论文研究的是 **matched-KV pairs**：Source / Target 具有相同 KV head 数和 per-head dimension。
+论文首先研究的是 **matched-KV pairs**，即：
+
+- KV Head 数量相同；
+- 每个 KV Head 的维度相同。
 
 核心发现：
 
-> 部分同 Family、不同尺寸模型的 KV 之间存在较强线性结构。
+> 部分同一 model family、不同尺寸的模型之间，KV 存在较强的线性关系。
 
 方法：
 
-1. 为每个 Target Layer 选择 top-k Source Layers；
+1. 为每个 Target Layer 选择最相关的若干 Source Layer；
 2. Key 先去掉 Source RoPE；
-3. 按 Layer / KV Head 用 Ridge Regression 拟合；
-4. 再加 Target RoPE；
+3. 按 Layer、按 KV Head 做 Ridge Regression；
+4. 再加入 Target RoPE；
 5. Value 直接映射。
 
 可粗略写成：
@@ -340,45 +381,87 @@ $$
 
 六个 model pair 中：
 
-- 4 个保留约 73–98% 的 Target standalone-prefill accuracy；
+- 4 个保留约 73–98% 的 Target native accuracy；
 - 2 个明显失败；
-- 非线性 MLP 能显著恢复部分失败 pair。
+- 使用非线性 MLP 后，可以恢复部分失败 model pair 的表现。
 
 Mapper application 比重新 Prefill 快约 2.7–25×。
 
 ---
 
-## 3.7 CacheBridge：缩小并稳定 Closed-form Mapping
+## 3.7 CacheBridge：让线性 KV Mapping 更小、更快、更稳
 
 **CacheBridge: Efficient Cross-Model KV Cache Transfer**  
 来源：arXiv:2609.00891  
 https://arxiv.org/abs/2609.00891
 
-CacheBridge 直接针对上面的 Full-Head Mapping 做优化，仍保留 closed-form affine mapper。
+CacheBridge 继续改进上面的 closed-form mapping。
 
-三项核心修改：
+原来的 Full-Head Mapping 会让一个 Target KV Head 读取很多 Source KV Head，带来：
 
-1. **Head-local / matched-head support**：每个 Target Head 只从匹配的 Source Head 建映射，而不是读取所有 Source Heads；
-2. **Attention-aligned Calibration**：按 causal attention sensitivity 对 reconstruction error 加权；
-3. **Fused Mapper Construction**：直接计算 weighted sufficient statistics，避免构造巨大的 observation tensor。
+- Mapper 参数多；
+- 执行成本高；
+- 无关 Head 可能引入噪声。
 
-结果中：
+CacheBridge 做了三项主要修改：
 
-- 修复了两组 Full-Head Mapping 明显掉点的 Ministral 3 transfer；
-- Qwen3 上平均保持 99.83% Target retention；
-- Qwen3 14B→32B 的 Mapper storage 降低 8×；
-- application 最多加速约 3×；
-- 500-sequence Mapper construction 从 92.63 s 降到 8.63 s。
+1. **Matched-head mapping**：每个 Target Head 只从匹配的 Source Head 读取信息；
+2. **Attention-aligned Calibration（注意力对齐校准）**：对真正影响 Attention 行为的 KV 误差赋予更高权重；
+3. **Fused Mapper Construction**：直接计算 weighted sufficient statistics，减少 Calibration 阶段的内存和时间开销。
+
+论文报告：
+
+- 修复了两组原方法明显掉点的 Ministral 3 transfer；
+- Qwen3 上平均保持 99.83% 的 Target performance retention；
+- Qwen3 14B → 32B 的 Mapper storage 降低 8×；
+- Mapper application 最多加速约 3×；
+- 500 条 Calibration 数据下，Mapper construction 从 92.63 s 降到 8.63 s。
 
 ---
 
-# 4. Reasoning Effort 与 Reasoning-State KV
+## 3.8 Universal Context-Reuse Layer：探索跨 model family 的 Context Mobility
 
-## 4.1 先区分“思考强度”和“是否开启思考”
+**A Universal Context-Reuse Layer for Cross-Model KV Sharing**  
+来源：arXiv:2608.30963v1  
+https://arxiv.org/abs/2608.30963
 
-### gpt-oss：真正的 low / medium / high effort
+这篇论文把目标扩展到 Source 和 Target 在以下方面都可能不同：
 
-gpt-oss 官方 Harmony format 把 Reasoning Effort 写进 system message：
+- model scale；
+- Layer 数；
+- Attention 配置；
+- Tokenizer；
+- model family。
+
+论文把这种能力称为 **Context Mobility（上下文迁移性）**。
+
+公开实验包括：
+
+- Qwen2.5-7B → Qwen2.5-1.5B；
+- Qwen2.5-1.5B → Gemma-2-2B；
+- Llama-3.1-70B → Qwen2.5-7B。
+
+其中 Llama-3.1-70B → Qwen2.5-7B 的实验报告：
+
+- Target 正常 Prefill accuracy 约 45.7%；
+- KV handoff 后约 44.0%；
+- measured handoff latency 约从 899 ms 降到 138 ms。
+
+需要注意：当前 v1 对实验结果和整体设计目标描述较多，但没有像 MoT、Closed-form Transfer、CacheBridge 那样公开到足以直接重建核心 Transport Module 的细节。
+
+因此更适合把它理解为：
+
+> **跨 model family KV handoff 可行性的实验性证据。**
+
+---
+
+# 4. Reasoning Effort 与 KV Cache
+
+## 4.1 先区分“Reasoning Effort”和“是否开启 Thinking”
+
+### gpt-oss：真正的 low / medium / high Reasoning Effort
+
+gpt-oss 官方 Harmony format 把 **Reasoning Effort（推理强度）**写入 system message：
 
 ```text
 Reasoning: low
@@ -389,25 +472,33 @@ Reasoning: high
 来源：OpenAI Harmony format  
 https://github.com/openai/harmony/blob/main/docs/format.md
 
-OpenAI 的 gpt-oss model card 说明，模型在训练时支持三种 effort；effort 越高，平均 CoT 长度越长。
+gpt-oss model card 说明，它在训练时支持这三档 Reasoning Effort；Effort 越高，平均 CoT 长度越长。
 
-因此这属于：
+这属于：
 
-> **同一模型、同一任务，不同 reasoning intensity。**
+> **同一个模型、同一个任务，用不同计算预算进行推理。**
 
-### Qwen3 / GLM：主要是 Thinking On / Off
+### Qwen3 / GLM：主要控制 Thinking On / Off
 
-Qwen3 的 `enable_thinking=True/False`、`/think`、`/no_think`，以及 GLM 的 `enable_thinking`，主要控制**是否进入 Thinking Mode**。
+Qwen3 的：
 
-Qwen3 来源：  
+```text
+enable_thinking=True / False
+/think
+/no_think
+```
+
+以及 GLM 的 `enable_thinking`，主要控制是否进入 Thinking Mode。
+
+Qwen3：  
 https://github.com/QwenLM/Qwen3/blob/main/docs/source/getting_started/quickstart.md
 
-GLM 来源：  
+GLM：  
 https://github.com/zai-org/GLM-4.5
 
-这和 low / medium / high effort 不是同一个问题。
+这和 low / medium / high Reasoning Effort 不是同一个问题。
 
-另外，如果 Template 变化只发生在长 Context **之后**，根据 causal attention，前面的 Context KV 本身仍可保持相同；因此不能仅凭“Chat Template 不同”就断言整段 Context KV 必须重算。
+另外，如果 Chat Template 的变化只发生在长 Context **之后**，由于 causal attention，前面的 Context KV 仍然可以完全相同。因此不能仅凭“Chat Template 不同”就断言整段 Context KV 必须重算。
 
 ---
 
@@ -417,23 +508,34 @@ https://github.com/zai-org/GLM-4.5
 来源：arXiv:2603.07915  
 https://arxiv.org/abs/2603.07915
 
-Ares 使用 gpt-oss-20b，在多步 Agent 任务中为每一步动态选择：
+Ares 使用 gpt-oss-20b，在多步 Agent 任务中动态选择：
 
 ```text
 low / medium / high
 ```
 
-它训练一个轻量 Router，根据 interaction history 和当前 observation 预测**最低但足够完成当前 step**的 effort。
+它训练一个轻量 Router，根据：
 
-训练流程先用 high-effort 成功轨迹得到 reference action，再分别测试 low / medium / high，标注能稳定复现正确 action 的最低 effort；随后 fine-tune Router，并进一步尝试 RL。
+- interaction history；
+- 当前 observation；
 
-论文报告最高约 **52.7% reasoning-token reduction**，同时保持接近 fixed-high 的 task performance。
+预测**完成当前 step 所需的最低 Reasoning Effort**。
 
-论文还明确把“同模型不同 effort 可以 preserve / reuse KV cache”作为相比 multi-model routing 的优势；但论文的主体实验评估的是 **effort routing 和 token cost**，不是专门的 KV compatibility / cache-hit study。
+训练流程大致是：
+
+1. 先用 high-effort 成功轨迹得到 reference action；
+2. 再分别测试 low / medium / high；
+3. 找到能稳定得到正确 action 的最低 Effort；
+4. 用这些标签训练 Router；
+5. 进一步尝试 RL 优化。
+
+论文报告最高约 **52.7% 的 reasoning Token reduction**，同时保持接近 fixed-high 策略的 task performance。
+
+论文还把“同模型不同 Effort 可以保留 / 复用 KV Cache”作为相比 multi-model routing 的优势之一；但它的主体实验研究的是 **Reasoning Effort routing 和 Token cost**，不是专门的 KV compatibility 或 cache-hit 实验。
 
 ---
 
-## 4.3 Efficient Reasoning on the Edge：让 Chat / Reasoning 天然共享 Prompt KV
+## 4.3 Efficient Reasoning on the Edge：让 Chat / Reasoning Mode 共享 Prompt KV
 
 **Efficient Reasoning on the Edge**  
 来源：arXiv:2603.16867，Qualcomm AI Research  
@@ -444,81 +546,103 @@ https://qualcomm-ai-research.github.io/llm-reasoning-on-edge/
 
 ```text
 Chat Mode      = Base Model
-Reasoning Mode = Base + Reasoning LoRA
+Reasoning Mode = Base Model + Reasoning LoRA
 ```
 
-系统先用 Base Model 编码 Prompt，并使用 final-layer prompt hidden states 的 mean pooling 训练一个轻量 switcher 判断是否开启 Reasoning LoRA。
+系统先用 Base Model 编码 Prompt，再用 final-layer prompt hidden states 的 mean pooling 表示训练一个轻量 switcher，判断是否需要启用 Reasoning LoRA。
 
 关键设计是：
 
-> **Prompt 永远只用 Base Model 编码。**
+> **Prompt 始终只由 Base Model 编码。**
 
-Reasoning LoRA 被训练成直接基于 Base Model 生成的 Prompt KV 解码。因此两种模式可以共享同一 Prompt KV，而不需要开启 LoRA 后重新 Prefill。
+Reasoning LoRA 被训练成直接基于 Base Model 产生的 Prompt KV 继续 Decode。
 
-这项工作不做 KV Translation，而是从训练和运行方式上保证 Cache Compatibility。
+因此：
+
+```text
+Prompt
+  ↓
+Base Model Prefill
+  ↓
+Shared Prompt KV
+  ├─ Chat Mode
+  └─ Reasoning LoRA
+```
+
+这项工作不做 KV Translation，而是从训练方式上让两种 Mode 天然兼容同一份 Prompt KV。
 
 ---
 
-## 4.4 Beyond Speedup：用 KV 判断 Fast / Slow Thinking
+## 4.4 Beyond Speedup：用 KV 判断应该 Fast Thinking 还是 Slow Thinking
 
 **Beyond Speedup — Utilizing KV Cache for Sampling and Reasoning**  
 来源：ICLR 2026  
 https://proceedings.iclr.cc/paper_files/paper/2026/hash/d147f24cac1b6cd88753ca830e462bdc-Abstract-Conference.html
 
-论文把 KV Cache 当作无需额外 forward 的 lightweight representation，并用于：
+这篇论文把 KV Cache 当作一种无需额外 forward 即可获得的轻量内部表示，并用于：
 
 - Chain-of-Embedding；
 - Fast / Slow Thinking Switching。
 
-在 Qwen3-8B 和 DeepSeek-R1-Distil-Qwen-14B 上，KV-derived representation 用于判断何时采用更慢、更长的 reasoning，最高报告约 **5.7× token-generation reduction**，同时保持较小 accuracy loss。
+在 Qwen3-8B 和 DeepSeek-R1-Distil-Qwen-14B 上，它从 KV 中提取 representation，用来判断当前是否需要更长、更慢的 Reasoning。
 
-它使用 KV **选择 reasoning mode**，不是把 low-effort KV 映射成 high-effort KV。
+论文最高报告约 **5.7× 的 generated Token reduction**，同时保持较小 accuracy loss。
+
+它解决的是：
+
+> **根据 KV 决定采用哪种 Reasoning Mode。**
+
+而不是把 low-effort KV 转换成 high-effort KV。
 
 ---
 
-# 5. 直接操纵或复用 Reasoning KV 的相关工作
+# 5. 直接操纵或复用 Reasoning State KV 的工作
 
-## 5.1 Deliberation in Latent Space：训练 Coprocessor 增强 KV
+## 5.1 Deliberation in Latent Space：用 Coprocessor 增强 KV
 
 **Deliberation in Latent Space via Differentiable Cache Augmentation**  
 来源：ICML 2025  
 https://proceedings.mlr.press/v267/liu25bc.html
 
-这篇工作与“额外思考是否必须生成很多 reasoning tokens”直接相关。
+这篇工作研究：
 
-Base LLM 保持冻结，额外训练一个 **Coprocessor**：
+> 额外思考是否一定要通过生成更多显式 Reasoning Token 来实现？
+
+Base LLM 保持冻结，额外训练一个 **Coprocessor（协处理器）**：
 
 ```text
-已有 KV
-  ↓
+Existing KV
+   ↓
 Coprocessor
-  ↓
-额外 latent embeddings
-  ↓
+   ↓
+Latent Embeddings
+   ↓
 Augmented KV
-  ↓
-Base LLM 继续 Decode
+   ↓
+Base LLM Decode
 ```
 
-Coprocessor 使用 decoder 的 language-modeling loss 在普通 pretraining data 上端到端训练。
+Coprocessor 使用 language-modeling loss 在普通 pretraining data 上端到端训练。
 
-目标不是生成显式 CoT，而是把额外 computation 压进可供后续 Decode 使用的 KV / latent state。论文报告 cache augmentation 能降低后续 Token perplexity，并提升多种 reasoning-intensive task。
+目标不是生成显式 CoT，而是把额外 computation 直接压进后续 Decode 可使用的 KV / latent state。
+
+论文报告这种 cache augmentation 可以降低后续 Token perplexity，并改善多种 reasoning-intensive task。
 
 ---
 
-## 5.2 KV Cache Steering：一次性修改已有 K/V
+## 5.2 KV Cache Steering：直接修改已有 K/V
 
 **KV Cache Steering for Controlling Frozen LLMs**  
 来源：arXiv:2507.08799  
 https://arxiv.org/abs/2507.08799
 
-它从 positive / negative reasoning examples 的 K、V 中计算 Mean-of-Differences steering tensors：
+它从正 / 负 Reasoning 样例的 K、V 中计算 **Mean-of-Differences steering tensors（均值差引导张量）**：
 
 $$
 S_l^K,\quad S_l^V
 $$
 
-Prefill 完后，对指定 token position 的已有 Cache 做一次性修改：
+Prefill 完成后，对指定 Token position 的已有 KV 做一次性修改：
 
 $$
 K_l^*=K_l+c^KS_l^K
@@ -528,35 +652,48 @@ $$
 V_l^*=V_l+c^VS_l^V
 $$
 
-然后正常 Decode。
+之后正常 Decode。
 
-它不训练辅助网络，也不修改模型权重；实验表明可以增强显式多步推理，并控制 stepwise、causal、analogical 等 reasoning style。
+它：
+
+- 不训练额外网络；
+- 不修改模型权重；
+- 直接操纵 KV。
+
+实验表明，可以增强显式多步 Reasoning，并控制 stepwise、causal、analogical 等不同 Reasoning style。
 
 ---
 
-## 5.3 Memory Inception：把文本指导编码成 Side KV Bank
+## 5.3 Memory Inception：把外部 guidance 编码成额外 KV Bank
 
 **Memory Inception: Latent-Space KV Cache Manipulation for Steering LLMs**  
 来源：arXiv:2605.06225v2  
 https://arxiv.org/abs/2605.06225
 
-Memory Inception 是 training-free 方法。
+Memory Inception 是一种 training-free 方法。
 
-它先用冻结模型把 descriptor、summary、retrieved fact 或 reasoning heuristic 编码成 latent KV bank，然后只把这些 slots 注入自动选择的 Layer / Attention Head / KV Group。
+它先用冻结模型把：
+
+- descriptor；
+- summary；
+- retrieved fact；
+- reasoning heuristic；
+
+编码成额外的 latent KV bank，然后只把这些 KV slots 注入选定的 Layer、Attention Head 或 KV Group。
 
 普通 Prompt KV 保持不变：
 
 ```text
 Prompt KV
    +
-Selected Side KV Banks
+Side KV Bank
    ↓
 Attention
 ```
 
-论文还使用 pre-RoPE canonical key storage，使 memory bank 更容易跨位置使用。
+论文还使用 pre-RoPE canonical Key storage，使 KV Bank 更容易跨位置复用。
 
-它主要研究行为 steering、可更新 guidance 和 structured reasoning，而不是不同 effort level 的 KV 对齐。
+它主要研究 behavior steering、可更新 guidance 和 structured reasoning，而不是不同 Reasoning Effort 之间的 KV 对齐。
 
 ---
 
@@ -566,17 +703,17 @@ Attention
 来源：ICLR 2026  
 https://proceedings.iclr.cc/paper_files/paper/2026/hash/d2ca35069eb6e9cbd2a37bf90ba9091c-Abstract-Conference.html
 
-KaVa 将 Teacher 长 CoT 对应的 KV Cache 压缩，并作为 self-distillation signal 训练 latent-reasoning student。
+KaVa 将 Teacher 长 CoT 对应的 KV Cache 压缩，再把它作为 self-distillation signal 训练 latent-reasoning student。
 
 重点是：
 
-> **即使压缩 KV 与显式 reasoning token 没有一一对应关系，它仍可以作为较强的推理监督信号。**
+> **即使压缩后的 KV 和显式 Reasoning Token 没有一一对应关系，它仍然可以携带有用的推理信息。**
 
-这是 training / distillation 场景，不是运行时 effort switching。
+它属于 training / distillation 场景，而不是 runtime Reasoning Effort switching。
 
 ---
 
-## 5.5 与“失败后继续思考”有关，但不是 KV Translation 的工作
+## 5.5 与“失败后继续思考”有关，但不属于 KV Translation 的工作
 
 ### Thought Rollback
 
@@ -584,9 +721,13 @@ KaVa 将 Teacher 长 CoT 对应的 KV Cache 压缩，并作为 self-distillation
 来源：ICML 2024  
 https://proceedings.mlr.press/v235/chen24y.html
 
-允许模型发现 reasoning error 后回到以前的 Thought，再把 trial-and-error 写进 Prompt 继续探索。
+Thought Rollback 允许模型发现 Reasoning error 后回到之前的 Thought，再把 trial-and-error 信息写入 Prompt 继续探索。
 
-它做的是 **text / thought-level rollback**，不是 KV-level state translation。
+它做的是：
+
+> **Text / Thought-level rollback**
+
+而不是 KV-level state translation。
 
 ### Reasoning Cache
 
@@ -596,7 +737,17 @@ https://arxiv.org/abs/2602.03773
 
 这里的 “Reasoning Cache” **不是 Transformer KV Cache**。
 
-它通过 iterative decoding 和 summary-conditioned generation，把上一轮推理压成 summary，再基于 summary 继续更长 horizon 的 reasoning。
+它通过：
+
+```text
+一轮 Reasoning
+↓
+压成 Summary
+↓
+基于 Summary 继续下一轮 Reasoning
+```
+
+把上一轮 Reasoning 压缩成较短状态，再继续更长 horizon 的推理。
 
 ### ArborKV
 
@@ -604,11 +755,23 @@ https://arxiv.org/abs/2602.03773
 来源：ICML 2026 / arXiv:2605.22106  
 https://arxiv.org/abs/2605.22106
 
-ArborKV 面向 Tree-of-Thoughts 的 branch / backtracking，管理不同 reasoning branch 的 KV。
+ArborKV 面向 Tree-of-Thoughts 的：
 
-它根据 tree topology 和 branch utility 做 eviction，并在分支重新激活时 lazy rehydration，从而降低多分支 reasoning 的 KV memory；论文报告最高约 4× peak KV-memory reduction。
+- branch；
+- backtracking；
+- branch reactivation；
 
-它研究的是**已有 reasoning branch 的 Cache 管理与恢复**，不是把一种 reasoning effort state 翻译成另一种。
+管理不同 Reasoning branch 对应的 KV Cache。
+
+它根据 tree topology 和 branch utility 决定：
+
+- 哪些 KV 保留；
+- 哪些 eviction；
+- 哪些在分支恢复时 rehydrate。
+
+论文报告最高约 **4× 的 peak KV memory reduction**。
+
+它研究的是**已有 Reasoning branch 的 KV 管理和恢复**，不是把一种 Reasoning Effort 的内部状态翻译成另一种。
 
 ---
 
@@ -616,62 +779,68 @@ ArborKV 面向 Tree-of-Thoughts 的 branch / backtracking，管理不同 reasoni
 
 ## 6.1 Context 继承
 
-| 工作         | 主要决策对象                        | 主要依据                                                 |
-| ---------- | ----------------------------- | ---------------------------------------------------- |
-| AOrchestra | 给 Sub-Agent 什么 Context        | Orchestrator 动态 curate / compress                    |
-| RCR-Router | 当前 Agent 看 Shared Memory 的哪部分 | role、task stage、semantic relevance、budget            |
-| AnyMAC     | 下一 Agent 访问哪些历史 step          | learned Next-Context Selection                       |
-| DeLM       | 多 Agent 共享什么进展                | compact verified updates                             |
-| Hindsight  | Memory 如何区分事实 / 判断            | fact-belief separation、confidence、temporal filtering |
-| STALE      | 旧 Memory 是否已失效                | implicit conflict / state revision                   |
-| PlanFence  | Action 前验证哪些旧依赖               | plan dependency scope                                |
+| 工作 | 主要问题 | 主要方法 |
+|---|---|---|
+| AOrchestra | Sub-Agent 应该获得什么 Context | Orchestrator 动态筛选和压缩 |
+| RCR-Router | 当前 Agent 应该看到 Shared Memory 的哪一部分 | role、task stage、semantic relevance、budget |
+| AnyMAC | 下一 Agent 应该访问哪些历史 step | learned Next-Context Selection |
+| DeLM | Multi-Agent 应该共享哪些进展 | compact verified updates |
+| Hindsight | Memory 如何区分事实、观察和判断 | 类型化 Memory、confidence、时间过滤 |
+| STALE | 旧 Memory 是否已经失效 | 检测 implicit conflict 和 state change |
+| PlanFence | Action 前应该重新验证哪些依赖 | 只验证当前 Plan 真正依赖的状态 |
 
-## 6.2 KV 复用 / 转换
+## 6.2 KV Cache 复用与转换
 
-| 工作 | Source / Target 关系 | 方法 | 是否训练 Translator |
+| 工作 | 模型 / Context 关系 | 核心方法 | 是否训练 Translator |
 |---|---|---|---:|
-| KVCOMM | 同模型、不同 Prefix | anchor-based online KV offset correction | ❌ |
+| KVCOMM | 同模型、不同 Prefix | 在线估计并校正 KV offset | ❌ |
 | DroidSpeak | 同 architecture 模型变体 | 大部分 KV 复用 + Critical Layer 重算 | ❌ |
-| ICaRus | 特殊训练的多个专用模型 | 训练时让 KV 完全一致 | 不需要 |
-| C2C | 异构模型 | neural projection + fusion | ✅ |
-| MoT | 异构模型 Pair | 多个 Cross-Attention Translator + learned routing | ✅ |
-| Closed-form Transfer | matched-KV model pairs | Ridge Regression | ❌ |
-| CacheBridge | 异构 / matched support | head-local affine mapping + attention-aligned calibration | ❌ |
-| Universal Context-Reuse | 跨 scale / architecture / family | cross-model transport，公开实现细节有限 | 论文未充分展开 |
+| ICaRus | 按统一方式训练的专用模型 | 训练时直接让 KV 相同 | 不需要 |
+| C2C | 异构模型 | neural projection + KV fusion | ✅ |
+| MoT | 异构 model pair | 多个 Cross-Attention Translator + learned routing | ✅ |
+| Closed-form Transfer | matched-KV model pairs | Ridge Regression linear mapping | ❌ |
+| CacheBridge | 异构 / matched model pairs | matched-head affine mapping + attention-aligned calibration | ❌ |
+| Universal Context-Reuse | 跨 scale、architecture、model family | cross-model transport，公开细节有限 | 公开版本未充分展开 |
 
 ## 6.3 Reasoning 与 KV
 
 | 工作 | 主要问题 | KV 的作用 |
 |---|---|---|
-| Ares | 每一步选 low / medium / high | 论文将跨 effort KV reuse 作为优势 |
-| Efficient Reasoning on the Edge | Chat / Reasoning 动态切换 | 训练设计保证共享 Prompt KV |
+| Ares | 每一步选择 low / medium / high Reasoning Effort | 论文把跨 Effort KV reuse 作为优势 |
+| Efficient Reasoning on the Edge | Chat / Reasoning Mode 动态切换 | 训练设计保证共享 Prompt KV |
 | Beyond Speedup | Fast / Slow Thinking Switching | KV 作为 routing representation |
 | Deliberation in Latent Space | 不生成长 CoT 也增加额外 computation | Coprocessor 增强 KV |
-| KV Cache Steering | 低成本改变 reasoning behavior | 一次性修改 K/V |
-| Memory Inception | 持久 / 可更新 guidance | 注入 selective KV banks |
-| KaVa | Latent reasoning supervision | 压缩 Teacher KV 做 distillation |
-| ArborKV | Tree reasoning branch 管理 | 保存 / eviction / rehydrate branch KV |
+| KV Cache Steering | 低成本改变 Reasoning behavior | 直接修改 K/V |
+| Memory Inception | 持久、可更新的 guidance | 注入额外 KV Bank |
+| KaVa | Latent Reasoning supervision | 压缩 Teacher KV 做 distillation |
+| ArborKV | Tree Reasoning branch 管理 | 保存、evict 和 rehydrate branch KV |
 
 ---
 
 # 7. 三个容易混淆的问题
 
-### 1. Context Selection
+## 7.1 Context Selection
 
 > **哪些已有信息应该给另一个 Agent？**
 
 主要工作：AOrchestra、RCR-Router、AnyMAC、DeLM。
 
-### 2. Context Computation Reuse
+## 7.2 Context Computation Reuse
 
-> **这些信息已经被处理过，另一个 Context / Model 能不能复用已有 KV？**
+> **这些信息已经被模型处理过，另一个 Context 或另一个 Model 能不能复用已有 KV？**
 
 主要工作：KVCOMM、DroidSpeak、ICaRus、MoT、Closed-form Transfer、CacheBridge 等。
 
-### 3. Reasoning-State Manipulation / Reuse
+## 7.3 Reasoning-State Manipulation / Reuse
 
-> **模型已经形成一定 reasoning state 后，能不能继续利用、增强、修改或恢复这些计算状态？**
+> **模型已经形成一定 Reasoning State 后，能不能继续利用、增强、修改或恢复这些计算状态？**
 
-相关工作包括 Deliberation in Latent Space、KV Cache Steering、Memory Inception、KaVa、ArborKV 等。
+相关工作包括：
 
-这三个问题有关联，但研究对象并不相同，不能简单把“传 Context”“共享 Prompt KV”“改变 Reasoning Effort”“修改 reasoning KV”视为同一个问题。
+- Deliberation in Latent Space；
+- KV Cache Steering；
+- Memory Inception；
+- KaVa；
+- ArborKV。
+
+这三个问题有关联，但研究对象不同，不能简单把“传 Context”“共享 Prompt KV”“改变 Reasoning Effort”“修改 Reasoning KV”视为同一个问题。
