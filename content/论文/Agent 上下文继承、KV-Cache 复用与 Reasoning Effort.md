@@ -644,15 +644,15 @@ ArborKV 面向 Tree-of-Thoughts 的 branch / backtracking，管理不同 reasoni
 
 ## 6.1 Context 继承
 
-| 工作 | 主要决策对象 | 主要依据 |
-|---|---|---|
-| AOrchestra | 给 Sub-Agent 什么 Context | Orchestrator 动态 curate / compress |
-| RCR-Router | 当前 Agent 看 Shared Memory 的哪部分 | role、task stage、semantic relevance、budget |
-| AnyMAC | 下一 Agent 访问哪些历史 step | learned Next-Context Selection |
-| DeLM | 多 Agent 共享什么进展 | compact verified updates |
-| Hindsight | Memory 如何区分事实 / 判断 | fact-belief separation、confidence、temporal filtering |
-| STALE | 旧 Memory 是否已失效 | implicit conflict / state revision |
-| PlanFence | Action 前验证哪些旧依赖 | plan dependency scope |
+| 工作         | 主要决策对象                        | 主要依据                                                 |
+| ---------- | ----------------------------- | ---------------------------------------------------- |
+| AOrchestra | 给 Sub-Agent 什么 Context        | Orchestrator 动态 curate / compress                    |
+| RCR-Router | 当前 Agent 看 Shared Memory 的哪部分 | role、task stage、semantic relevance、budget            |
+| AnyMAC     | 下一 Agent 访问哪些历史 step          | learned Next-Context Selection                       |
+| DeLM       | 多 Agent 共享什么进展                | compact verified updates                             |
+| Hindsight  | Memory 如何区分事实 / 判断            | fact-belief separation、confidence、temporal filtering |
+| STALE      | 旧 Memory 是否已失效                | implicit conflict / state revision                   |
+| PlanFence  | Action 前验证哪些旧依赖               | plan dependency scope                                |
 
 ## 6.2 KV 复用 / 转换
 
