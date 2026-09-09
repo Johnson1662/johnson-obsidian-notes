@@ -489,11 +489,3 @@ KaVa 把 Teacher 的长 CoT KV Cache 压缩，并作为监督信号训练 latent
 但它研究的是离线 Distillation，不是运行时 low → high effort escalation。
 
 ---
-## 5.7 值得研究的问题
-
-当模型先以 low reasoning effort 尝试任务并失败后，如何最大程度复用已经产生的 reasoning computation，而不是以 high effort 从头重新推理？
-
-实验设计：三组对照实验
-- 直接将思考强度从low切换到high，然后继续
-- 直接从头开始
-- 
