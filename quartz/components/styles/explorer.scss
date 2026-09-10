@@ -311,9 +311,19 @@ li:has(> .folder-outer.open) > .folder-container > .folder-icon-open {
         visibility 200ms ease;
       overflow: hidden;
       padding: 4rem 0 2rem 0;
-      height: 100dvh;
-      max-height: 100dvh;
+      // 100vh 回退：不支持 dvh 的旧 WebView 会把 height 解析成 auto，
+      // 再被 div:has(> .overflow) 的 max-height: 100% 压成一条横条。
+      height: 100vh;
+      max-height: 100vh;
       visibility: hidden;
+    }
+
+    // dvh 可用时改用动态视口高度，避免被移动端地址栏遮挡
+    @supports (height: 100dvh) {
+      .explorer-content {
+        height: 100dvh;
+        max-height: 100dvh;
+      }
     }
 
     .mobile-explorer {
