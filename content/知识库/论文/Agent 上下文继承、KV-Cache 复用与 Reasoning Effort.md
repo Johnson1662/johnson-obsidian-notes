@@ -158,7 +158,6 @@ Hindsight 把 Memory 区分为 world、experience、observation、opinion 等类
 
 因此它不只按“相似度”检索 Memory，还关注信息本身的性质。
 
-
 **作者明确提到的局限 / 边界：**
 
 - 依赖 LLM 做 fact extraction、entity resolution 和 opinion formation，基础模型的错误可能传播进 Memory Graph。
