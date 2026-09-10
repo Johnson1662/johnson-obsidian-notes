@@ -46,13 +46,16 @@ $$
 
 论文在 50 个 GAIA validation 样本上做了 Context 消融实验：
 
-| 设置              |     平均分 |
-| --------------- | ------: |
-| No Context      |     86% |
-| Full Context    |     84% |
+| 设置 | 平均分 |
+|---|---:|
+| No Context | 86% |
+| Full Context | 84% |
 | Curated Context | **96%** |
 
 这个实验规模较小，但至少说明：**把全部历史都交给 Sub-Agent 并不一定更好。**
+
+
+**作者明确提到的局限 / 边界：** 当前版本未单列 Limitations，也没有在结论中系统列出方法限制；这里不额外推断。
 
 ---
 
@@ -78,6 +81,12 @@ RCR-Router 维护一份 Shared Memory，每次只为当前 Agent 选择其中一
 
 > **当前 Agent 应该从 Shared Memory 中看到哪些信息。**
 
+
+**作者明确提到的局限 / 边界：**
+
+- 论文未单列 Limitations。其理论分析中，greedy routing 的最优性依赖 memory item 的 Token 长度一致；长度不一致时不再保证全局最优。
+- 作者把 learned routing、更复杂的 Agent workflow 和 multimodal setting 留作后续扩展。
+
 ---
 
 ## 2.3 AnyMAC：直接学习“下一步该看哪些历史”
@@ -92,6 +101,12 @@ AnyMAC 同时学习两个决策：
 2. **Next-Context Selection（NCS）**：下一 Agent 应该读取哪些历史 step。
 
 因此，下一 Agent 不必固定继承完整历史，也不必只看上一步输出，而可以从任意之前的 step 中选择相关信息。
+
+
+**作者明确提到的局限 / 边界：**
+
+- 在 HumanEval 上，Next-Context Selection 有时会选择过长 Context，可能让模型被过量信息干扰。
+- 作者认为 1,000 条 RL sampling 数据可能不足，可能导致次优收敛；继续扩大 RL sampling 的计算和经济成本较高。
 
 ---
 
@@ -115,6 +130,13 @@ Agent 异步领取子任务，读取已有进展，并把紧凑、已验证的�
 
 论文在 SWE-bench Verified 上报告，相对最强 baseline 最高提升约 **10.5 个百分点**，同时 task cost 约下降一半。
 
+
+**作者明确提到的局限 / 边界：**
+
+- admission-time verification 会带来额外开销，作者认为更轻量的 verifier 仍有优化空间。
+- 性能依赖 task decomposition：拆得太粗会信息不足，拆得太细又会产生不必要的 Agent 和推理复杂度。
+- 不同 model family 没有统一最优 Prompt，实际使用可能需要针对模型调整。
+
 ---
 
 ## 2.5 Context 不仅要“相关”，还涉及可靠性与时效性
@@ -136,6 +158,14 @@ Hindsight 把 Memory 区分为 world、experience、observation、opinion 等类
 
 因此它不只按“相似度”检索 Memory，还关注信息本身的性质。
 
+
+**作者明确提到的局限 / 边界：**
+
+- 依赖 LLM 做 fact extraction、entity resolution 和 opinion formation，基础模型的错误可能传播进 Memory Graph。
+- 实验主要是英文 LongMemEval / LoCoMo，其他语言没有系统验证。
+- opinion evolution 仍缺少正式的用户研究；时间解析也可能漏掉高度含糊或文化相关的时间表达。
+- 系统依赖 PostgreSQL + pgvector，部署复杂度高于纯内存方案。
+
 ### STALE
 
 **STALE: Can LLM Agents Know When Their Memories Are No Longer Valid?**  
@@ -147,6 +177,14 @@ STALE 研究一种更难的情况：
 > 后续 observation 已经使旧 Memory 失效，但没有一句话显式说“旧信息错了”。
 
 它构建了 400 个专家验证场景、1,200 个查询；论文报告最强被测模型整体准确率约 **55.2%**。
+
+
+**作者明确提到的局限 / 边界：**
+
+- benchmark 主要是受控的一次性隐式状态变化；现实环境中的多次更新、连锁状态传播和渐进漂移更复杂。
+- 场景由 LLM 生成后再人工验证，且 distractor 主要来自 LongMemEval，仍可能与真实长期对话存在分布差异。
+- LLM-as-a-judge 可能漏掉语义上正确但表达不同的回答。
+- CUPMem 依赖预定义状态 schema，目前只覆盖有限属性域；schema-free 的状态维护仍留作后续工作。
 
 ### Fresh Memory, Stale Plans
 
@@ -163,6 +201,14 @@ https://arxiv.org/abs/2609.03340
 ---
 
 # 3. KV Cache 复用与转换
+
+
+**作者明确提到的局限 / 边界：**
+
+- 实验只覆盖 3 类 workflow、3–8 个 Agent、构造的 keyspace 和有限历史 network trace，压力测试结果不能直接推广到所有 Agent 系统。
+- PlanFence 的安全性依赖 benign owner、正确 parent link 和完整 dependency declaration。
+- 当前不处理 Byzantine owner、owner migration、隐式 dependency、semantic merge，以及不在 public lineage 中的 private reasoning。
+- 多 owner validation 与外部 Action 之间不是原子操作；更强一致性需要 transaction 类机制。
 
 ## 3.1 KVCOMM：同模型、不同 Prefix 下复用同一段内容
 
@@ -192,6 +238,14 @@ KVCOMM 把这种差异建模为 **context-induced KV offset（上下文引起的
 - 解决的是**同模型、同内容、不同 Prefix**造成的 KV 不兼容。
 
 论文报告多种 Multi-Agent workload 中的 KV reuse rate 超过 70%；在其五 Agent 实验设置中，TTFT 从约 430 ms 降到约 55 ms。
+
+
+**作者明确提到的局限 / 边界：**
+
+- 当前只研究 text input，多模态 Context 留作后续工作。
+- KVCOMM 主要降低 Prefill latency，不直接降低 Decode latency。
+- 当前最适合 homogeneous Agent；同 architecture 不同 weights 以及更异构的 Attention 结构仍未充分验证。
+- 方法依赖可识别的重复共享片段，不覆盖完全无结构、持续变化且难以分段的 Context。
 
 ---
 
@@ -240,6 +294,15 @@ $$
 
 限制：Sender 和 Receiver 需要具有相同 architecture。
 
+
+**作者明确提到的局限 / 边界：**
+
+- 当前只适用于从同一 foundation model 派生出的模型变体；跨 foundation model 不在本文范围内。
+- Runtime 会根据系统负载调整重算比例，但没有同时根据 network bandwidth 自适应。
+- Critical Layer 由离线 profiling 得到；如果数据分布发生 drift，可能需要周期性重新 profiling。
+- “只有少量 Layer 敏感”是经验现象，作者不保证对所有 model pair 都成立。
+- 当前把多模型场景拆成 pairwise reuse，跨多个模型的全局优化留作后续工作。
+
 ---
 
 ## 3.3 ICaRus：训练时就让不同专用模型产生相同 KV
@@ -270,6 +333,13 @@ $$
 
 代价是：模型必须按这种方式训练，不能直接应用到任意已经训练好的模型。
 
+
+**作者明确提到的局限 / 边界：**
+
+- 论文未单列 Limitations。
+- 正文明确指出，如果 Logical Encoder 和 Logical Decoder 顺序执行，同一请求可能因为参数 / KV 被访问两次而带来接近 2× 的延迟；作者用轻量 Adapter 和并行执行来缓解。
+- 方法本身要求专用模型按 ICaRus 的方式训练，因此不是对任意已有模型的即插即用方案。
+
 ---
 
 ## 3.4 C2C：跨模型 Latent Communication，而不是省掉 Target Prefill
@@ -293,6 +363,12 @@ $$
 > **跨模型隐空间语义通信（Cross-model Latent Semantic Communication）**
 
 而不是纯粹的 Prefill Reuse。
+
+
+**作者明确提到的局限 / 边界：**
+
+- 论文未单列 Limitations。
+- 作者把更复杂 Fuser architecture 的系统研究、多模态 cache alignment / fusion，以及与 speculative decoding、heterogeneous routing 的结合留作 future work。
 
 ---
 
@@ -346,6 +422,13 @@ Predicted KV_B
 
 > MoT 是针对具体 Source → Target model pair 训练 Translator，并没有证明一个 Translator 可以直接适配任意模型。
 
+
+**作者明确提到的局限 / 边界：**
+
+- MoT 能减轻 translation shift，但不能直接提升 Target 自身的 correction ability，因此 correction deficit 仍存在。
+- Channel mapping 主要依赖 relative depth；当两个模型的 instruction tuning、训练分布或内部表示组织差异很大时，这种映射可能变弱。
+- 作者明确指出，跨 Tokenizer 的 KV translation 仍未完全解决：Tokenizer 不同时，Source / Target 的 cache position 本身就难以一一对齐。
+
 ---
 
 ## 3.6 Closed-form Cross-Model KV Transfer：部分模型对存在近似线性关系
@@ -387,6 +470,14 @@ $$
 
 Mapper application 比重新 Prefill 快约 2.7–25×。
 
+
+**作者明确提到的局限 / 边界：**
+
+- Calibration 只使用 FineWeb-Edu，没有验证医学、法律等专业领域是否仍能保持同样映射质量。
+- top-k Source Layer 的选择与部分报告指标使用了相同的 validation benchmark，因此不是完全独立的 out-of-sample 选择。
+- 六组实验全部是 matched-KV pair；KV Head 数或 per-head dimension 不匹配的情况没有验证。
+- 实验集中在同 family、dense full-attention 模型，hybrid attention、recurrent architecture 等不在本文范围内。
+
 ---
 
 ## 3.7 CacheBridge：让线性 KV Mapping 更小、更快、更稳
@@ -416,6 +507,14 @@ CacheBridge 做了三项主要修改：
 - Qwen3 14B → 32B 的 Mapper storage 降低 8×；
 - Mapper application 最多加速约 3×；
 - 500 条 Calibration 数据下，Mapper construction 从 92.63 s 降到 8.63 s。
+
+
+**作者明确提到的局限 / 边界：**
+
+- 当前只验证 same-family transfer。
+- 所有实验模型都是 dense GQA，并且 Source / Target 的 KV Head 数匹配；Head 数不匹配、sparse / sliding-window / linear / hybrid attention 尚未验证。
+- 质量评估主要是 immediate continuation，包括选择题准确率和 teacher-forced NLL；没有系统测试开放式 multi-turn generation。
+- 作者指出 repeated handoff 可能积累误差。
 
 ---
 
@@ -456,6 +555,9 @@ https://arxiv.org/abs/2608.30963
 ---
 
 # 4. Reasoning Effort 与 KV Cache
+
+
+**作者明确提到的局限 / 边界：** 当前 v1 未单列 Limitations。作者将论文结果表述为支持 Context Mobility 的 **initial evidence（初步证据）**，没有宣称已经覆盖所有跨模型组合。本文不把第三方对 Transport Module 细节不足的批评写成作者自述局限。
 
 ## 4.1 先区分“Reasoning Effort”和“是否开启 Thinking”
 
@@ -533,6 +635,14 @@ low / medium / high
 
 论文还把“同模型不同 Effort 可以保留 / 复用 KV Cache”作为相比 multi-model routing 的优势之一；但它的主体实验研究的是 **Reasoning Effort routing 和 Token cost**，不是专门的 KV compatibility 或 cache-hit 实验。
 
+
+**作者明确提到的局限 / 边界：**
+
+- 论文未单列 Limitations。
+- 作者指出，在 long-horizon deep research 中，一次低估 Reasoning Effort 就可能产生错误 query 并沿后续步骤传播，因此 Router 需要很高的判断精度。
+- 系统的绝对性能仍受 backbone model 能力上限约束。
+- 作者把 multimodal input 的扩展留作 future work。
+
 ---
 
 ## 4.3 Efficient Reasoning on the Edge：让 Chat / Reasoning Mode 共享 Prompt KV
@@ -571,6 +681,9 @@ Shared Prompt KV
 
 这项工作不做 KV Translation，而是从训练方式上让两种 Mode 天然兼容同一份 Prompt KV。
 
+
+**作者明确提到的局限 / 边界：** 论文未单列 Limitations。公开实验主要围绕 Qwen2.5-7B 和 mobile / edge deployment 展开；作者没有在文中给出跨更多 base model family 的系统性验证。
+
 ---
 
 ## 4.4 Beyond Speedup：用 KV 判断应该 Fast Thinking 还是 Slow Thinking
@@ -597,6 +710,9 @@ https://proceedings.iclr.cc/paper_files/paper/2026/hash/d147f24cac1b6cd88753ca83
 ---
 
 # 5. 直接操纵或复用 Reasoning State KV 的工作
+
+
+**作者明确提到的局限 / 边界：** 论文未单列 Limitations。作者明确承认，从 KV 提取的 representation 弱于专门训练的 embedding；本文主要验证了 Chain-of-Embedding 和 Fast / Slow Thinking Switching 两类用途。
 
 ## 5.1 Deliberation in Latent Space：用 Coprocessor 增强 KV
 
@@ -627,6 +743,9 @@ Coprocessor 使用 language-modeling loss 在普通 pretraining data 上端到�
 目标不是生成显式 CoT，而是把额外 computation 直接压进后续 Decode 可使用的 KV / latent state。
 
 论文报告这种 cache augmentation 可以降低后续 Token perplexity，并改善多种 reasoning-intensive task。
+
+
+**作者明确提到的局限 / 边界：** 论文未单列 Limitations。作者把更大模型、多个 modular Coprocessor、不同 Coprocessor architecture 和更多 downstream task 留作 future work。
 
 ---
 
@@ -662,6 +781,12 @@ $$
 
 实验表明，可以增强显式多步 Reasoning，并控制 stepwise、causal、analogical 等不同 Reasoning style。
 
+
+**作者明确提到的局限 / 边界：**
+
+- 实验主要关注小型 LLM 的 reasoning induction，只补充验证了一个更大模型；更大规模模型和更多任务域仍待验证。
+- 作者也指出 steering 技术可能被用于诱导有害、欺骗性或带偏见的行为，因此存在 misuse 风险。
+
 ---
 
 ## 5.3 Memory Inception：把外部 guidance 编码成额外 KV Bank
@@ -695,6 +820,15 @@ Attention
 
 它主要研究 behavior steering、可更新 guidance 和 structured reasoning，而不是不同 Reasoning Effort 之间的 KV 对齐。
 
+
+**作者明确提到的局限 / 边界：**
+
+- 不同任务族使用不同 judge / scoring protocol，因此跨任务结果只能间接比较，没有统一 aggregate score。
+- KV Bank 的质量依赖任务：过于 noisy、过细或过宽的 slot 都可能失效，selector 仍需要按任务校准。
+- 效果依赖 backbone；论文观察到 Qwen3 最稳定，而 Llama 上 control / quality trade-off 更明显。
+- Cache 分析主要统计 KV storage，不等同于真实端到端 latency 或 allocator-level VRAM 节省。
+- 作者还讨论了隐藏 guidance 被滥用的安全风险。
+
 ---
 
 ## 5.4 KaVa：用 Teacher 的压缩 KV 监督 Latent Reasoning
@@ -710,6 +844,9 @@ KaVa 将 Teacher 长 CoT 对应的 KV Cache 压缩，再把它作为 self-distil
 > **即使压缩后的 KV 和显式 Reasoning Token 没有一一对应关系，它仍然可以携带有用的推理信息。**
 
 它属于 training / distillation 场景，而不是 runtime Reasoning Effort switching。
+
+
+**作者明确提到的局限 / 边界：** 论文未单列 Limitations。Conclusion 明确指出，latent reasoning 的进一步提升仍依赖大规模训练数据来学习新的 reasoning dynamics。
 
 ---
 
@@ -728,6 +865,9 @@ Thought Rollback 允许模型发现 Reasoning error 后回到之前的 Thought�
 > **Text / Thought-level rollback**
 
 而不是 KV-level state translation。
+
+
+**作者明确提到的局限 / 边界：** 论文未单列 Limitations，也没有在结论中明确列出 future work；这里不额外推断。
 
 ### Reasoning Cache
 
@@ -748,6 +888,15 @@ https://arxiv.org/abs/2602.03773
 ```
 
 把上一轮 Reasoning 压缩成较短状态，再继续更长 horizon 的推理。
+
+
+**作者明确提到的局限 / 边界：**
+
+- 训练过程没有直接优化 summary generation，作者认为跨多轮 credit assignment 较困难。
+- 每轮局部 reward 容易偏向短期有效策略，难以奖励“当前看似较差、但对后续有帮助”的远期 reasoning。
+- summary-conditioned generation 并非对所有模型都同样有效，尤其专门的 reasoning model 可能 instruction following 较弱。
+- 并非所有任务都受益；search-heavy 问题可能在 Summary 中丢失关键细节。
+- 当前主要依赖可验证 outcome reward，开放式任务仍留作后续工作。
 
 ### ArborKV
 
@@ -776,6 +925,9 @@ ArborKV 面向 Tree-of-Thoughts 的：
 ---
 
 # 6. 关系总结
+
+
+**作者明确提到的局限 / 边界：** 当前论文版本未单列 Limitations / Future Work；这里不使用第三方 review 对模型规模或硬件范围的评价作为作者自述。
 
 ## 6.1 Context 继承
 
