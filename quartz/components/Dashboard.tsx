@@ -26,12 +26,8 @@ export default ((userOpts?: Options) => {
       ...userOpts,
     }
 
-    /* ==== 核心逻辑：只过滤并统计 "知识库" 目录下的笔记 ==== */
-    const knowledgeFiles = allFiles.filter((f) => {
-      if (!f.slug || f.slug === "index") return false
-      // 只包含路径以 '知识库/' 开头的文件
-      return f.slug.startsWith("知识库/")
-    })
+    /* ==== 核心逻辑：统计除首页外的全部笔记 ==== */
+    const knowledgeFiles = allFiles.filter((f) => f.slug && f.slug !== "index")
 
     const totalNotes = knowledgeFiles.length
 
@@ -41,10 +37,9 @@ export default ((userOpts?: Options) => {
 
     for (const f of knowledgeFiles) {
       const parts = f.slug!.split("/")
-      // 此时路径必然是 ["知识库", "分类名称", "文件名.md"] 等
+      // 路径形如 ["课程", "离散数学", "xxx.md"]，取前两段作为分类
       if (parts.length >= 3) {
-        // parts[0] 是 '知识库', parts[1] 就是子分类名 (如 'Agent', '数据库系统')
-        const categoryDir = parts[1]
+        const categoryDir = `${parts[0]}/${parts[1]}`
         dirMap.set(categoryDir, (dirMap.get(categoryDir) ?? 0) + 1)
       }
 
@@ -174,10 +169,10 @@ export default ((userOpts?: Options) => {
                 categories.map(([dir, count]) => (
                   <li class="dash-list-item">
                     <a
-                      href={resolveRelative(fileData.slug!, `知识库/${dir}/` as FullSlug)}
+                      href={resolveRelative(fileData.slug!, `${dir}/` as FullSlug)}
                       class="dash-item-title internal"
                     >
-                      {dir}
+                      {dir.split("/").pop()}
                     </a>
                     <span class="dash-item-count">{count} 篇</span>
                   </li>

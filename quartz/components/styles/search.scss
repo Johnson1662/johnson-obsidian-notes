@@ -43,6 +43,13 @@
       text-wrap: unset;
     }
 
+    // 窄屏放不下搜索框文字时只保留图标，避免顶部导航溢出
+    @media all and (max-width: 360px) {
+      & > p {
+        display: none;
+      }
+    }
+
     & svg {
       cursor: pointer;
       width: 18px;
@@ -240,6 +247,16 @@
             @media all and not ($mobile) {
               & > p.card-description {
                 display: none;
+              }
+            }
+
+            // 移动端没有预览面板，摘要过长会让结果列表变成几千像素的长页
+            @media all and ($mobile) {
+              & > p.card-description {
+                display: -webkit-box;
+                -webkit-line-clamp: 4;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
               }
             }
 

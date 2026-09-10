@@ -47,12 +47,6 @@ export const defaultContentPageLayout: PageLayout = {
       ],
     }),
     Component.Explorer({
-      filterFn: (node) => {
-        if (node.slugSegment === "tags") return false
-        if (node.slug.startsWith("知识库")) return true
-        if (node.slug.split("/").length === 1 && node.slug === "index") return true
-        return false
-      },
       folderDefaultState: "open",
     }),
   ],
@@ -79,12 +73,6 @@ export const defaultListPageLayout: PageLayout = {
       ],
     }),
     Component.Explorer({
-      filterFn: (node) => {
-        if (node.slugSegment === "tags") return false
-        if (node.slug.startsWith("知识库")) return true
-        if (node.slug.split("/").length === 1 && node.slug === "index") return true
-        return false
-      },
       folderDefaultState: "open",
     }),
   ],

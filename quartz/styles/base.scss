@@ -21,10 +21,8 @@ body {
   background-color: var(--light);
   font-family: var(--bodyFont);
   color: var(--darkgray);
-
-  @media all and ($mobile) {
-    overflow-x: hidden;
-  }
+  // 注意：不要在 body 上设置 overflow-x: hidden，
+  // 这会让 body 变成滚动容器，导致移动端顶部导航栏的 position: sticky 失效。
 }
 
 .text-highlight {

@@ -302,6 +302,17 @@ h6[id] {
     animation: none;
   }
 
+  // --- 扩大图标按钮的点击热区（视觉尺寸不变）---
+  .darkmode,
+  .readermode,
+  .global-graph-icon {
+    &::after {
+      content: "";
+      position: absolute;
+      inset: -8px;
+    }
+  }
+
   .section-li,
   .recent-li {
     &:hover {
