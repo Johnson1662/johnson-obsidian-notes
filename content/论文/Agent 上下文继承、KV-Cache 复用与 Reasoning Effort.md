@@ -46,10 +46,10 @@ $$
 
 论文在 50 个 GAIA validation 样本上做了 Context 消融实验：
 
-| 设置 | 平均分 |
-|---|---:|
-| No Context | 86% |
-| Full Context | 84% |
+| 设置              |     平均分 |
+| --------------- | ------: |
+| No Context      |     86% |
+| Full Context    |     84% |
 | Curated Context | **96%** |
 
 这个实验规模较小，但至少说明：**把全部历史都交给 Sub-Agent 并不一定更好。**
