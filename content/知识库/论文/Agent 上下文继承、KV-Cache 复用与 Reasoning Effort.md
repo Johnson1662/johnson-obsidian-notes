@@ -197,11 +197,6 @@ https://arxiv.org/abs/2609.03340
 
 它提出 PlanFence：让 Plan 记录自己依赖了哪些外部状态；执行动作前，只重新验证真正影响当前 Action 的依赖。
 
----
-
-# 3. KV Cache 复用与转换
-
-
 **作者明确提到的局限 / 边界：**
 
 - 实验只覆盖 3 类 workflow、3–8 个 Agent、构造的 keyspace 和有限历史 network trace，压力测试结果不能直接推广到所有 Agent 系统。
@@ -209,6 +204,7 @@ https://arxiv.org/abs/2609.03340
 - 当前不处理 Byzantine owner、owner migration、隐式 dependency、semantic merge，以及不在 public lineage 中的 private reasoning。
 - 多 owner validation 与外部 Action 之间不是原子操作；更强一致性需要 transaction 类机制。
 
+# 3. KV Cache 复用与转换
 ## 3.1 KVCOMM：同模型、不同 Prefix 下复用同一段内容
 
 **KVCOMM: Online Cross-context KV-cache Communication for Efficient LLM-based Multi-agent Systems**  
