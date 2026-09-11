@@ -102,12 +102,9 @@ AnyMAC 同时学习两个决策：
 
 因此，下一 Agent 不必固定继承完整历史，也不必只看上一步输出，而可以从任意之前的 step 中选择相关信息。
 
-
 **作者明确提到的局限 / 边界：**
-
 - 在 HumanEval 上，Next-Context Selection 有时会选择过长 Context，可能让模型被过量信息干扰。
 - 作者认为 1,000 条 RL sampling 数据可能不足，可能导致次优收敛；继续扩大 RL sampling 的计算和经济成本较高。
-
 ---
 
 ## 2.4 DeLM：共享 Verified Context
