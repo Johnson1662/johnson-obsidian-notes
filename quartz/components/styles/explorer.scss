@@ -17,6 +17,12 @@
       background-color: var(--light);
       padding: 1rem 0 1rem 0;
       margin: 0;
+      overflow: visible;
+      z-index: 10;
+    }
+
+    .sidebar.left:has(.explorer:not(.collapsed)) {
+      z-index: 1000;
     }
 
     .hide-until-loaded ~ .explorer-content {
@@ -49,7 +55,7 @@
   @media all and ($mobile) {
     order: -1;
     height: initial;
-    overflow: hidden;
+    overflow: visible;
     flex-shrink: 0;
     align-self: flex-start;
     margin-top: auto;
@@ -293,29 +299,89 @@ li:has(> .folder-outer.open) > .folder-container > .folder-icon-open {
         transform: translateX(0);
         visibility: visible;
       }
+
+      button.mobile-explorer {
+        .lucide-menu {
+          line {
+            transition:
+              transform 0.2s ease,
+              opacity 0.2s ease;
+            transform-origin: center;
+          }
+          line:nth-child(1) {
+            transform: translateY(6px) rotate(45deg);
+          }
+          line:nth-child(2) {
+            opacity: 0;
+          }
+          line:nth-child(3) {
+            transform: translateY(-6px) rotate(-45deg);
+          }
+        }
+      }
     }
 
     .explorer-content {
       box-sizing: border-box;
-      z-index: 100;
-      position: absolute;
+      z-index: 1000;
+      position: fixed;
       top: 0;
       left: 0;
       margin-top: 0;
       background-color: var(--light);
-      max-width: 100vw;
       width: 100vw;
       transform: translateX(-100vw);
       transition:
-        transform 200ms ease,
-        visibility 200ms ease;
+        transform 250ms cubic-bezier(0.16, 1, 0.3, 1),
+        visibility 250ms ease;
       overflow: hidden;
-      padding: 4rem 0 2rem 0;
-      // 100vh 回退：不支持 dvh 的旧 WebView 会把 height 解析成 auto，
-      // 再被 div:has(> .overflow) 的 max-height: 100% 压成一条横条。
+      display: flex;
+      flex-direction: column;
+      padding: 4.5rem 1.25rem 2rem 1.25rem;
       height: 100vh;
       max-height: 100vh;
       visibility: hidden;
+      box-shadow: 4px 0 24px rgba(0, 0, 0, 0.15);
+
+      &::before {
+        content: "文件目录";
+        display: block;
+        font-family: var(--headerFont);
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: var(--dark);
+        margin-bottom: 0.75rem;
+        padding-left: 0.6rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid var(--lightgray);
+        flex-shrink: 0;
+      }
+
+      .explorer-ul {
+        flex: 1;
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior: contain;
+        padding-bottom: 2rem;
+      }
+
+      .explorer-ul li > a {
+        padding: 0.45rem 0.6rem;
+        font-size: 0.95rem;
+        border-radius: 6px;
+        line-height: 1.4;
+      }
+
+      .folder-container {
+        padding: 0.4rem 0.6rem;
+        border-radius: 6px;
+
+        & div > button span,
+        & div > a {
+          font-size: 0.95rem;
+          line-height: 1.4;
+        }
+      }
     }
 
     // dvh 可用时改用动态视口高度，避免被移动端地址栏遮挡
@@ -329,10 +395,17 @@ li:has(> .folder-outer.open) > .folder-container > .folder-icon-open {
     .mobile-explorer {
       margin: 0;
       padding: 5px;
-      z-index: 101;
+      position: relative;
+      z-index: 1002;
 
       .lucide-menu {
         stroke: var(--darkgray);
+        line {
+          transition:
+            transform 0.2s ease,
+            opacity 0.2s ease;
+          transform-origin: center;
+        }
       }
     }
   }

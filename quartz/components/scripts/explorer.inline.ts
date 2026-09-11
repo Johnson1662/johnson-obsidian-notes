@@ -301,6 +301,18 @@ window.addEventListener("resize", function () {
   }
 })
 
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    const openExplorer = document.querySelector(".explorer:not(.collapsed)")
+    if (openExplorer) {
+      const toggle = openExplorer.querySelector(".mobile-explorer") as HTMLElement
+      if (toggle && toggle.checkVisibility()) {
+        toggle.click()
+      }
+    }
+  }
+})
+
 function setFolderState(folderElement: HTMLElement, collapsed: boolean) {
   return collapsed ? folderElement.classList.remove("open") : folderElement.classList.add("open")
 }

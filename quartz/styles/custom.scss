@@ -25,7 +25,7 @@
 
     li {
       padding: 0.3rem 0;
-      font-size: 0.9rem1;
+      font-size: 0.9rem;
 
       &::before {
         content: "→";
@@ -45,6 +45,38 @@
 // ============================================================
 // 全局自定义样式 - Johnson1662
 // ============================================================
+
+:root {
+  /* 对齐 Obsidian theme.css 字体体系: Google Sans + MiSans (正文) / LaTeX 学术衬线 (标题) / JetBrains Mono (代码) */
+  --headerFont:
+    "Latin Modern Roman", "Computer Modern", "CMU Serif", "Noto Serif SC", "SimHei", "黑体",
+    "方正黑体_GBK", serif;
+  --bodyFont:
+    "Google Sans", "MiSans", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
+  --codeFont: "JetBrainsMono Nerd Font", "JetBrains Mono", "Hack", monospace;
+  --line-height-normal: 1.75;
+}
+
+body,
+article {
+  font-family: var(--bodyFont);
+  line-height: var(--line-height-normal);
+  letter-spacing: 0.01em;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.article-title,
+.page-title {
+  font-family: var(--headerFont);
+  color: var(--dark);
+  font-weight: 700;
+}
 
 // --- 页面加载淡入动画 ---
 .page {
@@ -188,14 +220,32 @@ blockquote {
 
 // --- 表格美化 ---
 table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--lightgray);
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  font-size: 0.95em;
 }
 
 th {
-  background: var(--lightgray);
-  font-weight: 600;
+  background-color: var(--lightgray);
+  color: var(--dark);
+  font-weight: 700;
+  border-bottom: 1px solid var(--lightgray);
+  padding: 9px 12px;
+}
+
+td {
+  border-bottom: 1px solid var(--lightgray);
+  padding: 8px 12px;
+  line-height: 1.6;
+}
+
+tr:last-child td {
+  border-bottom: none;
 }
 
 // --- 图片悬停 ---
