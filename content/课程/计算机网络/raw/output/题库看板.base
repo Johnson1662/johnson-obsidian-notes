@@ -17,13 +17,12 @@ views:
     filters:
       and:
         - '!file.inFolder("课程/计算机网络/raw/output/review-guide")'
-        - 'file.name != "question-bank"'
+        - file.name != "question-bank"
     order:
       - file.name
       - year
       - status
       - score
-
   - type: table
     name: 分章节期末复习指南
     filters:
@@ -32,13 +31,12 @@ views:
     order:
       - file.name
       - file.mtime
-
   - type: cards
     name: 试卷卡片看板
     filters:
       and:
         - '!file.inFolder("课程/计算机网络/raw/output/review-guide")'
-        - 'file.name != "question-bank"'
+        - file.name != "question-bank"
     order:
       - file.name
       - year
