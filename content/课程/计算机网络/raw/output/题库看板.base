@@ -1,52 +1,31 @@
+# 计算机网络历年期末真题看板
 filters:
   and:
-    - file.path starts_with "课程/计算机网络/raw/output/questions"
+    - 'file.inFolder("课程/计算机网络/raw/output")'
+    - 'file.ext == "md"'
+
+properties:
+  year:
+    displayName: "年份"
+  status:
+    displayName: "复习状态"
+  score:
+    displayName: "试卷总分"
+  tags:
+    displayName: "标签"
+
 views:
   - type: table
-    name: 全部真题一览
-    sort: []
-    columns:
-      - field: qid
-        name: 题号
-      - field: year
-        name: 年份
-      - field: chapter
-        name: 所属章节
-      - field: type
-        name: 题型
-      - field: difficulty
-        name: 难度
-      - field: status
-        name: 掌握状态
-      - field: score
-        name: 分值
-  - type: table
-    name: 高危错题集
-    filters:
-      and:
-        - status == "错题"
-    columns:
-      - field: qid
-        name: 题号
-      - field: chapter
-        name: 章节
-      - field: tags
-        name: 考点标签
-      - field: concept
-        name: 关联概念笔记
-  - type: table
-    name: 高频核心大题
-    filters:
-      and:
-        - type != "选择题"
-    columns:
-      - field: year
-        name: 年份
-      - field: qid
-        name: 题号
-      - field: chapter
-        name: 章节
-      - field: tags
-        name: 考点
-      - field: status
-        name: 状态
+    name: "历年期末试卷一览"
+    order:
+      - file.name
+      - year
+      - status
+      - score
+
+  - type: cards
+    name: "试卷卡片视图"
+    order:
+      - file.name
+      - year
+      - status
