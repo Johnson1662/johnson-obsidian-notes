@@ -13,14 +13,32 @@ properties:
     displayName: 标签
 views:
   - type: table
-    name: 历年期末试卷一览
+    name: 历年期末真题试卷
+    filters:
+      and:
+        - '!file.inFolder("课程/计算机网络/raw/output/review-guide")'
+        - 'file.name != "question-bank"'
     order:
       - file.name
       - year
       - status
       - score
+
+  - type: table
+    name: 分章节期末复习指南
+    filters:
+      and:
+        - file.inFolder("课程/计算机网络/raw/output/review-guide")
+    order:
+      - file.name
+      - file.mtime
+
   - type: cards
-    name: 试卷卡片视图
+    name: 试卷卡片看板
+    filters:
+      and:
+        - '!file.inFolder("课程/计算机网络/raw/output/review-guide")'
+        - 'file.name != "question-bank"'
     order:
       - file.name
       - year
