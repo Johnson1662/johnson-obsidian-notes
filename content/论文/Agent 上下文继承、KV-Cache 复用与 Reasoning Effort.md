@@ -307,42 +307,6 @@ CacheBridge 做了三项主要修改：
 
 ---
 
-## 3.8 Universal Context-Reuse Layer：探索跨 model family 的 Context Mobility
-
-**A Universal Context-Reuse Layer for Cross-Model KV Sharing**  
-来源：arXiv:2608.30963v1  
-https://arxiv.org/abs/2608.30963
-
-这篇论文把目标扩展到 Source 和 Target 在以下方面都可能不同：
-
-- model scale；
-- Layer 数；
-- Attention 配置；
-- Tokenizer；
-- model family。
-
-论文把这种能力称为 **Context Mobility（上下文迁移性）**。
-
-公开实验包括：
-
-- Qwen2.5-7B → Qwen2.5-1.5B；
-- Qwen2.5-1.5B → Gemma-2-2B；
-- Llama-3.1-70B → Qwen2.5-7B。
-
-其中 Llama-3.1-70B → Qwen2.5-7B 的实验报告：
-
-- Target 正常 Prefill accuracy 约 45.7%；
-- KV handoff 后约 44.0%；
-- measured handoff latency 约从 899 ms 降到 138 ms。
-
-需要注意：当前 v1 对实验结果和整体设计目标描述较多，但没有像 MoT、Closed-form Transfer、CacheBridge 那样公开到足以直接重建核心 Transport Module 的细节。
-
-因此更适合把它理解为：
-
-> **跨 model family KV handoff 可行性的实验性证据。**
-
----
-
 # 4. Reasoning Effort 与 KV Cache
 
 
