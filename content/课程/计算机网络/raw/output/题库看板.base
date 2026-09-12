@@ -1,0 +1,60 @@
+# 计算机网络期末真题题库看板
+filters:
+  and:
+    - file.path starts_with "课程/计算机网络/raw/output/questions"
+
+views:
+  - type: table
+    name: "全部真题一览"
+    columns:
+      - field: qid
+        name: "题号"
+      - field: year
+        name: "年份"
+      - field: chapter
+        name: "所属章节"
+      - field: type
+        name: "题型"
+      - field: difficulty
+        name: "难度"
+      - field: status
+        name: "掌握状态"
+      - field: score
+        name: "分值"
+    sort:
+      - field: year
+        direction: desc
+      - field: type
+        direction: asc
+
+  - type: table
+    name: "高危错题集"
+    filters:
+      and:
+        - status == "错题"
+    columns:
+      - field: qid
+        name: "题号"
+      - field: chapter
+        name: "章节"
+      - field: tags
+        name: "考点标签"
+      - field: concept
+        name: "关联概念笔记"
+
+  - type: table
+    name: "高频核心大题"
+    filters:
+      and:
+        - type != "选择题"
+    columns:
+      - field: year
+        name: "年份"
+      - field: qid
+        name: "题号"
+      - field: chapter
+        name: "章节"
+      - field: tags
+        name: "考点"
+      - field: status
+        name: "状态"
