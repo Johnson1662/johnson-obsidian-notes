@@ -309,95 +309,6 @@ CacheBridge 做了三项主要修改：
 
 # 4. Reasoning Effort 与 KV Cache
 
-
-**作者明确提到的局限 / 边界：** 当前 v1 未单列 Limitations。作者将论文结果表述为支持 Context Mobility 的 **initial evidence（初步证据）**，没有宣称已经覆盖所有跨模型组合。本文不把第三方对 Transport Module 细节不足的批评写成作者自述局限。
-
-## 4.1 先区分“Reasoning Effort”和“是否开启 Thinking”
-
-### gpt-oss：真正的 low / medium / high Reasoning Effort
-
-gpt-oss 官方 Harmony format 把 **Reasoning Effort（推理强度）**写入 system message：
-
-```text
-Reasoning: low
-Reasoning: medium
-Reasoning: high
-```
-
-来源：OpenAI Harmony format  
-https://github.com/openai/harmony/blob/main/docs/format.md
-
-gpt-oss model card 说明，它在训练时支持这三档 Reasoning Effort；Effort 越高，平均 CoT 长度越长。
-
-这属于：
-
-> **同一个模型、同一个任务，用不同计算预算进行推理。**
-
-### Qwen3 / GLM：主要控制 Thinking On / Off
-
-Qwen3 的：
-
-```text
-enable_thinking=True / False
-/think
-/no_think
-```
-
-以及 GLM 的 `enable_thinking`，主要控制是否进入 Thinking Mode。
-
-Qwen3：  
-https://github.com/QwenLM/Qwen3/blob/main/docs/source/getting_started/quickstart.md
-
-GLM：  
-https://github.com/zai-org/GLM-4.5
-
-这和 low / medium / high Reasoning Effort 不是同一个问题。
-
-另外，如果 Chat Template 的变化只发生在长 Context **之后**，由于 causal attention，前面的 Context KV 仍然可以完全相同。因此不能仅凭“Chat Template 不同”就断言整段 Context KV 必须重算。
-
----
-
-## 4.2 Ares：动态选择每一步的 Reasoning Effort
-
-**Ares: Adaptive Reasoning Effort Selection for Efficient LLM Agents**  
-来源：arXiv:2603.07915  
-https://arxiv.org/abs/2603.07915
-
-Ares 使用 gpt-oss-20b，在多步 Agent 任务中动态选择：
-
-```text
-low / medium / high
-```
-
-它训练一个轻量 Router，根据：
-
-- interaction history；
-- 当前 observation；
-
-预测**完成当前 step 所需的最低 Reasoning Effort**。
-
-训练流程大致是：
-
-1. 先用 high-effort 成功轨迹得到 reference action；
-2. 再分别测试 low / medium / high；
-3. 找到能稳定得到正确 action 的最低 Effort；
-4. 用这些标签训练 Router；
-5. 进一步尝试 RL 优化。
-
-论文报告最高约 **52.7% 的 reasoning Token reduction**，同时保持接近 fixed-high 策略的 task performance。
-
-论文还把“同模型不同 Effort 可以保留 / 复用 KV Cache”作为相比 multi-model routing 的优势之一；但它的主体实验研究的是 **Reasoning Effort routing 和 Token cost**，不是专门的 KV compatibility 或 cache-hit 实验。
-
-
-**作者明确提到的局限 / 边界：**
-
-- 论文未单列 Limitations。
-- 作者指出，在 long-horizon deep research 中，一次低估 Reasoning Effort 就可能产生错误 query 并沿后续步骤传播，因此 Router 需要很高的判断精度。
-- 系统的绝对性能仍受 backbone model 能力上限约束。
-- 作者把 multimodal input 的扩展留作 future work。
-
----
-
 ## 4.3 Efficient Reasoning on the Edge：让 Chat / Reasoning Mode 共享 Prompt KV
 
 **Efficient Reasoning on the Edge**  
@@ -533,7 +444,6 @@ $$
 - 直接操纵 KV。
 
 实验表明，可以增强显式多步 Reasoning，并控制 stepwise、causal、analogical 等不同 Reasoning style。
-
 
 **作者明确提到的局限 / 边界：**
 
