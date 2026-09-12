@@ -1,30 +1,26 @@
-# 计算机网络历年期末真题看板
 filters:
   and:
-    - 'file.inFolder("课程/计算机网络/raw/output")'
-    - 'file.ext == "md"'
-
+    - file.inFolder("课程/计算机网络/raw/output")
+    - file.ext == "md"
 properties:
   year:
-    displayName: "年份"
+    displayName: 年份
   status:
-    displayName: "复习状态"
+    displayName: 复习状态
   score:
-    displayName: "试卷总分"
+    displayName: 试卷总分
   tags:
-    displayName: "标签"
-
+    displayName: 标签
 views:
   - type: table
-    name: "历年期末试卷一览"
+    name: 历年期末试卷一览
     order:
       - file.name
       - year
       - status
       - score
-
   - type: cards
-    name: "试卷卡片视图"
+    name: 试卷卡片视图
     order:
       - file.name
       - year
