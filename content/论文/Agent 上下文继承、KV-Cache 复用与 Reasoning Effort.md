@@ -413,45 +413,6 @@ Coprocessor 使用 language-modeling loss 在普通 pretraining data 上端到�
 
 ---
 
-## 5.2 KV Cache Steering：直接修改已有 K/V
-
-**KV Cache Steering for Controlling Frozen LLMs**  
-来源：arXiv:2507.08799  
-https://arxiv.org/abs/2507.08799
-
-它从正 / 负 Reasoning 样例的 K、V 中计算 **Mean-of-Differences steering tensors（均值差引导张量）**：
-
-$$
-S_l^K,\quad S_l^V
-$$
-
-Prefill 完成后，对指定 Token position 的已有 KV 做一次性修改：
-
-$$
-K_l^*=K_l+c^KS_l^K
-$$
-
-$$
-V_l^*=V_l+c^VS_l^V
-$$
-
-之后正常 Decode。
-
-它：
-
-- 不训练额外网络；
-- 不修改模型权重；
-- 直接操纵 KV。
-
-实验表明，可以增强显式多步 Reasoning，并控制 stepwise、causal、analogical 等不同 Reasoning style。
-
-**作者明确提到的局限 / 边界：**
-
-- 实验主要关注小型 LLM 的 reasoning induction，只补充验证了一个更大模型；更大规模模型和更多任务域仍待验证。
-- 作者也指出 steering 技术可能被用于诱导有害、欺骗性或带偏见的行为，因此存在 misuse 风险。
-
----
-
 ## 5.3 Memory Inception：把外部 guidance 编码成额外 KV Bank
 
 **Memory Inception: Latent-Space KV Cache Manipulation for Steering LLMs**  
