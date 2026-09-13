@@ -508,29 +508,11 @@ KaVa 将 Teacher 长 CoT 对应的 KV Cache 压缩，再把它作为 self-distil
 
 它属于 training / distillation 场景，而不是 runtime Reasoning Effort switching。
 
-
 **作者明确提到的局限 / 边界：** 论文未单列 Limitations。Conclusion 明确指出，latent reasoning 的进一步提升仍依赖大规模训练数据来学习新的 reasoning dynamics。
 
 ---
 
 ## 5.5 与“失败后继续思考”有关，但不属于 KV Translation 的工作
-
-### Thought Rollback
-
-**Toward Adaptive Reasoning in Large Language Models with Thought Rollback**  
-来源：ICML 2024  
-https://proceedings.mlr.press/v235/chen24y.html
-
-Thought Rollback 允许模型发现 Reasoning error 后回到之前的 Thought，再把 trial-and-error 信息写入 Prompt 继续探索。
-
-它做的是：
-
-> **Text / Thought-level rollback**
-
-而不是 KV-level state translation。
-
-
-**作者明确提到的局限 / 边界：** 论文未单列 Limitations，也没有在结论中明确列出 future work；这里不额外推断。
 
 ### Reasoning Cache
 
