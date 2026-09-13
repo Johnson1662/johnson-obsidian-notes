@@ -309,47 +309,6 @@ CacheBridge 做了三项主要修改：
 
 # 4. Reasoning Effort 与 KV Cache
 
-## 4.3 Efficient Reasoning on the Edge：让 Chat / Reasoning Mode 共享 Prompt KV
-
-**Efficient Reasoning on the Edge**  
-来源：arXiv:2603.16867，Qualcomm AI Research  
-https://arxiv.org/abs/2603.16867  
-https://qualcomm-ai-research.github.io/llm-reasoning-on-edge/
-
-它使用：
-
-```text
-Chat Mode      = Base Model
-Reasoning Mode = Base Model + Reasoning LoRA
-```
-
-系统先用 Base Model 编码 Prompt，再用 final-layer prompt hidden states 的 mean pooling 表示训练一个轻量 switcher，判断是否需要启用 Reasoning LoRA。
-
-关键设计是：
-
-> **Prompt 始终只由 Base Model 编码。**
-
-Reasoning LoRA 被训练成直接基于 Base Model 产生的 Prompt KV 继续 Decode。
-
-因此：
-
-```text
-Prompt
-  ↓
-Base Model Prefill
-  ↓
-Shared Prompt KV
-  ├─ Chat Mode
-  └─ Reasoning LoRA
-```
-
-这项工作不做 KV Translation，而是从训练方式上让两种 Mode 天然兼容同一份 Prompt KV。
-
-
-**作者明确提到的局限 / 边界：** 论文未单列 Limitations。公开实验主要围绕 Qwen2.5-7B 和 mobile / edge deployment 展开；作者没有在文中给出跨更多 base model family 的系统性验证。
-
----
-
 ## 4.4 Beyond Speedup：用 KV 判断应该 Fast Thinking 还是 Slow Thinking
 
 **Beyond Speedup — Utilizing KV Cache for Sampling and Reasoning**  
@@ -374,9 +333,6 @@ https://proceedings.iclr.cc/paper_files/paper/2026/hash/d147f24cac1b6cd88753ca83
 ---
 
 # 5. 直接操纵或复用 Reasoning State KV 的工作
-
-
-**作者明确提到的局限 / 边界：** 论文未单列 Limitations。作者明确承认，从 KV 提取的 representation 弱于专门训练的 embedding；本文主要验证了 Chain-of-Embedding 和 Fast / Slow Thinking Switching 两类用途。
 
 ## 5.1 Deliberation in Latent Space：用 Coprocessor 增强 KV
 
