@@ -494,24 +494,6 @@ Attention
 
 ---
 
-## 5.4 KaVa：用 Teacher 的压缩 KV 监督 Latent Reasoning
-
-**KaVa: Latent Reasoning via Compressed KV-Cache Distillation**  
-来源：ICLR 2026  
-https://proceedings.iclr.cc/paper_files/paper/2026/hash/d2ca35069eb6e9cbd2a37bf90ba9091c-Abstract-Conference.html
-
-KaVa 将 Teacher 长 CoT 对应的 KV Cache 压缩，再把它作为 self-distillation signal 训练 latent-reasoning student。
-
-重点是：
-
-> **即使压缩后的 KV 和显式 Reasoning Token 没有一一对应关系，它仍然可以携带有用的推理信息。**
-
-它属于 training / distillation 场景，而不是 runtime Reasoning Effort switching。
-
-**作者明确提到的局限 / 边界：** 论文未单列 Limitations。Conclusion 明确指出，latent reasoning 的进一步提升仍依赖大规模训练数据来学习新的 reasoning dynamics。
-
----
-
 ## 5.5 与“失败后继续思考”有关，但不属于 KV Translation 的工作
 
 ### Reasoning Cache
