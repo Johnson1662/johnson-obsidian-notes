@@ -23,6 +23,13 @@ for (let i = 0; i < L.length; i++)
     i = j;
   }
 
+// 单行形式的 $$...$$（与多行块等价，之前漏检）
+const single = [];
+for (let i = 0; i < L.length; i++) {
+  const m = L[i].match(/^\s*\$\$([\s\S]+)\$\$\s*$/);
+  if (m) single.push([i + 1, m[1]]);
+}
+
 let fence = false;
 const inline = [];
 for (let i = 0; i < L.length; i++) {
@@ -46,6 +53,12 @@ for (const [n, s] of inline)
   } catch (e) {
     warn.push(`ERR INLINE L${n} ${e.message.slice(0, 120)}`);
   }
+for (const [n, s] of single)
+  try {
+    katex.renderToString(s, opt(n, true));
+  } catch (e) {
+    warn.push(`ERR DISPLAY L${n} ${e.message.slice(0, 120)}`);
+  }
 for (let i = 0; i < L.length; i++)
   if (L[i].trimStart().startsWith("|"))
     for (const m of L[i].matchAll(/\$+([^$]+)\$+/g))
@@ -54,4 +67,4 @@ for (let i = 0; i < L.length; i++)
 if (warn.length) {
   console.log(warn.join("\n"));
   process.exitCode = 1;
-} else console.log(`OK ${blocks.length} display / ${inline.length} inline`);
+} else console.log(`OK ${blocks.length + single.length} display / ${inline.length} inline`);
