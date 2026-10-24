@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>语音信息处理 · 交互复习</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --paper: #f7f5f0;
+        --surface: #fffefa;
+        --ink: #20303c;
+        --muted: #536373;
+        --line: #d0d7d8;
+        --accent: #99502c;
+        --blue: #235d80;
+        --soft: #eaf0f2;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          color-scheme: dark;
+          --paper: #171e24;
+          --surface: #202a33;
+          --ink: #e4e9eb;
+          --muted: #b4bfc5;
+          --line: #465563;
+          --accent: #efb28b;
+          --blue: #98cbe5;
+          --soft: #283742;
+        }
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 48px 20px 72px;
+        background: var(--paper);
+        color: var(--ink);
+        font:
+          17px/1.75 -apple-system,
+          "PingFang SC",
+          "Noto Sans SC",
+          "Microsoft YaHei",
+          sans-serif;
+      }
+      main {
+        max-width: 880px;
+        margin: 0 auto;
+      }
+      h1 {
+        font-size: 2em;
+        line-height: 1.3;
+        margin: 0 0 12px;
+        letter-spacing: -0.01em;
+      }
+      .lead {
+        font-size: 1.05em;
+        color: var(--muted);
+        margin: 0 0 34px;
+        max-width: 40em;
+      }
+      ol {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        border-top: 1px solid var(--line);
+      }
+      li {
+        border-bottom: 1px solid var(--line);
+      }
+      a.row {
+        display: grid;
+        grid-template-columns: 3.2em 1fr auto;
+        gap: 4px 16px;
+        padding: 20px 4px;
+        text-decoration: none;
+        color: inherit;
+        align-items: baseline;
+      }
+      a.row:hover .title,
+      a.row:focus-visible .title {
+        color: var(--accent);
+      }
+      .no {
+        color: var(--muted);
+        font-variant-numeric: tabular-nums;
+        font-size: 0.9em;
+      }
+      .title {
+        font-size: 1.12em;
+        font-weight: 600;
+      }
+      .desc {
+        grid-column: 2 / -1;
+        color: var(--muted);
+        font-size: 0.95em;
+      }
+      .tag {
+        font-size: 0.78em;
+        color: var(--muted);
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        padding: 1px 10px;
+        white-space: nowrap;
+      }
+      footer {
+        margin-top: 34px;
+        color: var(--muted);
+        font-size: 0.9em;
+      }
+      footer a {
+        color: var(--blue);
+      }
+      @media (max-width: 560px) {
+        body {
+          padding: 32px 16px 56px;
+        }
+        h1 {
+          font-size: 1.6em;
+        }
+        a.row {
+          grid-template-columns: 2.4em 1fr;
+        }
+        .tag {
+          grid-column: 2;
+          justify-self: start;
+          margin-top: 4px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>语音信息处理 · 交互复习</h1>
+      <p class="lead">
+        每份课件一个单文件网页：先给结论和一张全局图，再给能动手的演示，最后用三道闭卷题自测。所有页面离线可用，关键数字都能点开角标回查原课件。
+      </p>
+      <ol>
+        <li>
+          <a class="row" href="1%20语音产生与感知/index.html">
+            <span class="no">01</span><span class="title">声音怎样变成语音</span
+            ><span class="tag">产生与感知 · 65 页</span>
+            <span class="desc">共鸣管实验台、浊音与清音、元音坐标、听觉链、言语链。</span>
+          </a>
+        </li>
+        <li>
+          <a class="row" href="2%20语音信号处理基础/index.html">
+            <span class="no">02</span><span class="title">把波形变成特征向量</span
+            ><span class="tag">信号基础 · 74 页</span>
+            <span class="desc"
+              >采样与混叠、分帧加窗、能量/过零率/自相关、语谱图、倒谱与 MFCC。</span
+            >
+          </a>
+        </li>
+        <li>
+          <a class="row" href="3%20语音识别/index.html">
+            <span class="no">03</span><span class="title">从声音里找出那句话</span
+            ><span class="tag">语音识别 · 167 页</span>
+            <span class="desc">WER 对齐、DTW、HMM 三问题、三音素与决策树、N-gram、解码打分。</span>
+          </a>
+        </li>
+        <li>
+          <a class="row" href="4%20语音合成/index.html">
+            <span class="no">04</span><span class="title">让文字发出人的声音</span
+            ><span class="tag">语音合成 · 99 页</span>
+            <span class="desc">文本规范化、声调与韵律、拼接与参数、声码器，以及 MOS 与 MCD。</span>
+          </a>
+        </li>
+        <li>
+          <a class="row" href="5%20语音增强/index.html">
+            <span class="no">05</span><span class="title">从嘈杂里保住那句话</span
+            ><span class="tag">语音增强 · 99 页</span>
+            <span class="desc">谱减与维纳滤波的实测对比、掩蔽、延迟求和波束形成的方向图。</span>
+          </a>
+        </li>
+        <li>
+          <a class="row" href="6%20声纹识别/index.html">
+            <span class="no">06</span><span class="title">听出是谁在说话</span
+            ><span class="tag">声纹识别 · 64 页</span>
+            <span class="desc">确认与辨认、系统流程、阈值与 EER、从 GMM-UBM 到 x-vector。</span>
+          </a>
+        </li>
+        <li>
+          <a class="row" href="7%20公式复习/index.html">
+            <span class="no">07</span><span class="title">考前把这几张表算一遍</span
+            ><span class="tag">补充说明 · 33 页</span>
+            <span class="desc">前向、维特比、混合高斯、N-gram 的手算练习，每步都给出算式。</span>
+          </a>
+        </li>
+        <li>
+          <a class="row" href="../HMM语音合成交互/index.html">
+            <span class="no">附</span><span class="title">HMM 语音合成（细节页）</span
+            ><span class="tag">第 52—72 页</span>
+            <span class="desc">状态与观测、训练与生成、三音素聚类、参数生成与过平滑的深入页。</span>
+          </a>
+        </li>
+      </ol>
+      <footer>
+        <p>页面由课件原文整理而成，解释与练习为自编，不是历年考题，也不代表考试范围。</p>
+        <p>
+          打开建议：直接双击
+          <code>index.html</code> 即可，无需联网；页面里保存的学习记录只存在当前浏览器。
+        </p>
+      </footer>
+    </main>
+  </body>
+</html>
