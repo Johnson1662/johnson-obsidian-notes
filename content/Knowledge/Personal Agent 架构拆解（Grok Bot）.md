@@ -77,8 +77,3 @@
 
 ---
 
-## 勘误
-
-视频口播稿由机器转写，以下按画面文字更正：`Grok Bot`（转写作 Grog Bot/Crogbot）、
-`纯异步`（转写作「纯逆步」）、`OpenClaw`（转写作 OpenCore）、`待办列表`（转写作「代办」）、
-`Anthropic`（转写作 Enthropic）。
