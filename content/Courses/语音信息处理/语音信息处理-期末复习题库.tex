@@ -216,17 +216,17 @@
 \item 声道是从声门延伸至唇的非均匀截面声管，成年男性约 \blank cm。
 \ans{17 cm（这一长度决定了共振峰的频率位置）。}
 
-\item 人的基音范围约为 \blank Hz，对应基音周期约 \blank ms。
-\ans{$80\sim 500$ Hz；$2\sim 12.5$ ms。这是第 2 章「窗长取 $1\sim 7$ 个基音周期」的依据。}
+\item \blank 是声带开启--闭合一次的时间，其倒数称为 \blank 。
+\ans{基音周期（Pitch Period）$T_0$；基频（Pitch Frequency）$F_0=1/T_0$。（p26 蓝字：振幅 Amplitude、基音周期、基频、音调同为语音的基本特性。）}
 
-\item 全世界语言共约 \blank 个元音、\blank 个辅音；而一种特定语言大约只有 \blank 个音素。
-\ans{200；600；40。}
+\item \blank 是生成上可区分的最小语音单元，区分标准是 \blank 属性；\blank 是听觉上可区分的最小语音单元，区分标准是 \blank 属性。
+\ans{音素（Phone）；物理和生理；音位（Phoneme）；社会和语言。若干相近的音素归为一个音位。}
 
-\item 音节是语言的最基本单位，至少包含一个 \blank 。汉语音节由 \blank 加 \blank 构成。
-\ans{元音；声母；韵母。（英语为音节首＋音节核＋可选音节尾；日语为音节首＋音节核。）}
+\item 人类语音的发音运动被 \blank 和符号化，这是同一语音单元在发音姿势变动时声学特性仍保持稳定的原因；语音识别的建模单元可取 \blank 、\blank 、\blank 等。
+\ans{范畴化；音素；音节；字。（「发音运动指令的范畴化」与「语音识别的建模单元」均为课件蓝字。）}
 
-\item 中耳听骨链对 \blank Hz 频率谐振，起 \blank 滤波器作用。
-\ans{$500\sim 2000$ Hz；带通。}
+\item 声波从外耳道进入后作用于 \blank ，经 \blank 传至耳蜗的 \blank ，中耳在此完成从空气振动到机械振动的转换。
+\ans{鼓膜；听骨链（锤骨 $\to$ 砧骨 $\to$ 镫骨）；前庭窗。（p45 蓝字：听骨链、前庭窗；中耳的功能是放大来自外耳的声波振动并传输给内耳。）}
 
 \item 人的听觉范围为 \blank Hz，它受基底膜谐振频率范围的制约。
 \ans{$20\sim 20000$ Hz。}
@@ -234,8 +234,8 @@
 \item 响度的单位是 \blank ，音调的主观单位是 \blank 。
 \ans{方（phon）；梅尔（Mel）。}
 
-\item 梅尔频率与客观频率的换算关系为 $\mathrm{Mel}(f)=$ \blankl 。
-\ans{$2595\log_{10}\!\left(1+\dfrac{f}{700}\right)$。标定点：$f=0\to 0$，$f=700$ Hz $\to 781$，$f=1000$ Hz $\to 1000$ Mel。}
+\item 音调在客观上用 \blank 表示，主观感觉的单位是 \blank 尺度。
+\ans{频率；梅尔（Mel）。人耳感知音高非线性：$f\to\infty$ 时 Mel 增长趋缓，等间隔的 Mel 对应低频更精细。}
 
 \item 言语链中，言语产生方向依次为：意图 $\to$ \blank $\to$ \blank $\to$ 声源 $\to$ 声道调制 $\to$ 辐射。
 \ans{言语规划；言语运动中心编排发音运动程序（运动指令）。（本章标「掌握」的核心内容。）}
@@ -353,14 +353,14 @@
 \item 语音产生系统的线性模型由三部分组成：\blank 模型、\blank 模型和 \blank 模型。
 \ans{激励；声道；辐射。（激励：浊音为准周期脉冲串、清音为随机白噪声；声道用全极点滤波器描述；辐射使高频端约每倍频程抬升 6 dB。）}
 
-\item 由于发音器官的运动频率约在 50 Hz 以下，声道形状在 \blank ms 内可认为不变，因此语音生成系统在该区间内可用 \blank 系统近似。
-\ans{20（一般说 $20\sim 30$ ms）；线性时不变（LTI）。这正是「分帧」的物理依据。}
+\item 已知系统的输入和脉冲响应可求输出；已知输入和输出可辨识系统；语音信号处理多属于第 \blank 种情况。
+\ans{3（只有输出已知）。}
 
-\item 倒谱结果所在的变量域称为 \blank （英文 quefrency），用于截取所需倒谱段的窗函数称为 \blank 。
-\ans{类频率（倒频）；Lifter。}
+\item \blank ：信号的傅里叶变换经 \blank 运算后再进行 \blank 得到的谱（语音中一般对频谱取幅度值）。
+\ans{倒谱（Cepstrum）；对数；傅里叶反变换。（p52 蓝字定义。）}
 
-\item 线性预测的残差定义为 $\varepsilon(n)=$ \blankl 。
-\ans{$x(n)-\hat x(n)=x(n)-\sum_{i=1}^{p}a_ix(n-i)$。}
+\item 用系数 \blank 可以定义一个 \blank 阶 \blank （Linear Prediction，线性预测）。
+\ans{$\{a_i\}$；$p$；线性预测器。（p57 蓝字：将语音 $x(n)$ 看作声源 $s(n)$ 激励全极点系统 $H(z)$ 的输出。）}
 
 \item 听觉滤波器的等效矩形带宽公式为 $ERB_N=$ \blankl ，其中 $F$ 为以 Hz 为单位的中心频率。
 \ans{$24.7\left(4.37\dfrac{F}{1000}+1\right)$。}
@@ -368,8 +368,8 @@
 \item 两耳时间差（ITD）主要适用于 \blank Hz 的低频，两耳声强差（IID）主要适用于 \blank Hz 的高频。
 \ans{低于 800；高于 1600。}
 
-\item MFCC 中第 $n$ 个系数的计算式为 $C_{\mathrm{MFCC}}(n)=$ \blankl 。
-\ans{$\sum_{i=1}^{L}\lg[m(i)]\cos\!\left(\dfrac{n(i-0.5)\pi}{L}\right)$，其中 $m(i)$ 为第 $i$ 个 Mel 滤波器的输出能量。}
+\item 语音信号的频谱分析，是 \blank 和 \blank 语音信号的重要方法。
+\ans{认识；处理。（p25 蓝字原句。）}
 
 \item 无论是 MFCC 还是 LPC 系数，都 \blank （能／不能）直接展示共振峰频谱包络的细节信息。
 \ans{不能。阶数越高 MFCC 表示的频谱细节越多，但仍不能直接给出共振峰包络细节。}
@@ -511,8 +511,8 @@
 \item 高斯混合模型描述观测概率的形式为 $P(x\mid\theta)=$ \blankl ，其中权重满足 \blank 。
 \ans{$\sum_{m=1}^{M}c_m\mathcal N(x;\mu_m,\Sigma_m)$；$\sum_{m=1}^{M}c_m=1$。它用 $M$ 个高斯分布的加权和拟合复杂的数据分布。}
 
-\item 高斯混合模型的参数集合为 $\theta=$ \blank 。
-\ans{$\{\mu_k,\Sigma_k,w_k\}_{k=1}^{K}$（均值向量、协方差矩阵、权重），权重之和为 1。}
+\item 高斯混合模型可以看作是由 \blank 个 \blank 组合而成的模型，用于描述复杂的 \blank 分布。
+\ans{$M$；单高斯模型；数据（如语音数据）。使用 GMM 的原因：高斯分布具备很好的数学性质以及良好的计算性能。（p80 蓝字。）}
 
 \item N-gram 的近似假设是：词 $w_k$ 出现的概率只与前 \blank 个词有关，即 \blank 阶马尔可夫模型。
 \ans{$N-1$；$N-1$。故 $P(w_1^n)=\prod_{k=1}^{n}P(w_k\mid w_{k-N+1}^{k-1})$。}
@@ -520,11 +520,11 @@
 \item 困惑度定义为 $PP(W)=$ \blankl 。
 \ans{$P(w_1w_2\cdots w_N)^{-1/N}=P(w_1^N)^{-1/N}$，越低越好。}
 
-\item 端到端识别中，CTC 通过引入 \blank 符号解决帧与标签不对齐的问题。
-\ans{blank（空白符号）。例如输出 spike 序列「\texttt{-{}-a-bb}」对应「\texttt{ab}」；每个输出序列的概率等于填充 blank 后所有可能路径的概率之和。}
+\item CTC 的全称是 \blank ，基于 \blank 的连接时序分类；传统声学模型训练的痛点是每一帧都需要 \blank 标签，必须先用 \blank 系统自动对齐，且对齐准确性严重依赖其可靠性、反复迭代非常耗时。
+\ans{Connectionist temporal classification；神经网络；三音素；GMM-HMM。（p146 蓝字「什么是 CTC／语音识别为什么需要 CTC」。）}
 
-\item 三音素建模中，记法 $l\text{-}c\text{+}r$ 的含义是：\blank 。
-\ans{$c$ 为中心音素，$l$ 为左上下文、$r$ 为右上下文。其目的是考虑协同发音（coarticulation）效应。}
+\item \blank 是指在语流中，音段并非是静止的、分离的声音，音段会对相邻的音段产生影响；解决方法是 \blank 建模。
+\ans{协同发音（coarticulation）；三音素（考虑音素的上下文，表示为 $l\text{-}c\text{+}r$，$c$ 为中心单元、$l$ 为左相关信息、$r$ 为右相关信息）。}
 
 \end{qlist}
 
@@ -781,11 +781,11 @@
 \item 语音增强的目的是去除受损语音中的 \blank 与 \blank ，得到目标干净语音；其意义一是提高语音 \blank ，二是提高 \blank 的性能。
 \ans{背景噪声；混响；可懂度（清晰度）；语音识别等后端系统。注意不少增强技术在降噪的同时会引入失真，反而损伤可懂度。}
 
-\item 广义谱减法公式为 $|\hat X(\omega)|^{2n}=\max\left(|Y(\omega)|^{2n}-\alpha|\hat V(\omega)|^{2n},\ \beta|Y(\omega)|^{2n}\right)$，其中 $\alpha$ 称为 \blank ，$\beta$ 称为 \blank ，$n=1$ 时为 \blank 谱减、$n=0.5$ 时为 \blank 谱减。
-\ans{噪声超估计因子；频谱下限系数；功率；幅度。}
+\item \blank ：用带噪信号的频谱减去噪声信号的频谱，得到 \blank 信号的频谱估计；其典型算法还有 \blank ，后者又被称为 \blank 滤波器（最小二乘／最小平方滤波器）。
+\ans{谱减法；干净；维纳滤波；最小平方。}
 
-\item 传统增强方法中，噪声估计一般假设输入语音的前 $n$ 帧为 \blank ，并假设噪声是 \blank 或缓慢变化的过程。
-\ans{静音；平稳。}
+\item 基于传统信号处理的语音增强中，最重要的是 \blank ；该方法 \blank 小、\blank 性强，典型算法为谱减法和维纳滤波器。
+\ans{噪声估计；计算量；通用。}
 
 \item 基于掩蔽的语音增强，增强阶段把 \blank 与 \blank 相乘，得到干净语音频谱的估计。
 \ans{含噪语音的语谱图；模型输出的掩蔽值。}
@@ -939,8 +939,8 @@
 \item 说话人分类训练时，输出层用 \blank 归一化，用 \blank 衡量输出与标签的差异。
 \ans{softmax；交叉熵。}
 
-\item GMM 模型的参数集合 $\theta=\{\mu_k,\Sigma_k,w_k\}_{k=1}^{K}$ 中，$w_k$ 为权重且满足 \blank 。
-\ans{$\sum_{k=1}^{K}w_k=1$。}
+\item MAP 自适应需要调整来自 UBM 的所有参数，包括 \blank 、\blank 和 \blank 。
+\ans{权重；均值向量；协方差矩阵。（p37 蓝字：计算语音帧到混合高斯分量的相似度 $\to$ 计算零阶和一阶统计量 $\to$ 调整参数（如平均向量 $\mu_k$）。）}
 
 \end{qlist}
 
