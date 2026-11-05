@@ -228,14 +228,14 @@
 \item 声波从外耳道进入后作用于 \blank ，经 \blank 传至耳蜗的 \blank ，中耳在此完成从空气振动到机械振动的转换。
 \ans{鼓膜；听骨链（锤骨 $\to$ 砧骨 $\to$ 镫骨）；前庭窗。（p45 蓝字：听骨链、前庭窗；中耳的功能是放大来自外耳的声波振动并传输给内耳。）}
 
-\item 人的听觉范围为 \blank Hz，它受基底膜谐振频率范围的制约。
-\ans{$20\sim 20000$ Hz。}
+\item 外耳包括耳廓和外耳道，主要起 \blank 的作用；外耳道是声波传导的通路，一端 \blank ，另一端由 \blank 封闭。
+\ans{集声；开放；鼓膜。（外耳道长约 2.5 cm，作为一端闭一端开的声管，初次谐振约 3.5 kHz、二次约 10 kHz——p44 蓝字。）}
 
-\item 响度的单位是 \blank ，音调的主观单位是 \blank 。
-\ans{方（phon）；梅尔（Mel）。}
+\item 耳蜗由三个充满淋巴液的腔组成：\blank 、\blank 、\blank ；\blank 把耳蜗内液体的声音振动转化为电学信号，\blank 则机械地放大传入的低水平声音、并对过强声音进行能动的抑制。
+\ans{前庭阶、蜗管、鼓阶；内毛细胞；外毛细胞。（p47 蓝字。）}
 
-\item 音调在客观上用 \blank 表示，主观感觉的单位是 \blank 尺度。
-\ans{频率；梅尔（Mel）。人耳感知音高非线性：$f\to\infty$ 时 Mel 增长趋缓，等间隔的 Mel 对应低频更精细。}
+\item 响度反映人 \blank 感觉不同频率成分的声音强弱的物理量；\blank 是声音小到人耳刚刚能听见时的大小，\blank 是声音大到人耳刚刚感觉痛时的大小。
+\ans{主观；听阈；痛阈。（p52 蓝字；响度是主观心理量、与频率有关——同样音强、频率不同则响度不同。）}
 
 \item 言语链中，言语产生方向依次为：意图 $\to$ \blank $\to$ \blank $\to$ 声源 $\to$ 声道调制 $\to$ 辐射。
 \ans{言语规划；言语运动中心编排发音运动程序（运动指令）。（本章标「掌握」的核心内容。）}
@@ -362,17 +362,17 @@
 \item 用系数 \blank 可以定义一个 \blank 阶 \blank （Linear Prediction，线性预测）。
 \ans{$\{a_i\}$；$p$；线性预测器。（p57 蓝字：将语音 $x(n)$ 看作声源 $s(n)$ 激励全极点系统 $H(z)$ 的输出。）}
 
-\item 听觉滤波器的等效矩形带宽公式为 $ERB_N=$ \blankl ，其中 $F$ 为以 Hz 为单位的中心频率。
-\ans{$24.7\left(4.37\dfrac{F}{1000}+1\right)$。}
+\item \blank （带通滤波器）实现听觉末梢系统中的声学频率分析；\blank 是根据心理物理实验结果获得的滤波器带宽。
+\ans{听觉滤波器；等效矩形带宽（ERB, Equivalent Rectangular Bandwidth）。}
 
-\item 两耳时间差（ITD）主要适用于 \blank Hz 的低频，两耳声强差（IID）主要适用于 \blank Hz 的高频。
-\ans{低于 800；高于 1600。}
+\item \blank （ITD）：来自右侧的声音到达右耳比左耳早；\blank （IID）：头部遮挡使远侧耳强度更低。
+\ans{两耳时间差（Interaural Time Difference）；两耳声强差（Interaural Intensity Difference）。}
 
 \item 语音信号的频谱分析，是 \blank 和 \blank 语音信号的重要方法。
 \ans{认识；处理。（p25 蓝字原句。）}
 
-\item 无论是 MFCC 还是 LPC 系数，都 \blank （能／不能）直接展示共振峰频谱包络的细节信息。
-\ans{不能。阶数越高 MFCC 表示的频谱细节越多，但仍不能直接给出共振峰包络细节。}
+\item \blank （200 Hz，窗长 5 ms）频率分辨率低、时间分辨率高；\blank 频率分辨率高、时间分辨率低。
+\ans{宽带滤波器；窄带滤波器。}
 
 \end{qlist}
 
@@ -496,23 +496,21 @@
 \item 前向变量定义为 $\alpha_t(i)=$ \blankl 。
 \ans{$P(o_1o_2\cdots o_t,\ q_t=i\mid\lambda)$，即到 $t$ 时刻观测为 $o_1\dots o_t$ 且状态为 $s_i$ 的概率。}
 
-\item 后向算法的初始条件为 $\beta_T(i)=$ \blank ，终止式为 $P(O\mid\lambda)=$ \blankl 。
-\ans{$1$；$\sum_{i=1}^{N}\pi_ib_i(o_1)\beta_1(i)$。}
+\item \blank 定义为 $P(o_{t+1}\cdots o_T\mid q_t=i,\lambda)$，对应的算法称为 \blank 算法。
+\ans{后向变量；后向。}
 
-\item 前向递推公式为 $\alpha_t(j)=$ \blankl 。
-\ans{$\left[\sum_{i=1}^{N}\alpha_{t-1}(i)a_{ij}\right]b_j(o_t)$。}
+\item 前向／后向算法的计算量为 $O($ \blank $)$；当 $N=5$、$T=100$ 时，只需约 \blank 次乘法运算。
+\ans{$N^2T$；2500。}
 
-\item 后向递推公式为 $\beta_t(i)=$ \blankl 。
-\ans{$\sum_{j=1}^{N}\beta_{t+1}(j)a_{ij}b_j(o_t)$。后向变量含义为 $P(o_{t+1}\cdots o_T\mid q_t=i,\lambda)$。}
+\item 后向变量定义为 \blank （用语言叙述）；其算法计算量为 \blank 数量级。
+\ans{$P(o_{t+1}\cdots o_T\mid q_t=i,\lambda)$（从 $t+1$ 到 $T$ 的观测且 $t$ 时刻状态为 $i$ 的概率）；$N^2T$。}
 
-\item Viterbi 的递推公式为 $\delta_t(j)=$ \blankl ，回溯指针 $\varphi_t(j)=$ \blankl 。
-\ans{$\max_{1\le i\le N}[\delta_{t-1}(i)a_{ij}]\,b_j(o_t)$；$\arg\max_{1\le i\le N}[\delta_{t-1}(i)a_{ij}]$。}
+\item 语音识别解码可采用 \blank 搜索算法；Viterbi 算法最终得到最佳状态序列 \blank 以及所对应的概率 \blank 。
+\ans{Viterbi；$Q^*$；$P^*$。}
 
-\item 高斯混合模型描述观测概率的形式为 $P(x\mid\theta)=$ \blankl ，其中权重满足 \blank 。
-\ans{$\sum_{m=1}^{M}c_m\mathcal N(x;\mu_m,\Sigma_m)$；$\sum_{m=1}^{M}c_m=1$。它用 $M$ 个高斯分布的加权和拟合复杂的数据分布。}
+\item 高斯混合模型可以看作是由 \blank 个单高斯模型组合而成的模型，用来描述复杂的 \blank 分布。
+\ans{$M$；数据（如语音数据）。}
 
-\item 高斯混合模型可以看作是由 \blank 个 \blank 组合而成的模型，用于描述复杂的 \blank 分布。
-\ans{$M$；单高斯模型；数据（如语音数据）。使用 GMM 的原因：高斯分布具备很好的数学性质以及良好的计算性能。（p80 蓝字。）}
 
 \item N-gram 的近似假设是：词 $w_k$ 出现的概率只与前 \blank 个词有关，即 \blank 阶马尔可夫模型。
 \ans{$N-1$；$N-1$。故 $P(w_1^n)=\prod_{k=1}^{n}P(w_k\mid w_{k-N+1}^{k-1})$。}
@@ -637,8 +635,8 @@
 
 \begin{qlist}
 
-\item 广义的语音合成除 TTS 外，还包括 \blank 、\blank 、\blank 、\blank 等。
-\ans{语音转换（说话人转换、语音到歌唱转换、情感转换、口音转换）；歌唱合成；可视语音合成。（答出三项即可。）}
+\item 语音合成的两个目标是 \blank （Intelligibility，听者能听懂）与 \blank （Naturalness，听起来像不像真人说的）。
+\ans{可懂度；自然度。}
 
 \item 文本分析一般包含三步：\blank 、\blank 、\blank 。
 \ans{分词与词性标注；文本归一化；字音转换（标音）。字音转换需处理协同发音、多音字消歧、儿化音标注、变调等。}
@@ -649,14 +647,14 @@
 \item 韵律在生成端主要通过 \blank 、\blank 、\blank 三个量的变化实现。
 \ans{音高（$F_0$）；持续时间；能量。}
 
-\item 基于 HMM 的语音合成，训练流程为：单音素训练 $\to$ \blank $\to$ \blank $\to$ 聚类后模型训练。
-\ans{上下文相关 HMM（三音素等）；决策树聚类。}
+\item 统计参数语音合成分 \blank 与 \blank 两条路线；SPSS 的四个优点是：无需大规模精心设计的语音数据库、\blank 、\blank 、可扩展性好易维护。
+\ans{基于 HMM；基于 DNN；合成语音的质量稳定；可以控制韵律。}
 
-\item HMM 合成中，合成阶段基于 \blank 准则由 HMM 生成声学参数，再由 \blank 把声学参数转换为语音波形。
-\ans{似然最大化；声码器。}
+\item \blank 语音合成兴起于 1990 年左右（规则驱动需大语料库），\blank 语音合成兴起于 1970 年左右。
+\ans{波形拼接；参数。}
 
-\item 过平滑问题使 HMM 合成语音 \blank ，其根源是状态参数分布为 \blank 的结果。
-\ans{平淡、音质不好；统计平均。}
+\item 如何解决波形拼接合成的问题？答案指向 \blank 语音合成。
+\ans{统计参数（SPSS）。其优点：无需大规模精心设计的语音数据库、合成语音质量稳定、可以控制韵律、可扩展性好易于维护。}
 
 \item 端到端语音合成直接读文本作为输入、不使用中间表示，直接输出 \blank ，其优化目标是 \blank 。
 \ans{语音波形；整个系统（而不是各子系统），从而减少人工假设与多阶段建模造成的性能损失。}
@@ -793,17 +791,17 @@
 \item 理想二值掩蔽 IBM 的二分类训练常用 \blank 损失；理想比率掩蔽 IRM 的估计常用 \blank 损失。
 \ans{交叉熵（CE）；均方误差（MSE）。}
 
-\item 麦克风阵列中，到达时间差 $\tau_s$ 与到达方向 $\theta_s$ 的关系为 $\tau_s=$ \blankl ，由此可得 DOA 估计 $\hat\theta_s=$ \blankl 。
-\ans{$\dfrac{d\sin\theta_s}{c}$；$\sin^{-1}\!\left(\dfrac{c\hat\tau_s}{d}\right)$。其中 $d$ 为麦克风间隔、$c$ 为声速。}
+\item 麦克风阵列常见的两种几何形态是 \blank 与 \blank ；通过调整加权系数，对目标声源方向实现 \blank 、对其他方向实现 \blank 。
+\ans{均匀线性阵列；均匀圆形阵列；增强；抑制。（此为波束形成 Beamforming。）}
 
 \item TDOA 通过计算两路信号的 \blank 来估计，其峰值出现的延迟即为 $\hat\tau_s=\arg\max_\tau\phi_{12}(\tau)$。
 \ans{互相关函数。因为 $\phi_{12}(\tau)=E[x_1(t)x_2(t+\tau)]=\phi_{11}(\tau-\tau_s)$，当 $\tau=\tau_s$ 时自相关取最大值。}
 
-\item 语音增强中，多目标训练指同一个网络同时输出 \blank 与 \blank ；其依据是两者在不同信噪比下 \blank 。
-\ans{干净语音 $X$；掩蔽（如 $X/Y$）；互补性很强（很难断定哪一种更好，尤其在噪声场景不可见时）。}
+\item 复杂听觉场景下，人依靠 \blank 刺激驱动（被动）与 \blank 任务驱动（主动）的组合来选择特定的听觉物体。
+\ans{自下而上；自上而下。}
 
-\item 多任务学习把 \blank 等任务作为增强任务的互补信息，反过来增强后的语音也能提升这些任务的性能。
-\ans{语音识别（ASR）、说话人确认（ASV）等。}
+\item 多目标训练指同一个网络同时输出干净语音 $X$ 与 \blank ；其技巧依据是映射与掩蔽在不同信噪比下 \blank 。
+\ans{掩蔽（如 $X/Y$）；互补性很强。}
 
 \end{qlist}
 
@@ -927,8 +925,8 @@
 \item 说话人确认可转化为两个假设的检验：$H_0$ 表示 \blank ，$H_1$ 表示 \blank 。
 \ans{测试段 $Y$ 来自假设说话人（零假设）；测试段 $Y$ 不是来自假设说话人（备择假设）。}
 
-\item 对数似然比打分为 $\Lambda(Y)=$ \blankl ，判决规则为 $\Lambda(Y)$ \blank 阈值 $\eta$ 时接受。
-\ans{$\mathcal L(Y\mid\theta_{\text{speaker}})-\mathcal L(Y\mid\theta_{\text{UBM}})$；大于。其中 $\mathcal L(Y\mid\theta)=\frac{1}{T}\sum_{t=1}^{T}\log p(x_t\mid\theta)$ 为平均对数似然。}
+\item GMM-UBM 范式中，说话人相关的 GMM 由 \blank 唯一表示，方法是仅调整 \blank 向量，而 \blank 和 \blank 保持与 UBM 相同。
+\ans{均值向量；均值；权重；协方差矩阵。（由此把各分量均值串接成 GMM 超向量。）}
 
 \item 现代声纹识别系统主要基于说话人嵌入，包含三步：\blank 、\blank 、\blank 。
 \ans{特征提取；说话人嵌入；打分。}
@@ -936,8 +934,8 @@
 \item x-vector 的帧处理器常采用 \blank ，其对时间上下文信息的提取取决于 \blank 的宽度；扩大视野可用 \blank 或堆叠更多空洞一维卷积层。
 \ans{延时神经网络（TDNN）；感受野；空洞卷积。}
 
-\item 说话人分类训练时，输出层用 \blank 归一化，用 \blank 衡量输出与标签的差异。
-\ans{softmax；交叉熵。}
+\item x-vector 的嵌入提取由若干相连网络层组成，其中一层设计为 \blank ；\blank 的输出（非线性层之前）就是 x-vector 说话人嵌入。
+\ans{瓶颈层（Bottleneck layer）；瓶颈层。}
 
 \item MAP 自适应需要调整来自 UBM 的所有参数，包括 \blank 、\blank 和 \blank 。
 \ans{权重；均值向量；协方差矩阵。（p37 蓝字：计算语音帧到混合高斯分量的相似度 $\to$ 计算零阶和一阶统计量 $\to$ 调整参数（如平均向量 $\mu_k$）。）}

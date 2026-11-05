@@ -1,0 +1,1724 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pdf2xml SYSTEM "pdf2xml.dtd">
+
+<pdf2xml producer="poppler" version="24.02.0">
+<page number="1" position="absolute" top="0" left="0" height="810" width="1080">
+	<fontspec id="0" size="54" family="BCDEEE+SimHei" color="#ffffff"/>
+<text top="320" left="490" width="162" height="54" font="0">第六章</text>
+<text top="320" left="707" width="217" height="54" font="0">声纹识别</text>
+</page>
+<page number="2" position="absolute" top="0" left="0" height="810" width="1080">
+	<fontspec id="1" size="66" family="BCDEEE+SimHei" color="#000000"/>
+	<fontspec id="2" size="36" family="BCDFEE+Wingdings" color="#00007c"/>
+	<fontspec id="3" size="48" family="TimesNewRomanPSMT" color="#ff0000"/>
+	<fontspec id="4" size="48" family="BCDEEE+SimHei" color="#ff0000"/>
+	<fontspec id="5" size="48" family="TimesNewRomanPSMT" color="#000000"/>
+	<fontspec id="6" size="48" family="BCDEEE+SimHei" color="#000000"/>
+	<fontspec id="7" size="18" family="TimesNewRomanPSMT" color="#000000"/>
+<text top="103" left="65" width="198" height="66" font="1">第六章</text>
+<text top="103" left="329" width="265" height="66" font="1">声纹识别</text>
+<text top="229" left="65" width="27" height="40" font="2">◼</text>
+<text top="229" left="105" width="72" height="43" font="3">6.1 </text>
+<text top="221" left="177" width="288" height="48" font="4">声纹识别概述</text>
+<text top="299" left="65" width="27" height="40" font="2">◼</text>
+<text top="298" left="105" width="72" height="43" font="5">6.2 </text>
+<text top="290" left="177" width="433" height="48" font="6">传统声纹识别算法（</text>
+<text top="298" left="610" width="246" height="43" font="5">GMM-UBM</text>
+<text top="290" left="856" width="48" height="48" font="6">）</text>
+<text top="368" left="65" width="27" height="40" font="2">◼</text>
+<text top="367" left="105" width="72" height="43" font="5">6.3 </text>
+<text top="359" left="177" width="624" height="48" font="6">基于深度学习的声纹识别算法</text>
+<text top="437" left="65" width="27" height="40" font="2">◼</text>
+<text top="436" left="105" width="72" height="43" font="5">6.4 </text>
+<text top="428" left="177" width="433" height="48" font="6">声纹识别技术的展望</text>
+<text top="770" left="1006" width="9" height="16" font="7">2</text>
+</page>
+<page number="3" position="absolute" top="0" left="0" height="810" width="1080">
+	<fontspec id="8" size="34" family="BCDFEE+Wingdings" color="#9999cc"/>
+	<fontspec id="9" size="42" family="TimesNewRomanPSMT" color="#ff0000"/>
+	<fontspec id="10" size="42" family="BCDEEE+SimHei" color="#ff0000"/>
+	<fontspec id="11" size="42" family="BCDEEE+SimHei" color="#0000ff"/>
+	<fontspec id="12" size="42" family="TimesNewRomanPSMT" color="#000000"/>
+	<fontspec id="13" size="42" family="BCDEEE+SimHei" color="#000000"/>
+<text top="103" left="65" width="198" height="66" font="1">第六章</text>
+<text top="103" left="329" width="265" height="66" font="1">声纹识别</text>
+<text top="229" left="65" width="27" height="40" font="2">◼</text>
+<text top="229" left="105" width="72" height="43" font="5">6.1 </text>
+<text top="221" left="177" width="288" height="48" font="6">声纹识别概述</text>
+<text top="293" left="119" width="30" height="37" font="8"></text>
+<text top="295" left="153" width="94" height="38" font="9">6.1.1 </text>
+<text top="288" left="247" width="378" height="42" font="10">声纹识别的基本概念</text>
+<text top="288" left="626" width="252" height="42" font="11">（基本概念）</text>
+<text top="354" left="119" width="30" height="37" font="8"></text>
+<text top="355" left="153" width="94" height="38" font="12">6.1.2 </text>
+<text top="348" left="247" width="378" height="42" font="13">声纹识别方法的回顾</text>
+<text top="348" left="626" width="378" height="42" font="11">（了解、基本概念）</text>
+<text top="414" left="119" width="30" height="37" font="8"></text>
+<text top="416" left="153" width="94" height="38" font="12">6.1.3 </text>
+<text top="409" left="247" width="378" height="42" font="13">声纹识别的典型应用</text>
+<text top="409" left="626" width="168" height="42" font="11">（了解）</text>
+<text top="480" left="65" width="27" height="40" font="2">◼</text>
+<text top="480" left="105" width="72" height="43" font="5">6.2 </text>
+<text top="471" left="177" width="432" height="48" font="6">传统声纹识别算法（</text>
+<text top="480" left="610" width="246" height="43" font="5">GMM-UBM</text>
+<text top="471" left="856" width="48" height="48" font="6">）</text>
+<text top="549" left="65" width="27" height="40" font="2">◼</text>
+<text top="549" left="105" width="72" height="43" font="5">6.3 </text>
+<text top="540" left="177" width="624" height="48" font="6">基于深度学习的声纹识别算法</text>
+<text top="618" left="65" width="27" height="40" font="2">◼</text>
+<text top="618" left="105" width="72" height="43" font="5">6.4 </text>
+<text top="609" left="177" width="433" height="48" font="6">声纹识别技术的展望</text>
+<text top="770" left="1006" width="9" height="16" font="7">3</text>
+</page>
+<page number="4" position="absolute" top="0" left="0" height="810" width="1080">
+	<fontspec id="14" size="27" family="BCDFEE+Wingdings" color="#00007c"/>
+	<fontspec id="15" size="36" family="BCDEEE+SimHei" color="#000000"/>
+	<fontspec id="16" size="29" family="BCDFEE+Wingdings" color="#9999cc"/>
+	<fontspec id="17" size="36" family="BCDEEE+SimHei" color="#0000ff"/>
+	<fontspec id="18" size="42" family="BCDEEE+SimHei" color="#0033cc"/>
+	<fontspec id="19" size="42" family="BCDGEE+Times" color="#000000"/>
+<text top="78" left="65" width="385" height="48" font="6">什么是声纹识别？</text>
+<text top="180" left="53" width="20" height="30" font="14">◼</text>
+<text top="174" left="94" width="108" height="36" font="15">定义：</text>
+<text top="231" left="107" width="26" height="32" font="16"></text>
+<text top="225" left="141" width="396" height="36" font="17">声纹识别（说话人识别）</text>
+<text top="225" left="537" width="468" height="36" font="15">作为生物识别（指纹识别、掌</text>
+<text top="269" left="141" width="864" height="36" font="15">纹识别、人脸识别和虹膜识别等）的一种，是根据说话</text>
+<text top="310" left="141" width="577" height="36" font="15">人的声音特性进行身份辨识的任务。</text>
+<text top="367" left="107" width="26" height="32" font="16"></text>
+<text top="362" left="141" width="180" height="36" font="15">输入：语音</text>
+<text top="419" left="107" width="26" height="32" font="16"></text>
+<text top="414" left="141" width="288" height="36" font="15">输出：说话人身份</text>
+<text top="542" left="409" width="168" height="42" font="18">声纹识别</text>
+<text top="592" left="451" width="84" height="42" font="18">系统</text>
+<text top="562" left="790" width="70" height="46" font="19">Bob</text>
+<text top="635" left="155" width="72" height="36" font="17">语音</text>
+<text top="634" left="734" width="181" height="36" font="17">说话人身份</text>
+<text top="770" left="1006" width="9" height="16" font="7">4</text>
+</page>
+<page number="5" position="absolute" top="0" left="0" height="810" width="1080">
+	<fontspec id="20" size="30" family="BCDHEE+SimHei" color="#000000"/>
+	<fontspec id="21" size="30" family="BCDEEE+SimHei" color="#000000"/>
+	<fontspec id="22" size="30" family="BCDEEE+SimHei" color="#006fc0"/>
+	<fontspec id="23" size="30" family="BCDEEE+SimHei" color="#ff0000"/>
+	<fontspec id="24" size="30" family="BCDHEE+SimHei" color="#ff0000"/>
+<text top="83" left="24" width="1060" height="48" font="6">语音中语言、副语言和非语言信息的感知（回顾）</text>
+<text top="445" left="211" width="90" height="30" font="20">Speech</text>
+<text top="481" left="211" width="60" height="30" font="21">言语</text>
+<text top="326" left="424" width="150" height="30" font="20">Linguistic</text>
+<text top="362" left="424" width="120" height="30" font="21">语言信息</text>
+<text top="447" left="428" width="150" height="30" font="21">副语言信息</text>
+<text top="483" left="428" width="105" height="30" font="20">Prosody</text>
+<text top="593" left="428" width="150" height="30" font="21">非语言信息</text>
+<text top="629" left="428" width="135" height="30" font="20">Personal </text>
+<text top="665" left="428" width="165" height="30" font="20">information</text>
+<text top="460" left="726" width="120" height="30" font="21">情感识别</text>
+<text top="600" left="738" width="150" height="30" font="21">说话人识别</text>
+<text top="636" left="738" width="150" height="30" font="21">说话人辨认</text>
+<text top="185" left="290" width="120" height="30" font="21">语音识别</text>
+<text top="260" left="300" width="120" height="30" font="21">语音合成</text>
+<text top="163" left="436" width="120" height="30" font="22">语音转写</text>
+<text top="234" left="442" width="150" height="30" font="23">文语转换（</text>
+<text top="234" left="592" width="45" height="30" font="24">TTS</text>
+<text top="234" left="637" width="30" height="30" font="23">）</text>
+<text top="770" left="1006" width="9" height="16" font="7">5</text>
+</page>
+<page number="6" position="absolute" top="0" left="0" height="810" width="1080">
+<text top="78" left="65" width="578" height="48" font="6">与其他语音处理方法的区别</text>
+<text top="217" left="66" width="20" height="30" font="14">◼</text>
+<text top="211" left="107" width="612" height="36" font="15">语音识别：输出语音携带的文本信息；</text>
+<text top="269" left="66" width="20" height="30" font="14">◼</text>
+<text top="262" left="107" width="612" height="36" font="15">情感识别：输出语音携带的情感信息；</text>
+<text top="321" left="66" width="20" height="30" font="14">◼</text>
+<text top="314" left="107" width="540" height="36" font="15">语种识别：输出语音所属的语种；</text>
+<text top="373" left="66" width="20" height="30" font="14">◼</text>
+<text top="366" left="107" width="468" height="36" font="15">语音合成：由文本输出语音；</text>
+<text top="425" left="66" width="20" height="30" font="14">◼</text>
+<text top="418" left="107" width="144" height="36" font="17">声纹识别</text>
+<text top="418" left="251" width="576" height="36" font="15">：输出语音携带的说话人身份信息。</text>
+<text top="770" left="1006" width="9" height="16" font="7">6</text>
+</page>
+<page number="7" position="absolute" top="0" left="0" height="810" width="1080">
+<text top="86" left="65" width="675" height="48" font="6">说话人身份信息相关的语音属性</text>
+<text top="202" left="49" width="20" height="30" font="14">◼</text>
+<text top="195" left="90" width="612" height="36" font="17">低级属性：与发声器官的生理方面相关</text>
+<text top="251" left="103" width="26" height="32" font="16"></text>
+<text top="245" left="137" width="180" height="36" font="15">声道频谱；</text>
+<text top="302" left="103" width="26" height="32" font="16"></text>
+<text top="297" left="137" width="216" height="36" font="15">共振峰轨迹。</text>
+<text top="358" left="49" width="20" height="30" font="14">◼</text>
+<text top="351" left="90" width="612" height="36" font="17">高级属性：与说话方式的行为差异相关</text>
+<text top="406" left="103" width="26" height="32" font="16"></text>
+<text top="401" left="137" width="108" height="36" font="15">韵律；</text>
+<text top="458" left="103" width="26" height="32" font="16"></text>
+<text top="453" left="137" width="108" height="36" font="15">口音；</text>
+<text top="510" left="103" width="26" height="32" font="16"></text>
+<text top="505" left="137" width="288" height="36" font="15">话语中词的选择。</text>
+<text top="770" left="1006" width="9" height="16" font="7">7</text>
+</page>
+<page number="8" position="absolute" top="0" left="0" height="810" width="1080">
+	<fontspec id="25" size="32" family="BCDFEE+Wingdings" color="#00007c"/>
+	<fontspec id="26" size="36" family="BCDIEE+Calibri" color="#0000ff"/>
+	<fontspec id="27" size="29" family="ArialMT" color="#9999cc"/>
+<text top="204" left="58" width="24" height="35" font="25">◼</text>
+<text top="197" left="98" width="294" height="42" font="13">按照输入的模式</text>
+<text top="257" left="112" width="26" height="32" font="16"></text>
+<text top="252" left="145" width="396" height="36" font="17">文本相关的说话人识别（</text>
+<text top="256" left="541" width="231" height="36" font="26">Text-dependent</text>
+<text top="252" left="772" width="36" height="36" font="17">）</text>
+<text top="309" left="112" width="10" height="32" font="27">•</text>
+<text top="305" left="145" width="757" height="36" font="15">注册和测试话语共享（至少部分）相同的内容；</text>
+<text top="361" left="112" width="10" height="32" font="27">•</text>
+<text top="356" left="145" width="685" height="36" font="15">目的是分析给定语音语境下的说话人特征；</text>
+<text top="413" left="112" width="10" height="32" font="27">•</text>
+<text top="408" left="145" width="216" height="36" font="15">更高的性能。</text>
+<text top="516" left="112" width="26" height="32" font="16"></text>
+<text top="511" left="145" width="396" height="36" font="17">文本无关的说话人识别（</text>
+<text top="515" left="541" width="258" height="36" font="26">Text-independent</text>
+<text top="511" left="799" width="36" height="36" font="17">）</text>
+<text top="569" left="112" width="10" height="32" font="27">•</text>
+<text top="564" left="145" width="901" height="36" font="15">注册和测试话语可以使用任意文本（甚至不同的语言）；</text>
+<text top="621" left="112" width="10" height="32" font="27">•</text>
+<text top="616" left="145" width="541" height="36" font="15">不使用关于口语内容的先验信息；</text>
+<text top="672" left="112" width="10" height="32" font="27">•</text>
+<text top="668" left="145" width="252" height="36" font="15">更高的便利性。</text>
+<text top="86" left="65" width="337" height="48" font="6">声纹识别的分类</text>
+<text top="770" left="1006" width="9" height="16" font="7">8</text>
+</page>
+<page number="9" position="absolute" top="0" left="0" height="810" width="1080">
+	<fontspec id="28" size="19" family="BCDFEE+Wingdings" color="#00007c"/>
+	<fontspec id="29" size="30" family="TimesNewRomanPSMT" color="#000000"/>
+<text top="81" left="65" width="482" height="48" font="6">声纹识别的分类（续）</text>
+<text top="219" left="66" width="20" height="30" font="14">◼</text>
+<text top="212" left="107" width="252" height="36" font="15">按照输出的模式</text>
+<text top="267" left="120" width="26" height="32" font="16"></text>
+<text top="262" left="154" width="216" height="36" font="17">说话人辨认（</text>
+<text top="266" left="370" width="318" height="36" font="26">Speaker Identification</text>
+<text top="262" left="689" width="36" height="36" font="17">）</text>
+<text top="320" left="174" width="15" height="21" font="28">➢</text>
+<text top="312" left="201" width="630" height="30" font="21">判定待识别说话人来自注册集中的哪个说话人；</text>
+<text top="363" left="174" width="15" height="21" font="28">➢</text>
+<text top="360" left="201" width="15" height="27" font="29">1</text>
+<text top="355" left="216" width="30" height="30" font="21">：</text>
+<text top="360" left="247" width="29" height="27" font="29">N </text>
+<text top="355" left="275" width="181" height="30" font="21">语音的对比。</text>
+<text top="526" left="120" width="26" height="32" font="16"></text>
+<text top="521" left="154" width="216" height="36" font="17">说话人确认（</text>
+<text top="525" left="370" width="291" height="36" font="26">Speaker Verification</text>
+<text top="521" left="661" width="36" height="36" font="17">）</text>
+<text top="580" left="174" width="15" height="21" font="28">➢</text>
+<text top="571" left="201" width="660" height="30" font="21">判定待识别语音是否来自注册集中的某个说话人；</text>
+<text top="623" left="174" width="15" height="21" font="28">➢</text>
+<text top="615" left="201" width="91" height="30" font="21">成对或</text>
+<text top="620" left="292" width="15" height="27" font="29">1</text>
+<text top="615" left="307" width="30" height="30" font="21">：</text>
+<text top="620" left="337" width="15" height="27" font="29">1</text>
+<text top="615" left="352" width="180" height="30" font="21">语音的对比。</text>
+<text top="770" left="1006" width="9" height="16" font="7">9</text>
+</page>
+<page number="10" position="absolute" top="0" left="0" height="810" width="1080">
+	<fontspec id="30" size="42" family="BCDHEE+SimHei" color="#000000"/>
+	<fontspec id="31" size="27" family="BCDEEE+SimHei" color="#0000ff"/>
+<text top="81" left="65" width="482" height="48" font="6">声纹识别的分类（续）</text>
+<text top="187" left="58" width="24" height="35" font="25">◼</text>
+<text top="180" left="98" width="252" height="42" font="13">说话人辨认（</text>
+<text top="180" left="350" width="462" height="42" font="30">Speaker Identification</text>
+<text top="180" left="812" width="42" height="42" font="13">）</text>
+<text top="240" left="112" width="26" height="32" font="16"></text>
+<text top="235" left="145" width="756" height="36" font="15">判定待识别说话人来自注册集中的哪个说话人；</text>
+<text top="294" left="112" width="26" height="32" font="16"></text>
+<text top="289" left="145" width="793" height="36" font="15">来自未知说话者的语音样本与一组标记样本进行比</text>
+<text top="333" left="145" width="793" height="36" font="15">较，未知说话人被识别为语音与输入语音样本最匹</text>
+<text top="373" left="145" width="216" height="36" font="15">配的说话人。</text>
+<text top="745" left="67" width="486" height="27" font="31">确定未知说话人是否是一组人中的特定人</text>
+<text top="770" left="997" width="18" height="16" font="7">10</text>
+</page>
+<page number="11" position="absolute" top="0" left="0" height="810" width="1080">
+	<fontspec id="32" size="36" family="BCDHEE+SimHei" color="#000000"/>
+	<fontspec id="33" size="36" family="BCDIEE+Calibri" color="#000000"/>
+<text top="81" left="65" width="482" height="48" font="6">声纹识别的分类（续）</text>
+<text top="219" left="66" width="20" height="30" font="14">◼</text>
+<text top="212" left="107" width="216" height="36" font="15">说话人确认（</text>
+<text top="212" left="323" width="360" height="36" font="32">Speaker Verification</text>
+<text top="212" left="683" width="36" height="36" font="15">）</text>
+<text top="267" left="120" width="26" height="32" font="16"></text>
+<text top="262" left="154" width="684" height="36" font="15">判断说话人身份是否与其声明的身份相符；</text>
+<text top="321" left="120" width="26" height="32" font="16"></text>
+<text top="316" left="154" width="792" height="36" font="15">由未知说话人提出身份声明。来自说话人的语音样</text>
+<text top="359" left="154" width="792" height="36" font="15">本与声称身份的注册样本进行比较。如果匹配足够</text>
+<text top="400" left="154" width="792" height="36" font="15">好（即通过给定的阈值），则系统接受身份声明。</text>
+<text top="457" left="120" width="26" height="32" font="16"></text>
+<text top="452" left="154" width="324" height="36" font="15">辨认任务可以分解为</text>
+<text top="456" left="478" width="23" height="36" font="33">N</text>
+<text top="452" left="501" width="468" height="36" font="15">对说话人的比较。验证任务更</text>
+<text top="495" left="154" width="144" height="36" font="15">为基础。</text>
+<text top="770" left="998" width="17" height="16" font="7">11</text>
+</page>
+<page number="12" position="absolute" top="0" left="0" height="810" width="1080">
+	<fontspec id="34" size="36" family="TimesNewRomanPSMT" color="#000000"/>
+	<fontspec id="35" size="36" family="BCDJEE+CambriaMath" color="#000000"/>
+<text top="90" left="49" width="385" height="48" font="6">声纹识别评价指标</text>
+<text top="181" left="58" width="20" height="30" font="14">◼</text>
+<text top="175" left="98" width="180" height="36" font="15">等错误率（</text>
+<text top="181" left="278" width="244" height="32" font="34">Equal Error Rate</text>
+<text top="175" left="522" width="36" height="36" font="15">）</text>
+<text top="231" left="112" width="26" height="32" font="16"></text>
+<text top="226" left="145" width="396" height="36" font="15">调整阈值，使得误拒绝率</text>
+<text top="230" left="541" width="309" height="36" font="33">(False Rejection Rate</text>
+<text top="226" left="850" width="36" height="36" font="15">，</text>
+<text top="230" left="886" width="67" height="36" font="33">FRR)</text>
+<text top="226" left="953" width="36" height="36" font="15">等</text>
+<text top="269" left="145" width="180" height="36" font="15">于误接受率</text>
+<text top="273" left="325" width="363" height="36" font="33">  (False Acceptance Rate</text>
+<text top="269" left="688" width="36" height="36" font="15">，</text>
+<text top="273" left="724" width="66" height="36" font="33">FAR)</text>
+<text top="269" left="790" width="144" height="36" font="15">，此时的</text>
+<text top="273" left="934" width="55" height="36" font="33">FAR</text>
+<text top="312" left="145" width="36" height="36" font="15">与</text>
+<text top="316" left="181" width="56" height="36" font="33">FRR</text>
+<text top="312" left="237" width="324" height="36" font="15">的值称为等错误率。</text>
+<text top="369" left="112" width="26" height="32" font="16"></text>
+<text top="364" left="145" width="144" height="36" font="15">误拒绝率</text>
+<text top="368" left="289" width="303" height="36" font="33">(False Rejection Rate</text>
+<text top="364" left="593" width="36" height="36" font="15">，</text>
+<text top="368" left="629" width="67" height="36" font="33">FRR)</text>
+<text top="364" left="695" width="36" height="36" font="15">：</text>
+<text top="422" left="159" width="23" height="32" font="16">➢</text>
+<text top="417" left="199" width="576" height="36" font="15">被错误拒绝的有效身份声明的比例。</text>
+<text top="490" left="150" width="106" height="36" font="35">𝐹𝑅𝑅 =</text>
+<text top="460" left="266" width="576" height="36" font="15">本该匹配成功却被判匹配失败的次数</text>
+<text top="512" left="410" width="288" height="36" font="15">总的匹配成功次数</text>
+<text top="564" left="112" width="26" height="32" font="16"></text>
+<text top="558" left="145" width="144" height="36" font="15">误接受率</text>
+<text top="562" left="289" width="343" height="36" font="33"> (False Acceptance Rate</text>
+<text top="558" left="633" width="36" height="36" font="15">，</text>
+<text top="562" left="669" width="66" height="36" font="33">FAR)</text>
+<text top="558" left="735" width="36" height="36" font="15">：</text>
+<text top="616" left="159" width="23" height="32" font="16">➢</text>
+<text top="611" left="199" width="612" height="36" font="15">错误接受冒名顶替者身份声明的比例。</text>
+<text top="684" left="150" width="106" height="36" font="35">𝐹𝐴𝑅 =</text>
+<text top="654" left="266" width="576" height="36" font="15">本该匹配失败却被判匹配成功的次数</text>
+<text top="706" left="410" width="288" height="36" font="15">总的匹配失败次数</text>
+<text top="770" left="997" width="18" height="16" font="7">12</text>
+</page>
+<page number="13" position="absolute" top="0" left="0" height="810" width="1080">
+<text top="90" left="49" width="530" height="48" font="6">声纹识别评价指标（续）</text>
+<text top="201" left="49" width="20" height="30" font="14">◼</text>
+<text top="194" left="90" width="180" height="36" font="15">等错误率（</text>
+<text top="201" left="270" width="244" height="32" font="34">Equal Error Rate</text>
+<text top="194" left="514" width="36" height="36" font="15">）</text>
+<text top="252" left="49" width="20" height="30" font="14">◼</text>
+<text top="245" left="90" width="72" height="36" font="15">检测</text>
+<text top="249" left="162" width="11" height="36" font="33">-</text>
+<text top="245" left="173" width="72" height="36" font="15">错误</text>
+<text top="249" left="245" width="11" height="36" font="33">-</text>
+<text top="245" left="256" width="180" height="36" font="15">均衡曲线（</text>
+<text top="249" left="436" width="430" height="36" font="33">Detection Error Tradeoff: DET</text>
+<text top="245" left="865" width="36" height="36" font="15">）</text>
+<text top="770" left="997" width="18" height="16" font="7">13</text>
+</page>
+<page number="14" position="absolute" top="0" left="0" height="810" width="1080">
+	<fontspec id="36" size="42" family="TimesNewRomanPSMT" color="#0d0d0d"/>
+	<fontspec id="37" size="42" family="BCDEEE+SimHei" color="#0d0d0d"/>
+<text top="103" left="65" width="198" height="66" font="1">第六章</text>
+<text top="103" left="329" width="265" height="66" font="1">声纹识别</text>
+<text top="229" left="65" width="27" height="40" font="2">◼</text>
+<text top="229" left="105" width="72" height="43" font="5">6.1 </text>
+<text top="221" left="177" width="288" height="48" font="6">声纹识别概述</text>
+<text top="293" left="119" width="30" height="37" font="8"></text>
+<text top="295" left="153" width="94" height="38" font="36">6.1.1 </text>
+<text top="288" left="247" width="378" height="42" font="37">声纹识别的基本概念</text>
+<text top="354" left="119" width="30" height="37" font="8"></text>
+<text top="355" left="153" width="94" height="38" font="9">6.1.2 </text>
+<text top="348" left="247" width="378" height="42" font="10">声纹识别方法的回顾</text>
+<text top="414" left="119" width="30" height="37" font="8"></text>
+<text top="416" left="153" width="94" height="38" font="12">6.1.3 </text>
+<text top="409" left="247" width="378" height="42" font="13">声纹识别的典型应用</text>
+<text top="480" left="65" width="27" height="40" font="2">◼</text>
+<text top="480" left="105" width="72" height="43" font="5">6.2 </text>
+<text top="471" left="177" width="432" height="48" font="6">传统声纹识别算法（</text>
+<text top="480" left="610" width="246" height="43" font="5">GMM-UBM</text>
+<text top="471" left="856" width="48" height="48" font="6">）</text>
+<text top="549" left="65" width="27" height="40" font="2">◼</text>
+<text top="549" left="105" width="72" height="43" font="5">6.3 </text>
+<text top="540" left="177" width="624" height="48" font="6">基于深度学习的声纹识别算法</text>
+<text top="618" left="65" width="27" height="40" font="2">◼</text>
+<text top="618" left="105" width="72" height="43" font="5">6.4 </text>
+<text top="609" left="177" width="433" height="48" font="6">声纹识别技术的展望</text>
+<text top="770" left="997" width="18" height="16" font="7">14</text>
+</page>
+<page number="15" position="absolute" top="0" left="0" height="810" width="1080">
+	<fontspec id="38" size="48" family="BCDEEE+SimHei" color="#0000ff"/>
+<text top="80" left="65" width="434" height="48" font="6">声纹识别技术的演化</text>
+<text top="80" left="498" width="192" height="48" font="38">（了解）</text>
+<text top="770" left="997" width="18" height="16" font="7">15</text>
+</page>
+<page number="16" position="absolute" top="0" left="0" height="810" width="1080">
+	<fontspec id="39" size="23" family="BCDFEE+Wingdings" color="#00007c"/>
+	<fontspec id="40" size="24" family="BCDFEE+Wingdings" color="#9999cc"/>
+<text top="80" left="65" width="482" height="48" font="6">声纹识别系统基本框架</text>
+<text top="80" left="547" width="192" height="48" font="38">（掌握）</text>
+<text top="175" left="15" width="17" height="25" font="39">◼</text>
+<text top="169" left="56" width="120" height="30" font="21">特征提取</text>
+<text top="216" left="69" width="21" height="26" font="40"></text>
+<text top="212" left="103" width="330" height="30" font="21">将原始语音信号转换为包</text>
+<text top="248" left="103" width="330" height="30" font="21">含说话人信息为主的特征</text>
+<text top="283" left="103" width="150" height="30" font="21">向量序列。</text>
+<text top="333" left="15" width="17" height="25" font="39">◼</text>
+<text top="327" left="56" width="60" height="30" font="21">注册</text>
+<text top="375" left="69" width="21" height="26" font="40"></text>
+<text top="371" left="103" width="330" height="30" font="21">用以与测试段对照，判断</text>
+<text top="407" left="103" width="330" height="30" font="21">访问者是否与其声明身份</text>
+<text top="441" left="103" width="90" height="30" font="21">相符。</text>
+<text top="491" left="15" width="17" height="25" font="39">◼</text>
+<text top="486" left="56" width="60" height="30" font="21">测试</text>
+<text top="533" left="69" width="21" height="26" font="40"></text>
+<text top="529" left="103" width="330" height="30" font="21">从待测语音中提取特征向</text>
+<text top="565" left="103" width="330" height="30" font="21">量，并与每个注册说话者</text>
+<text top="599" left="103" width="300" height="30" font="21">的存储模型进行比较。</text>
+<text top="649" left="69" width="21" height="26" font="40"></text>
+<text top="644" left="103" width="330" height="30" font="21">根据相似度（或似然度）</text>
+<text top="679" left="103" width="240" height="30" font="21">值做出识别决策。</text>
+<text top="770" left="997" width="18" height="16" font="7">16</text>
+</page>
+<page number="17" position="absolute" top="0" left="0" height="810" width="1080">
+	<fontspec id="41" size="48" family="TimesNewRomanPS" color="#000000"/>
+	<fontspec id="42" size="48" family="TimesNewRomanPSMT" color="#0000ff"/>
+	<fontspec id="43" size="36" family="BCDGEE+Times" color="#000000"/>
+	<fontspec id="44" size="30" family="BCDJEE+CambriaMath" color="#000000"/>
+	<fontspec id="45" size="22" family="BCDJEE+CambriaMath" color="#000000"/>
+<text top="93" left="41" width="256" height="43" font="41"><b>GMM-UBM</b></text>
+<text top="93" left="297" width="12" height="43" font="42"> </text>
+<text top="85" left="309" width="288" height="48" font="38">（基本概念）</text>
+<text top="191" left="41" width="20" height="30" font="14">◼</text>
+<text top="191" left="82" width="475" height="32" font="34">Gaussian mixture model (GMM)</text>
+<text top="242" left="95" width="26" height="32" font="16"></text>
+<text top="237" left="129" width="504" height="36" font="15">为目标说话人的声纹特征建模；</text>
+<text top="294" left="95" width="26" height="32" font="16"></text>
+<text top="288" left="129" width="90" height="40" font="43">GMM</text>
+<text top="289" left="221" width="717" height="36" font="15">将空间分布的概率密度用多个高斯概率密度</text>
+<text top="334" left="129" width="808" height="36" font="15">函数的加权来拟合，可以平滑地逼近任意形状的概</text>
+<text top="375" left="129" width="216" height="36" font="15">率密度函数；</text>
+<text top="434" left="95" width="26" height="32" font="16"></text>
+<text top="429" left="129" width="808" height="36" font="15">是一个易于处理的参数模型，对实际数据具备较强</text>
+<text top="470" left="129" width="216" height="36" font="15">的表征能力。</text>
+<text top="580" left="215" width="167" height="30" font="44">P 𝐱 θ = ෍</text>
+<text top="625" left="338" width="49" height="22" font="45">m=1</text>
+<text top="542" left="352" width="20" height="22" font="45">M</text>
+<text top="580" left="392" width="13" height="30" font="44">c</text>
+<text top="593" left="405" width="20" height="22" font="45">m</text>
+<text top="580" left="426" width="77" height="30" font="44">N 𝐱 𝛍</text>
+<text top="593" left="503" width="20" height="22" font="45">m</text>
+<text top="580" left="525" width="30" height="30" font="44">, 𝚺</text>
+<text top="593" left="555" width="20" height="22" font="45">m</text>
+<text top="668" left="138" width="77" height="30" font="44">N 𝐱 𝛍</text>
+<text top="681" left="214" width="20" height="22" font="45">m</text>
+<text top="668" left="236" width="30" height="30" font="44">, 𝚺</text>
+<text top="681" left="266" width="20" height="22" font="45">m</text>
+<text top="668" left="309" width="22" height="30" font="44">=</text>
+<text top="646" left="433" width="17" height="30" font="44">1</text>
+<text top="690" left="352" width="35" height="30" font="44">2π</text>
+<text top="686" left="415" width="12" height="22" font="45">Τ</text>
+<text top="687" left="399" width="41" height="22" font="45">D 2</text>
+<text top="690" left="454" width="17" height="30" font="44">𝚺</text>
+<text top="702" left="471" width="20" height="22" font="45">m</text>
+<text top="686" left="518" width="12" height="22" font="45">Τ</text>
+<text top="687" left="505" width="38" height="22" font="45">1 2</text>
+<text top="668" left="549" width="88" height="30" font="44">exp −</text>
+<text top="646" left="642" width="17" height="30" font="44">1</text>
+<text top="688" left="642" width="17" height="30" font="44">2</text>
+<text top="668" left="676" width="70" height="30" font="44">𝐱 − 𝛍</text>
+<text top="681" left="747" width="20" height="22" font="45">m</text>
+<text top="664" left="781" width="14" height="22" font="45">T</text>
+<text top="668" left="796" width="17" height="30" font="44">𝚺</text>
+<text top="681" left="814" width="20" height="22" font="45">m</text>
+<text top="661" left="835" width="29" height="22" font="45">−1</text>
+<text top="668" left="877" width="70" height="30" font="44">𝐱 − 𝛍</text>
+<text top="681" left="948" width="20" height="22" font="45">m</text>
+<text top="770" left="997" width="18" height="16" font="7">17</text>
+</page>
+<page number="18" position="absolute" top="0" left="0" height="810" width="1080">
+<text top="93" left="41" width="256" height="43" font="41"><b>GMM-UBM</b></text>
+<text top="85" left="297" width="145" height="48" font="6">（续）</text>
+<text top="93" left="442" width="12" height="43" font="42"> </text>
+<text top="85" left="453" width="288" height="48" font="38">（基本概念）</text>
+<text top="168" left="41" width="20" height="30" font="14">◼</text>
+<text top="161" left="82" width="576" height="36" font="32">Universal Background Model (UBM)</text>
+<text top="218" left="95" width="26" height="32" font="16"></text>
+<text top="213" left="129" width="900" height="36" font="15">实际场景中每一个说话人的语音数据很少，导致无法训练</text>
+<text top="255" left="129" width="144" height="36" font="15">出高效的</text>
+<text top="254" left="273" width="90" height="40" font="43">GMM</text>
+<text top="255" left="363" width="108" height="36" font="15">模型；</text>
+<text top="312" left="95" width="26" height="32" font="16"></text>
+<text top="307" left="129" width="612" height="36" font="15">在复杂的声学环境和信道场景下，训练</text>
+<text top="305" left="741" width="90" height="40" font="43">GMM</text>
+<text top="307" left="831" width="180" height="36" font="15">模型的语音</text>
+<text top="350" left="129" width="468" height="36" font="15">与测试语音存在失配的情况；</text>
+<text top="407" left="95" width="26" height="32" font="16"></text>
+<text top="402" left="129" width="288" height="36" font="15">为解决上述问题：</text>
+<text top="463" left="149" width="19" height="26" font="39">➢</text>
+<text top="453" left="176" width="72" height="36" font="15">使用</text>
+<text top="452" left="248" width="54" height="40" font="43">EM</text>
+<text top="453" left="302" width="720" height="36" font="15">算法对说话人无关的领域模型或通用背景模型</text>
+<text top="496" left="176" width="106" height="40" font="43">(UBM)</text>
+<text top="497" left="282" width="180" height="36" font="15">进行训练；</text>
+<text top="558" left="149" width="19" height="26" font="39">➢</text>
+<text top="548" left="176" width="72" height="36" font="15">基于</text>
+<text top="547" left="248" width="82" height="40" font="43">UBM</text>
+<text top="548" left="330" width="576" height="36" font="15">通过自适应算法（如最大后验概率：</text>
+<text top="547" left="906" width="78" height="40" font="43">MAP</text>
+<text top="548" left="984" width="36" height="36" font="15">）</text>
+<text top="592" left="176" width="396" height="36" font="15">来得到目标说话人模型。</text>
+<text top="770" left="997" width="18" height="16" font="7">18</text>
+</page>
+<page number="19" position="absolute" top="0" left="0" height="810" width="1080">
+	<fontspec id="46" size="30" family="BCDGEE+Times" color="#000000"/>
+<text top="93" left="41" width="256" height="43" font="41"><b>GMM-UBM</b></text>
+<text top="85" left="297" width="145" height="48" font="6">（续）</text>
+<text top="93" left="442" width="12" height="43" font="42"> </text>
+<text top="85" left="453" width="288" height="48" font="38">（基本概念）</text>
+<text top="168" left="41" width="20" height="30" font="14">◼</text>
+<text top="161" left="82" width="72" height="36" font="15">使用</text>
+<text top="161" left="154" width="54" height="36" font="32">MAP</text>
+<text top="161" left="208" width="108" height="36" font="15">的原因</text>
+<text top="217" left="95" width="26" height="32" font="16"></text>
+<text top="210" left="129" width="82" height="40" font="43">UBM</text>
+<text top="212" left="211" width="792" height="36" font="15">是初始模型，可以减少注册新说话人所需的语音发</text>
+<text top="255" left="129" width="216" height="36" font="15">生的持续时间</text>
+<text top="254" left="345" width="10" height="40" font="43">/</text>
+<text top="255" left="355" width="432" height="36" font="15">数量（导出依赖于说话人的</text>
+<text top="254" left="787" width="90" height="40" font="43">GMM</text>
+<text top="255" left="877" width="144" height="36" font="15">参数）；</text>
+<text top="312" left="95" width="26" height="32" font="16"></text>
+<text top="307" left="129" width="288" height="36" font="15">由于说话人相关的</text>
+<text top="305" left="417" width="90" height="40" font="43">GMM</text>
+<text top="307" left="507" width="252" height="36" font="15">和说话人无关的</text>
+<text top="305" left="759" width="82" height="40" font="43">UBM</text>
+<text top="307" left="841" width="180" height="36" font="15">具有相同的</text>
+<text top="350" left="129" width="792" height="36" font="15">模型复杂度，因此可以计算更好的对数似然分数；</text>
+<text top="407" left="95" width="26" height="32" font="16"></text>
+<text top="402" left="129" width="396" height="36" font="15">使用高斯选择可以更快。</text>
+<text top="738" left="432" width="65" height="33" font="46">MAP</text>
+<text top="739" left="497" width="150" height="30" font="21">算法自适应</text>
+<text top="770" left="997" width="18" height="16" font="7">19</text>
+</page>
+<page number="20" position="absolute" top="0" left="0" height="810" width="1080">
+	<fontspec id="47" size="42" family="TimesNewRomanPS" color="#000000"/>
+	<fontspec id="48" size="26" family="BCDJEE+CambriaMath" color="#000000"/>
+<text top="87" left="41" width="295" height="42" font="13">联合因子分析（</text>
+<text top="95" left="336" width="360" height="38" font="47"><b>Joint factor analysis</b></text>
+<text top="87" left="697" width="42" height="42" font="13">：</text>
+<text top="95" left="740" width="74" height="38" font="47"><b>JFA</b></text>
+<text top="87" left="813" width="42" height="42" font="13">）</text>
+<text top="87" left="856" width="168" height="42" font="11">（了解）</text>
+<text top="168" left="41" width="20" height="30" font="14">◼</text>
+<text top="161" left="82" width="72" height="36" font="15">目的</text>
+<text top="217" left="95" width="26" height="32" font="16"></text>
+<text top="212" left="129" width="36" height="36" font="15">在</text>
+<text top="210" left="165" width="90" height="40" font="43">GMM</text>
+<text top="212" left="255" width="468" height="36" font="15">超向量空间中进行信道补偿。</text>
+<text top="272" left="41" width="20" height="30" font="14">◼</text>
+<text top="265" left="82" width="72" height="36" font="15">实现</text>
+<text top="320" left="95" width="26" height="32" font="16"></text>
+<text top="314" left="129" width="99" height="40" font="43">GMM </text>
+<text top="315" left="228" width="108" height="36" font="15">超向量</text>
+<text top="318" left="336" width="33" height="36" font="35">𝐦</text>
+<text top="333" left="369" width="14" height="26" font="48">𝑟</text>
+<text top="315" left="385" width="324" height="36" font="15">被建模为说话人和信</text>
+<text top="358" left="129" width="252" height="36" font="15">道分量的总和。</text>
+<text top="396" left="772" width="270" height="27" font="31">均值超矢量分解示意图</text>
+<text top="770" left="997" width="18" height="16" font="7">20</text>
+</page>
+<page number="21" position="absolute" top="0" left="0" height="810" width="1080">
+<text top="168" left="41" width="20" height="30" font="14">◼</text>
+<text top="161" left="82" width="72" height="36" font="15">注册</text>
+<text top="217" left="95" width="26" height="32" font="16"></text>
+<text top="212" left="129" width="324" height="36" font="15">联合估计说话人因子</text>
+<text top="214" left="453" width="19" height="36" font="35">𝐲</text>
+<text top="229" left="471" width="14" height="26" font="48">𝑟</text>
+<text top="212" left="487" width="180" height="36" font="15">和信道因子</text>
+<text top="214" left="667" width="19" height="36" font="35">𝐱</text>
+<text top="229" left="687" width="14" height="26" font="48">𝑟</text>
+<text top="212" left="704" width="144" height="36" font="15">以及残差</text>
+<text top="214" left="848" width="18" height="36" font="35">𝐳</text>
+<text top="229" left="866" width="14" height="26" font="48">𝑟</text>
+<text top="212" left="890" width="36" height="36" font="15">。</text>
+<text top="268" left="95" width="26" height="32" font="16"></text>
+<text top="263" left="129" width="432" height="36" font="15">信道补偿通过丢弃信道分量</text>
+<text top="266" left="561" width="44" height="36" font="35">𝐔𝐱</text>
+<text top="281" left="606" width="14" height="26" font="48">𝑟</text>
+<text top="263" left="622" width="144" height="36" font="15">来实现。</text>
+<text top="324" left="41" width="20" height="30" font="14">◼</text>
+<text top="317" left="82" width="72" height="36" font="15">测试</text>
+<text top="372" left="95" width="26" height="32" font="16"></text>
+<text top="367" left="129" width="360" height="36" font="15">从测试段估计信道因子</text>
+<text top="370" left="489" width="17" height="36" font="35">𝑧</text>
+<text top="385" left="506" width="50" height="26" font="48">𝑡𝑒𝑠𝑡</text>
+<text top="424" left="95" width="26" height="32" font="16"></text>
+<text top="419" left="129" width="324" height="36" font="15">计算说话人验证分数</text>
+<text top="80" left="41" width="434" height="48" font="6">联合因子分析（续）</text>
+<text top="89" left="475" width="12" height="43" font="42"> </text>
+<text top="80" left="486" width="193" height="48" font="38">（了解）</text>
+<text top="770" left="997" width="18" height="16" font="7">21</text>
+</page>
+<page number="22" position="absolute" top="0" left="0" height="810" width="1080">
+	<fontspec id="49" size="36" family="BCDKEE+MicrosoftYaHei" color="#000000"/>
+<text top="83" left="41" width="504" height="43" font="41"><b>Identity vector (i-vector)</b></text>
+<text top="83" left="544" width="12" height="43" font="42"> </text>
+<text top="75" left="556" width="193" height="48" font="38">（了解）</text>
+<text top="192" left="41" width="20" height="30" font="14">◼</text>
+<text top="185" left="82" width="72" height="36" font="15">目的</text>
+<text top="241" left="95" width="26" height="32" font="16"></text>
+<text top="236" left="129" width="146" height="36" font="15">为了解决</text>
+<text top="240" left="275" width="47" height="36" font="33">JFA</text>
+<text top="236" left="322" width="692" height="36" font="15">估算出来的说话人子空间与信道子空间存在</text>
+<text top="279" left="129" width="540" height="36" font="15">互相掩盖的问题，不严格区分说话</text>
+<text top="273" left="669" width="36" height="47" font="49">⼈</text>
+<text top="279" left="705" width="288" height="36" font="15">空间以及信道空间</text>
+<text top="339" left="41" width="20" height="30" font="14">◼</text>
+<text top="332" left="82" width="180" height="36" font="15">简化版本的</text>
+<text top="331" left="262" width="57" height="40" font="43">JFA</text>
+<text top="561" left="95" width="26" height="32" font="16"></text>
+<text top="556" left="129" width="684" height="36" font="15">信道和说话人子空间形成一个总的可变空间</text>
+<text top="613" left="95" width="26" height="32" font="16"></text>
+<text top="612" left="129" width="112" height="36" font="33">I-vector</text>
+<text top="608" left="242" width="773" height="36" font="15">包含人的语音特征（来自说话人子空间）和信道</text>
+<text top="651" left="129" width="396" height="36" font="15">因子（来自信道子空间）</text>
+<text top="770" left="997" width="18" height="16" font="7">22</text>
+</page>
+<page number="23" position="absolute" top="0" left="0" height="810" width="1080">
+	<fontspec id="50" size="27" family="BCDHEE+SimHei" color="#000000"/>
+	<fontspec id="51" size="27" family="BCDEEE+SimHei" color="#000000"/>
+	<fontspec id="52" size="27" family="BCDJEE+CambriaMath" color="#000000"/>
+	<fontspec id="53" size="20" family="BCDJEE+CambriaMath" color="#000000"/>
+<text top="83" left="41" width="503" height="43" font="41"><b>Identity vector (i-vector)</b></text>
+<text top="83" left="544" width="12" height="43" font="42"> </text>
+<text top="75" left="556" width="192" height="48" font="38">（了解）</text>
+<text top="696" left="100" width="27" height="27" font="50">1.</text>
+<text top="696" left="141" width="54" height="27" font="51">通过</text>
+<text top="696" left="195" width="27" height="27" font="50">EM</text>
+<text top="696" left="222" width="378" height="27" font="51">算法迭代计算全局差异空间矩阵</text>
+<text top="696" left="600" width="14" height="27" font="50">T</text>
+<text top="696" left="613" width="27" height="27" font="51">；</text>
+<text top="727" left="100" width="27" height="27" font="50">2.</text>
+<text top="727" left="141" width="54" height="27" font="51">利用</text>
+<text top="727" left="195" width="14" height="27" font="50">T</text>
+<text top="727" left="208" width="54" height="27" font="51">计算</text>
+<text top="729" left="262" width="16" height="27" font="52">𝐡</text>
+<text top="740" left="279" width="10" height="20" font="53">𝑟</text>
+<text top="727" left="291" width="243" height="27" font="51">的后验分布的均值（</text>
+<text top="727" left="534" width="108" height="27" font="50">i-vector</text>
+<text top="727" left="642" width="54" height="27" font="51">）。</text>
+<text top="770" left="997" width="18" height="16" font="7">23</text>
+</page>
+<page number="24" position="absolute" top="0" left="0" height="810" width="1080">
+<text top="83" left="41" width="179" height="43" font="41"><b>X-vector</b></text>
+<text top="83" left="219" width="12" height="43" font="42"> </text>
+<text top="75" left="231" width="288" height="48" font="38">（基本概念）</text>
+<text top="314" left="38" width="20" height="30" font="14">◼</text>
+<text top="306" left="79" width="128" height="40" font="43">X-vector</text>
+<text top="308" left="207" width="108" height="36" font="15">提取器</text>
+<text top="364" left="92" width="26" height="32" font="16"></text>
+<text top="362" left="126" width="86" height="36" font="33">TDNN</text>
+<text top="358" left="216" width="279" height="36" font="15">： 经 过 训 练 以 在</text>
+<text top="402" left="126" width="324" height="36" font="15">输出层区分说话人；</text>
+<text top="461" left="92" width="26" height="32" font="16"></text>
+<text top="456" left="126" width="369" height="36" font="15">统计池化层：计算均值</text>
+<text top="497" left="126" width="180" height="36" font="15">和标准差；</text>
+<text top="556" left="92" width="26" height="32" font="16"></text>
+<text top="551" left="126" width="369" height="36" font="15">段的统计信息被传递到</text>
+<text top="592" left="126" width="405" height="36" font="15">另一个隐层以产生嵌入；</text>
+<text top="649" left="92" width="26" height="32" font="16"></text>
+<text top="644" left="126" width="324" height="36" font="15">数据增广是必要的。</text>
+<text top="155" left="32" width="20" height="30" font="14">◼</text>
+<text top="149" left="73" width="72" height="36" font="15">目的</text>
+<text top="207" left="86" width="26" height="32" font="16"></text>
+<text top="202" left="120" width="885" height="36" font="15">使用监督方式训练的深度神经网络导出句子级别的嵌入</text>
+<text top="244" left="120" width="108" height="36" font="15">表示。</text>
+<text top="770" left="997" width="18" height="16" font="7">24</text>
+</page>
+<page number="25" position="absolute" top="0" left="0" height="810" width="1080">
+	<fontspec id="54" size="41" family="BCDJEE+CambriaMath" color="#000000"/>
+	<fontspec id="55" size="29" family="TimesNewRomanPS" color="#000000"/>
+	<fontspec id="56" size="41" family="BCDLEE+CambriaMath" color="#000000"/>
+	<fontspec id="57" size="29" family="BCDJEE+CambriaMath" color="#000000"/>
+	<fontspec id="58" size="36" family="BCDMEE+DengXian" color="#000000"/>
+	<fontspec id="59" size="27" family="BCDKEE+MicrosoftYaHei" color="#000000"/>
+<text top="93" left="41" width="546" height="43" font="41"><b>Probabilistic LDA (PLDA)</b></text>
+<text top="85" left="587" width="96" height="48" font="6">简介</text>
+<text top="85" left="683" width="192" height="48" font="38">（了解）</text>
+<text top="166" left="41" width="20" height="30" font="14">◼</text>
+<text top="160" left="82" width="72" height="36" font="32">PLDA</text>
+<text top="160" left="154" width="72" height="36" font="15">定义</text>
+<text top="217" left="95" width="26" height="32" font="16"></text>
+<text top="212" left="129" width="252" height="36" font="15">嵌入表示（例如</text>
+<text top="210" left="381" width="112" height="40" font="43">i-vector</text>
+<text top="212" left="494" width="36" height="36" font="15">和</text>
+<text top="210" left="530" width="120" height="40" font="43">x-vector</text>
+<text top="212" left="649" width="324" height="36" font="15">）中既包含了说话人</text>
+<text top="255" left="129" width="432" height="36" font="15">信息，也包含了信道信息。</text>
+<text top="312" left="95" width="26" height="32" font="16"></text>
+<text top="305" left="129" width="94" height="40" font="43">PLDA</text>
+<text top="307" left="223" width="757" height="36" font="15">根据说话人身份和信道效应解释观察到的嵌入表</text>
+<text top="350" left="129" width="612" height="36" font="15">示，以实现对说话人因子的“提纯”。</text>
+<text top="407" left="95" width="26" height="32" font="16"></text>
+<text top="402" left="129" width="180" height="36" font="15">可以看作是</text>
+<text top="401" left="318" width="81" height="40" font="43">LDA </text>
+<text top="402" left="399" width="216" height="36" font="15">的概率形式。</text>
+<text top="507" left="268" width="25" height="41" font="54">𝜼</text>
+<text top="527" left="293" width="16" height="26" font="55"><i>ij</i></text>
+<text top="507" left="322" width="31" height="41" font="56">=</text>
+<text top="507" left="364" width="26" height="41" font="54">𝝁</text>
+<text top="507" left="399" width="31" height="41" font="56">+</text>
+<text top="507" left="439" width="51" height="41" font="54">𝑽𝒚</text>
+<text top="524" left="490" width="9" height="29" font="57">𝑖</text>
+<text top="507" left="512" width="31" height="41" font="56">+</text>
+<text top="507" left="552" width="54" height="41" font="54">𝑼𝒙</text>
+<text top="524" left="605" width="20" height="29" font="57">𝑖𝑗</text>
+<text top="507" left="641" width="31" height="41" font="56">+</text>
+<text top="507" left="680" width="21" height="41" font="54">𝜺</text>
+<text top="524" left="702" width="20" height="29" font="57">𝑖𝑗</text>
+<text top="510" left="728" width="10" height="38" font="58"> </text>
+<text top="616" left="98" width="17" height="27" font="52">𝛈</text>
+<text top="628" left="114" width="16" height="20" font="53">𝑖𝑗</text>
+<text top="614" left="132" width="82" height="27" font="51">代表第</text>
+<text top="616" left="214" width="9" height="27" font="52">𝑖</text>
+<text top="614" left="224" width="82" height="27" font="51">个说话</text>
+<text top="609" left="306" width="27" height="35" font="59">⼈</text>
+<text top="614" left="333" width="54" height="27" font="51">的第</text>
+<text top="616" left="388" width="10" height="27" font="52">𝑗</text>
+<text top="614" left="398" width="245" height="27" font="51">段语音的嵌入表示；</text>
+<text top="616" left="644" width="17" height="27" font="52">𝛍</text>
+<text top="614" left="661" width="354" height="27" font="51">为所有嵌入表示的全局均值；</text>
+<text top="650" left="66" width="14" height="27" font="50">V</text>
+<text top="650" left="80" width="220" height="27" font="51">是说话人空间矩阵</text>
+<text top="650" left="301" width="176" height="27" font="50">(Eigen Voice)</text>
+<text top="650" left="478" width="330" height="27" font="51">，用于描述说话人的特征；</text>
+<text top="650" left="808" width="14" height="27" font="50">U</text>
+<text top="650" left="823" width="192" height="27" font="51">是信道空间矩阵</text>
+<text top="686" left="66" width="203" height="27" font="50">(Eigen Channel)</text>
+<text top="686" left="270" width="303" height="27" font="51">，用于描述信道的特征；</text>
+<text top="688" left="573" width="15" height="27" font="52">𝐲</text>
+<text top="700" left="587" width="7" height="20" font="53">𝑖</text>
+<text top="686" left="596" width="27" height="27" font="51">与</text>
+<text top="688" left="623" width="14" height="27" font="52">𝐱</text>
+<text top="700" left="639" width="16" height="20" font="53">𝑖𝑗</text>
+<text top="686" left="657" width="358" height="27" font="51">是其对应子空间内的因子，服</text>
+<text top="722" left="66" width="162" height="27" font="51">从高斯分布；</text>
+<text top="724" left="228" width="14" height="27" font="52">𝛆</text>
+<text top="722" left="242" width="594" height="27" font="51">是残差项，服从协方差矩阵为对角阵的高斯分布。</text>
+<text top="770" left="997" width="18" height="16" font="7">25</text>
+</page>
+<page number="26" position="absolute" top="0" left="0" height="810" width="1080">
+	<fontspec id="60" size="36" family="BCDNEE+Times,Bold" color="#000000"/>
+<text top="93" left="41" width="546" height="43" font="41"><b>Probabilistic LDA (PLDA)</b></text>
+<text top="85" left="587" width="96" height="48" font="6">简介</text>
+<text top="85" left="683" width="192" height="48" font="38">（了解）</text>
+<text top="185" left="41" width="20" height="30" font="14">◼</text>
+<text top="179" left="82" width="108" height="36" font="15">训练：</text>
+<text top="234" left="95" width="26" height="32" font="16"></text>
+<text top="227" left="129" width="94" height="40" font="43">PLDA</text>
+<text top="229" left="223" width="288" height="36" font="15">的模型参数一个有</text>
+<text top="227" left="511" width="18" height="40" font="43">4</text>
+<text top="229" left="529" width="180" height="36" font="15">个，分别是</text>
+<text top="227" left="709" width="230" height="40" font="43">i-vector/x-vecto</text>
+<text top="229" left="939" width="72" height="36" font="15">均值</text>
+<text top="275" left="129" width="22" height="36" font="35">𝛍</text>
+<text top="272" left="151" width="252" height="36" font="15">，空间特征矩阵</text>
+<text top="271" left="403" width="26" height="40" font="60"><b>V</b></text>
+<text top="272" left="429" width="36" height="36" font="15">和</text>
+<text top="271" left="465" width="26" height="40" font="60"><b>U</b></text>
+<text top="272" left="491" width="36" height="36" font="15">，</text>
+<text top="275" left="527" width="18" height="36" font="35">𝛆</text>
+<text top="272" left="545" width="468" height="36" font="15">噪声协方差。由于模型含有隐</text>
+<text top="315" left="129" width="540" height="36" font="15">变量，模型的训练过程采用经典的</text>
+<text top="314" left="669" width="54" height="40" font="43">EM</text>
+<text top="315" left="723" width="252" height="36" font="15">算法迭代求解。</text>
+<text top="375" left="41" width="20" height="30" font="14">◼</text>
+<text top="369" left="82" width="108" height="36" font="15">测试：</text>
+<text top="424" left="95" width="26" height="32" font="16"></text>
+<text top="418" left="129" width="144" height="36" font="15">对于说话</text>
+<text top="412" left="273" width="36" height="47" font="49">⼈</text>
+<text top="418" left="309" width="684" height="36" font="15">确认任务，每组试验都需要一个目标说话人</text>
+<text top="464" left="129" width="864" height="36" font="15">和一个测试说话人。分别提取目标说话人和测试说话人</text>
+<text top="505" left="129" width="36" height="36" font="15">的</text>
+<text top="504" left="165" width="242" height="40" font="43">i-vector/x-vector</text>
+<text top="505" left="407" width="108" height="36" font="15">，使用</text>
+<text top="504" left="515" width="94" height="40" font="43">PLDA</text>
+<text top="505" left="609" width="396" height="36" font="15">模型计算它们之间的似然</text>
+<text top="548" left="129" width="144" height="36" font="15">度评分。</text>
+<text top="770" left="997" width="18" height="16" font="7">26</text>
+</page>
+<page number="27" position="absolute" top="0" left="0" height="810" width="1080">
+<text top="103" left="65" width="198" height="66" font="1">第六章</text>
+<text top="103" left="329" width="265" height="66" font="1">声纹识别</text>
+<text top="229" left="65" width="27" height="40" font="2">◼</text>
+<text top="229" left="105" width="72" height="43" font="5">6.1 </text>
+<text top="221" left="177" width="288" height="48" font="6">声纹识别概述</text>
+<text top="293" left="119" width="30" height="37" font="8"></text>
+<text top="295" left="153" width="94" height="38" font="36">6.1.1 </text>
+<text top="288" left="247" width="378" height="42" font="37">声纹识别的基本概念</text>
+<text top="354" left="119" width="30" height="37" font="8"></text>
+<text top="355" left="153" width="94" height="38" font="12">6.1.2 </text>
+<text top="348" left="247" width="378" height="42" font="13">声纹识别方法的回顾</text>
+<text top="414" left="119" width="30" height="37" font="8"></text>
+<text top="416" left="153" width="94" height="38" font="9">6.1.3 </text>
+<text top="409" left="247" width="378" height="42" font="10">声纹识别的典型应用</text>
+<text top="480" left="65" width="27" height="40" font="2">◼</text>
+<text top="480" left="105" width="72" height="43" font="5">6.2 </text>
+<text top="471" left="177" width="432" height="48" font="6">传统声纹识别算法（</text>
+<text top="480" left="610" width="246" height="43" font="5">GMM-UBM</text>
+<text top="471" left="856" width="48" height="48" font="6">）</text>
+<text top="549" left="65" width="27" height="40" font="2">◼</text>
+<text top="549" left="105" width="72" height="43" font="5">6.3 </text>
+<text top="540" left="177" width="624" height="48" font="6">基于深度学习的声纹识别算法</text>
+<text top="618" left="65" width="27" height="40" font="2">◼</text>
+<text top="618" left="105" width="72" height="43" font="5">6.4 </text>
+<text top="609" left="177" width="433" height="48" font="6">声纹识别技术的展望</text>
+<text top="770" left="997" width="18" height="16" font="7">27</text>
+</page>
+<page number="28" position="absolute" top="0" left="0" height="810" width="1080">
+<text top="73" left="41" width="193" height="48" font="6">访问控制</text>
+<text top="194" left="41" width="24" height="35" font="25">◼</text>
+<text top="186" left="82" width="546" height="42" font="13">访问房间、建筑物和物理资产</text>
+<text top="254" left="41" width="24" height="35" font="25">◼</text>
+<text top="246" left="82" width="294" height="42" font="13">身份和凭证认证</text>
+<text top="770" left="997" width="18" height="16" font="7">28</text>
+</page>
+<page number="29" position="absolute" top="0" left="0" height="810" width="1080">
+<text top="73" left="41" width="241" height="48" font="6">说话人日志</text>
+<text top="194" left="41" width="24" height="35" font="25">◼</text>
+<text top="186" left="82" width="336" height="42" font="13">谁在什么时候说话</text>
+<text top="254" left="41" width="24" height="35" font="25">◼</text>
+<text top="246" left="82" width="168" height="42" font="13">会议转录</text>
+<text top="315" left="41" width="24" height="35" font="25">◼</text>
+<text top="307" left="82" width="714" height="42" font="13">会议分析（不同会议参与者的积极性）</text>
+<text top="770" left="997" width="18" height="16" font="7">29</text>
+</page>
+<page number="30" position="absolute" top="0" left="0" height="810" width="1080">
+<text top="73" left="41" width="97" height="48" font="6">搜索</text>
+<text top="82" left="137" width="13" height="43" font="41"><b>/</b></text>
+<text top="73" left="151" width="96" height="48" font="6">索引</text>
+<text top="194" left="41" width="24" height="35" font="25">◼</text>
+<text top="186" left="82" width="294" height="42" font="13">索引多媒体档案</text>
+<text top="254" left="41" width="24" height="35" font="25">◼</text>
+<text top="246" left="82" width="210" height="42" font="13">情报、反恐</text>
+<text top="770" left="997" width="18" height="16" font="7">30</text>
+</page>
+<page number="31" position="absolute" top="0" left="0" height="810" width="1080">
+<text top="103" left="65" width="198" height="66" font="1">第六章</text>
+<text top="103" left="329" width="265" height="66" font="1">声纹识别</text>
+<text top="229" left="65" width="27" height="40" font="2">◼</text>
+<text top="229" left="105" width="72" height="43" font="5">6.1 </text>
+<text top="221" left="177" width="288" height="48" font="6">声纹识别概述</text>
+<text top="293" left="119" width="30" height="37" font="8"></text>
+<text top="295" left="153" width="94" height="38" font="36">6.1.1 </text>
+<text top="288" left="247" width="378" height="42" font="37">声纹识别的基本概念</text>
+<text top="354" left="119" width="30" height="37" font="8"></text>
+<text top="355" left="153" width="94" height="38" font="12">6.1.2 </text>
+<text top="348" left="247" width="378" height="42" font="13">声纹识别方法的回顾</text>
+<text top="414" left="119" width="30" height="37" font="8"></text>
+<text top="416" left="153" width="94" height="38" font="12">6.1.3 </text>
+<text top="409" left="247" width="378" height="42" font="13">声纹识别的典型应用</text>
+<text top="480" left="65" width="27" height="40" font="2">◼</text>
+<text top="480" left="105" width="72" height="43" font="5">6.2 </text>
+<text top="471" left="177" width="432" height="48" font="4">传统声纹识别算法（</text>
+<text top="480" left="610" width="246" height="43" font="3">GMM-UBM</text>
+<text top="471" left="856" width="48" height="48" font="4">）</text>
+<text top="480" left="904" width="12" height="43" font="42"> </text>
+<text top="540" left="149" width="288" height="48" font="38">（基本概念）</text>
+<text top="618" left="65" width="27" height="40" font="2">◼</text>
+<text top="618" left="105" width="72" height="43" font="5">6.3 </text>
+<text top="609" left="177" width="625" height="48" font="6">基于深度学习的声纹识别算法</text>
+<text top="687" left="65" width="27" height="40" font="2">◼</text>
+<text top="687" left="105" width="72" height="43" font="5">6.4 </text>
+<text top="679" left="177" width="432" height="48" font="6">声纹识别技术的展望</text>
+<text top="770" left="997" width="18" height="16" font="7">31</text>
+</page>
+<page number="32" position="absolute" top="0" left="0" height="810" width="1080">
+<text top="85" left="41" width="193" height="48" font="6">特征提取</text>
+<text top="168" left="41" width="24" height="35" font="25">◼</text>
+<text top="160" left="82" width="84" height="42" font="13">目的</text>
+<text top="224" left="95" width="26" height="32" font="16"></text>
+<text top="219" left="129" width="288" height="36" font="15">保留说话人信息；</text>
+<text top="276" left="95" width="26" height="32" font="16"></text>
+<text top="271" left="129" width="432" height="36" font="15">去除噪声和其他干扰信息。</text>
+<text top="335" left="41" width="24" height="35" font="25">◼</text>
+<text top="327" left="82" width="168" height="42" font="13">声学特征</text>
+<text top="388" left="95" width="26" height="32" font="16"></text>
+<text top="383" left="129" width="324" height="36" font="15">梅尔频率倒谱系数（</text>
+<text top="382" left="453" width="100" height="40" font="43">MFCC</text>
+<text top="383" left="553" width="36" height="36" font="15">）</text>
+<text top="440" left="95" width="26" height="32" font="16"></text>
+<text top="435" left="129" width="324" height="36" font="15">线性预测倒谱系数（</text>
+<text top="434" left="453" width="90" height="40" font="43">LPCC</text>
+<text top="435" left="543" width="36" height="36" font="15">）</text>
+<text top="499" left="41" width="24" height="35" font="25">◼</text>
+<text top="491" left="82" width="504" height="42" font="13">完整的特征提取前端还包括</text>
+<text top="552" left="95" width="26" height="32" font="16"></text>
+<text top="547" left="129" width="504" height="36" font="15">语音活动检测（丢弃非语音帧）</text>
+<text top="604" left="95" width="26" height="32" font="16"></text>
+<text top="599" left="129" width="144" height="36" font="15">后处理（</text>
+<text top="598" left="273" width="428" height="40" font="43">Cepstral Mean Normalization</text>
+<text top="599" left="701" width="72" height="36" font="15">等）</text>
+<text top="770" left="997" width="18" height="16" font="7">32</text>
+</page>
+<page number="33" position="absolute" top="0" left="0" height="810" width="1080">
+<text top="85" left="41" width="97" height="48" font="6">基于</text>
+<text top="93" left="137" width="128" height="43" font="41"><b>GMM</b></text>
+<text top="85" left="266" width="289" height="48" font="6">的说话人建模</text>
+<text top="168" left="41" width="24" height="35" font="25">◼</text>
+<text top="160" left="82" width="84" height="42" font="13">注册</text>
+<text top="226" left="95" width="26" height="32" font="16"></text>
+<text top="221" left="129" width="757" height="36" font="15">说话人模型通过来自该说话人的注册语音构建；</text>
+<text top="276" left="95" width="26" height="32" font="16"></text>
+<text top="271" left="129" width="216" height="36" font="15">每个注册语音</text>
+<text top="274" left="345" width="23" height="36" font="35">𝑋</text>
+<text top="271" left="369" width="576" height="36" font="15">是一个由特征提取前端生成的特征向</text>
+<text top="315" left="129" width="108" height="36" font="15">量序列</text>
+<text top="317" left="237" width="33" height="36" font="35">{𝐱</text>
+<text top="332" left="271" width="12" height="26" font="48">𝑡</text>
+<text top="317" left="285" width="14" height="36" font="35">}</text>
+<text top="333" left="299" width="47" height="26" font="48">𝑡=1</text>
+<text top="311" left="299" width="16" height="26" font="48">𝑇</text>
+<text top="315" left="347" width="36" height="36" font="15">。</text>
+<text top="527" left="95" width="26" height="32" font="16"></text>
+<text top="522" left="129" width="108" height="36" font="15">其中，</text>
+<text top="525" left="246" width="25" height="36" font="35">𝐾</text>
+<text top="522" left="272" width="360" height="36" font="15">表示高斯分量的数量；</text>
+<text top="580" left="95" width="26" height="32" font="16"></text>
+<text top="575" left="129" width="72" height="36" font="15">集合</text>
+<text top="578" left="201" width="104" height="36" font="35">𝜃 = {𝛍</text>
+<text top="593" left="305" width="16" height="26" font="48">𝑘</text>
+<text top="578" left="324" width="36" height="36" font="35">, 𝜮</text>
+<text top="593" left="360" width="16" height="26" font="48">𝑘</text>
+<text top="578" left="378" width="40" height="36" font="35">, 𝑤</text>
+<text top="593" left="417" width="16" height="26" font="48">𝑘</text>
+<text top="578" left="435" width="14" height="36" font="35">}</text>
+<text top="594" left="449" width="51" height="26" font="48">𝑘=1</text>
+<text top="571" left="449" width="19" height="26" font="48">𝐾</text>
+<text top="575" left="501" width="288" height="36" font="15">表示分布的参数；</text>
+<text top="633" left="95" width="26" height="32" font="16"></text>
+<text top="628" left="129" width="72" height="36" font="15">权重</text>
+<text top="631" left="201" width="27" height="36" font="35">𝑤</text>
+<text top="646" left="227" width="16" height="26" font="48">𝑘</text>
+<text top="628" left="245" width="216" height="36" font="15">，对于所有的</text>
+<text top="631" left="461" width="20" height="36" font="35">𝑘</text>
+<text top="628" left="482" width="216" height="36" font="15">值，其和总为</text>
+<text top="628" left="698" width="18" height="36" font="32">1</text>
+<text top="628" left="716" width="36" height="36" font="15">。</text>
+<text top="770" left="997" width="18" height="16" font="7">33</text>
+</page>
+<page number="34" position="absolute" top="0" left="0" height="810" width="1080">
+	<fontspec id="61" size="42" family="BCDJEE+CambriaMath" color="#000000"/>
+	<fontspec id="62" size="31" family="BCDJEE+CambriaMath" color="#000000"/>
+<text top="93" left="41" width="128" height="43" font="41"><b>GMM</b></text>
+<text top="85" left="169" width="434" height="48" font="6">的期望最大化算法（</text>
+<text top="93" left="603" width="77" height="43" font="41"><b>EM</b></text>
+<text top="85" left="680" width="48" height="48" font="6">）</text>
+<text top="85" left="729" width="193" height="48" font="38">（了解）</text>
+<text top="230" left="41" width="24" height="35" font="25">◼</text>
+<text top="223" left="82" width="252" height="42" font="13">给定注册数据</text>
+<text top="226" left="334" width="38" height="42" font="61">{𝐱</text>
+<text top="243" left="373" width="13" height="31" font="62">𝑡</text>
+<text top="226" left="390" width="16" height="42" font="61">}</text>
+<text top="244" left="406" width="54" height="31" font="62">𝑡=1</text>
+<text top="219" left="406" width="19" height="31" font="62">𝑇</text>
+<text top="223" left="471" width="42" height="42" font="13">，</text>
+<text top="226" left="513" width="122" height="42" font="61">𝜃 = {𝛍</text>
+<text top="243" left="635" width="19" height="31" font="62">𝑘</text>
+<text top="226" left="657" width="42" height="42" font="61">, 𝜮</text>
+<text top="243" left="699" width="19" height="31" font="62">𝑘</text>
+<text top="226" left="720" width="47" height="42" font="61">, 𝑤</text>
+<text top="243" left="765" width="19" height="31" font="62">𝑘</text>
+<text top="226" left="787" width="16" height="42" font="61">}</text>
+<text top="245" left="803" width="59" height="31" font="62">𝑘=1</text>
+<text top="218" left="803" width="22" height="31" font="62">𝐾</text>
+<text top="223" left="864" width="126" height="42" font="13">的最大</text>
+<text top="276" left="82" width="336" height="42" font="13">似然估计可以使用</text>
+<text top="276" left="418" width="42" height="42" font="30">EM</text>
+<text top="276" left="460" width="210" height="42" font="13">算法获得。</text>
+<text top="396" left="41" width="24" height="35" font="25">◼</text>
+<text top="388" left="82" width="713" height="42" font="13">从一些随机初始化开始迭代更新参数。</text>
+<text top="770" left="997" width="18" height="16" font="7">34</text>
+</page>
+<page number="35" position="absolute" top="0" left="0" height="810" width="1080">
+<text top="93" left="41" width="128" height="43" font="41"><b>GMM</b></text>
+<text top="85" left="169" width="434" height="48" font="6">的期望最大化算法（</text>
+<text top="93" left="603" width="77" height="43" font="41"><b>EM</b></text>
+<text top="85" left="680" width="48" height="48" font="6">）</text>
+<text top="85" left="729" width="193" height="48" font="38">（了解）</text>
+<text top="168" left="41" width="24" height="35" font="25">◼</text>
+<text top="160" left="82" width="126" height="42" font="30">E-step</text>
+<text top="224" left="95" width="26" height="32" font="16"></text>
+<text top="219" left="129" width="396" height="36" font="15">计算每个特征向量属于第</text>
+<text top="222" left="525" width="20" height="36" font="35">𝑘</text>
+<text top="219" left="546" width="324" height="36" font="15">个高斯分布的程度。</text>
+<text top="438" left="41" width="24" height="35" font="25">◼</text>
+<text top="431" left="82" width="126" height="42" font="30">M-step</text>
+<text top="492" left="95" width="26" height="32" font="16"></text>
+<text top="487" left="129" width="216" height="36" font="15">基于每个帧的</text>
+<text top="480" left="345" width="20" height="46" font="12">λ</text>
+<text top="505" left="366" width="16" height="26" font="48">𝑘</text>
+<text top="490" left="384" width="34" height="36" font="35">(𝐱</text>
+<text top="505" left="419" width="16" height="26" font="48">𝑘</text>
+<text top="490" left="438" width="15" height="36" font="35">)</text>
+<text top="487" left="453" width="144" height="36" font="15">更新均值</text>
+<text top="490" left="597" width="22" height="36" font="35">𝛍</text>
+<text top="505" left="619" width="16" height="26" font="48">𝑘</text>
+<text top="487" left="637" width="216" height="36" font="15">、协方差矩阵</text>
+<text top="490" left="853" width="21" height="36" font="35">𝚺</text>
+<text top="505" left="874" width="16" height="26" font="48">𝑘</text>
+<text top="487" left="892" width="108" height="36" font="15">和权重</text>
+<text top="533" left="129" width="27" height="36" font="35">𝑤</text>
+<text top="548" left="155" width="16" height="26" font="48">𝑘</text>
+<text top="530" left="181" width="36" height="36" font="15">。</text>
+<text top="770" left="997" width="18" height="16" font="7">35</text>
+</page>
+<page number="36" position="absolute" top="0" left="0" height="810" width="1080">
+<text top="85" left="41" width="434" height="48" font="6">识别（辨认或确认）</text>
+<text top="170" left="41" width="24" height="35" font="25">◼</text>
+<text top="163" left="82" width="924" height="42" font="13">测试语音与说话人模型的匹配程度被视为平均对数</text>
+<text top="212" left="82" width="294" height="42" font="13">似然，如下所示</text>
+<text top="217" left="376" width="36" height="36" font="15">：</text>
+<text top="385" left="41" width="24" height="35" font="25">◼</text>
+<text top="377" left="82" width="210" height="42" font="13">对于辨认（</text>
+<text top="377" left="292" width="294" height="42" font="30">Identification</text>
+<text top="377" left="586" width="420" height="42" font="13">）任务，选择得分最高</text>
+<text top="428" left="82" width="294" height="42" font="13">的说话人模型。</text>
+<text top="496" left="41" width="24" height="35" font="25">◼</text>
+<text top="488" left="82" width="210" height="42" font="13">对于验证（</text>
+<text top="488" left="292" width="252" height="42" font="30">Verification</text>
+<text top="488" left="544" width="462" height="42" font="13">）任务，决策基于以下形</text>
+<text top="539" left="82" width="294" height="42" font="13">式的对数似然比</text>
+<text top="770" left="997" width="18" height="16" font="7">36</text>
+</page>
+<page number="37" position="absolute" top="0" left="0" height="810" width="1080">
+<text top="85" left="41" width="241" height="48" font="6">最大后验（</text>
+<text top="93" left="282" width="109" height="43" font="41"><b>MAP</b></text>
+<text top="85" left="391" width="193" height="48" font="6">）自适应</text>
+<text top="166" left="41" width="20" height="30" font="14">◼</text>
+<text top="160" left="82" width="144" height="36" font="15">调整来自</text>
+<text top="159" left="226" width="100" height="40" font="43"> UBM </text>
+<text top="160" left="326" width="648" height="36" font="15">的所有参数（权重、均值向量和协方差矩</text>
+<text top="203" left="82" width="108" height="36" font="15">阵）。</text>
+<text top="260" left="95" width="26" height="32" font="16"></text>
+<text top="255" left="129" width="612" height="36" font="15">计算语音帧到混合高斯分量的相似度：</text>
+<text top="415" left="95" width="26" height="32" font="16"></text>
+<text top="410" left="129" width="396" height="36" font="15">计算零阶和一阶统计量：</text>
+<text top="571" left="95" width="26" height="32" font="16"></text>
+<text top="566" left="129" width="360" height="36" font="15">调整参数（如平均向量</text>
+<text top="569" left="489" width="22" height="36" font="35">𝛍</text>
+<text top="584" left="512" width="16" height="26" font="48">𝑘</text>
+<text top="566" left="530" width="72" height="36" font="15">）：</text>
+<text top="770" left="997" width="18" height="16" font="7">37</text>
+</page>
+<page number="38" position="absolute" top="0" left="0" height="810" width="1080">
+<text top="85" left="41" width="241" height="48" font="6">最大后验（</text>
+<text top="93" left="282" width="109" height="43" font="41"><b>MAP</b></text>
+<text top="85" left="391" width="337" height="48" font="6">）自适应（续）</text>
+<text top="85" left="728" width="193" height="48" font="38">（了解）</text>
+<text top="221" left="41" width="24" height="35" font="25">◼</text>
+<text top="214" left="82" width="168" height="42" font="13">适应系数</text>
+<text top="433" left="95" width="26" height="32" font="16"></text>
+<text top="430" left="129" width="20" height="36" font="35">𝑎</text>
+<text top="445" left="149" width="16" height="26" font="48">𝑘</text>
+<text top="428" left="167" width="108" height="36" font="15">始终在</text>
+<text top="430" left="276" width="87" height="36" font="35">0 &lt; 𝑎</text>
+<text top="445" left="362" width="16" height="26" font="48">𝑘</text>
+<text top="430" left="391" width="57" height="36" font="35">&lt; 1</text>
+<text top="428" left="448" width="144" height="36" font="15">范围内；</text>
+<text top="484" left="95" width="26" height="32" font="16"></text>
+<text top="479" left="129" width="540" height="36" font="15">控制新信息和旧参数之间的平衡；</text>
+<text top="538" left="95" width="26" height="32" font="16"></text>
+<text top="533" left="129" width="828" height="36" font="15">每个高斯分量不同，它取决于与特定混合对齐的帧总</text>
+<text top="575" left="129" width="540" height="36" font="15">数（即零阶统计数据）和相关因子</text>
+<text top="577" left="669" width="17" height="36" font="35">𝑟</text>
+<text top="575" left="687" width="144" height="36" font="15">（通常取</text>
+<text top="573" left="831" width="66" height="40" font="43">0-20</text>
+<text top="575" left="897" width="72" height="36" font="15">）。</text>
+<text top="770" left="997" width="18" height="16" font="7">38</text>
+</page>
+<page number="39" position="absolute" top="0" left="0" height="810" width="1080">
+<text top="85" left="41" width="241" height="48" font="6">最大后验（</text>
+<text top="93" left="282" width="109" height="43" font="41"><b>MAP</b></text>
+<text top="85" left="391" width="337" height="48" font="6">）自适应（续）</text>
+<text top="85" left="728" width="193" height="48" font="38">（了解）</text>
+<text top="166" left="41" width="20" height="30" font="14">◼</text>
+<text top="160" left="82" width="252" height="36" font="15">二维向量空间中</text>
+<text top="159" left="334" width="78" height="40" font="43">MAP</text>
+<text top="160" left="412" width="180" height="36" font="15">自适应图示</text>
+<text top="217" left="95" width="26" height="32" font="16"></text>
+<text top="212" left="129" width="180" height="36" font="15">平均适应（</text>
+<text top="210" left="309" width="241" height="40" font="43">Mean adaptation</text>
+<text top="212" left="550" width="324" height="36" font="15">）导致高斯分量偏移</text>
+<text top="210" left="874" width="10" height="40" font="43">;</text>
+<text top="268" left="95" width="26" height="32" font="16"></text>
+<text top="263" left="129" width="216" height="36" font="15">协方差适应（</text>
+<text top="262" left="345" width="323" height="40" font="43">Covariance adaptation</text>
+<text top="263" left="668" width="288" height="36" font="15">）导致高斯分量的</text>
+<text top="307" left="129" width="468" height="36" font="15">大小（不确定性）发生变化。</text>
+<text top="770" left="997" width="18" height="16" font="7">39</text>
+</page>
+<page number="40" position="absolute" top="0" left="0" height="810" width="1080">
+<text top="93" left="41" width="256" height="43" font="41"><b>GMM-UBM</b></text>
+<text top="85" left="297" width="96" height="48" font="6">识别</text>
+<text top="85" left="394" width="192" height="48" font="38">（掌握）</text>
+<text top="166" left="41" width="20" height="30" font="14">◼</text>
+<text top="160" left="82" width="216" height="36" font="15">说话人验证（</text>
+<text top="159" left="298" width="170" height="40" font="43">Verification</text>
+<text top="160" left="468" width="504" height="36" font="15">）任务可以被转换为以下两项的</text>
+<text top="203" left="82" width="216" height="36" font="15">似然比测试：</text>
+<text top="260" left="95" width="26" height="32" font="16"></text>
+<text top="255" left="129" width="144" height="36" font="15">零假设，</text>
+<text top="254" left="273" width="44" height="40" font="43">H0</text>
+<text top="255" left="317" width="144" height="36" font="15">：测试段</text>
+<text top="258" left="461" width="22" height="36" font="35">𝑌</text>
+<text top="255" left="484" width="252" height="36" font="15">来自假设说话人</text>
+<text top="254" left="736" width="10" height="40" font="43">;</text>
+<text top="312" left="95" width="26" height="32" font="16"></text>
+<text top="307" left="129" width="180" height="36" font="15">备择假设，</text>
+<text top="305" left="309" width="44" height="40" font="43">H1</text>
+<text top="307" left="353" width="144" height="36" font="15">：测试段</text>
+<text top="309" left="497" width="22" height="36" font="35">𝑌</text>
+<text top="307" left="520" width="360" height="36" font="15">不是来自假设说话人。</text>
+<text top="770" left="997" width="18" height="16" font="7">40</text>
+</page>
+<page number="41" position="absolute" top="0" left="0" height="810" width="1080">
+<text top="93" left="41" width="256" height="43" font="41"><b>GMM-UBM</b></text>
+<text top="85" left="297" width="241" height="48" font="6">识别（续）</text>
+<text top="85" left="538" width="192" height="48" font="38">（掌握）</text>
+<text top="218" left="41" width="20" height="30" font="14">◼</text>
+<text top="212" left="82" width="396" height="36" font="15">给定测试段和说话人模型</text>
+<text top="214" left="478" width="20" height="36" font="35">𝜃</text>
+<text top="212" left="499" width="324" height="36" font="15">的对数似然相似度：</text>
+<text top="770" left="997" width="18" height="16" font="7">41</text>
+</page>
+<page number="42" position="absolute" top="0" left="0" height="810" width="1080">
+<text top="93" left="41" width="128" height="43" font="41"><b>GMM</b></text>
+<text top="85" left="169" width="145" height="48" font="6">超向量</text>
+<text top="168" left="41" width="24" height="35" font="25">◼</text>
+<text top="160" left="82" width="147" height="42" font="30">GMM-UBM</text>
+<text top="160" left="229" width="84" height="42" font="13">范式</text>
+<text top="224" left="95" width="26" height="32" font="16"></text>
+<text top="219" left="129" width="468" height="36" font="15">对于每个说话者，基于相同的</text>
+<text top="218" left="597" width="100" height="40" font="43"> UBM </text>
+<text top="219" left="697" width="288" height="36" font="15">估计说话者相关的</text>
+<text top="261" left="129" width="90" height="40" font="43">GMM</text>
+<text top="262" left="219" width="36" height="36" font="15">；</text>
+<text top="319" left="95" width="26" height="32" font="16"></text>
+<text top="314" left="129" width="216" height="36" font="15">说话人相关的</text>
+<text top="313" left="345" width="108" height="40" font="43"> GMM </text>
+<text top="314" left="453" width="541" height="36" font="15">由均值向量唯一表示，方法是仅调</text>
+<text top="357" left="129" width="648" height="36" font="15">整均值向量，而权重和协方差矩阵保持与</text>
+<text top="356" left="777" width="100" height="40" font="43"> UBM </text>
+<text top="357" left="877" width="108" height="36" font="15">相同。</text>
+<text top="770" left="997" width="18" height="16" font="7">42</text>
+</page>
+<page number="43" position="absolute" top="0" left="0" height="810" width="1080">
+<text top="103" left="65" width="198" height="66" font="1">第六章</text>
+<text top="103" left="329" width="265" height="66" font="1">声纹识别</text>
+<text top="229" left="65" width="27" height="40" font="2">◼</text>
+<text top="229" left="105" width="72" height="43" font="5">6.1 </text>
+<text top="221" left="177" width="288" height="48" font="6">声纹识别概述</text>
+<text top="293" left="119" width="30" height="37" font="8"></text>
+<text top="295" left="153" width="94" height="38" font="36">6.1.1 </text>
+<text top="288" left="247" width="378" height="42" font="37">声纹识别的基本概念</text>
+<text top="354" left="119" width="30" height="37" font="8"></text>
+<text top="355" left="153" width="94" height="38" font="12">6.1.2 </text>
+<text top="348" left="247" width="378" height="42" font="13">声纹识别方法的回顾</text>
+<text top="414" left="119" width="30" height="37" font="8"></text>
+<text top="416" left="153" width="94" height="38" font="12">6.1.3 </text>
+<text top="409" left="247" width="378" height="42" font="13">声纹识别的典型应用</text>
+<text top="480" left="65" width="27" height="40" font="2">◼</text>
+<text top="480" left="105" width="72" height="43" font="5">6.2 </text>
+<text top="471" left="177" width="432" height="48" font="6">传统声纹识别算法（</text>
+<text top="480" left="610" width="246" height="43" font="5">GMM-UBM</text>
+<text top="471" left="856" width="48" height="48" font="6">）</text>
+<text top="549" left="65" width="27" height="40" font="2">◼</text>
+<text top="549" left="105" width="72" height="43" font="5">6.3 </text>
+<text top="540" left="177" width="624" height="48" font="4">基于深度学习的声纹识别算法</text>
+<text top="540" left="802" width="288" height="48" font="38">（基本概念）</text>
+<text top="618" left="65" width="27" height="40" font="2">◼</text>
+<text top="618" left="105" width="72" height="43" font="5">6.4 </text>
+<text top="609" left="177" width="433" height="48" font="6">声纹识别技术的展望</text>
+<text top="770" left="997" width="18" height="16" font="7">43</text>
+</page>
+<page number="44" position="absolute" top="0" left="0" height="810" width="1080">
+<text top="85" left="41" width="385" height="48" font="6">现代声纹识别系统</text>
+<text top="168" left="41" width="24" height="35" font="25">◼</text>
+<text top="160" left="82" width="881" height="42" font="13">现代声纹识别系统主要基于说话人嵌入，包括：</text>
+<text top="224" left="95" width="26" height="32" font="16"></text>
+<text top="219" left="129" width="180" height="36" font="15">特征提取；</text>
+<text top="276" left="95" width="26" height="32" font="16"></text>
+<text top="271" left="129" width="216" height="36" font="15">说话人嵌入；</text>
+<text top="327" left="95" width="26" height="32" font="16"></text>
+<text top="322" left="129" width="108" height="36" font="15">打分。</text>
+<text top="770" left="997" width="18" height="16" font="7">44</text>
+</page>
+<page number="45" position="absolute" top="0" left="0" height="810" width="1080">
+	<fontspec id="63" size="48" family="BCDHEE+SimHei" color="#000000"/>
+<text top="109" left="32" width="96" height="48" font="6">基于</text>
+<text top="109" left="129" width="193" height="48" font="63">x-vector</text>
+<text top="109" left="322" width="385" height="48" font="6">的深度说话人嵌入</text>
+<text top="109" left="708" width="192" height="48" font="38">（掌握）</text>
+<text top="228" left="53" width="20" height="30" font="14">◼</text>
+<text top="221" left="93" width="144" height="36" font="32">x-vector</text>
+<text top="221" left="237" width="324" height="36" font="15">是一个包含四个函数</text>
+<text top="264" left="93" width="288" height="36" font="15">块的深度神经网络</text>
+<text top="333" left="73" width="26" height="32" font="16"></text>
+<text top="328" left="107" width="468" height="36" font="15">使用多层神经网络实现帧处理</text>
+<text top="392" left="107" width="468" height="36" font="15">器用以提取深度特征，例如延</text>
+<text top="457" left="107" width="180" height="36" font="15">时神经网络</text>
+<text top="456" left="287" width="133" height="40" font="43">(TDNN) </text>
+<text top="536" left="73" width="26" height="32" font="16"></text>
+<text top="531" left="107" width="108" height="36" font="15">池化层</text>
+<text top="609" left="73" width="26" height="32" font="16"></text>
+<text top="604" left="107" width="144" height="36" font="15">嵌入提取</text>
+<text top="683" left="73" width="26" height="32" font="16"></text>
+<text top="678" left="107" width="468" height="36" font="15">基于判别性损失的说话人分类</text>
+<text top="770" left="997" width="18" height="16" font="7">45</text>
+</page>
+<page number="46" position="absolute" top="0" left="0" height="810" width="1080">
+	<fontspec id="64" size="27" family="BCDFEE+Wingdings" color="#003300"/>
+<text top="89" left="65" width="193" height="48" font="63">x-vector</text>
+<text top="89" left="258" width="385" height="48" font="6">提取器的总体架构</text>
+<text top="89" left="644" width="192" height="48" font="38">（掌握）</text>
+<text top="197" left="65" width="20" height="30" font="14">◼</text>
+<text top="190" left="105" width="216" height="36" font="15">深度特征提取</text>
+<text top="255" left="85" width="21" height="26" font="40"></text>
+<text top="251" left="119" width="360" height="30" font="21">获取一系列声学特征，例如</text>
+<text top="251" left="479" width="60" height="30" font="20">MFCC</text>
+<text top="251" left="539" width="90" height="30" font="21">或对数</text>
+<text top="251" left="629" width="210" height="30" font="20">mel-filterbank</text>
+<text top="251" left="839" width="90" height="30" font="21">系数；</text>
+<text top="316" left="85" width="21" height="26" font="40"></text>
+<text top="312" left="119" width="780" height="30" font="21">采用多层深度神经网络从声学特征中提取深度说话人特征。</text>
+<text top="384" left="65" width="20" height="30" font="64">◼</text>
+<text top="378" left="105" width="144" height="36" font="15">时间池化</text>
+<text top="451" left="85" width="21" height="26" font="40"></text>
+<text top="447" left="119" width="540" height="30" font="21">将特征向量序列转换为单个固定维向量；</text>
+<text top="512" left="85" width="21" height="26" font="40"></text>
+<text top="508" left="119" width="150" height="30" font="21">时间池化（</text>
+<text top="508" left="269" width="240" height="30" font="20">Temporal pooling</text>
+<text top="508" left="509" width="540" height="30" font="21">）（取特征向量的均值和标准差）是最常</text>
+<text top="562" left="119" width="210" height="30" font="21">见的池化方式；</text>
+<text top="770" left="997" width="18" height="16" font="7">46</text>
+</page>
+<page number="47" position="absolute" top="0" left="0" height="810" width="1080">
+<text top="90" left="44" width="193" height="48" font="63">x-vector</text>
+<text top="90" left="237" width="530" height="48" font="6">提取器的总体架构（续）</text>
+<text top="98" left="767" width="12" height="43" font="42"> </text>
+<text top="90" left="779" width="192" height="48" font="38">（掌握）</text>
+<text top="209" left="58" width="20" height="30" font="14">◼</text>
+<text top="202" left="98" width="144" height="36" font="15">嵌入提取</text>
+<text top="267" left="78" width="21" height="26" font="40"></text>
+<text top="263" left="112" width="450" height="30" font="21">由若干个相互连接的网络层组成；</text>
+<text top="328" left="78" width="21" height="26" font="40"></text>
+<text top="324" left="112" width="360" height="30" font="21">其中一层被设计为瓶颈层（</text>
+<text top="324" left="472" width="240" height="30" font="20">Bottleneck layer</text>
+<text top="324" left="712" width="60" height="30" font="21">）；</text>
+<text top="390" left="78" width="21" height="26" font="40"></text>
+<text top="385" left="112" width="480" height="30" font="21">瓶颈层的输出（非线性层之前）就是</text>
+<text top="385" left="592" width="120" height="30" font="20">x-vector</text>
+<text top="385" left="712" width="180" height="30" font="21">说话人嵌入。</text>
+<text top="458" left="58" width="20" height="30" font="64">◼</text>
+<text top="451" left="98" width="180" height="36" font="15">说话人分类</text>
+<text top="524" left="78" width="21" height="26" font="40"></text>
+<text top="520" left="112" width="510" height="30" font="21">根据说话人标签对训练音频进行分类。</text>
+<text top="770" left="997" width="18" height="16" font="7">47</text>
+</page>
+<page number="48" position="absolute" top="0" left="0" height="810" width="1080">
+<text top="92" left="65" width="136" height="43" font="41"><b>TDNN</b></text>
+<text top="83" left="201" width="337" height="48" font="6">中的时间上下文</text>
+<text top="205" left="32" width="20" height="30" font="14">◼</text>
+<text top="199" left="73" width="72" height="36" font="32">TDNN</text>
+<text top="199" left="145" width="720" height="36" font="15">对时间上下文信息的提取取决于感受野的宽度</text>
+<text top="272" left="52" width="21" height="26" font="40"></text>
+<text top="268" left="86" width="600" height="30" font="21">感受野：影响网络特定单元的输入空间区域。</text>
+<text top="770" left="997" width="18" height="16" font="7">48</text>
+</page>
+<page number="49" position="absolute" top="0" left="0" height="810" width="1080">
+<text top="107" left="58" width="136" height="43" font="41"><b>TDNN</b></text>
+<text top="98" left="194" width="481" height="48" font="6">中的时间上下文（续）</text>
+<text top="192" left="75" width="24" height="35" font="25">◼</text>
+<text top="184" left="115" width="504" height="42" font="13">更广泛的时间上下文视野：</text>
+<text top="266" left="95" width="21" height="26" font="40"></text>
+<text top="261" left="129" width="600" height="30" font="21">空洞卷积（通过以一定的步长跳过输入值）；</text>
+<text top="327" left="95" width="21" height="26" font="40"></text>
+<text top="323" left="129" width="390" height="30" font="21">堆叠更多的空洞一维卷积层。</text>
+<text top="770" left="997" width="18" height="16" font="7">49</text>
+</page>
+<page number="50" position="absolute" top="0" left="0" height="810" width="1080">
+	<fontspec id="65" size="23" family="BCDFEE+Wingdings" color="#b1b1ff"/>
+	<fontspec id="66" size="30" family="BCDOEE+CambriaMath" color="#000000"/>
+<text top="97" left="49" width="145" height="48" font="6">池化层</text>
+<text top="225" left="74" width="20" height="30" font="64">◼</text>
+<text top="218" left="115" width="828" height="36" font="15">说话人嵌入通过特征的池化来形成固定长度的表征。</text>
+<text top="298" left="74" width="20" height="30" font="64">◼</text>
+<text top="292" left="115" width="792" height="36" font="15">时间池化通过平均实现的（计算均值和标准差）。</text>
+<text top="562" left="65" width="20" height="25" font="65"></text>
+<text top="559" left="99" width="18" height="30" font="44">𝐡</text>
+<text top="572" left="117" width="10" height="22" font="45">𝑡</text>
+<text top="557" left="128" width="90" height="30" font="21">–在第</text>
+<text top="557" left="219" width="15" height="30" font="20">t</text>
+<text top="557" left="233" width="300" height="30" font="21">时刻步变换的特征向量</text>
+<text top="616" left="65" width="20" height="25" font="65"></text>
+<text top="613" left="99" width="13" height="30" font="44">𝐟</text>
+<text top="626" left="110" width="10" height="22" font="45">𝑡</text>
+<text top="611" left="122" width="511" height="30" font="21">–前馈层的输入，后跟非线性激活函数</text>
+<text top="613" left="632" width="18" height="30" font="66">𝑔</text>
+<text top="613" left="663" width="8" height="30" font="44">·</text>
+<text top="611" left="684" width="15" height="30" font="20"> </text>
+<text top="670" left="65" width="20" height="25" font="65"></text>
+<text top="667" left="99" width="29" height="30" font="66">𝐖</text>
+<text top="665" left="128" width="150" height="30" font="21">–权重矩阵</text>
+<text top="724" left="65" width="20" height="25" font="65"></text>
+<text top="721" left="99" width="18" height="30" font="66">𝐛</text>
+<text top="719" left="117" width="151" height="30" font="21">–偏差向量</text>
+<text top="770" left="997" width="18" height="16" font="7">50</text>
+</page>
+<page number="51" position="absolute" top="0" left="0" height="810" width="1080">
+<text top="80" left="65" width="289" height="48" font="6">池化层（续）</text>
+<text top="88" left="354" width="12" height="43" font="42"> </text>
+<text top="80" left="366" width="193" height="48" font="38">（了解）</text>
+<text top="203" left="65" width="20" height="30" font="14">◼</text>
+<text top="197" left="105" width="396" height="36" font="15">基于注意力机制的池化：</text>
+<text top="270" left="85" width="21" height="26" font="40"></text>
+<text top="266" left="119" width="840" height="30" font="21">通过加权平均令模型更多地关注对说话人识别任务更重要的帧。</text>
+<text top="770" left="997" width="18" height="16" font="7">51</text>
+</page>
+<page number="52" position="absolute" top="0" left="0" height="810" width="1080">
+<text top="75" left="65" width="289" height="48" font="6">池化层（续）</text>
+<text top="83" left="354" width="12" height="43" font="42"> </text>
+<text top="75" left="366" width="193" height="48" font="38">（了解）</text>
+<text top="189" left="65" width="20" height="30" font="14">◼</text>
+<text top="182" left="105" width="252" height="36" font="15">自注意力池化：</text>
+<text top="256" left="85" width="21" height="26" font="40"></text>
+<text top="251" left="119" width="660" height="30" font="21">找到一组权重，每个帧对应一个权重，加权求和；</text>
+<text top="317" left="85" width="21" height="26" font="40"></text>
+<text top="313" left="119" width="90" height="30" font="21">类似于</text>
+<text top="313" left="209" width="165" height="30" font="20">Transformer</text>
+<text top="313" left="374" width="90" height="30" font="21">中基于</text>
+<text top="313" left="464" width="90" height="30" font="20">{query</text>
+<text top="313" left="554" width="30" height="30" font="21">，</text>
+<text top="313" left="584" width="45" height="30" font="20">key</text>
+<text top="313" left="629" width="30" height="30" font="21">，</text>
+<text top="313" left="659" width="90" height="30" font="20">value}</text>
+<text top="313" left="749" width="210" height="30" font="21">的自注意力池。</text>
+<text top="770" left="997" width="18" height="16" font="7">52</text>
+</page>
+<page number="53" position="absolute" top="0" left="0" height="810" width="1080">
+<text top="77" left="65" width="193" height="48" font="6">嵌入提取</text>
+<text top="205" left="49" width="20" height="30" font="64">◼</text>
+<text top="199" left="90" width="648" height="36" font="15">说话人嵌入表征是一个固定长度的向量，</text>
+<text top="263" left="56" width="504" height="36" font="15">它捕捉说话人的长期声纹特征；</text>
+<text top="343" left="49" width="20" height="30" font="64">◼</text>
+<text top="337" left="90" width="648" height="36" font="15">聚合特征通过若干个全连接层进行处理；</text>
+<text top="417" left="49" width="20" height="30" font="64">◼</text>
+<text top="410" left="90" width="612" height="36" font="15">将第一个线性层的输出作为嵌入表征。</text>
+<text top="770" left="997" width="18" height="16" font="7">53</text>
+</page>
+<page number="54" position="absolute" top="0" left="0" height="810" width="1080">
+	<fontspec id="67" size="36" family="BCDOEE+CambriaMath" color="#000000"/>
+	<fontspec id="68" size="36" family="BCDPEE+SimSun" color="#000000"/>
+	<fontspec id="69" size="20" family="BCDFEE+Wingdings" color="#b1b1ff"/>
+	<fontspec id="70" size="27" family="TimesNewRomanPS" color="#000000"/>
+	<fontspec id="71" size="27" family="BCDOEE+CambriaMath" color="#000000"/>
+<text top="88" left="65" width="193" height="48" font="6">多类分类</text>
+<text top="225" left="74" width="20" height="30" font="64">◼</text>
+<text top="218" left="115" width="864" height="36" font="15">神经网络的输出层被构造为每个节点代表一个类，其中</text>
+<text top="224" left="979" width="9" height="32" font="34"> </text>
+<text top="286" left="81" width="20" height="36" font="67">𝑦</text>
+<text top="289" left="101" width="9" height="32" font="34"> </text>
+<text top="283" left="110" width="36" height="36" font="68">∈</text>
+<text top="289" left="146" width="152" height="32" font="34"> {1,2, … , </text>
+<text top="286" left="299" width="21" height="36" font="67">𝐶</text>
+<text top="289" left="320" width="44" height="32" font="34">} , </text>
+<text top="286" left="365" width="21" height="36" font="67">𝐶</text>
+<text top="289" left="386" width="9" height="32" font="34"> </text>
+<text top="283" left="395" width="468" height="36" font="15">表示训练集中说话人的数量；</text>
+<text top="363" left="74" width="20" height="30" font="64">◼</text>
+<text top="356" left="115" width="72" height="36" font="15">使用</text>
+<text top="363" left="187" width="134" height="32" font="34"> softmax </text>
+<text top="356" left="321" width="612" height="36" font="15">函数（归一化指数函数）激活输出层。</text>
+<text top="524" left="74" width="18" height="22" font="69"></text>
+<text top="521" left="108" width="14" height="27" font="52">𝐱</text>
+<text top="533" left="123" width="7" height="20" font="53">𝑖</text>
+<text top="519" left="132" width="14" height="27" font="50"> </text>
+<text top="519" left="146" width="27" height="27" font="51">–</text>
+<text top="519" left="173" width="14" height="27" font="50"> </text>
+<text top="519" left="186" width="27" height="27" font="51">第</text>
+<text top="524" left="213" width="8" height="24" font="70"><i>i</i></text>
+<text top="519" left="221" width="270" height="27" font="51">个训练样本的深度特征</text>
+<text top="576" left="74" width="18" height="22" font="69"></text>
+<text top="573" left="108" width="26" height="27" font="52">𝐖</text>
+<text top="584" left="130" width="9" height="20" font="53">𝑗</text>
+<text top="571" left="141" width="14" height="27" font="50"> </text>
+<text top="571" left="154" width="27" height="27" font="51">–</text>
+<text top="571" left="181" width="14" height="27" font="50"> </text>
+<text top="571" left="195" width="108" height="27" font="51">权重矩阵</text>
+<text top="573" left="303" width="26" height="27" font="71">𝐖</text>
+<text top="571" left="329" width="243" height="27" font="51">（输出前馈层）的第</text>
+<text top="576" left="572" width="8" height="24" font="70"><i>j</i></text>
+<text top="571" left="580" width="27" height="27" font="51">列</text>
+<text top="770" left="997" width="18" height="16" font="7">54</text>
+</page>
+<page number="55" position="absolute" top="0" left="0" height="810" width="1080">
+	<fontspec id="72" size="18" family="BCDOEE+CambriaMath" color="#000000"/>
+	<fontspec id="73" size="27" family="TimesNewRomanPSMT" color="#000000"/>
+<text top="94" left="49" width="241" height="48" font="6">交叉熵损失</text>
+<text top="227" left="41" width="20" height="30" font="64">◼</text>
+<text top="220" left="81" width="792" height="36" font="15">交叉熵损失用于衡量网络输出和标签之间的差异：</text>
+<text top="482" left="58" width="18" height="22" font="69"></text>
+<text top="479" left="91" width="14" height="27" font="71">𝐱</text>
+<text top="493" left="106" width="6" height="18" font="72">𝑖</text>
+<text top="477" left="111" width="14" height="27" font="50"> </text>
+<text top="477" left="125" width="54" height="27" font="51">–第</text>
+<text top="482" left="179" width="8" height="24" font="70"><i>i</i></text>
+<text top="477" left="186" width="270" height="27" font="51">个训练样本的深度特征</text>
+<text top="534" left="58" width="18" height="22" font="69"></text>
+<text top="531" left="91" width="26" height="27" font="52">𝐖</text>
+<text top="542" left="113" width="9" height="20" font="53">𝑗</text>
+<text top="529" left="124" width="135" height="27" font="51">–权重矩阵</text>
+<text top="531" left="259" width="26" height="27" font="71">𝐖</text>
+<text top="529" left="285" width="243" height="27" font="51">（输出前馈层）的第</text>
+<text top="534" left="528" width="8" height="24" font="70"><i>j</i></text>
+<text top="529" left="536" width="27" height="27" font="51">列</text>
+<text top="583" left="58" width="18" height="22" font="69"></text>
+<text top="580" left="91" width="15" height="27" font="52">𝑦</text>
+<text top="592" left="106" width="7" height="20" font="53">𝑖</text>
+<text top="578" left="114" width="54" height="27" font="51">–第</text>
+<text top="583" left="168" width="8" height="24" font="70"><i>i</i></text>
+<text top="578" left="176" width="189" height="27" font="51">个样本的类标签</text>
+<text top="632" left="58" width="18" height="22" font="69"></text>
+<text top="629" left="91" width="16" height="27" font="71">𝐶</text>
+<text top="627" left="108" width="135" height="27" font="51">–类的数量</text>
+<text top="680" left="58" width="18" height="22" font="69"></text>
+<text top="678" left="91" width="20" height="27" font="71">𝑁</text>
+<text top="675" left="111" width="135" height="27" font="51">–批量大小</text>
+<text top="729" left="58" width="18" height="22" font="69"></text>
+<text top="724" left="91" width="27" height="27" font="50">1{</text>
+<text top="726" left="118" width="15" height="27" font="52">𝑦</text>
+<text top="737" left="133" width="7" height="20" font="53">𝑖</text>
+<text top="729" left="148" width="15" height="24" font="73">=</text>
+<text top="726" left="163" width="10" height="27" font="71">𝑗</text>
+<text top="724" left="173" width="14" height="27" font="50">}</text>
+<text top="724" left="186" width="243" height="27" font="51">–指示函数。如果第</text>
+<text top="729" left="429" width="8" height="24" font="70"><i>i</i></text>
+<text top="724" left="437" width="162" height="27" font="51">个样本属于第</text>
+<text top="729" left="599" width="8" height="24" font="70"><i>j</i></text>
+<text top="724" left="606" width="216" height="27" font="51">个说话者则取值为</text>
+<text top="724" left="822" width="14" height="27" font="50">1</text>
+<text top="724" left="836" width="108" height="27" font="51">，否则为</text>
+<text top="724" left="944" width="14" height="27" font="50">0</text>
+<text top="724" left="957" width="27" height="27" font="51">。</text>
+<text top="770" left="997" width="18" height="16" font="7">55</text>
+</page>
+<page number="56" position="absolute" top="0" left="0" height="810" width="1080">
+<text top="84" left="65" width="145" height="48" font="6">改进的</text>
+<text top="93" left="210" width="175" height="43" font="41"><b>softmax </b></text>
+<text top="84" left="384" width="96" height="48" font="6">函数</text>
+<text top="84" left="481" width="192" height="48" font="38">（了解）</text>
+<text top="225" left="74" width="20" height="30" font="64">◼</text>
+<text top="218" left="115" width="108" height="36" font="15">传统的</text>
+<text top="224" left="223" width="116" height="32" font="34">softmax</text>
+<text top="218" left="339" width="648" height="36" font="15">输出层的学习嵌入仅针对类间分离进行了</text>
+<text top="283" left="81" width="468" height="36" font="15">优化，而未考虑类内紧凑性。</text>
+<text top="363" left="74" width="20" height="30" font="64">◼</text>
+<text top="356" left="115" width="144" height="36" font="15">可以修改</text>
+<text top="363" left="259" width="140" height="32" font="34"> Softmax </text>
+<text top="356" left="399" width="504" height="36" font="15">函数以促进类内紧凑性，例如，</text>
+<text top="427" left="81" width="233" height="32" font="34">angular softmax</text>
+<text top="421" left="314" width="36" height="36" font="15">和</text>
+<text top="427" left="350" width="354" height="32" font="34">additive-margin softmax</text>
+<text top="421" left="704" width="36" height="36" font="15">。</text>
+<text top="770" left="997" width="18" height="16" font="7">56</text>
+</page>
+<page number="57" position="absolute" top="0" left="0" height="810" width="1080">
+<text top="101" left="58" width="193" height="48" font="6">数据增广</text>
+<text top="101" left="250" width="192" height="48" font="38">（了解）</text>
+<text top="225" left="74" width="20" height="30" font="14">◼</text>
+<text top="218" left="115" width="252" height="36" font="15">添加噪音和混响</text>
+<text top="291" left="95" width="21" height="26" font="40"></text>
+<text top="287" left="128" width="330" height="30" font="21">使用增广数据集（例如：</text>
+<text top="287" left="459" width="75" height="30" font="20">MUSAN</text>
+<text top="287" left="534" width="270" height="30" font="21">等）和房间脉冲响应</text>
+<text top="353" left="95" width="21" height="26" font="40"></text>
+<text top="348" left="128" width="75" height="30" font="20">MUSAN</text>
+<text top="348" left="204" width="180" height="30" font="21">数据集（来自</text>
+<text top="348" left="384" width="30" height="30" font="20">12</text>
+<text top="348" left="414" width="390" height="30" font="21">种语言的噪音、音乐、语音）</text>
+<text top="421" left="74" width="20" height="30" font="64">◼</text>
+<text top="414" left="115" width="144" height="36" font="15">语音编码</text>
+<text top="494" left="74" width="20" height="30" font="64">◼</text>
+<text top="487" left="115" width="180" height="36" font="15">说话人增强</text>
+<text top="561" left="95" width="21" height="26" font="40"></text>
+<text top="556" left="128" width="180" height="30" font="21">音频速度扰动</text>
+<text top="622" left="95" width="21" height="26" font="40"></text>
+<text top="618" left="128" width="180" height="30" font="21">使用速度因子</text>
+<text top="620" left="309" width="18" height="30" font="66">𝛼</text>
+<text top="618" left="327" width="30" height="30" font="21">，</text>
+<text top="620" left="357" width="16" height="30" font="66">𝑥</text>
+<text top="618" left="373" width="15" height="30" font="20">(</text>
+<text top="620" left="388" width="18" height="30" font="44">𝛼</text>
+<text top="615" left="408" width="10" height="22" font="45">𝑡</text>
+<text top="618" left="419" width="15" height="30" font="20">)</text>
+<text top="618" left="434" width="150" height="30" font="21">的时间扭曲</text>
+<text top="770" left="997" width="18" height="16" font="7">57</text>
+</page>
+<page number="58" position="absolute" top="0" left="0" height="810" width="1080">
+<text top="103" left="65" width="198" height="66" font="1">第六章</text>
+<text top="103" left="329" width="265" height="66" font="1">声纹识别</text>
+<text top="229" left="65" width="27" height="40" font="2">◼</text>
+<text top="229" left="105" width="72" height="43" font="5">6.1 </text>
+<text top="221" left="177" width="288" height="48" font="6">声纹识别概述</text>
+<text top="293" left="119" width="30" height="37" font="8"></text>
+<text top="295" left="153" width="94" height="38" font="36">6.1.1 </text>
+<text top="288" left="247" width="378" height="42" font="37">声纹识别的基本概念</text>
+<text top="354" left="119" width="30" height="37" font="8"></text>
+<text top="355" left="153" width="94" height="38" font="12">6.1.2 </text>
+<text top="348" left="247" width="378" height="42" font="13">声纹识别方法的回顾</text>
+<text top="414" left="119" width="30" height="37" font="8"></text>
+<text top="416" left="153" width="94" height="38" font="12">6.1.3 </text>
+<text top="409" left="247" width="378" height="42" font="13">声纹识别的典型应用</text>
+<text top="480" left="65" width="27" height="40" font="2">◼</text>
+<text top="480" left="105" width="72" height="43" font="5">6.2 </text>
+<text top="471" left="177" width="432" height="48" font="6">传统声纹识别算法（</text>
+<text top="480" left="610" width="246" height="43" font="5">GMM-UBM</text>
+<text top="471" left="856" width="48" height="48" font="6">）</text>
+<text top="549" left="65" width="27" height="40" font="2">◼</text>
+<text top="549" left="105" width="72" height="43" font="5">6.3 </text>
+<text top="540" left="177" width="624" height="48" font="6">基于深度学习的声纹识别算法</text>
+<text top="618" left="65" width="27" height="40" font="2">◼</text>
+<text top="618" left="105" width="72" height="43" font="5">6.4 </text>
+<text top="609" left="177" width="433" height="48" font="4">声纹识别技术的展望</text>
+<text top="609" left="610" width="192" height="48" font="38">（了解）</text>
+<text top="770" left="997" width="18" height="16" font="7">58</text>
+</page>
+<page number="59" position="absolute" top="0" left="0" height="810" width="1080">
+	<fontspec id="74" size="27" family="BCDHEE+SimHei" color="#0000ff"/>
+<text top="85" left="41" width="337" height="48" font="6">端到端声纹识别</text>
+<text top="167" left="41" width="20" height="30" font="14">◼</text>
+<text top="160" left="81" width="396" height="36" font="32">Generalized End-to-End</text>
+<text top="160" left="477" width="36" height="36" font="15">（</text>
+<text top="160" left="513" width="72" height="36" font="32">GE2E</text>
+<text top="160" left="585" width="36" height="36" font="15">）</text>
+<text top="215" left="88" width="20" height="25" font="65"></text>
+<text top="209" left="128" width="600" height="30" font="21">分别提取不同说话人的多条语音的嵌入向量；</text>
+<text top="258" left="88" width="20" height="25" font="65"></text>
+<text top="253" left="128" width="840" height="30" font="21">计算不同嵌入向量间的相似度，并进行线性变换，来构造相似度</text>
+<text top="289" left="128" width="840" height="30" font="21">矩阵。在相似度矩阵中，同说话人语音嵌入间的相似度要尽可能</text>
+<text top="325" left="128" width="840" height="30" font="21">大，不同说话人语音嵌入间的相似度要尽可能小。以此为依据可</text>
+<text top="361" left="128" width="450" height="30" font="21">以设计损失函数来优化模型参数。</text>
+<text top="671" left="339" width="54" height="27" font="31">基于</text>
+<text top="671" left="393" width="54" height="27" font="74">GE2E</text>
+<text top="671" left="447" width="243" height="27" font="31">的声纹识别模型示例</text>
+<text top="770" left="997" width="18" height="16" font="7">59</text>
+</page>
+<page number="60" position="absolute" top="0" left="0" height="810" width="1080">
+<text top="85" left="41" width="97" height="48" font="6">挑战</text>
+<text top="93" left="137" width="60" height="43" font="41"><b> ---</b></text>
+<text top="85" left="209" width="145" height="48" font="6">跨信道</text>
+<text top="183" left="41" width="20" height="30" font="14">◼</text>
+<text top="177" left="81" width="540" height="36" font="15">跨信道会严重降低声纹识别的性能</text>
+<text top="235" left="41" width="20" height="30" font="14">◼</text>
+<text top="229" left="81" width="216" height="36" font="15">信道变量类型</text>
+<text top="284" left="95" width="21" height="26" font="40"></text>
+<text top="280" left="128" width="120" height="30" font="21">采录设备</text>
+<text top="327" left="95" width="21" height="26" font="40"></text>
+<text top="323" left="128" width="120" height="30" font="21">传输信道</text>
+<text top="370" left="95" width="21" height="26" font="40"></text>
+<text top="366" left="128" width="120" height="30" font="21">采录位置</text>
+<text top="412" left="95" width="21" height="26" font="40"></text>
+<text top="408" left="128" width="60" height="30" font="21">……</text>
+<text top="750" left="372" width="432" height="27" font="31">不同设备（相同原始语音）的语谱图</text>
+<text top="770" left="997" width="18" height="16" font="7">60</text>
+</page>
+<page number="61" position="absolute" top="0" left="0" height="810" width="1080">
+<text top="85" left="41" width="97" height="48" font="6">挑战</text>
+<text top="93" left="137" width="60" height="43" font="41"><b> ---</b></text>
+<text top="85" left="209" width="289" height="48" font="6">复杂声学场景</text>
+<text top="183" left="41" width="17" height="25" font="39">◼</text>
+<text top="177" left="81" width="120" height="30" font="21">加性噪声</text>
+<text top="225" left="95" width="21" height="26" font="40"></text>
+<text top="221" left="129" width="60" height="30" font="21">音乐</text>
+<text top="268" left="95" width="21" height="26" font="40"></text>
+<text top="264" left="129" width="60" height="30" font="21">杂音</text>
+<text top="311" left="95" width="21" height="26" font="40"></text>
+<text top="307" left="129" width="90" height="30" font="21">白噪声</text>
+<text top="355" left="95" width="21" height="26" font="40"></text>
+<text top="350" left="129" width="60" height="30" font="21">……</text>
+<text top="399" left="41" width="17" height="25" font="39">◼</text>
+<text top="394" left="81" width="60" height="30" font="21">混响</text>
+<text top="770" left="997" width="18" height="16" font="7">61</text>
+</page>
+<page number="62" position="absolute" top="0" left="0" height="810" width="1080">
+<text top="85" left="41" width="97" height="48" font="6">挑战</text>
+<text top="93" left="137" width="60" height="43" font="41"><b> ---</b></text>
+<text top="85" left="209" width="338" height="48" font="6">时变及说话风格</text>
+<text top="168" left="49" width="20" height="30" font="14">◼</text>
+<text top="161" left="90" width="900" height="36" font="15">相同的说话人和相同的内容，由于说话风格、健康状况、</text>
+<text top="203" left="90" width="756" height="36" font="15">发声器官等变化可能产生高度不同的声学特征。</text>
+<text top="770" left="997" width="18" height="16" font="7">62</text>
+</page>
+<page number="63" position="absolute" top="0" left="0" height="810" width="1080">
+	<fontspec id="75" size="36" family="BCEAEE+Times" color="#000000"/>
+<text top="85" left="41" width="97" height="48" font="6">挑战</text>
+<text top="93" left="137" width="60" height="43" font="41"><b> ---</b></text>
+<text top="85" left="209" width="289" height="48" font="6">声纹欺诈攻击</text>
+<text top="166" left="41" width="20" height="30" font="14">◼</text>
+<text top="160" left="82" width="144" height="36" font="15">语音合成</text>
+<text top="218" left="41" width="20" height="30" font="14">◼</text>
+<text top="212" left="82" width="144" height="36" font="15">语音转换</text>
+<text top="270" left="41" width="20" height="30" font="14">◼</text>
+<text top="263" left="82" width="144" height="36" font="15">录音重放</text>
+<text top="321" left="41" width="20" height="30" font="14">◼</text>
+<text top="314" left="82" width="72" height="40" font="75">……</text>
+<text top="770" left="997" width="18" height="16" font="7">63</text>
+</page>
+<page number="64" position="absolute" top="0" left="0" height="810" width="1080">
+	<fontspec id="76" size="30" family="BCDEEE+SimHei" color="#0000ff"/>
+<text top="770" left="997" width="18" height="16" font="7">64</text>
+<text top="77" left="66" width="434" height="48" font="6">声纹识别前沿研究（</text>
+<text top="86" left="500" width="61" height="43" font="41"><b>1/3</b></text>
+<text top="77" left="562" width="48" height="48" font="6">）</text>
+<text top="560" left="840" width="180" height="30" font="76">声纹识别机理</text>
+<text top="636" left="793" width="270" height="30" font="76">多模态生物特征识别</text>
+</page>
+<page number="65" position="absolute" top="0" left="0" height="810" width="1080">
+	<fontspec id="77" size="36" family="BCDHEE+SimHei" color="#0066ff"/>
+	<fontspec id="78" size="36" family="BCDEEE+SimHei" color="#0066ff"/>
+<text top="770" left="997" width="18" height="16" font="7">65</text>
+<text top="77" left="66" width="434" height="48" font="6">声纹识别前沿研究（</text>
+<text top="86" left="500" width="61" height="43" font="41"><b>2/4</b></text>
+<text top="77" left="562" width="48" height="48" font="6">）</text>
+<text top="178" left="92" width="72" height="36" font="77">2024</text>
+<text top="178" left="164" width="721" height="36" font="78">“声纹识别研究与应用学术研讨会”日程安排</text>
+</page>
+<page number="66" position="absolute" top="0" left="0" height="810" width="1080">
+<text top="770" left="997" width="18" height="16" font="7">66</text>
+<text top="77" left="66" width="434" height="48" font="6">声纹识别前沿研究（</text>
+<text top="86" left="500" width="61" height="43" font="41"><b>3/4</b></text>
+<text top="77" left="562" width="48" height="48" font="6">）</text>
+</page>
+<page number="67" position="absolute" top="0" left="0" height="810" width="1080">
+<text top="770" left="997" width="18" height="16" font="7">67</text>
+<text top="77" left="66" width="434" height="48" font="6">声纹识别前沿研究（</text>
+<text top="86" left="500" width="61" height="43" font="41"><b>4/4</b></text>
+<text top="77" left="562" width="48" height="48" font="6">）</text>
+</page>
+<page number="68" position="absolute" top="0" left="0" height="810" width="1080">
+	<fontspec id="79" size="36" family="ArialMT" color="#252525"/>
+	<fontspec id="80" size="36" family="BCDEEE+SimHei" color="#252525"/>
+	<fontspec id="81" size="36" family="BCDHEE+SimHei" color="#252525"/>
+<text top="76" left="41" width="530" height="48" font="6">语音信息处理的技术展望</text>
+<text top="770" left="997" width="18" height="16" font="7">68</text>
+<text top="617" left="68" width="13" height="40" font="79">•</text>
+<text top="618" left="102" width="324" height="36" font="80">深度意图理解的语音</text>
+<text top="618" left="426" width="18" height="36" font="81">/</text>
+<text top="618" left="444" width="324" height="36" font="80">文本多模态人机交互</text>
+<text top="660" left="68" width="13" height="40" font="79">•</text>
+<text top="662" left="102" width="360" height="36" font="80">低资源语言的性能瓶颈</text>
+<text top="703" left="68" width="13" height="40" font="79">•</text>
+<text top="705" left="102" width="216" height="36" font="80">具身听觉智能</text>
+<text top="705" left="318" width="18" height="36" font="81">/</text>
+<text top="705" left="336" width="252" height="36" font="80">具身多模态智能</text>
+<text top="746" left="68" width="13" height="40" font="79">•</text>
+<text top="748" left="102" width="432" height="36" font="80">低能耗的通用语音交互智能</text>
+</page>
+<page number="69" position="absolute" top="0" left="0" height="810" width="1080">
+	<fontspec id="82" size="60" family="BCDEEE+SimHei" color="#000000"/>
+<text top="349" left="65" width="145" height="48" font="38">时间：</text>
+<text top="358" left="209" width="46" height="43" font="42">11</text>
+<text top="349" left="255" width="48" height="48" font="38">月</text>
+<text top="358" left="304" width="46" height="43" font="42">11</text>
+<text top="349" left="350" width="240" height="48" font="38">日（周三）</text>
+<text top="358" left="590" width="247" height="43" font="42"> 15:25-17:25</text>
+<text top="407" left="65" width="145" height="48" font="38">考场：</text>
+<text top="415" left="209" width="494" height="43" font="3">3022244110-3024244236</text>
+<text top="407" left="704" width="48" height="48" font="4">（</text>
+<text top="415" left="752" width="169" height="43" font="3">46-A110</text>
+<text top="407" left="920" width="48" height="48" font="4">）</text>
+<text top="473" left="209" width="241" height="43" font="3">3024244238</text>
+<text top="465" left="449" width="240" height="48" font="4">之后及其他</text>
+<text top="473" left="690" width="12" height="43" font="3"> </text>
+<text top="465" left="701" width="48" height="48" font="4">（</text>
+<text top="473" left="749" width="171" height="43" font="3">46-A120</text>
+<text top="465" left="920" width="48" height="48" font="4">）</text>
+<text top="522" left="65" width="240" height="48" font="38">方式：闭卷</text>
+<text top="770" left="997" width="18" height="16" font="7">69</text>
+<text top="180" left="415" width="240" height="60" font="82">期末考试</text>
+</page>
+<outline>
+<item page="1">幻灯片 1: 第六章　声纹识别</item>
+<item page="2">幻灯片 2: 第六章　声纹识别</item>
+<item page="3">幻灯片 3: 第六章　声纹识别</item>
+<item page="4">幻灯片 4: 什么是声纹识别？</item>
+<item page="5">幻灯片 5</item>
+<item page="6">幻灯片 6: 与其他语音处理方法的区别</item>
+<item page="7">幻灯片 7: 说话人身份信息相关的语音属性</item>
+<item page="8">幻灯片 8: 声纹识别的分类</item>
+<item page="9">幻灯片 9: 声纹识别的分类（续）</item>
+<item page="10">幻灯片 10: 声纹识别的分类（续）</item>
+<item page="11">幻灯片 11: 声纹识别的分类（续）</item>
+<item page="12">幻灯片 12: 声纹识别评价指标</item>
+<item page="13">幻灯片 13: 声纹识别评价指标（续）</item>
+<item page="14">幻灯片 14: 第六章　声纹识别</item>
+<item page="15">幻灯片 15: 声纹识别技术的演化（了解）</item>
+<item page="16">幻灯片 16: 声纹识别系统基本框架（掌握）</item>
+<item page="17">幻灯片 17: GMM-UBM （基本概念）</item>
+<item page="18">幻灯片 18: GMM-UBM（续） （基本概念）</item>
+<item page="19">幻灯片 19: GMM-UBM（续） （基本概念）</item>
+<item page="20">幻灯片 20: 联合因子分析（Joint factor analysis：JFA）（了解）</item>
+<item page="21">幻灯片 21: 联合因子分析（续） （了解）</item>
+<item page="22">幻灯片 22: Identity vector (i-vector) （了解）</item>
+<item page="23">幻灯片 23: Identity vector (i-vector) （了解）</item>
+<item page="24">幻灯片 24: X-vector （基本概念）</item>
+<item page="25">幻灯片 25: Probabilistic LDA (PLDA)简介（了解）</item>
+<item page="26">幻灯片 26: Probabilistic LDA (PLDA)简介（了解）</item>
+<item page="27">幻灯片 27: 第六章　声纹识别</item>
+<item page="28">幻灯片 28: 访问控制</item>
+<item page="29">幻灯片 29: 说话人日志</item>
+<item page="30">幻灯片 30: 搜索/索引</item>
+<item page="31">幻灯片 31: 第六章　声纹识别</item>
+<item page="32">幻灯片 32: 特征提取</item>
+<item page="33">幻灯片 33: 基于GMM的说话人建模</item>
+<item page="34">幻灯片 34: GMM的期望最大化算法（EM）（了解）</item>
+<item page="35">幻灯片 35: GMM的期望最大化算法（EM）（了解）</item>
+<item page="36">幻灯片 36: 识别（辨认或确认）</item>
+<item page="37">幻灯片 37: 最大后验（MAP）自适应</item>
+<item page="38">幻灯片 38: 最大后验（MAP）自适应（续）（了解）</item>
+<item page="39">幻灯片 39: 最大后验（MAP）自适应（续）（了解）</item>
+<item page="40">幻灯片 40: GMM-UBM识别（掌握）</item>
+<item page="41">幻灯片 41: GMM-UBM识别（续）（掌握）</item>
+<item page="42">幻灯片 42: GMM超向量</item>
+<item page="43">幻灯片 43: 第六章　声纹识别</item>
+<item page="44">幻灯片 44: 现代声纹识别系统</item>
+<item page="45">幻灯片 45: 基于x-vector的深度说话人嵌入（掌握）</item>
+<item page="46">幻灯片 46: x-vector提取器的总体架构（掌握）</item>
+<item page="47">幻灯片 47: x-vector提取器的总体架构（续） （掌握）</item>
+<item page="48">幻灯片 48: TDNN中的时间上下文</item>
+<item page="49">幻灯片 49: TDNN中的时间上下文（续）</item>
+<item page="50">幻灯片 50: 池化层</item>
+<item page="51">幻灯片 51: 池化层（续） （了解）</item>
+<item page="52">幻灯片 52: 池化层（续） （了解）</item>
+<item page="53">幻灯片 53: 嵌入提取</item>
+<item page="54">幻灯片 54: 多类分类</item>
+<item page="55">幻灯片 55: 交叉熵损失</item>
+<item page="56">幻灯片 56: 改进的softmax 函数（了解）</item>
+<item page="57">幻灯片 57: 数据增广（了解）</item>
+<item page="58">幻灯片 58: 第六章　声纹识别</item>
+<item page="59">幻灯片 59: 端到端声纹识别</item>
+<item page="60">幻灯片 60: 挑战 --- 跨信道</item>
+<item page="61">幻灯片 61: 挑战 --- 复杂声学场景</item>
+<item page="62">幻灯片 62: 挑战 --- 时变及说话风格</item>
+<item page="63">幻灯片 63: 挑战 --- 声纹欺诈攻击</item>
+<item page="64">幻灯片 64: 声纹识别前沿研究（1/3）</item>
+<item page="65">幻灯片 65: 声纹识别前沿研究（2/4）</item>
+<item page="66">幻灯片 66: 声纹识别前沿研究（3/4）</item>
+<item page="67">幻灯片 67: 声纹识别前沿研究（4/4）</item>
+<item page="68">幻灯片 68: 语音信息处理的技术展望</item>
+<item page="69">幻灯片 69</item>
+</outline>
+</pdf2xml>
