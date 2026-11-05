@@ -1,124 +1,207 @@
-\documentclass[11pt]{ctexart}
-\usepackage[a4paper,margin=2.1cm,bottom=2.4cm]{geometry}
-\usepackage{amsmath,amssymb}
+\documentclass[10.5pt]{ctexart}
+\usepackage[a4paper,top=2.15cm,bottom=2.35cm,left=2.3cm,right=2.3cm,headsep=0.5cm,footskip=1.0cm]{geometry}
+\usepackage{amsmath}
+\usepackage{unicode-math}
 \usepackage{xcolor}
+\usepackage{array,tabularx}
 \usepackage{enumitem}
+\usepackage{titlesec,titletoc}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
 \usepackage{fancyhdr}
-\usepackage{titlesec}
+\usepackage{microtype}
+\usepackage{needspace}
+\usepackage{multicol}
 \usepackage[hidelinks]{hyperref}
+\hypersetup{pdftitle={语音信息处理 · 期末复习题库},pdfsubject={依据 2026 复习课件编写的六套复习题},pdfkeywords={语音信息处理,复习,题库}}
 
-\setCJKmainfont{Noto Serif CJK SC}[BoldFont=Noto Sans CJK SC Bold]
-\setCJKsansfont{Noto Sans CJK SC}
-\setmainfont{Noto Serif CJK SC}[BoldFont=Noto Sans CJK SC Bold]
-\linespread{1.12}
+% ---------- 颜色 ----------
+\definecolor{ink}{RGB}{28,29,32}
+\definecolor{accent}{RGB}{30,72,110}
+\definecolor{accentlt}{RGB}{126,152,178}
+\definecolor{muted}{RGB}{112,120,130}
+\definecolor{rule}{RGB}{203,211,219}
+\definecolor{ansbg}{RGB}{243,247,251}
+\definecolor{optink}{RGB}{58,61,67}
+\definecolor{coverbg}{RGB}{247,249,252}
+
+% ---------- 字体 ----------
+\setmainfont{TeX Gyre Termes}
+\setsansfont{Inter}
+\setCJKmainfont{Noto Serif CJK SC}[BoldFont=Noto Sans CJK SC Bold, ItalicFont=Noto Serif CJK SC]
+\setCJKsansfont{Noto Sans CJK SC}[BoldFont=Noto Sans CJK SC Bold]
+\setCJKfamilyfont{zhsong}{Noto Serif CJK SC}
+\setmathfont{TeX Gyre Termes Math}
+\setmonofont{DejaVu Sans Mono}[Scale=0.86]
+
+\color{ink}
+\linespread{1.42}
 \setlength{\parindent}{0pt}
-\setlength{\parskip}{0.35em}
-\setlength{\emergencystretch}{3.2em}
+\setlength{\parskip}{0.28em}
+\setlength{\emergencystretch}{3em}
 \setcounter{secnumdepth}{0}
 \renewcommand{\sectionmark}[1]{\markboth{#1}{}}
 
-\definecolor{ansc}{RGB}{25,70,150}
-\definecolor{hintc}{RGB}{110,110,110}
-\definecolor{secc}{RGB}{20,60,120}
-
-\setlength{\headheight}{13pt}
+% ---------- 页眉页脚 ----------
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[L]{\small\color{hintc}语音信息处理 · 期末复习题库}
-\fancyhead[R]{\small\color{hintc}\leftmark}
-\fancyfoot[C]{\small\color{hintc}\thepage}
-\renewcommand{\headrulewidth}{0.3pt}
+\renewcommand{\headrulewidth}{0.35pt}
+\renewcommand{\footrulewidth}{0pt}
+\fancyhead[L]{\sffamily\footnotesize\color{muted}语音信息处理\quad 期末复习题库}
+\fancyhead[R]{\sffamily\footnotesize\color{muted}\leftmark}
+\fancyfoot[C]{\sffamily\footnotesize\color{muted}\thepage}
+\fancypagestyle{plain}{\fancyhf{}\renewcommand{\headrulewidth}{0pt}\fancyfoot[C]{\sffamily\footnotesize\color{muted}\thepage}}
 
-\titleformat{\section}{\normalfont\Large\bfseries\color{secc}}{}{0em}{}
-\titleformat{\subsection}{\normalfont\large\bfseries\color{secc}}{}{0em}{}
+% ---------- 章首 ----------
+\newcommand{\chapstart}[4]{%
+  \clearpage
+  \phantomsection\addcontentsline{toc}{section}{第 #1 章\quad #2}%
+  \markboth{第 #1 章\quad #2}{}%
+  \begin{tcolorbox}[enhanced jigsaw,breakable=false,colback=coverbg,colframe=coverbg,boxrule=0pt,
+    left=10pt,right=10pt,top=9pt,bottom=9pt,arc=0pt,outer arc=0pt,before skip=0pt,after skip=1.1em]
+    {\sffamily\footnotesize\color{accentlt}第 #1 套\ \ \textbar\ \ 本章共 #4 题}\par\vspace{0.25em}
+    {\sffamily\bfseries\color{accent}\fontsize{20}{24}\selectfont 第 #1 章\quad #2}\par\vspace{0.5em}
+    {\color{accent}\rule{\linewidth}{1.1pt}}\par\vspace{1.2pt}
+    {\color{rule}\rule{\linewidth}{0.35pt}}\par\vspace{0.5em}
+    {\sffamily\footnotesize\color{muted}#3}
+  \end{tcolorbox}%
+  \vspace{0.2em}\par}
 
-\newcommand{\blank}{\rule[-0.4ex]{2.6em}{0.5pt}}
-\newcommand{\blankl}{\rule[-0.4ex]{5.2em}{0.5pt}}
+% ---------- 题型 ----------
+\titleformat{\subsection}[block]
+  {\normalfont\sffamily\bfseries\color{accent}\fontsize{12.5}{15}\selectfont}
+  {\raisebox{-0.06em}{\color{accent}\rule{3pt}{0.92em}}\hspace{0.55em}}{0em}{}
+\titlespacing*{\subsection}{0pt}{1.55em plus 0.2em minus 0.15em}{0.65em}
 
-% 答案：题目后空几行，再给答案
-\newcommand{\ans}[1]{\par\vspace{1.85\baselineskip}\noindent{\color{ansc}\small\textbf{答案：}#1\par}\vspace{0.85em}}
-\newcommand{\ansL}[1]{\par\vspace{4.0\baselineskip}\noindent{\color{ansc}\small\textbf{答案：}#1\par}\vspace{0.85em}}
+% ---------- 题目列表 ----------
+\newenvironment{qlist}
+  {\begin{enumerate}[label={\sffamily\bfseries\color{accent}\arabic*.},leftmargin=2.4em,labelsep=0.55em,itemsep=0.62em,topsep=0.15em,parsep=0.3em,partopsep=0pt]}
+  {\end{enumerate}}
 
-\newenvironment{qlist}{\begin{enumerate}[label=\textbf{\arabic*.},leftmargin=2.1em,itemsep=0.55em,topsep=0.3em]}{\end{enumerate}}
+% ---------- 选项 ----------
+\newcommand{\optlist}[4]{%
+  \par\vspace{0.34em}%
+  {\small\color{optink}%
+  \begin{list}{}{\leftmargin=1.8em\itemindent=-1.8em\topsep=0pt\partopsep=0pt\parsep=0.1em\itemsep=0.17em}%
+  \item #1\item #2\item #3\item #4%
+  \end{list}}}
+\newcommand{\optlisttwo}[4]{%
+  \par\vspace{0.34em}%
+  {\small\color{optink}%
+  \noindent\begin{tabularx}{\dimexpr\linewidth-0.2em\relax}{@{}>{\raggedright\arraybackslash}p{0.47\linewidth}@{\hspace{0.9em}}>{\raggedright\arraybackslash}X@{}}
+  #1 & #2\\[0.28em] #3 & #4
+  \end{tabularx}}}
 
-\title{\bfseries 语音信息处理 \,·\, 期末复习题库}
-\author{}
-\date{}
+% ---------- 答案 ----------
+\newtcolorbox{ansbox}{enhanced,breakable,colback=ansbg,colframe=ansbg,boxrule=0pt,
+  borderline west={2.3pt}{0pt}{accent!55!white},
+  arc=0pt,outer arc=0pt,left=7.5pt,right=7pt,top=4.6pt,bottom=4.6pt,
+  before skip=0pt,after skip=0.62em,fontupper=\small,fontlower=\small}
+\newcommand{\anslabel}{{\sffamily\bfseries\color{accent}答\ 案：}\hspace{0.35em}}
+\newcommand{\ans}[1]{\par\vspace{2.15\baselineskip}\begin{ansbox}\anslabel #1\end{ansbox}}
+\newcommand{\ansL}[1]{\par\vspace{3.6\baselineskip}\begin{ansbox}\anslabel #1\end{ansbox}}
+
+% ---------- 填空 ----------
+\newcommand{\blank}{\rule[-0.42ex]{2.55em}{0.45pt}}
+\newcommand{\blankl}{\rule[-0.42ex]{5.1em}{0.45pt}}
+
+% ---------- 目录 ----------
+\renewcommand{\contentsname}{目\ \ 录}
+\titlecontents{section}[0pt]
+  {\addvspace{0.62em}\sffamily\bfseries\color{accent}\fontsize{10.5}{13}\selectfont}
+  {\thecontentslabel\hspace{0.4em}}{}
+  {\hfill\color{accent}\contentspage}
+\titlecontents{subsection}[1.7em]
+  {\addvspace{0.06em}\sffamily\footnotesize\color{muted}}
+  {\thecontentslabel\hspace{0.4em}}{}
+  {\titlerule*[0.45pc]{\color{rule}.}\color{muted}\contentspage}
 
 \begin{document}
-\maketitle
 \thispagestyle{empty}
 
-\vspace{-1.2em}
-\begin{center}
-\begin{minipage}{0.92\textwidth}
-\small
-\textbf{编写依据：}《语音信息处理》2026 复习课件（第 1--6 章）。
+\vspace*{2.1cm}
+{\color{accent}\rule{\linewidth}{2pt}}\par\vspace{3pt}
+{\color{rule}\rule{\linewidth}{0.4pt}}\par
 
-\textbf{范围：}课件中标注「掌握」「基本概念」的内容，以及课件蓝字（重点标注）的概念。标注「了解」的内容不进入题库。
+\vspace{2.4cm}
+{\sffamily\color{accentlt}\fontsize{11}{14}\selectfont 2026 复习课件\ \ ·\ \ 六章全覆盖}\par
+\vspace{0.7cm}
+{\sffamily\bfseries\color{accent}\fontsize{34}{40}\selectfont 语音信息处理}\par
+\vspace{0.35cm}
+{\sffamily\bfseries\color{ink}\fontsize{24}{28}\selectfont 期末复习题库}\par
+\vspace{0.9cm}
+{\color{accent}\rule{6cm}{1.2pt}}\par
 
-\textbf{题型：}选择题、填空题、判断题、简答题；共 6 套，每章一套。
+\vfill
 
-\textbf{答案：}位于每道题目下方，题后留有若干空行供作答。
+\begin{tcolorbox}[enhanced jigsaw,colback=coverbg,colframe=coverbg,boxrule=0pt,arc=0pt,outer arc=0pt,
+  left=13pt,right=13pt,top=11pt,bottom=11pt]
+  \small
+  \begin{tabularx}{\linewidth}{@{}>{\sffamily\bfseries\color{accent}}l@{\hspace{1.1em}}X@{}}
+    范\ \ 围 & 课件中标注「掌握」「基本概念」的内容，以及课件蓝字重点标注的概念；标注「了解」的内容不进入题库。\\
+    结\ \ 构 & 六套题，每章一套：选择题、填空题、判断题、简答题。\\
+    答\ \ 案 & 位于每题下方，题后留有作答空行，蓝色区段内为答案与解析。\\
+    用\ \ 法 & 先闭卷做完整套，再对照答案；错题回到该章「总览（思维导图）」复查。\\
+  \end{tabularx}
+\end{tcolorbox}
 
-\textbf{建议：}先闭卷做完整套，再对照答案；错题回到对应章节的「总览（思维导图）」复查。
-\end{minipage}
-\end{center}
+\vspace{0.8cm}
+{\sffamily\footnotesize\color{muted}依据《语音信息处理》2026 复习课件（第 1--6 章）编写}\par
+\vspace{1.6cm}
 
-\vspace{1.2em}
-\hrule height 0.4pt
+\newpage
+\thispagestyle{plain}
+{\sffamily\bfseries\color{accent}\fontsize{18}{22}\selectfont 目\ \ 录}\par
+\vspace{0.4em}
+{\color{rule}\rule{\linewidth}{0.4pt}}\par
 \vspace{0.6em}
-\newpage
-\tableofcontents
-\newpage
+{\parskip=0pt\relax\makeatletter\@starttoc{toc}\makeatother}
 
-\section{第 1 章\quad 语音产生与感知机理}
+
+\chapstart{1}{语音产生与感知机理}{选择题 10 · 填空题 10 · 判断题 6 · 简答题 5}{31}
 
 \subsection{一、选择题}
 
 \begin{qlist}
 
 \item 关于「语音」的定义，下列表述正确的是：
-\\ A. 语音就是声音，两者完全等价\\ B. 语音是声音的一种，是人在言语交流中由发音器官产生、由听觉系统感知的语言载体\\ C. 语音是书写符号的读音，与发音器官无关\\ D. 语音只能由机器合成
+\optlist{A. 语音就是声音，两者完全等价}{B. 语音是声音的一种，是人在言语交流中由发音器官产生、由听觉系统感知的语言载体}{C. 语音是书写符号的读音，与发音器官无关}{D. 语音只能由机器合成}
 \ans{B。声音泛指一切振动产生的声波；语音只是其中由人发音器官产生、经听觉系统感知的那一类，它同时具有生理物理属性（载体）和社会属性（承载内容）。}
 
 \item 声带在发声过程中的作用是：
-\\ A. 只提供能量\\ B. 既是阀门，又是振动部件\\ C. 只起滤波作用\\ D. 只承担辐射作用
+\optlisttwo{A. 只提供能量}{B. 既是阀门，又是振动部件}{C. 只起滤波作用}{D. 只承担辐射作用}
 \ans{B。肺提供气流（能量来源），声带位于喉内、两声带之间的开口叫声门，既可开合控制气流（阀门），又因张弛振动产生准周期脉冲（振动部件）。}
 
 \item 一端封闭、一端开放的声管（如外耳道），其第 $n$ 次谐振频率为：
-\\ \\ A. $nc/2l$
-\\ B. $(2n-1)c/4l$
-\\ C. $nc/4l$
-\\ D. $(2n-1)c/2l$
+\optlisttwo{A. $nc/2l$}{B. $(2n-1)c/4l$}{C. $nc/4l$}{D. $(2n-1)c/2l$}
 \ans{B。两端开放或两端封闭的声管、两端固定的弦用 $f_n=\dfrac{nc}{2l}$；一端闭一端开的声管用 $f_n=\dfrac{(2n-1)c}{4l}$。外耳道属后者，取 $l\approx 2.5$ cm、$c\approx 350$ m/s，得 $f_1\approx 3.5$ kHz、$f_2\approx 10$ kHz。}
 
 \item 成年人外耳道的初次谐振频率大约位于：
-\\ A. $1$ kHz\\ B. $3.5$ kHz\\ C. $10$ kHz\\ D. $20$ kHz
+\optlisttwo{A. $1$ kHz}{B. $3.5$ kHz}{C. $10$ kHz}{D. $20$ kHz}
 \ans{B。初次谐振约 $3.5$ kHz，二次谐振约 $10$ kHz 前后（课件原问即此）。}
 
 \item 浊音的激励源可等效为：
-\\ A. 白噪声\\ B. 准周期脉冲信号\\ C. 单频正弦波\\ D. 单位冲激
+\optlisttwo{A. 白噪声}{B. 准周期脉冲信号}{C. 单频正弦波}{D. 单位冲激}
 \ans{B。浊音是声带张弛振动产生的准周期气流脉冲；清音是气流高速通过收缩处形成湍流，等效为白噪声；爆破音是声道先关闭、气压升高后突然打开。}
 
 \item 元音的声学特征主要取决于：
-\\ A. 基频 $F_0$ 与 $F_1$\\ B. 共振峰 $F_1$ 与 $F_2$\\ C. 基音周期\\ D. 声道长度
+\optlisttwo{A. 基频 $F_0$ 与 $F_1$}{B. 共振峰 $F_1$ 与 $F_2$}{C. 基音周期}{D. 声道长度}
 \ans{B。在声学上元音特征主要取决于共振峰频率 $F_1$、$F_2$；$F_1$ 大小对应张口度，$F_2$ 大小对应舌位前后（圆唇会进一步拉低 $F_2$）。}
 
 \item 音素与音位最本质的区别是：
-\\ A. 音素数量少、音位数量多\\ B. 音素按物理和生理属性划分，音位按社会和语言属性划分\\ C. 音素是辅音，音位是元音\\ D. 音素可以书写，音位不能书写
+\optlist{A. 音素数量少、音位数量多}{B. 音素按物理和生理属性划分，音位按社会和语言属性划分}{C. 音素是辅音，音位是元音}{D. 音素可以书写，音位不能书写}
 \ans{B。音素是生成上可区分的最小语音单元，区分标准是物理和生理属性；音位是听觉上可区分的最小语音单元，区分标准是社会和语言属性。若干相近的音素可归为一个音位。}
 
 \item 耳蜗内毛细胞的主要功能是：
-\\ A. 放大弱声\\ B. 抑制过强声\\ C. 把机械振动转换为电信号\\ D. 维持身体平衡
+\optlisttwo{A. 放大弱声}{B. 抑制过强声}{C. 把机械振动转换为电信号}{D. 维持身体平衡}
 \ans{C。内毛细胞把耳蜗内淋巴液的振动转换为电信号，经听觉神经传到脑干、丘脑与听觉皮层；外毛细胞负责放大低水平声音、对过强声音做能动抑制；平衡由前庭系统负责。}
 
 \item 描述人耳主观感觉声音「有多响」的物理量，其单位是：
-\\ A. Mel\\ B. phon\\ C. Hz\\ D. dB
+\optlisttwo{A. Mel}{B. phon}{C. Hz}{D. dB}
 \ans{B。响度用方（phon）表示，是主观心理量，与频率有关（等响度曲线）；音调的主观单位是梅尔（Mel）；Hz 与 dB 是客观量。}
 
 \item 在基底膜上，高频与低频分别在何处引起最大振动：
-\\ A. 高频在蜗顶、低频在基部\\ B. 高频在基部、低频在蜗顶\\ C. 两者都在基部\\ D. 与频率无关
+\optlisttwo{A. 高频在蜗顶、低频在基部}{B. 高频在基部、低频在蜗顶}{C. 两者都在基部}{D. 与频率无关}
 \ans{B。基底膜波动自耳蜗基部向蜗顶移动，不同频率在最匹配的一段振幅最大：高频靠基部、低频靠蜗顶，从而把频率转换成位置，耳蜗等效为一个滤波器组。}
 
 \end{qlist}
@@ -204,56 +287,55 @@
 
 \end{qlist}
 
-\newpage
 
-\section{第 2 章\quad 语音信号处理的基础}
+\chapstart{2}{语音信号处理的基础}{选择题 11 · 填空题 10 · 判断题 6 · 简答题 5}{32}
 
 \subsection{一、选择题}
 
 \begin{qlist}
 
 \item 奈奎斯特频率是指：
-\\ A. 人耳能听到的最高频率\\ B. 离散信号系统采样频率的一半\\ C. 语音信号的基频\\ D. 滤波器的截止频率
+\optlisttwo{A. 人耳能听到的最高频率}{B. 离散信号系统采样频率的一半}{C. 语音信号的基频}{D. 滤波器的截止频率}
 \ans{B。奈奎斯特频率为 $f_s/2$。奈奎斯特--香农采样定理指出：给定采样频率 $f_s$，能完全重构的频带限制为 $B\le f_s/2$，只要奈奎斯特频率高于被采样信号的最高频率（带宽），就不会发生混叠。}
 
 \item 语音信号预处理中加窗的主要目的是：
-\\ A. 提高信噪比\\ B. 满足离散傅里叶变换的周期性要求、减少泄漏\\ C. 去除噪声\\ D. 压缩数据量
+\optlist{A. 提高信噪比}{B. 满足离散傅里叶变换的周期性要求、减少泄漏}{C. 去除噪声}{D. 压缩数据量}
 \ans{B。加窗后信号 $x'(n)=x(n)w(n)$，使时域信号更好地满足 DFT 的周期性要求、减少泄漏。常用汉明窗、汉宁窗、矩形窗（矩形窗旁瓣泄漏大）。}
 
 \item 分帧时窗长一般取 $20\sim 25$ ms，主要原因是：
-\\ A. 计算方便\\ B. 约等于 $1\sim 7$ 个基音周期\\ C. 与采样率成正比\\ D. 人耳时间分辨率上限
+\optlisttwo{A. 计算方便}{B. 约等于 $1\sim 7$ 个基音周期}{C. 与采样率成正比}{D. 人耳时间分辨率上限}
 \ans{B。人的基音范围 $80\sim 500$ Hz，对应基音周期 $2\sim 12.5$ ms；窗长取 $1\sim 7$ 个基音周期，既能包含足够多的周期，又不至于跨越音素变化。（课件原问「为什么分帧的窗长一般取 25 ms」即此。）}
 
 \item 短时能量的表达式 $E_n=\sum_m x^2(m)h(n-m)$ 中，$h(n)$ 等于：
-\\ A. $w(n)$\quad B. $w^2(n)$\quad C. $|w(n)|$\quad D. $\log w(n)$
+\optlisttwo{A. $w(n)$}{B. $w^2(n)$}{C. $|w(n)|$}{D. $\log w(n)$}
 \ans{B。因为 $E_n=\sum_m [x(m)w(n-m)]^2=\sum_m x^2(m)w^2(n-m)$。短时能量可用于浊音/清音区分、端点检测、声母与韵母分界、情感分类特征。}
 
 \item 短时平均过零率（ZCR）的典型值为：
-\\ A. 浊音约 4500 Hz、清音约 1400 Hz\\ B. 浊音约 1400 Hz、清音约 4500 Hz\\ C. 两者均约 3000 Hz\\ D. 与浊清无关
+\optlist{A. 浊音约 4500 Hz、清音约 1400 Hz}{B. 浊音约 1400 Hz、清音约 4500 Hz}{C. 两者均约 3000 Hz}{D. 与浊清无关}
 \ans{B。ZCR 反映包括主能量在内的区域的平均频率，浊音约 1400 Hz、清音约 4500 Hz；常与短时能量结合用于端点检测。}
 
 \item 关于短时自相关函数，下列说法错误的是：
-\\ A. 具有对称性 $R(m)=R(-m)$\\ B. $m=0$ 时取最大值\\ C. 白噪声的自相关只在 $m=0$ 处有强峰\\ D. 周期信号的自相关在所有 $m$ 上恒定
+\optlist{A. 具有对称性 $R(m)=R(-m)$}{B. $m=0$ 时取最大值}{C. 白噪声的自相关只在 $m=0$ 处有强峰}{D. 周期信号的自相关在所有 $m$ 上恒定}
 \ans{D。若 $x(n)$ 是周期信号，$R(i)$ 会在 $i$ 等于周期整数倍处取极大值，这正是用它估计基音周期的依据。}
 
 \item 关于语谱图，下列说法正确的是：
-\\ A. 宽带语谱图（窗长约 5 ms）呈现水平条纹\\ B. 窄带语谱图（窗长约 40 ms）呈现垂直条纹\\ C. 宽带语谱图时间分辨率高，垂直条纹间隔为基音周期，适合看共振峰\\ D. 窗长越长，时间分辨率越高
+\optlist{A. 宽带语谱图（窗长约 5 ms）呈现水平条纹}{B. 窄带语谱图（窗长约 40 ms）呈现垂直条纹}{C. 宽带语谱图时间分辨率高，垂直条纹间隔为基音周期，适合看共振峰}{D. 窗长越长，时间分辨率越高}
 \ans{C。宽带（约 200 Hz／5 ms）频率分辨率低、时间分辨率高，呈垂直条纹，间隔即基音周期，用于观测共振峰；窄带（约 25 Hz／40 ms）频率分辨率高，呈水平条纹，用于观测谐波与基音频率。核心权衡是时间分辨率与频率分辨率不能同时高。}
 
 \item 倒谱的定义是：
-\\ A. 信号的傅里叶变换\\ B. 信号傅里叶变换经对数运算后再作傅里叶反变换得到的谱\\ C. 信号的自相关函数\\ D. 信号的功率谱
+\optlist{A. 信号的傅里叶变换}{B. 信号傅里叶变换经对数运算后再作傅里叶反变换得到的谱}{C. 信号的自相关函数}{D. 信号的功率谱}
 \ans{B。语音中一般先取频谱幅度。目的是把声源与声道的卷积（频域相乘）经对数变成相加，从而在倒谱域把它们分开。}
 
 \item 在倒谱中，$C(n)\ge F_0$ 与 $C(n)<F_0$ 分别主要对应：
-\\ A. 声道信息与声源信息\\ B. 声源信息与声道（系统）信息\\ C. 噪声与语音\\ D. 低频与高频
+\optlisttwo{A. 声道信息与声源信息}{B. 声源信息与声道（系统）信息}{C. 噪声与语音}{D. 低频与高频}
 \ans{B。声源频谱变化比声道频谱快得多，因此低倒谱段反映声道包络、高倒谱段反映声源（基音）；用 Lifter 窗取出低倒谱段即得声道包络。}
 
 \item 线性预测编码（LPC）将声道建模为：
-\\ A. 全零点系统\\ B. 全极点（自回归 AR）系统\\ C. 带通滤波器组\\ D. 有限脉冲响应系统
+\optlisttwo{A. 全零点系统}{B. 全极点（自回归 AR）系统}{C. 带通滤波器组}{D. 有限脉冲响应系统}
 \ans{B。$H(z)=\dfrac{G}{1-\sum_{i=1}^{p}a_iz^{-i}}$，$G$ 为增益、$a_i$ 为实数系数、$p$ 为阶数；$a_i$ 通过最小化残差均方误差 $E[\varepsilon^2(n)]$ 求得。}
 
 \item 梅尔频率倒谱系数（MFCC）提取流程中，第 5 步是：
-\\ A. 取对数\\ B. 离散余弦变换（DCT）\\ C. Mel 滤波\\ D. 预加重
+\optlisttwo{A. 取对数}{B. 离散余弦变换（DCT）}{C. Mel 滤波}{D. 预加重}
 \ans{B。六步为：预加重、分帧、加窗 $\to$ DFT 取模平方得能量谱 $\to$ Mel 三角滤波器组 $\to$ 取对数 $\to$ DCT $\to$ 取低阶系数。其中 $C_0$ 表示语音的平均强度，语音识别中一般不直接使用。}
 
 \end{qlist}
@@ -339,68 +421,67 @@
 
 \end{qlist}
 
-\newpage
 
-\section{第 3 章\quad 语音识别}
+\chapstart{3}{语音识别}{选择题 14 · 填空题 12 · 判断题 6 · 简答题 6}{38}
 
 \subsection{一、选择题}
 
 \begin{qlist}
 
 \item 自动语音识别（ASR）的任务是：
-\\ A. 由文本生成语音\\ B. 把语音信号转变为相应的文本\\ C. 判断说话人身份\\ D. 去除背景噪声
+\optlisttwo{A. 由文本生成语音}{B. 把语音信号转变为相应的文本}{C. 判断说话人身份}{D. 去除背景噪声}
 \ans{B。识别结果可作最终输出（转写），也可作为自然语言处理（对话、翻译）的输入。}
 
 \item 按发音方式划分，语音识别可分为：
-\\ A. 小、中、大词汇表识别\\ B. 特定说话人与非特定说话人识别\\ C. 孤立词、连接词、连续语音识别\\ D. 单通道与多通道识别
+\optlist{A. 小、中、大词汇表识别}{B. 特定说话人与非特定说话人识别}{C. 孤立词、连接词、连续语音识别}{D. 单通道与多通道识别}
 \ans{C。三个分类维度是：发音方式（孤立词／连接词／连续语音）、词汇表大小（10\textasciitilde 100／100\textasciitilde 1000／1000 词条以上）、说话人（特定／非特定）。}
 
 \item 词错误率（WER）的分子由哪三类错误构成：
-\\ A. 插入、替换、删除\\ B. 漏检、误检、重复\\ C. 训练、解码、对齐\\ D. 声学、语言、词典
+\optlisttwo{A. 插入、替换、删除}{B. 漏检、误检、重复}{C. 训练、解码、对齐}{D. 声学、语言、词典}
 \ans{A。$\mathrm{WER}=\dfrac{100\times(\#I+\#S+\#D)}{\text{正确转写中的总词数}}$，其中 Insertion 为插入、Substitution 为置换、Deletion 为删除。}
 
 \item 动态时间弯折（DTW）的核心思想是：
-\\ A. 用神经网络分类\\ B. 用动态规划把两个不等长的矢量序列对齐后再算相似度\\ C. 用统计模型估计概率\\ D. 用语言模型约束结果
+\optlist{A. 用神经网络分类}{B. 用动态规划把两个不等长的矢量序列对齐后再算相似度}{C. 用统计模型估计概率}{D. 用语言模型约束结果}
 \ans{B。DTW 建立从 $(1,1)$ 到 $(I,J)$ 的路径，累积距离最小的路径即最优对齐路径，再用路径长度归正。其缺点：难区分相似模板、声学条件不同时性能急剧下降、未充分利用时序动态信息、不利于大词汇表连续语音识别。}
 
 \item 噪音通道模型经贝叶斯法则化简后的识别判据是：
-\\ A. $\arg\max_W P(W\mid X)=\arg\max_W P(X\mid W)P(W)$\\ B. $\arg\max_W P(X)$\\ C. $\arg\max_W P(W)$\\ D. $\arg\max_W P(X\mid W)/P(W)$
+\optlisttwo{A. $\arg\max_W P(W\mid X)=\arg\max_W P(X\mid W)P(W)$}{B. $\arg\max_W P(X)$}{C. $\arg\max_W P(W)$}{D. $\arg\max_W P(X\mid W)/P(W)$}
 \ans{A。$\arg\max_W\dfrac{P(X\mid W)P(W)}{P(X)}$，因 $P(X)$ 与 $W$ 无关可去掉分母。$P(X\mid W)$ 是声学模型、$P(W)$ 是语言模型。（课件标「掌握」，框架图标注「重点掌握」。）}
 
 \item 隐马尔可夫模型的「隐」是指：
-\\ A. 观测值不可见\\ B. 状态序列不可直接观测，只能通过观测序列推断\\ C. 参数不可估计\\ D. 转移概率未知
+\optlist{A. 观测值不可见}{B. 状态序列不可直接观测，只能通过观测序列推断}{C. 参数不可估计}{D. 转移概率未知}
 \ans{B。HMM 用双重随机过程描述：一个 Markov 链描述状态转移（不可见），另一个随机过程描述状态与观察值的统计对应关系（可见）。}
 
 \item HMM 的三个基本问题与算法的对应关系是：
-\\ A. 概率计算—Viterbi，解码—前向算法，参数估计—Baum-Welch\\ B. 概率计算—前向／后向算法，解码—Viterbi 算法，参数估计—Baum-Welch 算法\\ C. 三者都用 Viterbi\\ D. 三者都用 EM
+\optlist{A. 概率计算—Viterbi，解码—前向算法，参数估计—Baum-Welch}{B. 概率计算—前向／后向算法，解码—Viterbi 算法，参数估计—Baum-Welch 算法}{C. 三者都用 Viterbi}{D. 三者都用 EM}
 \ans{B。问题 1 计算 $P(O\mid\lambda)$ 用前向／后向算法；问题 2 求最佳状态序列 $Q^*$ 用 Viterbi；问题 3 调整 $\lambda$ 使 $P(O\mid\lambda)$ 最大用 Baum-Welch。（课件标「掌握」。）}
 
 \item 前向算法的计算量是：
-\\ A. $O(NT)$\\ B. $O(N^2T)$\\ C. $O(N^3T)$\\ D. $O(2^TN)$
+\optlisttwo{A. $O(NT)$}{B. $O(N^2T)$}{C. $O(N^3T)$}{D. $O(2^TN)$}
 \ans{B。当 $N=5$、$T=100$ 时只需约 2500 次乘法，而直接计算法需 $O(N^T)$，这是引入前向／后向算法的根本原因。}
 
 \item Viterbi 算法与前向算法的根本区别在于：
-\\ A. Viterbi 求和、前向取最大\\ B. Viterbi 每步取最大并记录回溯指针 $\varphi$，前向对所有路径求和\\ C. 两者完全相同\\ D. Viterbi 只能用于离散 HMM
+\optlist{A. Viterbi 求和、前向取最大}{B. Viterbi 每步取最大并记录回溯指针 $\varphi$，前向对所有路径求和}{C. 两者完全相同}{D. Viterbi 只能用于离散 HMM}
 \ans{B。$\delta_t(j)=\max_i[\delta_{t-1}(i)a_{ij}]b_j(o_t)$，$\varphi_t(j)=\arg\max_i[\delta_{t-1}(i)a_{ij}]$；终了取 $\max_i\delta_T(i)$ 后按 $\varphi$ 回溯得 $Q^*$。}
 
 \item Baum-Welch 算法的性质是：
-\\ A. 能保证求得全局最优参数\\ B. 是期望最大化（EM）算法的一个特例，未必收敛到全局最优\\ C. 用于解码\\ D. 用于计算观测概率
+\optlist{A. 能保证求得全局最优参数}{B. 是期望最大化（EM）算法的一个特例，未必收敛到全局最优}{C. 用于解码}{D. 用于计算观测概率}
 \ans{B。它用于观测序列与隐状态序列都未知时的参数估计，通过 E 步与 M 步迭代提高 $P(O\mid\lambda)$，可能收敛到局部极值。}
 
 \item 大词汇表连续语音识别（LVCSR）系统的三层框架是：
-\\ A. 声学层、韵律层、语义层\\ B. 声学—语音层、词层、句法层\\ C. 前端、后端、解码\\ D. 特征层、模型层、决策层
+\optlisttwo{A. 声学层、韵律层、语义层}{B. 声学—语音层、词层、句法层}{C. 前端、后端、解码}{D. 特征层、模型层、决策层}
 \ans{B。声学—语音层以子词（subword）为单位输出，每个子词对应一套 HMM 结构与参数；词层规定每个词由哪些音素／音子串接而成（词典）；句法层规定词按什么规则组合成句子（语言模型）。}
 
 \item 三音素建模的记法与参数量级是：
-\\ A. $c\text{-}l\text{+}r$，$N^2$\\ B. $l\text{-}c\text{+}r$，$N^3$\\ C. $l\text{+}c\text{-}r$，$N$\\ D. $l\text{-}c\text{+}r$，$N^2$
+\optlisttwo{A. $c\text{-}l\text{+}r$，$N^2$}{B. $l\text{-}c\text{+}r$，$N^3$}{C. $l\text{+}c\text{-}r$，$N$}{D. $l\text{-}c\text{+}r$，$N^2$}
 \ans{B。$c$ 为中心单元、$l$ 为左相关、$r$ 为右相关信息；$N$ 个音素共需 $N^3$ 个三音素，参数量过大，故实际用决策树聚类共享参数，该过程依赖单音素建模后的对齐。}
 
 \item 与 GMM 相比，DNN-HMM 中输入特征的特点是：
-\\ A. 只用单帧 MFCC\\ B. 多采用滤波器组（FBK）特征并拼接相邻多帧\\ C. 只用时域波形\\ D. 必须做矢量量化
+\optlist{A. 只用单帧 MFCC}{B. 多采用滤波器组（FBK）特征并拼接相邻多帧}{C. 只用时域波形}{D. 必须做矢量量化}
 \ans{B。DNN 会拼接相邻若干帧以利用更多上下文；输出维度对应 HMM 状态数（通常每维对应一个绑定的 triphone 状态）；训练标注需先用 GMM-HMM 做强制对齐（Viterbi）给每帧打状态标签。}
 
 \item 语言模型的困惑度（perplexity）：
-\\ A. 越高越好\\ B. 越低越好，等于模型分配给测试集概率的 $-1/N$ 次方\\ C. 与句长无关\\ D. 等于 WER
+\optlist{A. 越高越好}{B. 越低越好，等于模型分配给测试集概率的 $-1/N$ 次方}{C. 与句长无关}{D. 等于 WER}
 \ans{B。$PP(W)=P(w_1w_2\cdots w_N)^{-1/N}$，含义是预测下一个词时的加权平均分支因子，越低越好。例（WSJ 语料）：Unigram 962、Bigram 170、Trigram 109。}
 
 \end{qlist}
@@ -495,60 +576,59 @@
 
 \end{qlist}
 
-\newpage
 
-\section{第 4 章\quad 语音合成}
+\chapstart{4}{语音合成}{选择题 12 · 填空题 10 · 判断题 6 · 简答题 5}{33}
 
 \subsection{一、选择题}
 
 \begin{qlist}
 
 \item 语音合成（TTS）的任务是：
-\\ A. 把语音转写成文本\\ B. 由文本自动生成语音\\ C. 判断说话人身份\\ D. 增强带噪语音
+\optlisttwo{A. 把语音转写成文本}{B. 由文本自动生成语音}{C. 判断说话人身份}{D. 增强带噪语音}
 \ans{B。语音合成指通过机械的、电子的方法产生人造语音的技术；TTS（Text-to-Speech）指自动把文本转换为声音。}
 
 \item 语音合成的两个主要目标是：
-\\ A. 速度与体积\\ B. 可懂度与自然度\\ C. 信噪比与失真度\\ D. 准确率与召回率
+\optlisttwo{A. 速度与体积}{B. 可懂度与自然度}{C. 信噪比与失真度}{D. 准确率与召回率}
 \ans{B。可懂度指听者能听懂，自然度指听起来像不像真人说的。}
 
 \item 关于主观评价指标，下列说法正确的是：
-\\ A. MOS 取值范围为 $[-3,3]$\\ B. CMOS 是绝对评分、范围 $1\sim 5$\\ C. MOS 为 $1\sim 5$ 分制，CMOS 为相对评分、范围 $-3\sim 3$\\ D. ABX 只能用于客观评价
+\optlist{A. MOS 取值范围为 $[-3,3]$}{B. CMOS 是绝对评分、范围 $1\sim 5$}{C. MOS 为 $1\sim 5$ 分制，CMOS 为相对评分、范围 $-3\sim 3$}{D. ABX 只能用于客观评价}
 \ans{C。MOS（平均意见得分）分 5 级：优、良、一般、差、劣；CMOS（对比平均意见得分）为相对评分，$3$ 表示远优于、$0$ 无差别、$-3$ 远差于；ABX 测试播放 A、B 两段音频，由听者选 A、选 B 或认为无差别（X）。}
 
 \item 下列属于语音合成客观评价指标的是：
-\\ A. MOS\\ B. CMOS\\ C. 梅尔倒谱失真（MCD）\\ D. ABX
+\optlisttwo{A. MOS}{B. CMOS}{C. 梅尔倒谱失真（MCD）}{D. ABX}
 \ans{C。客观指标是合成结果与真实录音（ground truth）之间的距离度量，包括 MCD、基频 $F_0$ 的 RMSE、时长的 RMSE。}
 
 \item 波形拼接合成的缺点是：
-\\ A. 无需大语料库\\ B. 需要大规模精心设计的语音数据库，且不易控制韵律\\ C. 合成质量不稳定\\ D. 无法扩展
+\optlist{A. 无需大语料库}{B. 需要大规模精心设计的语音数据库，且不易控制韵律}{C. 合成质量不稳定}{D. 无法扩展}
 \ans{B。其余缺点还包括：数据库中缺少类似音素样例时合成质量差、可扩展性差不易维护。这些正是统计参数合成要解决的问题。}
 
 \item 统计参数语音合成（SPSS）的优点是：
-\\ A. 需要大规模精心设计的语料库\\ B. 无需大规模精心设计的语音数据库、合成质量稳定、可以控制韵律、可扩展性好\\ C. 无法控制韵律\\ D. 只能合成单字
+\optlist{A. 需要大规模精心设计的语料库}{B. 无需大规模精心设计的语音数据库、合成质量稳定、可以控制韵律、可扩展性好}{C. 无法控制韵律}{D. 只能合成单字}
 \ans{B。它先对语音做参数化表征，再用统计模型对声学参数建模，并以训练得到的模型构建合成系统，分基于 HMM 与基于 DNN 两条路线。}
 
 \item 语音合成系统的正确分工是：
-\\ A. 前端做声码器、后端做文本分析\\ B. 前端做文本分析与韵律预测、后端做声学模型与声码器\\ C. 前后端都做声学建模\\ D. 前端输出波形、后端输出文本
+\optlist{A. 前端做声码器、后端做文本分析}{B. 前端做文本分析与韵律预测、后端做声学模型与声码器}{C. 前后端都做声学建模}{D. 前端输出波形、后端输出文本}
 \ans{B。合成本质是把语言信息调制到声学信号上：前端提取语言学特征（音标与韵律信息的符号化表征），后端把语言学特征转换为声学特征、再转换为语音波形。有的研究把「文本分析＋韵律预测」合称语言分析。}
 
 \item 韵律结构由小到大的三个层级是：
-\\ A. 语调短语、韵律短语、韵律词\\ B. 韵律词、韵律短语（中间短语）、语调短语\\ C. 音节、词、句\\ D. 声母、韵母、声调
+\optlist{A. 语调短语、韵律短语、韵律词}{B. 韵律词、韵律短语（中间短语）、语调短语}{C. 音节、词、句}{D. 声母、韵母、声调}
 \ans{B。三个易混概念：语调是说话的腔调（一句话里快慢轻重的配置与变化）；声调又叫字调，普通话有阴平、阳平、上声、去声；重音起强调重点、突出情感的作用。}
 
 \item 基于 HMM 的语音合成与语音识别的关系是：
-\\ A. 完全无关\\ B. 互为反向问题，训练都用 Baum-Welch、解码都用 Viterbi\\ C. 合成用 Viterbi 训练、识别用 Baum-Welch\\ D. 两者只能共用语言模型
+\optlist{A. 完全无关}{B. 互为反向问题，训练都用 Baum-Welch、解码都用 Viterbi}{C. 合成用 Viterbi 训练、识别用 Baum-Welch}{D. 两者只能共用语言模型}
 \ans{B。识别是 $\hat L=\arg\max_L P(O\mid L,\Lambda)$（由声音求文本），合成是 $\hat O=\arg\max_O P(O\mid L,\Lambda)$（由文本求声学参数）；训练算法相同（Baum-Welch），解码算法相同（基于动态规划的 Viterbi）。}
 
 \item HMM 合成语音听起来平淡、音质不好的主要原因是：
-\\ A. 训练数据不足\\ B. 过平滑：状态参数分布是统计平均的结果，且决策树为浅层线性模型\\ C. 声码器无法工作\\ D. 基频提取错误
+\optlist{A. 训练数据不足}{B. 过平滑：状态参数分布是统计平均的结果，且决策树为浅层线性模型}{C. 声码器无法工作}{D. 基频提取错误}
 \ans{B。HMM 假设各状态之间独立，状态参数分布是统计平均的结果；决策树作为浅层线性模型无法建模复杂映射关系，对输入特征与数据空间的线性分割会降低泛化能力。}
 
 \item 基于 DNN 的语音合成中，时长模型与参数生成模型的输入分别是：
-\\ A. 都是帧级输入\\ B. 时长模型为音素级特征，参数生成模型为按音素时长展开后的帧级输入\\ C. 都是音素级输入\\ D. 时长模型为波形，参数生成模型为频谱
+\optlist{A. 都是帧级输入}{B. 时长模型为音素级特征，参数生成模型为按音素时长展开后的帧级输入}{C. 都是音素级输入}{D. 时长模型为波形，参数生成模型为频谱}
 \ans{B。一句话有多少音素就对应多少条时长模型的输入，有多少帧就对应多少条参数生成模型的输入。}
 
 \item 端到端语音合成中，被称为「神经声码器」的是：
-\\ A. 前端的端到端模型\\ B. 后端的端到端模型\\ C. 文本分析模块\\ D. 韵律预测模块
+\optlisttwo{A. 前端的端到端模型}{B. 后端的端到端模型}{C. 文本分析模块}{D. 韵律预测模块}
 \ans{B。前端的端到端模型把韵律预测、持续时长与语音特征模型统合到一个模型中，直接由上下文无关的符号预测语音特征；后端的端到端模型读取语音特征直接产生波形，即神经声码器。}
 
 \end{qlist}
@@ -634,60 +714,59 @@
 
 \end{qlist}
 
-\newpage
 
-\section{第 5 章\quad 语音增强}
+\chapstart{5}{语音增强}{选择题 12 · 填空题 10 · 判断题 6 · 简答题 5}{33}
 
 \subsection{一、选择题}
 
 \begin{qlist}
 
 \item 单说话人场景下的受损语音模型可写为：
-\\ A. $y(n)=x(n)+h(n)$\\ B. $y(n)=x(n)*h(n)+v(n)$\\ C. $y(n)=x(n)\cdot v(n)$\\ D. $y(n)=h(n)*v(n)$
+\optlisttwo{A. $y(n)=x(n)+h(n)$}{B. $y(n)=x(n)*h(n)+v(n)$}{C. $y(n)=x(n)\cdot v(n)$}{D. $y(n)=h(n)*v(n)$}
 \ans{B。$x(n)$ 为干净语音、$h(n)$ 为房间脉冲响应（RIR）、$v(n)$ 为背景噪声；混响为乘性（卷积）干扰，噪声为加性干扰。}
 
 \item 关于背景噪声与混响，下列说法正确的是：
-\\ A. 背景噪声是乘性干扰、与干净语音相关性高\\ B. 混响是加性干扰、相关性低\\ C. 背景噪声是加性干扰、相关性更低；混响是乘性干扰、相关性更高\\ D. 两者都是加性干扰
+\optlist{A. 背景噪声是乘性干扰、与干净语音相关性高}{B. 混响是加性干扰、相关性低}{C. 背景噪声是加性干扰、相关性更低；混响是乘性干扰、相关性更高}{D. 两者都是加性干扰}
 \ans{C。混响本质是干净语音自身的多次延迟叠加，故与干净语音相关性更高；背景噪声来自其他声源，相关性更低。这一区别决定了谱减法只对加性噪声有效，而 IRM 等掩蔽目标不适用于混响。}
 
 \item 狭义的语音增强与狭义的语音分离分别指：
-\\ A. 去混响与去噪\\ B. 语音去噪（语音与非语音分离）与说话人分离（多说话人分离）\\ C. 语音识别与语音合成\\ D. 单通道与多通道处理
+\optlist{A. 去混响与去噪}{B. 语音去噪（语音与非语音分离）与说话人分离（多说话人分离）}{C. 语音识别与语音合成}{D. 单通道与多通道处理}
 \ans{B。三类分离任务：语音去噪、语音去混响、说话人分离；前两类合称广义的语音增强。}
 
 \item 基于传统信号处理的语音增强算法流程依赖的两个核心步骤是：
-\\ A. 波束形成与后置滤波\\ B. 静音检测（VAD）与噪声估计\\ C. 特征提取与模型训练\\ D. 编码与解码
+\optlist{A. 波束形成与后置滤波}{B. 静音检测（VAD）与噪声估计}{C. 特征提取与模型训练}{D. 编码与解码}
 \ans{B。传统方法的目标就是算出一个抑制增益，而这个增益依赖于准确的噪声谱估计；通常利用 VAD 在静音帧更新噪声估计。只有噪声谱估得准，抑制增益才准。}
 
 \item 谱减法中被广泛采用的假设是：
-\\ A. 语音与噪声高度相关\\ B. 语音与噪声不相关，功率谱可直接相减\\ C. 噪声为零均值高斯\\ D. 相位与幅度均可忽略
+\optlist{A. 语音与噪声高度相关}{B. 语音与噪声不相关，功率谱可直接相减}{C. 噪声为零均值高斯}{D. 相位与幅度均可忽略}
 \ans{B。由 $y(n)=x(n)+v(n)$ 且两者不相关得 $|Y(\omega)|^2\approx|X(\omega)|^2+|V(\omega)|^2$，于是 $|\hat X(\omega)|=\left(|Y(\omega)|^2-|\hat V(\omega)|^2\right)^{1/2}$，相位沿用带噪语音的相位。}
 
 \item 谱减法最典型的副作用是：
-\\ A. 计算量过大\\ B. 产生「音乐噪声」（有节奏感、类似音乐声的残留）\\ C. 无法实时实现\\ D. 只能处理平稳噪声
+\optlist{A. 计算量过大}{B. 产生「音乐噪声」（有节奏感、类似音乐声的残留）}{C. 无法实时实现}{D. 只能处理平稳噪声}
 \ans{B。其缺点还包括适用信噪比范围窄，低信噪比时对语音可懂度损伤较大。广义谱减法用 $\max(|Y|^{2n}-\alpha|\hat V|^{2n},\ \beta|Y|^{2n})$ 避免出现负功率谱。}
 
 \item 维纳滤波器的传输函数为：
-\\ A. $H(\omega)=\dfrac{P_v}{P_x+P_v}$\\ B. $H(\omega)=\dfrac{P_x}{P_x+P_v}$\\ C. $H(\omega)=\dfrac{P_x}{P_v}$\\ D. $H(\omega)=1$
+\optlisttwo{A. $H(\omega)=\dfrac{P_v}{P_x+P_v}$}{B. $H(\omega)=\dfrac{P_x}{P_x+P_v}$}{C. $H(\omega)=\dfrac{P_x}{P_v}$}{D. $H(\omega)=1$}
 \ans{B。其思想是寻找系数为实数的线性滤波器，使滤波后的信号与原干净语音的均方误差最小（故又称最小二乘／最小平方滤波器）。$P_x\gg P_v$ 时 $H\to1$ 保留，$P_x\ll P_v$ 时 $H\to0$ 压制。}
 
 \item 频域语音增强的三个步骤是：
-\\ A. 编码、传输、解码\\ B. 特征提取、特征增强、波形重构\\ C. 分帧、加窗、FFT\\ D. 训练、验证、测试
+\optlist{A. 编码、传输、解码}{B. 特征提取、特征增强、波形重构}{C. 分帧、加窗、FFT}{D. 训练、验证、测试}
 \ans{B。特征提取把时域信号转为频域特征（STFT 语谱图）；特征增强用神经网络增强频谱图的振幅；波形重构用增强后的振幅与原始相位经 ISTFT 还原时域波形。}
 
 \item 基于映射（mapping）与基于掩蔽（mask）的框架，其网络输出分别是：
-\\ A. 都为干净语音频谱\\ B. 前者输出干净语音频谱，后者输出掩蔽值（如 $X/Y$）\\ C. 前者输出掩蔽值，后者输出干净频谱\\ D. 都输出掩蔽值
+\optlist{A. 都为干净语音频谱}{B. 前者输出干净语音频谱，后者输出掩蔽值（如 $X/Y$）}{C. 前者输出掩蔽值，后者输出干净频谱}{D. 都输出掩蔽值}
 \ans{B。映射把语音增强视为多变量回归问题，非线性回归函数由 DNN 参数化；掩蔽受听觉掩蔽现象与听觉场景分析启发，先估计掩蔽再与含噪频谱相乘得到干净语音估计。两者都明显优于谱减法与维纳滤波，且对非平稳噪声抑制良好。}
 
 \item 关于两种经典掩蔽目标，说法正确的是：
-\\ A. IBM 是软掩蔽、IRM 是硬掩蔽\\ B. IBM 取 0 或 1（二值），常用交叉熵损失；IRM 是 $0\sim 1$ 的软比例，常用 MSE 损失\\ C. 两者都用 MSE\\ D. IRM 适用于混响
+\optlist{A. IBM 是软掩蔽、IRM 是硬掩蔽}{B. IBM 取 0 或 1（二值），常用交叉熵损失；IRM 是 $0\sim 1$ 的软比例，常用 MSE 损失}{C. 两者都用 MSE}{D. IRM 适用于混响}
 \ans{B。$\mathrm{IBM}=1$（当 $\mathrm{SNR}(t,f)$ 大于阈值）否则为 0，是二分类问题，常用交叉熵；$\mathrm{IRM}=\left(\dfrac{|X|^2}{|X|^2+|V|^2}\right)^{\beta}$，$\beta$ 常取 0.5，常用 MSE。IRM 适用于加性噪声，不适用于混响（混响不是能量叠加）。}
 
 \item 波束形成的基本思路是：
-\\ A. 对单路信号做滤波\\ B. 对各麦克风信号加权求和，通过调整权系数实现对目标方向的增强与对其他方向的抑制\\ C. 对频谱做减法\\ D. 用神经网络预测掩蔽
+\optlist{A. 对单路信号做滤波}{B. 对各麦克风信号加权求和，通过调整权系数实现对目标方向的增强与对其他方向的抑制}{C. 对频谱做减法}{D. 用神经网络预测掩蔽}
 \ans{B。加权系数决定增强效果；按权系数能否随信号统计特性自适应调整，分为固定波束形成与自适应波束形成。}
 
 \item 延迟求和波束形成（DSB）包含的两个步骤是：
-\\ A. 编码与解码\\ B. 延迟补偿与加权求和\\ C. 训练与推理\\ D. 分帧与加窗
+\optlisttwo{A. 编码与解码}{B. 延迟补偿与加权求和}{C. 训练与推理}{D. 分帧与加窗}
 \ans{B。延迟补偿使各麦克风信号在时间上对齐，加权求和得到增强后的单通道输出；来自目标方向的声音同相相加被增强，其他方向因不同相被削弱。}
 
 \end{qlist}
@@ -777,61 +856,60 @@
 
 \end{qlist}
 
-\newpage
 
-\section{第 6 章\quad 声纹识别}
+\chapstart{6}{声纹识别}{选择题 12 · 填空题 8 · 判断题 6 · 简答题 4}{30}
 
 \subsection{一、选择题}
 
 \begin{qlist}
 
 \item 声纹识别的任务是：
-\\ A. 把语音转写成文本\\ B. 根据说话人的声音特性判断其身份\\ C. 判断语音所属语种\\ D. 由文本生成语音
+\optlist{A. 把语音转写成文本}{B. 根据说话人的声音特性判断其身份}{C. 判断语音所属语种}{D. 由文本生成语音}
 \ans{B。声纹识别（说话人识别）是生物识别（指纹、掌纹、人脸、虹膜等）的一种：输入语音，输出说话人身份。}
 
 \item 下列任务与输出信息的对应关系错误的是：
-\\ A. 语音识别 $\to$ 文本信息\\ B. 情感识别 $\to$ 情感信息\\ C. 语种识别 $\to$ 说话人身份\\ D. 声纹识别 $\to$ 说话人身份信息
+\optlisttwo{A. 语音识别 $\to$ 文本信息}{B. 情感识别 $\to$ 情感信息}{C. 语种识别 $\to$ 说话人身份}{D. 声纹识别 $\to$ 说话人身份信息}
 \ans{C。语种识别输出的是语音所属语种，不是说话人身份。}
 
 \item 与说话人身份相关的语音属性中，低级属性与高级属性分别指：
-\\ A. 韵律与口音、声道频谱与共振峰轨迹\\ B. 与发声器官的生理方面相关（声道频谱、共振峰轨迹）、与说话方式的行为差异相关（韵律、口音、用词）\\ C. 音高与音长\\ D. 文本相关与文本无关
+\optlist{A. 韵律与口音、声道频谱与共振峰轨迹}{B. 与发声器官的生理方面相关（声道频谱、共振峰轨迹）、与说话方式的行为差异相关（韵律、口音、用词）}{C. 音高与音长}{D. 文本相关与文本无关}
 \ans{B。}
 
 \item 说话人辨认（Identification）与说话人确认（Verification）的对比形式分别是：
-\\ A. 1:1 与 1:N\\ B. 1:N 与 1:1\\ C. 都是 1:N\\ D. 都是 1:1
+\optlisttwo{A. 1:1 与 1:N}{B. 1:N 与 1:1}{C. 都是 1:N}{D. 都是 1:1}
 \ans{B。辨认判定待识别说话人来自注册集中的哪一个（$1:N$）；确认判定待识别语音是否来自注册集中的某个说话人（$1:1$，成对）。}
 
 \item 关于 FRR、FAR、EER，下列说法正确的是：
-\\ A. FRR 是误接受率、FAR 是误拒绝率\\ B. EER 是 FAR 与 FRR 相等时的错误率，越小越好\\ C. EER 越大越好\\ D. FAR 与 FRR 相等时系统不可用
+\optlist{A. FRR 是误接受率、FAR 是误拒绝率}{B. EER 是 FAR 与 FRR 相等时的错误率，越小越好}{C. EER 越大越好}{D. FAR 与 FRR 相等时系统不可用}
 \ans{B。FRR（误拒绝率）是被错误拒绝的有效身份声明的比例（本该匹配成功却判失败）；FAR（误接受率）是错误接受冒名顶替者声明的比例（本该失败却判成功）；调整阈值使 $\mathrm{FAR}=\mathrm{FRR}$ 时的错误率即 EER。阈值变化时两者的权衡画成 DET 曲线。}
 
 \item 声纹识别系统基本框架的三个部分是：
-\\ A. 特征提取、注册、测试\\ B. 训练、验证、测试\\ C. 前端、后端、解码\\ D. 编码、传输、解码
+\optlisttwo{A. 特征提取、注册、测试}{B. 训练、验证、测试}{C. 前端、后端、解码}{D. 编码、传输、解码}
 \ans{A。特征提取把原始语音转换为以说话人信息为主的特征向量序列；注册用注册语音建立说话人模型；测试从待测语音提取特征并与各注册说话者比较判决。}
 
 \item 通用背景模型（UBM）的主要作用是：
-\\ A. 直接作为说话人模型\\ B. 用大量说话人无关数据训练的先验模型，解决单人语音太少、训练不出可靠 GMM 的问题\\ C. 用于语种识别\\ D. 用于特征降维
+\optlist{A. 直接作为说话人模型}{B. 用大量说话人无关数据训练的先验模型，解决单人语音太少、训练不出可靠 GMM 的问题}{C. 用于语种识别}{D. 用于特征降维}
 \ans{B。实际场景中每个说话人的语音数据很少，且训练与测试存在信道失配；UBM 用 EM 算法在说话人无关数据上训练，再通过 MAP 等自适应算法得到目标说话人模型。}
 
 \item 使用 MAP 自适应的好处不包括：
-\\ A. 减少注册新说话人所需的语音时长／数量\\ B. 说话人相关 GMM 与 UBM 模型复杂度相同，可计算更可靠的对数似然分数\\ C. 可以使用高斯选择从而更快\\ D. 可以完全不需要任何注册语音
+\optlist{A. 减少注册新说话人所需的语音时长／数量}{B. 说话人相关 GMM 与 UBM 模型复杂度相同，可计算更可靠的对数似然分数}{C. 可以使用高斯选择从而更快}{D. 可以完全不需要任何注册语音}
 \ans{D。MAP 自适应仍需少量注册语音，只是大幅减少所需时长与数量。}
 
 \item GMM 超向量的构造方法是：
-\\ A. 把所有高斯分量的均值向量按固定顺序首尾相连\\ B. 把协方差矩阵求逆\\ C. 把权重求和\\ D. 把多个说话人的模型平均
+\optlist{A. 把所有高斯分量的均值向量按固定顺序首尾相连}{B. 把协方差矩阵求逆}{C. 把权重求和}{D. 把多个说话人的模型平均}
 \ans{A。做法是假设说话人与 UBM 的权重和协方差相同、只调整均值向量，再把各分量均值串成一条超长向量，作为说话人的定长表征。
 }
 
 \item x-vector 包含的四个函数块依次是：
-\\ A. 特征提取、编码、解码、打分\\ B. 帧处理（TDNN）、池化、嵌入提取、说话人分类\\ C. 训练、注册、测试、判决\\ D. 分帧、加窗、FFT、DCT
+\optlist{A. 特征提取、编码、解码、打分}{B. 帧处理（TDNN）、池化、嵌入提取、说话人分类}{C. 训练、注册、测试、判决}{D. 分帧、加窗、FFT、DCT}
 \ans{B。帧处理器用多层网络（如 TDNN）提取深度特征；池化层把变长序列压成固定维向量；嵌入提取层中一层为瓶颈层，瓶颈层的输出（非线性层之前）就是 x-vector；最后用判别性损失按说话人标签分类。}
 
 \item 时间池化（Temporal pooling）通常计算的是：
-\\ A. 最大值\\ B. 特征向量各维的均值和标准差\\ C. 中位数\\ D. 一阶差分
+\optlisttwo{A. 最大值}{B. 特征向量各维的均值和标准差}{C. 中位数}{D. 一阶差分}
 \ans{B。时间池化把特征向量序列转换为单个固定维向量，最常见做法是取均值与标准差。}
 
 \item x-vector 中真正作为说话人嵌入输出的是：
-\\ A. 池化层的输出\\ B. 瓶颈层的输出（非线性激活之前）\\ C. softmax 层的输出\\ D. 输入特征
+\optlist{A. 池化层的输出}{B. 瓶颈层的输出（非线性激活之前）}{C. softmax 层的输出}{D. 输入特征}
 \ans{B。嵌入提取由若干相连网络层组成，其中一层设计为瓶颈层，瓶颈层的输出（非线性层之前）即 x-vector 说话人嵌入，是固定长度向量，捕捉说话人的长期声纹特征。}
 
 \end{qlist}
@@ -908,6 +986,5 @@
 
 \end{qlist}
 
-\newpage
 
 \end{document}
