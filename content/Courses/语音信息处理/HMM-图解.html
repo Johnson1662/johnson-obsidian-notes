@@ -1,0 +1,497 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HMM 图解 · 语音信息处理</title>
+<style>
+:root{--ink:#1b1d21;--muted:#6b7280;--line:#e3e8ee;--accent:#1e4870;--accent2:#c2410c;--bg:#fcfcfd;--card:#fff;--ok:#0f7b4f;--bad:#b91c1c;--soft:#f2f6fa}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.85 system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:780px;margin:0 auto;padding:0 22px 120px}
+header{padding:56px 0 8px}
+h1{font-size:34px;line-height:1.25;letter-spacing:-.02em;margin:0 0 10px;font-weight:750}
+.lead{font-size:18px;color:#33383d;margin:0 0 6px}
+.kicker{font-size:13px;letter-spacing:.08em;color:var(--accent);font-weight:700;margin-bottom:14px}
+h2{font-size:23px;letter-spacing:-.01em;margin:56px 0 6px;font-weight:700;display:flex;align-items:baseline;gap:10px}
+h2 .n{font-size:13px;color:#fff;background:var(--accent);border-radius:6px;padding:1px 8px;font-weight:700;letter-spacing:.04em;transform:translateY(-3px)}
+h3{font-size:17px;margin:26px 0 6px;font-weight:700}
+p{margin:10px 0}
+.muted{color:var(--muted)}
+.small{font-size:14px}
+b,strong{font-weight:700}
+code,.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-variant-numeric:tabular-nums}
+code{background:#f1f4f8;padding:1px 5px;border-radius:4px;font-size:14px}
+.hr{height:1px;background:var(--line);margin:34px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:14px 0}
+.card.tight{padding:12px 14px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:620px){.grid2{grid-template-columns:1fr}}
+table{border-collapse:collapse;width:100%;font-size:15px;font-variant-numeric:tabular-nums}
+th,td{border-bottom:1px solid var(--line);padding:7px 8px;text-align:left}
+th{font-weight:650;color:var(--muted);font-size:13px;letter-spacing:.02em}
+td.n,th.n{text-align:right}
+button{font:inherit;font-size:14px;padding:7px 14px;border-radius:8px;border:1px solid var(--line);background:#fff;color:var(--ink);cursor:pointer;transition:.15s}
+button:hover{border-color:#b9c6d4;background:#f7fafc}
+button.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+button.primary:hover{background:#173a5c}
+button.small{padding:4px 10px;font-size:13px}
+.btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.tag{display:inline-block;font-size:12px;padding:1px 8px;border-radius:99px;background:var(--soft);color:var(--accent);font-weight:650}
+.tag.orange{background:#fdf1e8;color:var(--accent2)}
+.formula{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:15px;background:#f7f9fc;border:1px solid var(--line);border-radius:8px;padding:12px 14px;min-height:52px;line-height:1.7}
+.formula b{color:var(--accent)}
+.formula .t{color:#2563eb}
+.formula .e{color:var(--accent2)}
+.note{font-size:14.5px;color:#40464d;margin:10px 0 0;min-height:48px}
+/* 状态机 */
+.machine{position:relative}
+.sm{display:flex;align-items:center;gap:26px;justify-content:center;padding:14px 0 4px}
+.state{width:92px;height:92px;border-radius:50%;border:2px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;color:var(--muted);transition:.2s;background:#fff}
+.state.on{border-color:var(--accent);color:var(--accent);background:#eef4fa;box-shadow:0 0 0 6px #eef4fa}
+.arrowline{font-size:13px;color:var(--muted);text-align:center;line-height:1.5}
+.strip{display:flex;gap:8px;flex-wrap:wrap;min-height:44px;align-items:center;margin-top:10px}
+.chip{background:#eef4fa;border:1px solid #cfe0ef;color:var(--accent);border-radius:7px;padding:4px 12px;font-family:ui-monospace,monospace;font-size:15px}
+.chip.truth{background:#fdf1e8;border-color:#f3d5bd;color:var(--accent2)}
+/* 账本 */
+.ledger{display:grid;grid-template-columns:auto 1fr 1fr;gap:8px;align-items:center;font-variant-numeric:tabular-nums}
+.ledger .h{font-size:13px;color:var(--muted);font-weight:650;text-align:center;padding-bottom:2px}
+.ledger .rl{font-size:13px;color:var(--muted);white-space:nowrap}
+.cell{border:1px solid var(--line);border-radius:9px;padding:9px 6px;text-align:center;background:#fff;font-family:ui-monospace,monospace;font-size:15px;min-height:46px;display:flex;flex-direction:column;justify-content:center;transition:.2s;color:#9aa4af}
+.cell.v{color:var(--ink)}
+.cell.hl{border-color:var(--accent);background:#eef4fa;color:var(--accent);font-weight:700}
+.cell .sub{font-size:11px;color:var(--muted);font-weight:400;font-family:inherit}
+/* 柱状 */
+.bars{display:flex;align-items:flex-end;gap:6px;height:200px;padding:8px 0 0;border-bottom:1px solid var(--line);margin-bottom:28px}
+.bar{flex:1;background:#cfe0ef;border-radius:4px 4px 0 0;position:relative;transition:opacity .3s,background .3s}
+.bar .lb{position:absolute;bottom:-22px;left:0;right:0;text-align:center;font-size:11px;color:var(--muted);white-space:nowrap}
+.bar .vl{position:absolute;top:-20px;left:0;right:0;text-align:center;font-size:10.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.bar.dim{opacity:.22}
+.bar.top{background:var(--accent2)}
+/* gamma */
+.gbars{display:flex;gap:16px;margin:14px 0 30px}
+.gb{flex:1;text-align:center;font-size:12px;color:var(--muted)}
+.gb .stack{height:26px;border-radius:6px;overflow:hidden;display:flex;border:1px solid var(--line)}
+.gb .a{background:#2563eb}.gb .i{background:#f59e0b}
+.gb .cap{font-size:11px;margin-top:5px;font-variant-numeric:tabular-nums}
+/* mfcc */
+.mf{display:flex;align-items:flex-end;gap:3px;height:120px;border-bottom:1px solid var(--line)}
+.mf div{flex:1;background:#cfe0ef;border-radius:2px 2px 0 0}
+.mf div.pk{background:var(--accent)}
+/* 自查 */
+.q{border-top:1px solid var(--line);padding:16px 0}
+.q .qt{font-weight:650;margin-bottom:8px}
+.opt{display:block;width:100%;text-align:left;margin:6px 0;border-radius:8px}
+.opt.ok{background:#eaf7f0;border-color:#9fd8bb;color:#0f7b4f}
+.opt.no{background:#fdecec;border-color:#f0b4b4;color:#b91c1c}
+.exp{font-size:14px;color:#40464d;background:var(--soft);border-radius:8px;padding:9px 12px;margin-top:8px;display:none}
+.exp.show{display:block}
+.score{font-weight:700;color:var(--accent)}
+nav{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 0}
+nav a{font-size:13px;color:var(--accent);text-decoration:none;border:1px solid #cfe0ef;border-radius:99px;padding:2px 11px}
+nav a:hover{background:#eef4fa}
+details{margin:8px 0}
+summary{cursor:pointer;font-weight:650;color:var(--accent);font-size:15px}
+.qbox{border-left:3px solid var(--accent);padding:2px 0 2px 14px;margin:12px 0;color:#33383d}
+@media print{nav,button,.noprint{display:none!important}body{font-size:12pt}.wrap{max-width:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="kicker">语音信息处理 · 第 3 章 · 复习用</div>
+  <h1>HMM 图解：用 3 帧语音把三个基本问题走一遍</h1>
+  <p class="lead">这一页每个数字都是算出来的，每个概念都能点。</p>
+  <p class="muted small">滚到底大约 20 分钟。每屏都有一个可以点的东西 —— 别读，动手。<span id="cd"></span></p>
+  <nav>
+    <a href="#s1">1 什么是 HMM</a><a href="#s2">2 三张表</a><a href="#s3">3 账本</a>
+    <a href="#s4">4 求和 vs 取最大</a><a href="#s5">5 三个问题</a>
+    <a href="#s7">6 MFCC</a><a href="#s8">7 自查</a><a href="#s9">8 背这一页</a>
+  </nav>
+</header>
+
+<h2 id="s1"><span class="n">1</span>先亲手玩一次：为什么叫「隐」</h2>
+<p>想象一个人在心里随机挑一个音素来说，每 25 毫秒你可能听到 <code>c1</code>、<code>c2</code>、<code>c3</code> 三种特征之一。
+<strong>你看不到他在发哪个音素，只看到他吐出的特征。</strong>下面点四下按钮体会一下。</p>
+
+<div class="card">
+  <div class="machine">
+    <div class="sm">
+      <div class="state" id="stA">/a/</div>
+      <div class="arrowline">停留 0.7 ⇄ 0.3 转走<br>0.4 转回 ⇄ 0.6 停留</div>
+      <div class="state" id="stI">/i/</div>
+    </div>
+    <div class="small muted" style="margin-top:6px">下面这一行是你「听得见」的东西：</div>
+    <div class="strip" id="strip"><span class="muted small">（还没有）</span></div>
+    <div class="small muted" style="margin-top:4px">这一行是他心里真实的音素，你<strong>本来看不到</strong>：</div>
+    <div class="strip" id="truth"><span class="muted small">（隐藏）</span></div>
+    <div class="btns">
+      <button class="primary" id="bStep">说下一帧</button>
+      <button id="bReveal">揭晓真实音素</button>
+      <button id="bReset">重来</button>
+    </div>
+  </div>
+</div>
+
+<p class="qbox">玩完之后你就懂了三个词：<strong>隐状态</strong>是那个圆（音素），<strong>观测</strong>是吐出来的 c1/c2/c3，<strong>模型 λ=(π,A,B)</strong> 就是决定他「怎么跳、跳的时候发出什么」的那套概率。</p>
+
+<h2 id="s2"><span class="n">2</span>模型 = 三张表，一共 12 个数字</h2>
+<p>整章要用的全部材料就是下面三张表。没有别的。</p>
+
+<div class="grid2">
+  <div class="card tight">
+    <h3 style="margin-top:0">π 起点概率（2 个）</h3>
+    <table><tr><th>第一帧是</th><th class="n">概率</th></tr>
+    <tr><td>/a/</td><td class="n">0.6</td></tr><tr><td>/i/</td><td class="n">0.4</td></tr></table>
+    <p class="small muted">说话开口时，六成是 /a/。</p>
+  </div>
+  <div class="card tight">
+    <h3 style="margin-top:0">A 转移（4 个）</h3>
+    <table><tr><th>上一帧↓ 这一帧→</th><th class="n">/a/</th><th class="n">/i/</th></tr>
+    <tr><td>/a/</td><td class="n">0.7</td><td class="n">0.3</td></tr>
+    <tr><td>/i/</td><td class="n">0.4</td><td class="n">0.6</td></tr></table>
+    <p class="small muted">对角线那两格是「这个音素还没说完」。每行加起来必须是 1。</p>
+  </div>
+</div>
+<div class="card tight">
+  <h3 style="margin-top:0">B 发射（6 个）：每个音素爱发什么特征</h3>
+  <table><tr><th>音素↓ 特征→</th><th class="n">c1</th><th class="n">c2</th><th class="n">c3</th></tr>
+  <tr><td>/a/</td><td class="n">0.1</td><td class="n">0.4</td><td class="n">0.5</td></tr>
+  <tr><td>/i/</td><td class="n">0.6</td><td class="n">0.3</td><td class="n">0.1</td></tr></table>
+  <p class="small muted">/i/ 偏爱 c1，/a/ 偏爱 c3。这张表就是音素的「声学指纹」。</p>
+</div>
+
+<p><strong>今天全程要处理的那段语音只有 3 帧</strong>：观测 <code>O = (c1, c2, c3)</code>。下面所有数字都由这三张表算出来。</p>
+
+<h2 id="s3"><span class="n">3</span>把「所有可能」记成一本账（前向算法）</h2>
+<p>问题是：<strong>这串 c1 c2 c3 到底有多可能？</strong>答案要把 8 种「帧→音素」的划法全算出来再相加。
+直接列出 8 条太笨，于是改成每帧只在两个格子里记账：<strong>每格 = 所有走到这里的划法的概率之和</strong>。</p>
+<p class="small muted">点「下一步」一格一格填。蓝色字是转移概率（A 表），橙色字是发射概率（B 表）。</p>
+
+<div class="card">
+  <div class="ledger" id="ledger">
+    <div></div><div class="h">/a/ 格</div><div class="h">/i/ 格</div>
+    <div class="rl">帧 1（c1）</div><div class="cell" data-k="a1">·</div><div class="cell" data-k="i1">·</div>
+    <div class="rl">帧 2（c2）</div><div class="cell" data-k="a2">·</div><div class="cell" data-k="i2">·</div>
+    <div class="rl">帧 3（c3）</div><div class="cell" data-k="a3">·</div><div class="cell" data-k="i3">·</div>
+  </div>
+  <div class="formula" id="fml">（点「下一步」开始）</div>
+  <p class="note" id="note"></p>
+  <div class="btns">
+    <button class="primary" id="bNext">下一步</button>
+    <button id="bPrev">上一步</button>
+    <button id="bRe">重来</button>
+    <button id="bMode">换成「取最大」看看</button>
+  </div>
+</div>
+
+<p>每格永远只做三件事：<strong>上一行的两个数 × 转移 → 相加 → × 发射</strong>。3 帧做完只用了十几步乘法；
+换成 100 帧，也只是把这张表往下多画 100 行，运算次数从 $2^{100}$ 降到几千次 —— 这就是前向算法存在的唯一理由：<strong>它只是把加法换了个顺序，没有丢掉任何一条路径</strong>。</p>
+
+<div class="card tight" style="background:var(--soft);border-color:#dbe6f0">
+  <strong>你已经写完前向算法了。</strong> 公式长这样，现在你会自己读：<br>
+  <code>α<sub>t+1</sub>(j) = [ Σ<sub>i</sub> α<sub>t</sub>(i)·a<sub>ij</sub> ] · b<sub>j</sub>(o<sub>t+1</sub>)</code><br>
+  那个 Σ 就是你点的「两条来路相加」，那个 b 就是最后一步「乘发射」，α 就是格子里的数。
+</div>
+
+<h2 id="s4"><span class="n">4</span>为什么 0.033612 和 0.01344 不是一回事</h2>
+<p>同样这 8 种划法，换个问法就是另一个算法。点两个按钮看区别。</p>
+
+<div class="card">
+  <div class="bars" id="bars"></div>
+  <p class="note" id="barNote">（横轴 a = /a/，i = /i/）</p>
+  <div class="btns">
+    <button class="primary" id="bSum">全加起来 = 这段语音有多可能</button>
+    <button id="bMax">只留最高的 = 最像的一种划法</button>
+    <button id="bClr">还原</button>
+  </div>
+</div>
+
+<p><strong>前向 = 求和，Viterbi = 取最大</strong>，两个算法的账本长得一模一样，只有一个运算符不同。所以：</p>
+<table>
+  <tr><th>问法</th><th>得到</th><th>数值</th><th>算法</th></tr>
+  <tr><td>这段语音有多像这个模型</td><td>所有划法之和 P(O|λ)</td><td class="n">0.033612</td><td>前向 / 后向</td></tr>
+  <tr><td>最像是哪一种划法</td><td>最大的一条 + 它的路径</td><td class="n">0.01344</td><td>Viterbi</td></tr>
+</table>
+<p class="small muted">最大的一条肯定 ≤ 全部之和。把这两个数搞混，是这一章最常见的失分点。</p>
+
+<h2 id="s5"><span class="n">5</span>三个基本问题：其实是同一套东西的三种用法</h2>
+
+<div class="card">
+  <h3 style="margin-top:0">① 评估：这段语音有多像这个模型？</h3>
+  <p>得到<strong>一个数</strong> <code>P(O|λ)</code>。识别时同一个观测丢给「你好」「你好吗」「你早」三个模型，谁的分数高判谁。<br>
+  <span class="tag">前向 / 后向</span> <span class="tag orange">复杂度 O(N²T)</span> <span class="tag">N=5、T=100 只要约 2500 次乘法</span></p>
+  <details><summary>后向算法是干什么的（考试会填空）</summary>
+    <p>把同一本账从右往左记：<code>β<sub>t</sub>(i) = Σ<sub>j</sub> a<sub>ij</sub>·b<sub>j</sub>(o<sub>t+1</sub>)·β<sub>t+1</sub>(j)</code>，初值 <code>β<sub>T</sub>(i) = 1</code>（最后一帧之后没有观测了）。它单独没用，但和前向一乘就得到「第 t 帧属于状态 i 的概率」，那是第 ③ 题的原料。</p>
+  </details>
+</div>
+
+<div class="card">
+  <h3 style="margin-top:0">② 解码：最像是哪一种划法？</h3>
+  <p>得到<strong>一条路径</strong> <code>Q*</code>。同样逐帧推进，但每步只留最大的来路，并在旁边记下「这一格是从哪来的」（回溯指针 φ），最后倒着退回第 1 帧。<br>
+  本例答案：<strong>/i/ /a/ /a/</strong>。<br>
+  <span class="tag">Viterbi</span> <span class="tag orange">同样 O(N²T)</span></p>
+  <p class="small muted">工程上：有转写文本、只差「每帧对应哪个音素」时，就是用 Viterbi 在这张账本上定边界，叫<strong>强制对齐</strong>，也是给 DNN-HMM 打训练标签的办法。</p>
+</div>
+
+<div class="card">
+  <h3 style="margin-top:0">③ 学习：这三张表本身怎么来？</h3>
+  <p>真实语料里没人标「第 3 帧是 /a/」。所以只能交替两件事：<strong>用当前的表算出每帧属于各音素的概率（软对齐）</strong> → <strong>按这个比例去数数、重填表</strong> → 再来一遍。这就是 Baum-Welch，是 EM 的一个特例。</p>
+  <p><span class="tag">Baum-Welch</span> <span class="tag orange">保证一轮比一轮好，但只到局部最优</span></p>
+<h3>这一步的软对齐长什么样</h3>
+  <p class="small muted">把前向和后向的账一乘，就得到每一帧属于两个音素的概率（蓝色 = /a/，橙色 = /i/）：</p>
+  <div class="gbars">
+    <div class="gb"><div class="stack"><div class="a" style="width:23.17%"></div><div class="i" style="width:76.83%"></div></div><div class="cap">帧1　/a/ 0.23　/i/ 0.77</div></div>
+    <div class="gb"><div class="stack"><div class="a" style="width:62.41%"></div><div class="i" style="width:37.59%"></div></div><div class="cap">帧2　/a/ 0.62　/i/ 0.38</div></div>
+    <div class="gb"><div class="stack"><div class="a" style="width:86.40%"></div><div class="i" style="width:13.60%"></div></div><div class="cap">帧3　/a/ 0.86　/i/ 0.14</div></div>
+  </div>
+  <p>有了这三组比例，「数数」就变得很直观。比如「/a/ 之后还是 /a/」的新概率：</p>
+  <div class="formula">分子：帧1→2 里 /a/→/a/ 的那部分 0.19　+　帧2→3 里 0.57　= 0.76<br>分母：从 /a/ 出发的总量 0.23 + 0.62 = 0.86<br>新概率 = 0.76 ÷ 0.86 = <b>0.89</b>（原来是 0.7）</div>
+  <p class="small muted">把 12 个数字都这样数一遍，就是一轮 M 步。数值变了之后，似然从 0.033612 涨到 0.071447 —— EM 保证它不会下降。</p>
+  <details><summary>一轮迭代后的 12 个数字（对照用）</summary>
+    <table><tr><th>参数</th><th class="n">迭代前</th><th class="n">迭代后</th></tr>
+    <tr><td>π(/a/)</td><td class="n">0.6</td><td class="n">0.2317</td></tr>
+    <tr><td>π(/i/)</td><td class="n">0.4</td><td class="n">0.7683</td></tr>
+    <tr><td>a(/a/→/a/)</td><td class="n">0.7</td><td class="n">0.8936</td></tr>
+    <tr><td>a(/a/→/i/)</td><td class="n">0.3</td><td class="n">0.1064</td></tr>
+    <tr><td>a(/i/→/a/)</td><td class="n">0.4</td><td class="n">0.6321</td></tr>
+    <tr><td>a(/i/→/i/)</td><td class="n">0.6</td><td class="n">0.3679</td></tr>
+    <tr><td>b(/a/→c1)</td><td class="n">0.1</td><td class="n">0.1347</td></tr>
+    <tr><td>b(/a/→c2)</td><td class="n">0.4</td><td class="n">0.3629</td></tr>
+    <tr><td>b(/a/→c3)</td><td class="n">0.5</td><td class="n">0.5024</td></tr>
+    <tr><td>b(/i/→c1)</td><td class="n">0.6</td><td class="n">0.6001</td></tr>
+    <tr><td>b(/i/→c2)</td><td class="n">0.3</td><td class="n">0.2936</td></tr>
+    <tr><td>b(/i/→c3)</td><td class="n">0.1</td><td class="n">0.1062</td></tr></table>
+  </details>
+</div>
+
+<h2 id="s7"><span class="n">6</span>那「观测」本身是什么：MFCC 六步</h2>
+<p>模型要每帧喂一个东西。那东西就是从波形一路算出来的 13 个数，全程只在<strong>维度</strong>上变了五次：</p>
+<div class="card">
+  <table>
+    <tr><th>步骤</th><th>做了什么</th><th class="n">维度</th></tr>
+    <tr><td>1 预加重</td><td>给高频补一点，平衡嘴唇辐射造成的衰减</td><td class="n">1 秒 16000 个采样点</td></tr>
+    <tr><td>2 分帧加窗</td><td>25 ms 一帧、10 ms 一跳，乘汉明窗防泄漏</td><td class="n">→ 100 帧</td></tr>
+    <tr><td>3 FFT</td><td>看这一帧里「哪些频率各有多响」</td><td class="n">400 点 → 257 个数</td></tr>
+    <tr><td>4 Mel 滤波</td><td>按人耳重新分带：低频分得细、高频分得粗</td><td class="n">→ 26 个频带</td></tr>
+    <tr><td>5 取对数</td><td>响度对数化，并把「声源×声道」变成相加</td><td class="n">26 → 26</td></tr>
+    <tr><td>6 DCT 取低阶</td><td>撕出频谱包络（=共振峰=音素），扔掉音高</td><td class="n">→ 13 个数</td></tr>
+  </table>
+</div>
+<p>第 4 步那 26 个数长这样（我用一段合成元音实算的）：</p>
+<div class="card tight">
+  <div class="mf" id="mf"></div>
+  <p class="small muted" style="margin-top:10px">两个峰就是两个共振峰（F1、F2）—— 元音靠它们定位。第 6 步的 DCT 干的就是把这条曲线的「大包络」和「细齿」分开：低阶系数 = 包络 = 音素信息，高阶系数 = 谐波细节 = 音高，扔掉。</p>
+</div>
+<p><strong>一帧 = 13 个数 = 一个 <code>o<sub>t</sub></code></strong>。100 帧就是 100×13 的一张表，这张表就是前面所有算法里的「观测序列 O」。</p>
+
+<h2 id="s8"><span class="n">7</span>自查：点选项立刻判</h2>
+<div class="card" id="quiz"></div>
+
+<h2 id="s9"><span class="n">8</span>最后一屏：背这些就够了</h2>
+<p class="small muted">只背「能直接写在卷子上的句子」。复杂推导和手算例子在 2026 课件里标了「了解」，不考。</p>
+
+<div class="card">
+  <h3 style="margin-top:0">填空（原文照抄）</h3>
+  <table>
+    <tr><td>λ = (π, A, B)</td><td>π 初始状态概率分布；A 状态转移概率矩阵；B 观测值概率矩阵</td></tr>
+    <tr><td>前向变量</td><td>α<sub>t</sub>(i) = P(o<sub>1</sub>…o<sub>t</sub>, q<sub>t</sub>=s<sub>i</sub> | λ)</td></tr>
+    <tr><td>后向变量</td><td>β<sub>t</sub>(i) = P(o<sub>t+1</sub>…o<sub>T</sub> | q<sub>t</sub>=s<sub>i</sub>, λ)</td></tr>
+    <tr><td>计算量</td><td>前向／后向都是 O(N²T)；N=5、T=100 时约 2500 次乘法</td></tr>
+    <tr><td>Viterbi 的输出</td><td>最佳状态序列 Q*，及其概率 P*</td></tr>
+  </table>
+</div>
+
+<div class="card">
+  <h3 style="margin-top:0">判断／选择（每条一个判断）</h3>
+  <table>
+    <tr><td>「隐」是指</td><td>状态序列不可直接观测，只能由观测序列推断</td></tr>
+    <tr><td>三问题配算法</td><td>概率计算→前向／后向；解码→Viterbi；参数估计→Baum-Welch</td></tr>
+    <tr><td>前向 vs Viterbi</td><td>前向对所有路径<strong>求和</strong>；Viterbi 每步<strong>取最大</strong>＋回溯指针。说「只是记号不同」＝<strong>错</strong></td></tr>
+    <tr><td>Baum-Welch</td><td>EM 的特例，可能停在局部极值。说「一定全局最优」＝<strong>错</strong></td></tr>
+    <tr><td>马尔可夫性质</td><td>无后效性。判断题＝<strong>正确</strong></td></tr>
+  </table>
+</div>
+
+<div class="card">
+  <h3 style="margin-top:0">简答（照这个结构写）</h3>
+  <p><strong>问：写出三个基本问题及求解算法。</strong></p>
+  <p>① 模型概率计算：已知 λ 与 O=o<sub>1</sub>…o<sub>T</sub>，求 P(O|λ)。解：前向或后向算法，递推 α<sub>t</sub>(j)=[Σ<sub>i</sub>α<sub>t-1</sub>(i)a<sub>ij</sub>]b<sub>j</sub>(o<sub>t</sub>)，计算量 O(N²T)。<br>
+  ② 模型解码：求 Q*=argmax<sub>Q</sub>P(O,Q|λ)。解：Viterbi，每步取最大并记回溯指针 φ。<br>
+  ③ 参数估计：调整 λ 使 P(O|λ) 最大。解：Baum-Welch，EM 的特例，可能收敛到局部极值。</p>
+  <p class="small muted">另一个高频简答：为什么前向把 O(N<sup>T</sup>) 降到 O(N²T)？答：直接法要枚举 N<sup>T</sup> 条路径求和；前向用动态规划，把「到 t 时刻观测为 o<sub>1</sub>…o<sub>t</sub> 且状态为 i」的概率作为中间量递推，每步只对 N 个前驱求和，故为 O(N²T)。</p>
+</div>
+
+<div class="card tight" style="background:#fff8f1;border-color:#f3d5bd">
+  <strong style="color:var(--accent2)">别浪费时间的地方（课件标「了解」，不考）</strong>
+  <p class="small" style="margin:6px 0 0">HMM 手算例子 · Baum-Welch 推导续页 · VQ 与单高斯细节 · <strong>3.4 语音识别解码整节</strong>（Viterbi beam、WFST/HCLG）· 决策树聚类实现细节 · N-gram 平滑 · 神经语言模型</p>
+</div>
+
+</div>
+
+<script>
+(function(){
+  // ---------- 倒计时 ----------
+  try{
+    var exam = new Date('2026-11-11T15:25:00+08:00');
+    var h = Math.round((exam - new Date())/3600000);
+    if(h>0){ document.getElementById('cd').textContent = '　距考试约 ' + h + ' 小时。'; }
+    else{ document.getElementById('cd').textContent = '　考试已开始／结束。'; }
+  }catch(e){}
+
+  // ---------- 1. 状态机 ----------
+  var PI=[0.6,0.4], TR=[[0.7,0.3],[0.4,0.6]], EM=[[0.1,0.4,0.5],[0.6,0.3,0.1]];
+  var cur=null, obs=[], tru=[];
+  function pick(p){ var r=Math.random(), s=0; for(var i=0;i<p.length;i++){ s+=p[i]; if(r<=s) return i; } return p.length-1; }
+  function paint(){
+    var a=document.getElementById('stA'), b=document.getElementById('stI');
+    a.className='state'+(cur===0?' on':'');
+    b.className='state'+(cur===1?' on':'');
+    var sd=document.getElementById('strip'), td=document.getElementById('truth');
+    sd.innerHTML = obs.length? obs.map(function(o){return '<span class="chip">'+o+'</span>';}).join('')
+                             : '<span class="muted small">（还没有）</span>';
+    var show = td.dataset.show === '1';
+    td.innerHTML = show
+      ? (tru.length? tru.map(function(s){return '<span class="chip truth">'+ (s===0?'/a/':'/i/') +'</span>';}).join('') : '<span class="muted small">（先点几下再说）</span>')
+      : '<span class="muted small">（隐藏，想揭晓就点右边按钮）</span>';
+  }
+  document.getElementById('bStep').onclick=function(){
+    if(cur===null){ cur=pick(PI); } else { cur=pick(TR[cur]); }
+    obs.push('c'+(pick(EM[cur])+1)); tru.push(cur);
+    paint();
+  };
+  document.getElementById('bReveal').onclick=function(){
+    document.getElementById('truth').dataset.show='1';
+    paint();
+  };
+  document.getElementById('bReset').onclick=function(){ cur=null; obs=[]; tru=[]; document.getElementById('truth').dataset.show='0'; paint(); };
+  paint();
+
+  // ---------- 3. 账本 ----------
+  var SUM=[
+   {f:'0.6 × 0.1 = <b>0.06</b>', set:{a1:'0.06'}, hl:['a1'], note:'第 1 帧只有两样东西可用：起点概率 π(/a/)=0.6，和「/a/ 会发出 c1」的 0.1。没有历史，所以没有转移。'},
+   {f:'0.4 × 0.6 = <b>0.24</b>', set:{i1:'0.24'}, hl:['i1'], note:'同理。/i/ 发出 c1 的概率高达 0.6，所以第一帧其实被 c1 拉向了 /i/。'},
+   {f:'0.06 × 0.7 = 0.042　　(/a/ → /a/)', set:{}, hl:['a1'], note:'进入第 2 帧。先问「能从哪些状态过来」：从 /a/ 出发，转移概率 0.7。'},
+   {f:'0.24 × 0.4 = 0.096　　(/i/ → /a/)', set:{}, hl:['i1'], note:'另一条来路：从 /i/ 转到 /a/，转移概率 0.4。'},
+   {f:'0.042 + 0.096 = 0.138　→　0.138 × 0.4 = <b>0.0552</b>', set:{a2:'0.0552'}, hl:['a2'], note:'两条来路是「或」的关系，所以相加；最后再乘「/a/ 发出 c2」的 0.4。一格填完。'},
+   {f:'0.018 + 0.144 = 0.162　→　0.162 × 0.3 = <b>0.0486</b>', set:{i2:'0.0486'}, hl:['i2'], note:'/i/ 格照做一遍：0.06×0.3=0.018，0.24×0.6=0.144，相加后乘 B(/i/→c2)=0.3。'},
+   {f:'0.03864 + 0.01944 = 0.05808　→　× 0.5 = <b>0.02904</b>', set:{a3:'0.02904'}, hl:['a3'], note:'第 3 帧同样三步，只是上一行的数换成第 2 帧算出来的。'},
+   {f:'0.01656 + 0.02916 = 0.04572　→　× 0.1 = <b>0.004572</b>', set:{i3:'0.004572'}, hl:['i3'], note:'最后一格。到这里整本账填完。'},
+   {f:'0.02904 + 0.004572 = <b>0.033612</b>', set:{}, hl:['a3','i3'], note:'最后一行的两格加起来 = P(O|λ)。它是全部 8 种划法的总和，不是其中某一条。'}
+  ];
+  var MAXS=[
+   {f:'0.6 × 0.1 = <b>0.06</b>', set:{a1:'0.06'}, hl:['a1'], note:'第 1 帧没有历史，只乘起点概率和发射概率。'},
+   {f:'0.4 × 0.6 = <b>0.24</b>', set:{i1:'0.24'}, hl:['i1'], note:'两格都填上。接下来每一步都只在「谁更大」上做选择。'},
+   {f:'0.06 × 0.7 = 0.042　vs　0.24 × 0.4 = 0.096　→ 留 0.096', set:{}, hl:['a1','i1'], note:'比较两条来路：0.096 更大，只留它，旁边记下「来自 /i/」。被丢掉的 0.042 从此不参与任何计算 —— Viterbi 就是靠这个省算力的。'},
+   {f:'0.096 × 0.4 = <b>0.0384</b>', set:{a2:'0.0384'}, hl:['a2'], note:'留下的最大值乘「/a/ 发出 c2」的 0.4，填进格子。'},
+   {f:'0.06 × 0.3 = 0.018　vs　0.24 × 0.6 = 0.144　→ 留 0.144', set:{}, hl:['a1','i1'], note:'/i/ 格同样比较，0.144 更大，记下「来自 /i/」。'},
+   {f:'0.144 × 0.3 = <b>0.0432</b>', set:{i2:'0.0432'}, hl:['i2'], note:'第 2 帧两格填完。'},
+   {f:'0.0384 × 0.7 = 0.02688　vs　0.0432 × 0.4 = 0.01728　→ 留 0.02688', set:{}, hl:['a2','i2'], note:'第 3 帧，比较两条来路，留大的，记下「来自 /a/」。'},
+   {f:'0.02688 × 0.5 = <b>0.01344</b>', set:{a3:'0.01344'}, hl:['a3'], note:'/a/ 格填好。'},
+   {f:'0.0384 × 0.3 = 0.01152　vs　0.0432 × 0.6 = 0.02592　→ 留 0.02592', set:{}, hl:['a2','i2'], note:'/i/ 格比较，留 0.02592，记下「来自 /i/」。'},
+   {f:'0.02592 × 0.1 = <b>0.002592</b>', set:{i3:'0.002592'}, hl:['i3'], note:'最后一格。'},
+   {f:'终点 0.01344 > 0.002592 → 帧3 = /a/；沿「来自」倒推：帧2 = /a/，帧1 = /i/', set:{}, hl:['i1','a2','a3'], note:'最优划法 = /i/ /a/ /a/，概率 0.01344。它比 0.033612 小 —— 那是 8 条的总和，这是其中一条。'}
+  ];
+  var steps=SUM, idx=-1;
+  var cellEls={};
+  Array.prototype.forEach.call(document.querySelectorAll('.cell'), function(el){ cellEls[el.dataset.k]=el; });
+  function clearCells(){
+    for(var k in cellEls){ cellEls[k].className='cell'; cellEls[k].innerHTML='·'; }
+  }
+  function renderLedger(){
+    clearCells();
+    for(var i=0;i<=idx;i++){
+      var s=steps[i];
+      for(var k in s.set){ if(cellEls[k]){ cellEls[k].innerHTML=s.set[k]; cellEls[k].className='cell v'; } }
+    }
+    var f=document.getElementById('fml'), n=document.getElementById('note');
+    if(idx<0){ f.innerHTML='（点「下一步」开始）'; n.textContent=''; return; }
+    f.innerHTML=steps[idx].f;
+    n.textContent=steps[idx].note;
+    steps[idx].hl.forEach(function(k){ if(cellEls[k] && cellEls[k].classList.contains('v')) cellEls[k].className='cell v hl'; });
+    // 上面这行只能高亮已填的格；对还没填的格子单独高亮
+    steps[idx].hl.forEach(function(k){ if(cellEls[k] && !cellEls[k].classList.contains('v')) cellEls[k].className='cell hl'; });
+  }
+  document.getElementById('bNext').onclick=function(){ if(idx<steps.length-1){ idx++; renderLedger(); } };
+  document.getElementById('bPrev').onclick=function(){ if(idx>-1){ idx--; renderLedger(); } };
+  document.getElementById('bRe').onclick=function(){ idx=-1; renderLedger(); };
+  document.getElementById('bMode').onclick=function(){
+    steps = (steps===SUM)? MAXS : SUM;
+    idx=-1;
+    document.getElementById('bMode').textContent = (steps===SUM)? '换成「取最大」看看' : '换回「求和」';
+    renderLedger();
+  };
+  renderLedger();
+
+  // ---------- 4. 8 条划法 ----------
+  var PATHS=[['a a a',0.00588],['a a i',0.000504],['a i a',0.00108],['a i i',0.000324],
+             ['i a a',0.01344],['i a i',0.001152],['i i a',0.00864],['i i i',0.002592]];
+  var mx=0.01344, barsEl=document.getElementById('bars');
+  barsEl.innerHTML = PATHS.map(function(p){
+    var h = 26 + 150*Math.sqrt(p[1]/mx);
+    return '<div class="bar'+(p[1]===mx?' top':'')+'" style="height:'+h.toFixed(0)+'px">'+
+           '<span class="vl">'+p[1].toFixed(5)+'</span><span class="lb">'+p[0]+'</span></div>';
+  }).join('');
+  document.getElementById('bSum').onclick=function(){
+    Array.prototype.forEach.call(barsEl.children,function(b){ b.classList.remove('dim'); });
+    document.getElementById('barNote').innerHTML='8 根全部相加：<b>0.033612</b> —— 这就是 P(O|λ)，「这段语音有多可能」。';
+  };
+  document.getElementById('bMax').onclick=function(){
+    Array.prototype.forEach.call(barsEl.children,function(b){ if(!b.classList.contains('top')) b.classList.add('dim'); });
+    document.getElementById('barNote').innerHTML='只留最高的一根：<b>0.01344</b> —— 这就是 Viterbi 的答案 /i/ /a/ /a/。';
+  };
+  document.getElementById('bClr').onclick=function(){
+    Array.prototype.forEach.call(barsEl.children,function(b){ b.classList.remove('dim'); });
+    document.getElementById('barNote').textContent='（横轴 a = /a/，i = /i/）';
+  };
+
+  // ---------- 6. MFCC 26 带 ----------
+  var MF=[-8.66,-8.08,-6.72,-5.23,-3.65,-1.23,0.73,0.20,-1.82,-0.72,-0.76,-3.07,-4.77,-4.84,-2.82,-0.97,-1.99,-5.13,-6.94,-8.15,-9.05,-9.79,-10.43,-10.98,-11.47,-11.92];
+  var lo=-12.2, hi=1.2, mfEl=document.getElementById('mf');
+  mfEl.innerHTML = MF.map(function(v,i){
+    var h=(v-lo)/(hi-lo)*100;
+    var pk=(i===6||i===15);
+    return '<div class="'+(pk?'pk':'')+'" style="height:'+h.toFixed(1)+'%" title="第'+(i+1)+'带 '+v+'"></div>';
+  }).join('');
+
+  // ---------- 7. 自查 ----------
+  var QS=[
+   {q:'HMM 的「隐」是指：', o:['观测值不可见','状态序列不可直接观测，只能由观测序列推断','参数不可估计','转移概率未知'], a:1,
+    e:'双重随机过程：状态转移不可见，观测由状态发出、可见。'},
+   {q:'三个基本问题与算法的对应关系是：', o:['概率计算—Viterbi，解码—前向算法，参数估计—Baum-Welch','概率计算—前向／后向，解码—Viterbi，参数估计—Baum-Welch','三者都用 Viterbi','三者都用 EM'], a:1,
+    e:'这条在选择题和简答题里都会出现。'},
+   {q:'前向算法的计算量是：', o:['O(NT)','O(N²T)','O(N³T)','O(2^T·N)'], a:1,
+    e:'N=5、T=100 约 2500 次乘法；直接法 O(N^T)。'},
+   {q:'Viterbi 与前向算法的根本区别是：', o:['Viterbi 求和、前向取最大','Viterbi 每步取最大并记回溯指针 φ，前向对所有路径求和','两者完全相同，只是记号不同','Viterbi 只能用于离散 HMM'], a:1,
+    e:'判断题「递推结构完全相同，只是记号不同」＝错，考的就是这一点。'},
+   {q:'Baum-Welch 算法的性质是：', o:['能保证求得全局最优参数','是 EM 的特例，未必收敛到全局最优','用于解码','用于计算观测概率'], a:1,
+    e:'判断题「一定能求全局最优」＝错。'},
+   {q:'判断：马尔可夫性质（无后效性）是指，给定当前信息后，过去的历史对预测将来无关。', o:['正确','错误'], a:0,
+    e:'一阶马尔可夫链：P(q_t|q_{t-1},…)=P(q_t|q_{t-1})。'}
+  ];
+  var score=0, answered=0, qEl=document.getElementById('quiz');
+  qEl.innerHTML = QS.map(function(item,i){
+    return '<div class="q" id="q'+i+'"><div class="qt">'+(i+1)+'. '+item.q+'</div>'+
+      item.o.map(function(t,j){ return '<button class="opt" data-i="'+i+'" data-j="'+j+'">'+String.fromCharCode(65+j)+'. '+t+'</button>'; }).join('')+
+      '<div class="exp" id="e'+i+'">'+item.e+'</div></div>';
+  }).join('') + '<div class="q" style="border-bottom:none"><span class="score" id="sc">已答 0 / 6，正确 0</span></div>';
+  qEl.addEventListener('click', function(ev){
+    var b=ev.target.closest? ev.target.closest('.opt') : null;
+    if(!b) return;
+    var i=+b.dataset.i, j=+b.dataset.j, box=document.getElementById('q'+i);
+    if(box.dataset.done) return;
+    box.dataset.done='1'; answered++;
+    var ok=(j===QS[i].a);
+    b.className='opt '+(ok?'ok':'no');
+    if(!ok){
+      var right=box.querySelectorAll('.opt')[QS[i].a];
+      if(right) right.className='opt ok';
+    } else { score++; }
+    document.getElementById('e'+i).className='exp show';
+    document.getElementById('sc').textContent='已答 '+answered+' / 6，正确 '+score;
+  });
+})();
+</script>
+</body>
+</html>
