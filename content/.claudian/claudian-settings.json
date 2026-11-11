@@ -1,7 +1,7 @@
 {
   "userName": "",
   "permissionMode": "normal",
-  "model": "pi:deepseek/deepseek-v4-flash",
+  "model": "pi:workbuddy/cn:deepseek-v4-flash",
   "thinkingBudget": "off",
   "effortLevel": "medium",
   "serviceTier": "default",
@@ -1241,37 +1241,164 @@
       "cliPathsByHost": {},
       "discoveredModels": [
         {
-          "api": "openai-completions",
-          "contextWindow": 1000000,
-          "encodedId": "pi:deepseek/deepseek-v4-flash",
-          "id": "deepseek-v4-flash",
-          "input": [
-            "text"
-          ],
-          "label": "DeepSeek V4 Flash",
-          "maxTokens": 384000,
-          "provider": "deepseek",
-          "reasoning": true,
-          "thinkingLevels": [
-            "off",
-            "minimal",
-            "low",
-            "medium",
-            "high"
-          ]
-        },
-        {
-          "api": "openai-completions",
-          "contextWindow": 1000000,
-          "encodedId": "pi:deepseek/deepseek-v4-flash-vision-exp",
-          "id": "deepseek-v4-flash-vision-exp",
+          "api": "openai-codex-responses",
+          "contextWindow": 272000,
+          "encodedId": "pi:openai-codex/gpt-5.6-luna",
+          "id": "gpt-5.6-luna",
           "input": [
             "text",
             "image"
           ],
-          "label": "DeepSeek V4 Flash Vision Exp",
-          "maxTokens": 384000,
-          "provider": "deepseek",
+          "label": "GPT-5.6 Luna",
+          "maxTokens": 128000,
+          "provider": "openai-codex",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-codex-responses",
+          "contextWindow": 272000,
+          "encodedId": "pi:openai-codex/gpt-5.6-sol",
+          "id": "gpt-5.6-sol",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "GPT-5.6 Sol",
+          "maxTokens": 128000,
+          "provider": "openai-codex",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-codex-responses",
+          "contextWindow": 272000,
+          "encodedId": "pi:openai-codex/gpt-5.6-terra",
+          "id": "gpt-5.6-terra",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "GPT-5.6 Terra",
+          "maxTokens": 128000,
+          "provider": "openai-codex",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-codex-responses",
+          "contextWindow": 272000,
+          "encodedId": "pi:openai-codex/gpt-6-astra",
+          "id": "gpt-6-astra",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "GPT-6 Astra",
+          "maxTokens": 128000,
+          "provider": "openai-codex",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-codex-responses",
+          "contextWindow": 872000,
+          "encodedId": "pi:openai-codex/gpt-6-luna",
+          "id": "gpt-6-luna",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "GPT-6 Luna",
+          "maxTokens": 128000,
+          "provider": "openai-codex",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-codex-responses",
+          "contextWindow": 272000,
+          "encodedId": "pi:openai-codex/gpt-6-sol",
+          "id": "gpt-6-sol",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "GPT-6 Sol",
+          "maxTokens": 128000,
+          "provider": "openai-codex",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-codex-responses",
+          "contextWindow": 500000,
+          "encodedId": "pi:openai-codex/gpt-6.1-sol",
+          "id": "gpt-6.1-sol",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "GPT-6.1 Sol",
+          "maxTokens": 128000,
+          "provider": "openai-codex",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-codex-responses",
+          "contextWindow": 500000,
+          "encodedId": "pi:openai-codex/gpt-6.1-terra",
+          "id": "gpt-6.1-terra",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "GPT-6.1 Terra",
+          "maxTokens": 128000,
+          "provider": "openai-codex",
           "reasoning": true,
           "thinkingLevels": [
             "off",
@@ -1284,14 +1411,519 @@
         {
           "api": "openai-completions",
           "contextWindow": 1000000,
-          "encodedId": "pi:deepseek/deepseek-v4-pro",
-          "id": "deepseek-v4-pro",
+          "encodedId": "pi:workbuddy/cn:hy4-preview-f",
+          "id": "cn:hy4-preview-f",
           "input": [
-            "text"
+            "text",
+            "image"
           ],
-          "label": "DeepSeek V4 Pro",
-          "maxTokens": 384000,
-          "provider": "deepseek",
+          "label": "Hy4 Preview F (WorkBuddy)",
+          "maxTokens": 64000,
+          "provider": "workbuddy",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 1000000,
+          "encodedId": "pi:workbuddy/cn:deepseek-v4.1-flash",
+          "id": "cn:deepseek-v4.1-flash",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "DeepSeek V4.1 Flash (WorkBuddy)",
+          "maxTokens": 393216,
+          "provider": "workbuddy",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 1000000,
+          "encodedId": "pi:workbuddy/cn:kimi-k3.1-pro",
+          "id": "cn:kimi-k3.1-pro",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Kimi-K3.1-Pro (WorkBuddy)",
+          "maxTokens": 32000,
+          "provider": "workbuddy",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 1000000,
+          "encodedId": "pi:workbuddy/cn:minimax-m3.1-flash",
+          "id": "cn:minimax-m3.1-flash",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "MiniMax-M3.1-Flash (WorkBuddy)",
+          "maxTokens": 128000,
+          "provider": "workbuddy",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 1000000,
+          "encodedId": "pi:workbuddy/cn:glm-5.3",
+          "id": "cn:glm-5.3",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "GLM 5.3 (WorkBuddy)",
+          "maxTokens": 131072,
+          "provider": "workbuddy",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 1000000,
+          "encodedId": "pi:workbuddy/cn:kimi-k3-1",
+          "id": "cn:kimi-k3-1",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Kimi K3.1 (WorkBuddy)",
+          "maxTokens": 1048576,
+          "provider": "workbuddy",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 1000000,
+          "encodedId": "pi:workbuddy/cn:glm-5.2",
+          "id": "cn:glm-5.2",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "GLM 5.2 (WorkBuddy)",
+          "maxTokens": 131072,
+          "provider": "workbuddy",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 1000000,
+          "encodedId": "pi:workbuddy/cn:mimo-v2.6-pro",
+          "id": "cn:mimo-v2.6-pro",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Xiaomi MiMo-V2.6-Pro (WorkBuddy)",
+          "maxTokens": 128000,
+          "provider": "workbuddy",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 1000000,
+          "encodedId": "pi:workbuddy/cn:hy4std",
+          "id": "cn:hy4std",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Hy4 (WorkBuddy)",
+          "maxTokens": 64000,
+          "provider": "workbuddy",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 1000000,
+          "encodedId": "pi:workbuddy/cn:glm-5.3-flash",
+          "id": "cn:glm-5.3-flash",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "GLM 5.3 Flash (WorkBuddy)",
+          "maxTokens": 131072,
+          "provider": "workbuddy",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 192000,
+          "encodedId": "pi:workbuddy/cn:hy3",
+          "id": "cn:hy3",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Hy3 (WorkBuddy)",
+          "maxTokens": 64000,
+          "provider": "workbuddy",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 192000,
+          "encodedId": "pi:workbuddy/cn:hy3-x",
+          "id": "cn:hy3-x",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Hy3 X (WorkBuddy)",
+          "maxTokens": 64000,
+          "provider": "workbuddy",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 1000000,
+          "encodedId": "pi:workbuddy/cn:step-5-preview",
+          "id": "cn:step-5-preview",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Step-5-Preview (WorkBuddy)",
+          "maxTokens": 64000,
+          "provider": "workbuddy",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 1000000,
+          "encodedId": "pi:workbuddy/cn:space-bunny",
+          "id": "cn:space-bunny",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Space Bunny (WorkBuddy)",
+          "maxTokens": 128000,
+          "provider": "workbuddy",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 1000000,
+          "encodedId": "pi:workbuddy/cn:deepseek-v4-pro",
+          "id": "cn:deepseek-v4-pro",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "DeepSeek V4 Pro (WorkBuddy)",
+          "maxTokens": 393216,
+          "provider": "workbuddy",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 1000000,
+          "encodedId": "pi:workbuddy/cn:kimi-k2.8-preview",
+          "id": "cn:kimi-k2.8-preview",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Kimi K2.8 Preview (WorkBuddy)",
+          "maxTokens": 131072,
+          "provider": "workbuddy",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 256000,
+          "encodedId": "pi:workbuddy/cn:auto",
+          "id": "cn:auto",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Auto (WorkBuddy)",
+          "maxTokens": 32000,
+          "provider": "workbuddy",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 1000000,
+          "encodedId": "pi:workbuddy/cn:hy4free",
+          "id": "cn:hy4free",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Hy4 (WorkBuddy)",
+          "maxTokens": 64000,
+          "provider": "workbuddy",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 1000000,
+          "encodedId": "pi:workbuddy/cn:deepseek-v4-flash",
+          "id": "cn:deepseek-v4-flash",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "DeepSeek V4 Flash (WorkBuddy)",
+          "maxTokens": 50000,
+          "provider": "workbuddy",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 512000,
+          "encodedId": "pi:workbuddy/cn:minimax-m3",
+          "id": "cn:minimax-m3",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "MiniMax M3 (WorkBuddy)",
+          "maxTokens": 524288,
+          "provider": "workbuddy",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 200000,
+          "encodedId": "pi:workbuddy/cn:glm-5.1",
+          "id": "cn:glm-5.1",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "GLM 5.1 (WorkBuddy)",
+          "maxTokens": 48000,
+          "provider": "workbuddy",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 200000,
+          "encodedId": "pi:workbuddy/cn:glm-5v-turbo",
+          "id": "cn:glm-5v-turbo",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "GLM 5v Turbo (WorkBuddy)",
+          "maxTokens": 64000,
+          "provider": "workbuddy",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 256000,
+          "encodedId": "pi:workbuddy/cn:kimi-k2.7",
+          "id": "cn:kimi-k2.7",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Kimi K2.7 Code (WorkBuddy)",
+          "maxTokens": 32000,
+          "provider": "workbuddy",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 256000,
+          "encodedId": "pi:workbuddy/cn:kimi-k2.6",
+          "id": "cn:kimi-k2.6",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Kimi K2.6 (WorkBuddy)",
+          "maxTokens": 32000,
+          "provider": "workbuddy",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 1000000,
+          "encodedId": "pi:workbuddy/cn:hy4-preview",
+          "id": "cn:hy4-preview",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "Hy4 Preview (WorkBuddy)",
+          "maxTokens": 64000,
+          "provider": "workbuddy",
           "reasoning": true,
           "thinkingLevels": [
             "off",
@@ -1309,7 +1941,7 @@
       "preferredThinkingByModel": {},
       "toolMode": "all",
       "visibleModels": [
-        "pi:deepseek/deepseek-v4-flash"
+        "pi:workbuddy/cn:deepseek-v4-flash"
       ]
     }
   },
@@ -1318,8 +1950,8 @@
     "claude": "sonnet",
     "opencode": "opencode:opencode/big-pickle",
     "codex": "gpt-5.5",
-    "pi": "pi:deepseek/deepseek-v4-flash",
-    "omp": "pi:deepseek/deepseek-v4-flash"
+    "pi": "pi:workbuddy/cn:deepseek-v4-flash",
+    "omp": "pi:workbuddy/cn:deepseek-v4-flash"
   },
   "savedProviderEffort": {
     "claude": "high",
