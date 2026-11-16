@@ -38,14 +38,6 @@
   min-height: 1.2rem;
   flex: 0 1 auto;
 
-  &.collapsed {
-    flex: 0 1 1.2rem;
-
-    & .fold {
-      opacity: 0.4;
-    }
-  }
-
   & .fold {
     margin-left: 0.5rem;
     transition: opacity 0.3s ease;
@@ -330,7 +322,8 @@ li:has(> .folder-outer.open) > .folder-container::before {
         visibility: visible;
       }
 
-      button.mobile-explorer {
+      // 抽屉真正打开时脚本会给 <html> 加 mobile-no-scroll，用它避免首屏闪出关闭按钮
+      :root.mobile-no-scroll & button.mobile-explorer {
         position: fixed;
         top: 3.05rem;
         right: 0.75rem;
