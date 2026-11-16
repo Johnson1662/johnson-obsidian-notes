@@ -125,19 +125,15 @@ tbody {
   line-height: 1.5;
 }
 
-// --- 链接：Notion 是「下划线 + 同色文字」，不是彩色加粗 ---
+// --- 链接：只有正文里的链接带下划线，界面控件（侧栏、目录、页脚）不带 ---
 a {
   color: inherit;
   font-weight: 400;
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-decoration-color: color-mix(in srgb, var(--darkgray) 35%, transparent);
-  text-underline-offset: 2px;
+  text-decoration: none;
   transition: none;
 
   &:hover {
     color: var(--dark);
-    text-decoration-color: var(--dark);
   }
 
   &.internal {
@@ -158,6 +154,18 @@ a {
 
   &.external .external-icon > path {
     fill: var(--gray);
+  }
+}
+
+article a,
+article a.internal {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: color-mix(in srgb, var(--darkgray) 35%, transparent);
+  text-underline-offset: 2px;
+
+  &:hover {
+    text-decoration-color: var(--dark);
   }
 }
 
@@ -441,7 +449,7 @@ ul.toc-content.overflow > li {
 
     &.in-view {
       color: var(--dark);
-      background: var(--highlight);
+      background: none;
       font-weight: 500;
     }
 

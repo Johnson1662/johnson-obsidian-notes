@@ -76,7 +76,8 @@ function toggleFolder(evt: MouseEvent) {
   }
 
   const stringifiedFileTree = JSON.stringify(currentExplorerState)
-  localStorage.setItem("fileTree", stringifiedFileTree)
+  // v2：默认折叠后，丢弃旧版本存下的“全部展开”状态
+  localStorage.setItem("fileTree.v2", stringifiedFileTree)
 }
 
 function createFileNode(currentSlug: FullSlug, node: FileTrieNode): HTMLLIElement {
@@ -171,7 +172,7 @@ async function setupExplorer(currentSlug: FullSlug) {
     }
 
     // Get folder state from local storage
-    const storageTree = localStorage.getItem("fileTree")
+    const storageTree = localStorage.getItem("fileTree.v2")
     const serializedExplorerState = storageTree && opts.useSavedState ? JSON.parse(storageTree) : []
     const oldIndex = new Map<string, boolean>(
       serializedExplorerState.map((entry: FolderState) => [entry.path, entry.collapsed]),

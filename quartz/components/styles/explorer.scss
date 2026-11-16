@@ -295,22 +295,29 @@ li:has(> .folder-outer.open) > .folder-container > .folder-icon-open {
       }
 
       button.mobile-explorer {
+        // 线性图标的 rotate 组合在不同引擎里会散架，直接用两条等长横线拼出关闭叉号
+        &::before,
+        &::after {
+          content: "";
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          width: 18px;
+          height: 1.5px;
+          border-radius: 2px;
+          background: var(--darkgray);
+        }
+
+        &::before {
+          transform: translate(-50%, -50%) rotate(45deg);
+        }
+
+        &::after {
+          transform: translate(-50%, -50%) rotate(-45deg);
+        }
+
         .lucide-menu {
-          line {
-            transition:
-              transform 0.2s ease,
-              opacity 0.2s ease;
-            transform-origin: center;
-          }
-          line:nth-child(1) {
-            transform: translateY(6px) rotate(45deg);
-          }
-          line:nth-child(2) {
-            opacity: 0;
-          }
-          line:nth-child(3) {
-            transform: translateY(-6px) rotate(-45deg);
-          }
+          opacity: 0;
         }
       }
     }
@@ -322,7 +329,7 @@ li:has(> .folder-outer.open) > .folder-container > .folder-icon-open {
       top: 0;
       left: 0;
       margin-top: 0;
-      background-color: var(--light);
+      background-color: var(--sidebar-bg);
       width: 100vw;
       transform: translateX(-100vw);
       transition:
@@ -331,25 +338,11 @@ li:has(> .folder-outer.open) > .folder-container > .folder-icon-open {
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      padding: 4.5rem 1.25rem 2rem 1.25rem;
+      padding: 4rem 0.75rem 2rem 0.75rem;
       height: 100vh;
       max-height: 100vh;
       visibility: hidden;
-      box-shadow: 4px 0 24px rgba(0, 0, 0, 0.15);
-
-      &::before {
-        content: "文件目录";
-        display: block;
-        font-family: var(--headerFont);
-        font-size: 1.15rem;
-        font-weight: 700;
-        color: var(--dark);
-        margin-bottom: 0.75rem;
-        padding-left: 0.6rem;
-        padding-bottom: 0.5rem;
-        border-bottom: 1px solid var(--lightgray);
-        flex-shrink: 0;
-      }
+      box-shadow: none;
 
       .explorer-ul {
         flex: 1;
@@ -360,19 +353,19 @@ li:has(> .folder-outer.open) > .folder-container > .folder-icon-open {
       }
 
       .explorer-ul li > a {
-        padding: 0.45rem 0.6rem;
-        font-size: 0.95rem;
-        border-radius: 6px;
+        padding: 0.4rem 0.5rem;
+        font-size: 0.875rem;
+        border-radius: 4px;
         line-height: 1.4;
       }
 
       .folder-container {
-        padding: 0.4rem 0.6rem;
-        border-radius: 6px;
+        padding: 0.4rem 0.5rem;
+        border-radius: 4px;
 
         & div > button span,
         & div > a {
-          font-size: 0.95rem;
+          font-size: 0.875rem;
           line-height: 1.4;
         }
       }
