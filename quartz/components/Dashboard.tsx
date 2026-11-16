@@ -82,11 +82,6 @@ export default ((userOpts?: Options) => {
       <div class={classNames(displayClass, "dashboard")}>
         {/* ===== Hero 区域 ===== */}
         <header class="dashboard-hero">
-          <div class="shape shape-1" />
-          <div class="shape shape-2" />
-          <div class="shape shape-3" />
-          <div class="shape shape-4" />
-
           <h1 class="dashboard-title">{opts.welcomeTitle}</h1>
           <p class="dashboard-subtitle">{opts.subtitle}</p>
 

@@ -78,8 +78,7 @@
     height: 100vh;
     overflow-y: auto;
     display: none;
-    backdrop-filter: blur(6px);
-    background: rgba(0, 0, 0, 0.15);
+    background: rgba(15, 15, 15, 0.5);
     animation: fadeIn 0.2s ease;
 
     &.active {
@@ -88,9 +87,14 @@
 
     & > .search-space {
       width: 65%;
+      max-width: 40rem;
       margin-top: 12vh;
       margin-left: auto;
       margin-right: auto;
+      background: var(--light);
+      border-radius: 8px;
+      box-shadow: 0 10px 30px rgba(15, 15, 15, 0.16);
+      overflow: hidden;
 
       @media all and not ($desktop) {
         width: 90%;
@@ -98,41 +102,39 @@
 
       & > * {
         width: 100%;
-        border-radius: 12px;
-        background: var(--light);
-        box-shadow:
-          0 20px 60px rgba(0, 0, 0, 0.12),
-          0 8px 24px rgba(0, 0, 0, 0.08);
-        margin-bottom: 2em;
-        transition: box-shadow 0.3s ease;
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
+        margin-bottom: 0;
       }
 
       & > input {
         box-sizing: border-box;
-        padding: 0.6em 1.2em;
+        padding: 0.7em 1.2em;
         font-family: var(--bodyFont);
         color: var(--dark);
-        font-size: 1.1em;
-        border: 1px solid var(--lightgray);
-        border-radius: 12px;
+        font-size: 1em;
+        border: none;
+        border-bottom: 1px solid var(--rule);
+        border-radius: 0;
         transition:
           border-color 0.2s ease,
           box-shadow 0.2s ease;
 
         &:focus {
           outline: none;
-          border-color: var(--secondary);
-          box-shadow: 0 0 0 4px rgba(120, 113, 108, 0.1);
+          border-bottom-color: var(--secondary);
+          box-shadow: inset 0 -1px 0 var(--secondary);
         }
       }
 
       & > .search-layout {
         display: none;
         flex-direction: row;
-        border: 1px solid var(--lightgray);
+        border: none;
         flex: 0 0 100%;
         box-sizing: border-box;
-        border-radius: 12px;
+        border-radius: 0;
         overflow: hidden;
 
         &.display-results {
@@ -151,7 +153,7 @@
 
             & > div {
               &:first-child {
-                border-right: 1px solid var(--lightgray);
+                border-right: 1px solid var(--rule);
                 border-top-right-radius: unset;
                 border-bottom-right-radius: unset;
               }
@@ -166,7 +168,7 @@
 
         & > div {
           height: calc(75vh - 12vh);
-          border-radius: 5px;
+          border-radius: 0;
         }
 
         @media all and ($mobile) {
@@ -185,7 +187,7 @@
 
         & .highlight {
           background: color-mix(in srgb, var(--tertiary) 60%, rgba(255, 255, 255, 0));
-          border-radius: 5px;
+          border-radius: 3px;
           scroll-margin-top: 2rem;
         }
 
@@ -215,12 +217,10 @@
 
           & .result-card {
             overflow: hidden;
-            padding: 1em;
+            padding: 0.7em 1em;
             cursor: pointer;
-            transition:
-              background 0.2s ease,
-              transform 0.15s ease;
-            border-bottom: 1px solid var(--lightgray);
+            transition: background 0.15s ease;
+            border-bottom: 1px solid var(--rule);
             width: 100%;
             display: block;
             box-sizing: border-box;
@@ -236,8 +236,7 @@
             &:hover,
             &:focus,
             &.focus {
-              background: var(--lightgray);
-              transform: translateX(2px);
+              background: var(--highlight);
             }
 
             & > h3 {

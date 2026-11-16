@@ -220,6 +220,13 @@ document.addEventListener("nav", async () => {
     )
 
     const darkMode = document.documentElement.getAttribute("saved-theme") === "dark"
+    // 亮色下用站点同一套浅底色，暗色交给 mermaid 自己的 dark 主题（其文字与底色配对一致）
+    const scale = ["#DDEBF1", "#FAEBDD", "#DDEDEA", "#FBF3DB", "#EAE4F2", "#FBE4E4"]
+    const scaleVars = darkMode
+      ? {}
+      : Object.fromEntries(
+          Array.from({ length: 12 }, (_, i) => [`cScale${i}`, scale[i % scale.length]]),
+        )
     mermaid.initialize({
       startOnLoad: false,
       securityLevel: "loose",
@@ -234,6 +241,7 @@ document.addEventListener("nav", async () => {
         tertiaryColor: computedStyleMap["--tertiary"],
         clusterBkg: computedStyleMap["--light"],
         edgeLabelBackground: computedStyleMap["--highlight"],
+        ...scaleVars,
       },
     })
 

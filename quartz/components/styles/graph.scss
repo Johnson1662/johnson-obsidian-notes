@@ -2,23 +2,23 @@
 
 .graph {
   & > h3 {
-    font-size: 1rem;
+    font-size: 0.75rem;
     margin: 0;
     font-weight: 600;
+    color: var(--tertiary);
   }
 
   & > .graph-outer {
-    border-radius: 10px;
-    border: 1px solid var(--lightgray);
+    border-radius: 6px;
+    border: 1px solid var(--rule);
     box-sizing: border-box;
     height: 250px;
     margin: 0.5em 0;
     position: relative;
     overflow: hidden;
-    transition: box-shadow 0.3s ease;
 
     &:hover {
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+      border-color: var(--gray);
     }
 
     & > .global-graph-icon {
