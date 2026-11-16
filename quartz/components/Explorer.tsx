@@ -160,12 +160,7 @@ export default ((userOpts?: Partial<Options>) => {
               <path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z" />
             </svg>
             <span>文件</span>
-          </div>
-          <OverflowList class="explorer-ul" />
-        </div>
-        <template id="template-file">
-          <li>
-            <a href="#">
+            <button type="button" class="explorer-toggle-all" aria-label="展开或折叠全部">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -176,13 +171,34 @@ export default ((userOpts?: Partial<Options>) => {
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <polyline points="15 3 21 3 21 9" />
+                <polyline points="9 21 3 21 3 15" />
+                <line x1="21" y1="3" x2="14" y2="10" />
+                <line x1="3" y1="21" x2="10" y2="14" />
+              </svg>
+            </button>
+          </div>
+          <OverflowList class="explorer-ul" />
+        </div>
+        <template id="template-file">
+          <li>
+            <a href="#">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.333"
+                stroke-linecap="round"
+                stroke-linejoin="round"
                 class="file-icon"
               >
-                <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
-                <polyline points="14 2 14 8 20 8" />
-                <line x1="16" x2="8" y1="13" y2="13" />
-                <line x1="16" x2="8" y1="17" y2="17" />
-                <line x1="10" x2="8" y1="9" y2="9" />
+                <path d="M9.667 1.333H4a1.333 1.333 0 0 0-1.333 1.334v10.666A1.333 1.333 0 0 0 4 14.667h8a1.333 1.333 0 0 0 1.333-1.334V5L9.667 1.333Z" />
+                <path d="M9.333 1.333v4h4" />
               </svg>
               <span class="file-name"></span>
             </a>
@@ -195,29 +211,29 @@ export default ((userOpts?: Partial<Options>) => {
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
                 height="16"
-                viewBox="0 0 24 24"
+                viewBox="0 0 16 16"
                 fill="none"
                 stroke="currentColor"
-                stroke-width="2"
+                stroke-width="1.333"
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 class="folder-icon folder-icon-closed"
               >
-                <path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z" />
+                <path d="M2.667 13.333h10.666A1.333 1.333 0 0 0 14.667 12V5.333A1.333 1.333 0 0 0 13.333 4H8.047a1.333 1.333 0 0 1-1.107-.6l-.547-.8A1.333 1.333 0 0 0 5.287 2h-2.62a1.333 1.333 0 0 0-1.334 1.333V12c0 .733.6 1.333 1.334 1.333Z" />
               </svg>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
                 height="16"
-                viewBox="0 0 24 24"
+                viewBox="0 0 16 16"
                 fill="none"
                 stroke="currentColor"
-                stroke-width="2"
+                stroke-width="1.333"
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 class="folder-icon folder-icon-open"
               >
-                <path d="m6 14 1.5-2.9A2 2 0 0 1 9.24 10H20a2 2 0 0 1 1.94 2.5l-1.54 6a2 2 0 0 1-1.95 1.5H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.93a2 2 0 0 1 1.66.9l.82 1.2a2 2 0 0 0 1.66.9H14a2 2 0 0 1 2 2v2" />
+                <path d="M4 9.333 4.967 7.4a1.333 1.333 0 0 1 1.193-.733h7.173m0 0a1.333 1.333 0 0 1 1.294 1.666l-1.034 4a1.333 1.333 0 0 1-1.293 1H2.667A1.333 1.333 0 0 1 1.333 12V3.333C1.333 2.6 1.933 2 2.667 2h2.62a1.333 1.333 0 0 1 1.106.6l.547.8a1.333 1.333 0 0 0 1.107.6H12a1.333 1.333 0 0 1 1.333 1.333v1.334Z" />
               </svg>
               <div>
                 <button class="folder-button">

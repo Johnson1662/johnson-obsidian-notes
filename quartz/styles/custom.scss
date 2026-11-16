@@ -23,9 +23,11 @@
   --code-fg: #eb5757;
   --sidebar-bg: #f6f6f6;
   --row-active: rgba(0, 0, 0, 0.07);
-  --obsidian-hover: rgba(0, 0, 0, 0.06);
-  --obsidian-active: rgba(0, 0, 0, 0.075);
-  --obsidian-guide: rgba(0, 0, 0, 0.08);
+  // 文件面板：Obsidian 1.15 的导航项取值
+  --nav-text: #5c5c5c;
+  --nav-text-strong: #222222;
+  --nav-bg-hover: rgba(0, 0, 0, 0.067);
+  --nav-indent: 17px;
 }
 
 :root[saved-theme="dark"] {
@@ -35,16 +37,25 @@
   --code-fg: #ff7369;
   --sidebar-bg: #1e1e1e;
   --row-active: rgba(255, 255, 255, 0.08);
-  --obsidian-hover: rgba(255, 255, 255, 0.06);
-  --obsidian-active: rgba(255, 255, 255, 0.09);
-  --obsidian-guide: rgba(255, 255, 255, 0.08);
+  --nav-text: #b3b3b3;
+  --nav-text-strong: #dadada;
+  --nav-bg-hover: rgba(255, 255, 255, 0.067);
 }
 
 body,
-article {
+article,
+article p,
+.markdown-rendered {
   font-family: var(--bodyFont);
-  line-height: 1.5;
-  letter-spacing: 0;
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  letter-spacing: 0.02em;
+  color: #111827;
+}
+
+article {
+  // 正文里的 p/li 由 base.scss 直接取 --darkgray，这里按主题取炭黑
+  --darkgray: #111827;
 }
 
 // 桌面端左栏取 Notion 侧边栏底色
@@ -151,8 +162,9 @@ h6,
 .article-title,
 .page-title {
   font-family: var(--headerFont);
-  color: var(--dark);
-  font-weight: 600;
+  color: #0f172a;
+  font-weight: 700;
+  letter-spacing: -0.01em;
 }
 
 // --- 字阶：标题 40 / H1 30 / H2 24 / H3 20 / 正文 16 ---
@@ -166,19 +178,19 @@ h6,
 
 h1 {
   font-size: 1.875rem;
-  line-height: 1.25;
+  line-height: 1.35;
   margin: 2rem 0 0.5rem;
 }
 
 h2 {
   font-size: 1.5rem;
-  line-height: 1.3;
+  line-height: 1.35;
   margin: 1.9rem 0 0.4rem;
 }
 
 h3 {
   font-size: 1.25rem;
-  line-height: 1.4;
+  line-height: 1.35;
   margin: 1.6rem 0 0.35rem;
 }
 
@@ -192,7 +204,11 @@ h6 {
 p,
 li,
 tbody {
-  line-height: 1.5;
+  line-height: inherit;
+}
+
+.markdown-rendered p {
+  margin: 0 0 1.15rem;
 }
 
 // --- 链接：只有正文里的链接带下划线，界面控件（侧栏、目录、页脚）不带 ---

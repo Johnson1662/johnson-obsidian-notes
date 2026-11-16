@@ -261,6 +261,20 @@ async function setupExplorer(currentSlug: FullSlug) {
       icon.addEventListener("click", toggleFolder)
       window.addCleanup(() => icon.removeEventListener("click", toggleFolder))
     }
+
+    // 面板头的展开/折叠全部：任一文件夹未展开就全部展开，否则全部收起
+    const toggleAll = explorer.querySelector(".explorer-toggle-all")
+    if (toggleAll) {
+      const toggleAllFolders = () => {
+        const outers = Array.from(explorer.querySelectorAll<HTMLElement>(".folder-outer"))
+        const expand = !outers.every((o) => o.classList.contains("open"))
+        for (const outer of outers) {
+          outer.classList.toggle("open", expand)
+        }
+      }
+      toggleAll.addEventListener("click", toggleAllFolders)
+      window.addCleanup(() => toggleAll.removeEventListener("click", toggleAllFolders))
+    }
   }
 }
 
