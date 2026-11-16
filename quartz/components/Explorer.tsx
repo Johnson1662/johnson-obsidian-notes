@@ -6,6 +6,7 @@ import script from "./scripts/explorer.inline"
 import { classNames } from "../util/lang"
 import { i18n } from "../i18n"
 import { FileTrieNode } from "../util/fileTrie"
+import { countFilesAndFolders } from "../util/fileStats"
 import OverflowListFactory from "./OverflowList"
 import { concatenateResources } from "../util/resources"
 
@@ -60,8 +61,9 @@ export default ((userOpts?: Partial<Options>) => {
   const opts: Options = { ...defaultOptions, ...userOpts }
   const { OverflowList, overflowListAfterDOMLoaded } = OverflowListFactory()
 
-  const Explorer: QuartzComponent = ({ cfg, displayClass }: QuartzComponentProps) => {
+  const Explorer: QuartzComponent = ({ cfg, displayClass, allFiles }: QuartzComponentProps) => {
     const id = `explorer-${numExplorers++}`
+    const { files: totalFiles, folders: totalFolders } = countFilesAndFolders(allFiles)
 
     return (
       <div
@@ -120,6 +122,45 @@ export default ((userOpts?: Partial<Options>) => {
           </svg>
         </button>
         <div id={id} class="explorer-content" aria-expanded={false} role="group">
+          <div class="explorer-mobile-head">
+            <div class="explorer-vault">
+              <span>{cfg.pageTitle}</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </div>
+            <div class="explorer-meta">
+              {totalFiles} 个文件，{totalFolders} 个文件夹
+            </div>
+          </div>
+          <div class="explorer-pane-head">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z" />
+            </svg>
+            <span>文件</span>
+          </div>
           <OverflowList class="explorer-ul" />
         </div>
         <template id="template-file">

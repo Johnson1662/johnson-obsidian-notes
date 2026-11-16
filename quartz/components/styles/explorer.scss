@@ -124,7 +124,7 @@ button.desktop-explorer {
   list-style: none;
   overflow: hidden;
   overflow-y: auto;
-  margin-top: 0.5rem;
+  margin-top: 0.25rem;
 
   & ul {
     list-style: none;
@@ -139,30 +139,31 @@ button.desktop-explorer {
       border-radius: 4px;
       transition: background-color 0.15s ease;
 
-      &:hover {
-        background-color: var(--highlight);
-      }
-
       & > a {
         color: var(--darkgray);
-        font-size: 0.875rem;
+        font-size: 0.9rem;
         opacity: 1;
         pointer-events: all;
         display: flex;
         align-items: center;
-        padding: 0.15rem 0.35rem;
+        padding: 0.25rem 0.4rem;
         transition:
           color 0.15s ease,
           background-color 0.15s ease;
 
         &.active {
           color: var(--dark);
-          background-color: var(--row-active);
+          background-color: var(--obsidian-active);
+          border-radius: 6px;
           font-weight: 400;
         }
 
         &:hover {
           color: var(--dark);
+        }
+
+        &:hover:not(.active) {
+          background-color: var(--obsidian-hover);
         }
       }
     }
@@ -190,9 +191,35 @@ button.desktop-explorer {
 
   .folder-outer > ul {
     overflow: hidden;
-    margin-left: 6px;
-    padding-left: 0.9rem;
+    margin-left: 4px;
+    padding-left: 0.85rem;
+    border-left: 1px solid var(--obsidian-guide);
   }
+}
+
+// 抽屉头（Obsidian 的库名 + 文件/文件夹计数），桌面侧栏已有页标题，不重复显示
+.explorer-mobile-head {
+  display: none;
+}
+
+// 「文件」面板标题（Obsidian 的 Files 面板头）
+.explorer-pane-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.35rem 0.25rem;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--darkgray);
+
+  & svg {
+    flex: 0 0 auto;
+    color: var(--gray);
+  }
+}
+
+.explorer > .title-button.desktop-explorer {
+  display: none;
 }
 
 .folder-container {
@@ -200,20 +227,44 @@ button.desktop-explorer {
   display: flex;
   align-items: center;
   user-select: none;
-  padding: 0.1rem 0.3rem;
+  padding: 0.25rem 0.4rem;
   border-radius: 4px;
   transition: background-color 0.15s ease;
 
+  // Obsidian 的折叠箭头在文件夹图标左侧
+  &::before {
+    content: "";
+    flex: 0 0 auto;
+    width: 7px;
+    height: 7px;
+    margin-right: 8px;
+    border-right: 2px solid var(--gray);
+    border-bottom: 2px solid var(--gray);
+    transform: rotate(-45deg);
+    transition: transform 0.15s ease;
+  }
+
   &:hover {
-    background-color: var(--highlight);
+    background-color: var(--obsidian-hover);
+  }
+
+  // 名称按钮铺满行内剩余宽度，点行内空白也能折叠（Obsidian 的整行可点）
+  & > div {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+  }
+
+  & div > button {
+    width: 100%;
   }
 
   & div > a {
     color: var(--darkgray);
     font-family: var(--headerFont);
-    font-size: 0.875rem;
-    font-weight: 500;
-    line-height: 1.5rem;
+    font-size: 0.9rem;
+    font-weight: 400;
+    line-height: 1.4rem;
     display: inline-block;
     transition: color 0.2s ease;
 
@@ -239,40 +290,25 @@ button.desktop-explorer {
     }
 
     & span {
-      font-size: 0.875rem;
+      font-size: 0.9rem;
       display: inline-block;
       color: var(--darkgray);
-      font-weight: 500;
+      font-weight: 400;
       margin: 0;
-      line-height: 1.5rem;
+      line-height: 1.4rem;
       pointer-events: none;
     }
   }
 }
 
-.folder-icon {
-  margin-right: 6px;
-  color: var(--gray);
-  cursor: pointer;
-  transition: color 0.2s ease;
-  backface-visibility: visible;
-  flex-shrink: 0;
-
-  &:hover {
-    color: var(--dark);
-  }
+li:has(> .folder-outer.open) > .folder-container::before {
+  transform: rotate(90deg);
 }
 
-.folder-icon-open {
+// Obsidian 的文件树不带每行图标，只靠折叠箭头与缩进区分
+.folder-icon,
+.file-icon {
   display: none;
-}
-
-li:has(> .folder-outer.open) > .folder-container > .folder-icon-closed {
-  display: none;
-}
-
-li:has(> .folder-outer.open) > .folder-container > .folder-icon-open {
-  display: inline-block;
 }
 
 .explorer {
@@ -295,6 +331,10 @@ li:has(> .folder-outer.open) > .folder-container > .folder-icon-open {
       }
 
       button.mobile-explorer {
+        position: fixed;
+        top: 3.05rem;
+        right: 0.75rem;
+
         // 线性图标的 rotate 组合在不同引擎里会散架，直接用两条等长横线拼出关闭叉号
         &::before,
         &::after {
@@ -338,11 +378,37 @@ li:has(> .folder-outer.open) > .folder-container > .folder-icon-open {
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      padding: 4rem 0.75rem 2rem 0.75rem;
+      padding: 3.25rem 0.75rem 2rem 0.75rem;
       height: 100vh;
       max-height: 100vh;
       visibility: hidden;
       box-shadow: none;
+
+      .explorer-mobile-head {
+        display: block;
+        flex-shrink: 0;
+        padding: 0 2.5rem 0.6rem 0.25rem;
+
+        .explorer-vault {
+          display: flex;
+          align-items: center;
+          gap: 4px;
+          font-size: 1rem;
+          font-weight: 600;
+          color: var(--dark);
+          line-height: 1.4;
+
+          & svg {
+            color: var(--gray);
+          }
+        }
+
+        .explorer-meta {
+          font-size: 0.75rem;
+          color: var(--gray);
+          line-height: 1.5;
+        }
+      }
 
       .explorer-ul {
         flex: 1;
@@ -353,21 +419,25 @@ li:has(> .folder-outer.open) > .folder-container > .folder-icon-open {
       }
 
       .explorer-ul li > a {
-        padding: 0.4rem 0.5rem;
-        font-size: 0.875rem;
+        padding: 0.5rem 0.45rem;
+        font-size: 1rem;
         border-radius: 4px;
         line-height: 1.4;
       }
 
       .folder-container {
-        padding: 0.4rem 0.5rem;
+        padding: 0.5rem 0.45rem;
         border-radius: 4px;
 
         & div > button span,
         & div > a {
-          font-size: 0.875rem;
+          font-size: 1rem;
           line-height: 1.4;
         }
+      }
+
+      .explorer-pane-head {
+        font-size: 1rem;
       }
     }
 
