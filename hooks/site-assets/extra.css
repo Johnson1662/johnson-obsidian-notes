@@ -350,9 +350,7 @@
     width: 100%;
     max-width: 100%;
     margin: 0 0 12px;
-    overflow-x: auto;
-    overscroll-behavior-x: contain;
-    -webkit-overflow-scrolling: touch;
+    overflow-x: hidden;
   }
 
   .xhs-sec--block pre > code {
@@ -367,6 +365,38 @@
     white-space: pre-wrap;
     overflow-wrap: anywhere;
     word-break: break-word;
+  }
+
+  /* 多列表格改竖排卡片：一行记录一段，列名在左 */
+  .xhs-stack__row {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--xhs-line-soft);
+  }
+
+  .xhs-stack__row:last-child {
+    border-bottom: 0;
+  }
+
+  .xhs-stack__cell {
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+    padding: 2px 0;
+  }
+
+  .xhs-stack__label {
+    flex: 0 0 78px;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: var(--xhs-muted);
+  }
+
+  .xhs-stack__value {
+    flex: 1;
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--xhs-ink);
+    overflow-wrap: anywhere;
   }
 
   /* 表格页：表头随滚动吸顶 */
@@ -385,16 +415,27 @@
   }
 
   /* 整块表格页：宽表在页内横向滚动，不压缩字号 */
+  /* 表格按栏宽排版、单元格换行，只上下滚动，不做横向平移 */
   .xhs-sec--block table:not([class]) {
-    min-width: 540px;
-    font-size: 13px;
+    min-width: 0;
+    width: 100%;
+    font-size: 13.5px;
+  }
+
+  .xhs-sec--block th,
+  .xhs-sec--block td {
+    padding: 0.55em 0.6em;
   }
 
   .xhs-sec--block .md-typeset__scrollwrap {
     width: 100%;
     margin: 0;
-    overflow-x: auto;
-    overscroll-behavior-x: contain;
+    overflow-x: hidden;
+  }
+
+  .xhs-sec--block .md-typeset__table {
+    display: block;
+    width: 100%;
   }
 
   .xhs-sec--flow img,

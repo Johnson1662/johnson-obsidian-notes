@@ -174,6 +174,42 @@
     markCurrent()
   }
 
+  // 多列表格在手机上装不下：改成竖排卡片（列名 + 值），只上下滚动
+  function stackTables() {
+    state.sections.forEach((sec) => {
+      if (sec.type !== "block") return
+      const table = sec.el.querySelector("table")
+      if (!table) return
+      const heads = Array.from(table.querySelectorAll("thead th")).map((th) =>
+        th.textContent.trim()
+      )
+      if (heads.length < 3) return
+      if (table.scrollWidth <= state.colW + 2) return
+
+      const wrap = document.createElement("div")
+      wrap.className = "xhs-stack"
+      table.querySelectorAll("tbody tr").forEach((tr) => {
+        const row = document.createElement("div")
+        row.className = "xhs-stack__row"
+        Array.from(tr.children).forEach((td, i) => {
+          const cell = document.createElement("div")
+          cell.className = "xhs-stack__cell"
+          const label = document.createElement("span")
+          label.className = "xhs-stack__label"
+          label.textContent = heads[i] || ""
+          const value = document.createElement("span")
+          value.className = "xhs-stack__value"
+          value.innerHTML = td.innerHTML
+          cell.append(label, value)
+          row.appendChild(cell)
+        })
+        wrap.appendChild(row)
+      })
+      const box = table.closest(".md-typeset__scrollwrap") || table
+      box.replaceWith(wrap)
+    })
+  }
+
   // 公式适配：正文里的轻微超宽按 0.8 兜底缩放；
   // 独占一页的长公式按栏宽整幅缩放，保证一屏看全
   function fitMath() {
@@ -290,6 +326,7 @@
     })
 
     state.pages = Math.max(1, start)
+    stackTables()
     fitMath()
     state.sections.forEach((sec) => {
       const boxes = sec.el.querySelectorAll(".md-typeset__scrollwrap, .highlight, pre")
