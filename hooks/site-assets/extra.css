@@ -287,65 +287,131 @@
     background-color: var(--xhs-paper-2);
   }
 
-  /* 翻页容器 */
+  /* 翻页阅读器：整屏、隐页头、底部条按需出现 */
   html.xhs-on,
   html.xhs-on body {
     height: 100%;
     overflow: hidden;
   }
 
-  .xhs-reader {
-    position: relative;
-    overflow: hidden;
-    margin: 0;
+  html.xhs-on .md-header,
+  html.xhs-on .md-tabs,
+  html.xhs-on .md-footer {
+    display: none;
   }
 
-  .xhs-track {
-    display: flex;
+  .xhs-reader {
+    position: fixed;
+    inset: 0;
+    z-index: 25;
+    background: var(--xhs-paper);
+  }
+
+  .xhs-viewport {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    padding: calc(env(safe-area-inset-top, 0px) + 16px) 22px
+      calc(env(safe-area-inset-bottom, 0px) + 34px);
+    touch-action: pan-y;
+    clip-path: inset(0 22px);
+  }
+
+  .xhs-flow {
+    position: relative;
     height: 100%;
-    transition: transform 0.26s cubic-bezier(0.22, 1, 0.36, 1);
+    column-gap: 0;
+    column-fill: auto;
+    overflow-wrap: break-word;
     will-change: transform;
   }
 
-  .xhs-page {
-    flex: 0 0 100%;
-    min-width: 0;
-    height: 100%;
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    padding: 12px 18px 20px;
-    -webkit-overflow-scrolling: touch;
+  .xhs-flow img,
+  .xhs-flow pre,
+  .xhs-flow .admonition,
+  .xhs-flow details,
+  .xhs-flow .xhs-tablewrap {
+    break-inside: avoid;
   }
 
-  .md-typeset__scrollwrap {
-    overscroll-behavior-x: contain;
+  .xhs-flow h1,
+  .xhs-flow h2,
+  .xhs-flow h3 {
+    break-after: avoid;
   }
 
-  .xhs-page.is-tall::after {
-    content: "本页较长，可上下滑动";
-    display: block;
-    margin: 10px 0 4px;
+  .xhs-flow img {
+    max-width: 100%;
+    max-height: 52vh;
+    object-fit: contain;
+  }
+
+  .xhs-flow .katex-display {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  .xhs-flow .headerlink {
+    display: none;
+  }
+
+  /* 多栏里横向滚动容器不可靠：宽表按栏宽收窄，超出即换行 */
+  .xhs-tablewrap {
+    width: var(--xhs-col, 100%);
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .xhs-flow table:not([class]) {
+    min-width: 0 !important;
+    width: 100%;
+    font-size: 12px;
+  }
+
+  .xhs-flow table:not([class]) th,
+  .xhs-flow table:not([class]) td {
+    padding: 0.4em 0.5em;
+  }
+
+  .xhs-count {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 10px);
+    text-align: center;
     font-size: 11px;
     letter-spacing: 0.08em;
     color: var(--xhs-muted);
-    text-align: center;
+    font-variant-numeric: tabular-nums;
+    opacity: 0.65;
+    pointer-events: none;
   }
 
-  /* 底部操作条 */
+  html.xhs-ui .xhs-count {
+    display: none;
+  }
+
+  /* 底部操作条：默认收起，点屏幕中间弹出 */
   .xhs-bar {
-    position: fixed;
+    position: absolute;
     left: 0;
     right: 0;
     bottom: 0;
     z-index: 30;
-    display: grid;
-    grid-template-columns: 1fr 1fr auto 1fr;
+    display: flex;
     align-items: center;
     gap: 4px;
     padding: 0 12px env(safe-area-inset-bottom, 0px);
     height: calc(52px + env(safe-area-inset-bottom, 0px));
     background: var(--xhs-paper);
     border-top: 1px solid var(--xhs-line-soft);
+    transform: translateY(110%);
+    transition: transform 0.2s ease;
+  }
+
+  html.xhs-ui .xhs-bar {
+    transform: none;
   }
 
   .xhs-bar__btn {
@@ -359,8 +425,8 @@
     cursor: pointer;
   }
 
-  .xhs-bar__btn:first-child {
-    text-align: left;
+  .xhs-bar__btn[data-act="prev"] {
+    margin-left: auto;
   }
 
   .xhs-bar__btn[disabled] {
