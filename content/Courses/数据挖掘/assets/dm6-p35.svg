@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="470" viewBox="0 0 560 470" font-family="Noto Sans CJK SC, Source Han Sans SC, Microsoft YaHei, sans-serif">
+<rect x="0" y="0" width="560" height="470" fill="#ffffff"/>
+<line x1="110" y1="405" x2="520" y2="405" stroke="#333" stroke-width="1.4"/>
+<line x1="110" y1="405" x2="110" y2="55" stroke="#333" stroke-width="1.4"/>
+<text x="315.0" y="439" text-anchor="middle" font-size="20" fill="#222">X</text>
+<text x="76" y="230.0" text-anchor="middle" font-size="20" fill="#222">Y</text>
+<rect x="169.6" y="147.0" width="12" height="12" transform="rotate(45 175.6 153.0)" fill="#d81f1f" stroke="#333" stroke-opacity="0.3"/>
+<rect x="145.0" y="252.0" width="12" height="12" transform="rotate(45 151.0 258.0)" fill="#d81f1f" stroke="#333" stroke-opacity="0.3"/>
+<rect x="124.5" y="301.0" width="12" height="12" transform="rotate(45 130.5 307.0)" fill="#d81f1f" stroke="#333" stroke-opacity="0.3"/>
+<rect x="157.3" y="294.0" width="12" height="12" transform="rotate(45 163.3 300.0)" fill="#d81f1f" stroke="#333" stroke-opacity="0.3"/>
+<rect x="181.9" y="346.5" width="12" height="12" transform="rotate(45 187.9 352.5)" fill="#d81f1f" stroke="#333" stroke-opacity="0.3"/>
+<rect x="202.39999999999998" y="364.0" width="12" height="12" transform="rotate(45 208.39999999999998 370.0)" fill="#d81f1f" stroke="#333" stroke-opacity="0.3"/>
+<rect x="239.3" y="343.0" width="12" height="12" transform="rotate(45 245.3 349.0)" fill="#d81f1f" stroke="#333" stroke-opacity="0.3"/>
+<rect x="231.1" y="322.0" width="12" height="12" transform="rotate(45 237.1 328.0)" fill="#d81f1f" stroke="#333" stroke-opacity="0.3"/>
+<rect x="329.5" y="168.0" width="12" height="12" transform="rotate(45 335.5 174.0)" fill="#1aa81a" stroke="#333" stroke-opacity="0.3"/>
+<rect x="374.6" y="154.00000000000003" width="12" height="12" transform="rotate(45 380.6 160.00000000000003)" fill="#1aa81a" stroke="#333" stroke-opacity="0.3"/>
+<rect x="403.3" y="133.0" width="12" height="12" transform="rotate(45 409.3 139.0)" fill="#1aa81a" stroke="#333" stroke-opacity="0.3"/>
+<rect x="427.90000000000003" y="206.49999999999997" width="12" height="12" transform="rotate(45 433.90000000000003 212.49999999999997)" fill="#1aa81a" stroke="#333" stroke-opacity="0.3"/>
+<rect x="452.5" y="171.5" width="12" height="12" transform="rotate(45 458.5 177.5)" fill="#1aa81a" stroke="#333" stroke-opacity="0.3"/>
+<rect x="419.7" y="182.0" width="12" height="12" transform="rotate(45 425.7 188.0)" fill="#1aa81a" stroke="#333" stroke-opacity="0.3"/>
+<rect x="460.7" y="122.5" width="12" height="12" transform="rotate(45 466.7 128.5)" fill="#1aa81a" stroke="#333" stroke-opacity="0.3"/>
+<rect x="436.1" y="147.0" width="12" height="12" transform="rotate(45 442.1 153.0)" fill="#1aa81a" stroke="#333" stroke-opacity="0.3"/>
+<rect x="468.9" y="147.0" width="12" height="12" transform="rotate(45 474.9 153.0)" fill="#1aa81a" stroke="#333" stroke-opacity="0.3"/>
+<rect x="329.5" y="322.0" width="12" height="12" transform="rotate(45 335.5 328.0)" fill="#1f52d8" stroke="#333" stroke-opacity="0.3"/>
+<rect x="284.4" y="259.0" width="12" height="12" transform="rotate(45 290.4 265.0)" fill="#1f52d8" stroke="#333" stroke-opacity="0.3"/>
+<rect x="358.2" y="224.0" width="12" height="12" transform="rotate(45 364.2 230.0)" fill="#1f52d8" stroke="#333" stroke-opacity="0.3"/>
+<rect x="317.20000000000005" y="336.0" width="12" height="12" transform="rotate(45 323.20000000000005 342.0)" fill="#1f52d8" stroke="#333" stroke-opacity="0.3"/>
+<rect x="374.6" y="301.0" width="12" height="12" transform="rotate(45 380.6 307.0)" fill="#1f52d8" stroke="#333" stroke-opacity="0.3"/>
+<rect x="399.2" y="252.0" width="12" height="12" transform="rotate(45 405.2 258.0)" fill="#1f52d8" stroke="#333" stroke-opacity="0.3"/>
+<rect x="358.2" y="294.0" width="12" height="12" transform="rotate(45 364.2 300.0)" fill="#1f52d8" stroke="#333" stroke-opacity="0.3"/>
+<rect x="423.8" y="336.0" width="12" height="12" transform="rotate(45 429.8 342.0)" fill="#1f52d8" stroke="#333" stroke-opacity="0.3"/>
+<rect x="448.4" y="301.0" width="12" height="12" transform="rotate(45 454.4 307.0)" fill="#1f52d8" stroke="#333" stroke-opacity="0.3"/>
+<rect x="432.0" y="350.0" width="12" height="12" transform="rotate(45 438.0 356.0)" fill="#1f52d8" stroke="#333" stroke-opacity="0.3"/>
+<circle cx="294.5" cy="188.0" r="12" fill="#1aa81a"/>
+<text x="308.5" y="204.0" font-size="18" fill="#111">k₁</text>
+<circle cx="224.8" cy="251.0" r="12" fill="#d81f1f"/>
+<text x="238.8" y="267.0" font-size="18" fill="#111">k₂</text>
+<circle cx="364.2" cy="363.0" r="12" fill="#1f52d8"/>
+<text x="378.2" y="379.0" font-size="18" fill="#111">k₃</text>
+<text x="110" y="40" font-size="16" fill="#333">把每个点分到离它最近的中心</text>
+</svg>

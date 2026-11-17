@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="620" height="470" viewBox="0 0 620 470" font-family="Noto Sans CJK SC, Source Han Sans SC, Microsoft YaHei, sans-serif">
+<rect x="0" y="0" width="620" height="470" fill="#ffffff"/>
+<circle cx="290.5" cy="198.0" r="8" fill="#d2491a" stroke="#8a2f0f"/>
+<circle cx="315.0" cy="190.6" r="8" fill="#d2491a" stroke="#8a2f0f"/>
+<circle cx="354.2" cy="205.4" r="8" fill="#d2491a" stroke="#8a2f0f"/>
+<circle cx="217.0" cy="227.6" r="8" fill="#d2491a" stroke="#8a2f0f"/>
+<circle cx="246.4" cy="253.5" r="8" fill="#d2491a" stroke="#8a2f0f"/>
+<circle cx="217.0" cy="309.0" r="8" fill="#d2491a" stroke="#8a2f0f"/>
+<circle cx="256.2" cy="360.8" r="8" fill="#d2491a" stroke="#8a2f0f"/>
+<circle cx="290.5" cy="338.6" r="8" fill="#d2491a" stroke="#8a2f0f"/>
+<circle cx="241.5" cy="323.8" r="8" fill="#d2491a" stroke="#8a2f0f"/>
+<circle cx="202.3" cy="264.6" r="8" fill="#d2491a" stroke="#8a2f0f"/>
+<circle cx="270.9" cy="383.0" r="8" fill="#d2491a" stroke="#8a2f0f"/>
+<circle cx="300.3" cy="371.9" r="8" fill="#d2491a" stroke="#8a2f0f"/>
+<circle cx="334.6" cy="353.4" r="8" fill="#d2491a" stroke="#8a2f0f"/>
+<circle cx="368.9" cy="364.5" r="8" fill="#d2491a" stroke="#8a2f0f"/>
+<circle cx="398.3" cy="309.0" r="8" fill="#d2491a" stroke="#8a2f0f"/>
+<circle cx="339.5" cy="198.0" r="107.8" fill="none" stroke="#222" stroke-width="1.6"/>
+<circle cx="266.0" cy="309.0" r="107.8" fill="none" stroke="#222" stroke-width="1.6"/>
+<text x="373.8" y="183.2" font-size="20" font-style="italic" fill="#111">p</text>
+<text x="246.4" y="323.8" font-size="20" font-style="italic" fill="#111">q</text>
+<text x="70" y="34" font-size="15" fill="#333">以点为中心、ε 为半径的圆内的点数 = 该点的密度</text>
+</svg>

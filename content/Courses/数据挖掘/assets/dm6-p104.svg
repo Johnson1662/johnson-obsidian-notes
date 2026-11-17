@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="430" viewBox="0 0 720 430" font-family="Noto Sans CJK SC, Source Han Sans SC, Microsoft YaHei, sans-serif">
+<rect x="0" y="0" width="720" height="430" fill="#ffffff"/>
+<circle cx="150" cy="190" r="95" fill="none" stroke="#333" stroke-width="1.4"/>
+<text x="150" y="83" text-anchor="middle" font-size="15" fill="#333">cluster 1</text>
+<line x1="99.4" y1="154.6" x2="109.4" y2="164.6" stroke="#222" stroke-width="1.6"/>
+<line x1="99.4" y1="164.6" x2="109.4" y2="154.6" stroke="#222" stroke-width="1.6"/>
+<line x1="175.4" y1="154.6" x2="185.4" y2="164.6" stroke="#222" stroke-width="1.6"/>
+<line x1="175.4" y1="164.6" x2="185.4" y2="154.6" stroke="#222" stroke-width="1.6"/>
+<circle cx="150.0" cy="197.6" r="4.5" fill="none" stroke="#222" stroke-width="1.6"/>
+<line x1="114.6" y1="215.4" x2="124.6" y2="225.4" stroke="#222" stroke-width="1.6"/>
+<line x1="114.6" y1="225.4" x2="124.6" y2="215.4" stroke="#222" stroke-width="1.6"/>
+<line x1="160.2" y1="223.0" x2="170.2" y2="233.0" stroke="#222" stroke-width="1.6"/>
+<line x1="160.2" y1="233.0" x2="170.2" y2="223.0" stroke="#222" stroke-width="1.6"/>
+<line x1="190.60000000000002" y1="192.6" x2="200.60000000000002" y2="202.6" stroke="#222" stroke-width="1.6"/>
+<line x1="190.60000000000002" y1="202.6" x2="200.60000000000002" y2="192.6" stroke="#222" stroke-width="1.6"/>
+<circle cx="360" cy="190" r="95" fill="none" stroke="#333" stroke-width="1.4"/>
+<text x="360" y="83" text-anchor="middle" font-size="15" fill="#333">cluster 2</text>
+<line x1="309.4" y1="147.0" x2="319.4" y2="157.0" stroke="#222" stroke-width="1.6"/>
+<line x1="309.4" y1="157.0" x2="319.4" y2="147.0" stroke="#222" stroke-width="1.6"/>
+<circle cx="375.2" cy="159.6" r="4.5" fill="none" stroke="#222" stroke-width="1.6"/>
+<circle cx="337.2" cy="197.6" r="4.5" fill="none" stroke="#222" stroke-width="1.6"/>
+<rect x="385.9" y="185.5" width="9" height="9" transform="rotate(45 390.4 190.0)" fill="none" stroke="#222" stroke-width="1.6"/>
+<circle cx="360.0" cy="235.6" r="4.5" fill="none" stroke="#222" stroke-width="1.6"/>
+<circle cx="405.6" cy="212.8" r="4.5" fill="none" stroke="#222" stroke-width="1.6"/>
+<circle cx="570" cy="190" r="95" fill="none" stroke="#333" stroke-width="1.4"/>
+<text x="570" y="83" text-anchor="middle" font-size="15" fill="#333">cluster 3</text>
+<line x1="519.4" y1="147.0" x2="529.4" y2="157.0" stroke="#222" stroke-width="1.6"/>
+<line x1="519.4" y1="157.0" x2="529.4" y2="147.0" stroke="#222" stroke-width="1.6"/>
+<rect x="580.7" y="170.3" width="9" height="9" transform="rotate(45 585.2 174.8)" fill="none" stroke="#222" stroke-width="1.6"/>
+<rect x="550.3" y="200.7" width="9" height="9" transform="rotate(45 554.8 205.2)" fill="none" stroke="#222" stroke-width="1.6"/>
+<rect x="595.9" y="208.3" width="9" height="9" transform="rotate(45 600.4 212.8)" fill="none" stroke="#222" stroke-width="1.6"/>
+<line x1="542.2" y1="230.6" x2="552.2" y2="240.6" stroke="#222" stroke-width="1.6"/>
+<line x1="542.2" y1="240.6" x2="552.2" y2="230.6" stroke="#222" stroke-width="1.6"/>
+<text x="360" y="330" text-anchor="middle" font-size="20" fill="#111">purity = (3 + 4 + 5) / 17 = 0.71</text>
+<text x="360" y="368" text-anchor="middle" font-size="14" fill="#555">每簇取多数类：5、4、3，共 12；样本总数 17</text>
+</svg>
