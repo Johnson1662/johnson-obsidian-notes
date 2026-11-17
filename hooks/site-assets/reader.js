@@ -53,15 +53,33 @@
       '<div class="xhs-sheet__grip"></div>' +
       '<div class="xhs-sheet__head"><span>目录</span>' +
       '<button type="button" class="xhs-sheet__close" data-sheet="close">关闭</button></div>' +
+      '<div class="xhs-sheet__tabs">' +
+      '<button type="button" class="xhs-sheet__tab is-active" data-tab="doc">本文</button>' +
+      '<button type="button" class="xhs-sheet__tab" data-tab="site">全部笔记</button>' +
+      "</div>" +
       '<div class="xhs-sheet__list"></div>' +
       "</div>"
     sheet.addEventListener("click", (e) => {
       e.preventDefault()
       e.stopPropagation()
+      const tab = e.target.closest("[data-tab]")
+      if (tab) {
+        state.sheetTab = tab.dataset.tab
+        sheet.querySelectorAll("[data-tab]").forEach((el) => {
+          el.classList.toggle("is-active", el.dataset.tab === state.sheetTab)
+        })
+        fillSheet()
+        return
+      }
       const item = e.target.closest("[data-page]")
       if (item) {
         go(Number(item.dataset.page), false)
         closeSheet()
+        return
+      }
+      const link = e.target.closest("[data-href]")
+      if (link) {
+        location.href = link.dataset.href
         return
       }
       if (e.target.closest('[data-sheet="close"]')) closeSheet()
@@ -262,6 +280,10 @@
 
     state.pages = Math.max(1, start)
     fitMath()
+    state.sections.forEach((sec) => {
+      const box = sec.el.querySelector(".md-typeset__scrollwrap") || sec.el
+      if (box.scrollWidth > box.clientWidth + 2) sec.el.classList.add("is-wide")
+    })
 
     // 表格段若比一屏还高，允许页内纵向滚动（样式在 CSS 里）
     go(clamp(keep, 0, state.pages - 1), false)
@@ -289,9 +311,63 @@
     })
   }
 
+  function siteEntries() {
+    const root = document.querySelector(".md-nav--primary")
+    if (!root) return []
+    const current = decodeURI(location.pathname).replace(/index\.html$/, "").replace(/\/$/, "")
+    const out = []
+    const seen = new Set()
+    root.querySelectorAll(".md-nav__link").forEach((el) => {
+      if (el.closest(".md-nav--secondary")) return // 右栏本文目录不重复列
+      const text = el.textContent.trim()
+      if (!text) return
+      const href = el.getAttribute("href")
+      // 该链接所在的嵌套层级
+      let depth = 0
+      let node = el.parentElement
+      while (node && node !== root) {
+        if (node.tagName === "NAV" && node.classList.contains("md-nav") && !node.classList.contains("md-nav--secondary")) depth += 1
+        node = node.parentElement
+      }
+      if (!href) {
+        if (el.tagName === "LABEL" || el.tagName === "SPAN") out.push({ text, depth, section: true })
+        return
+      }
+      const key = decodeURI(href)
+      if (seen.has(key)) return
+      seen.add(key)
+      out.push({
+        href,
+        text,
+        depth,
+        current: decodeURI(href).replace(/\/$/, "") === current,
+      })
+    })
+    return out
+  }
+
   function fillSheet() {
     if (!state.sheet) return
     const list = state.sheet.querySelector(".xhs-sheet__list")
+    if (state.sheetTab === "site") {
+      const rows = siteEntries().map((e) => {
+        const el = document.createElement(e.section ? "p" : "button")
+        if (e.section) {
+          el.className = "xhs-sheet__section"
+          el.style.paddingLeft = 20 + e.depth * 14 + "px"
+        } else {
+          el.type = "button"
+          el.className = "xhs-sheet__item xhs-sheet__item--site" + (e.current ? " is-current" : "")
+          el.style.paddingLeft = 20 + e.depth * 14 + "px"
+          el.dataset.href = e.href
+        }
+        el.textContent = e.text
+        return el
+      })
+      list.replaceChildren(...rows)
+      return
+    }
+
     const items = []
     state.sections.forEach((sec) => {
       if (sec.type !== "flow") return
@@ -320,6 +396,12 @@
   }
 
   function openSheet() {
+    state.sheetTab = "doc"
+    if (state.sheet) {
+      state.sheet.querySelectorAll("[data-tab]").forEach((el) => {
+        el.classList.toggle("is-active", el.dataset.tab === "doc")
+      })
+    }
     fillSheet()
     setUI(false)
     state.sheet?.classList.add("is-open")
@@ -343,10 +425,10 @@
         startY = e.touches[0].clientY
         moved = false
         horizontal = null
-        const blockSec = e.target.closest(".xhs-sec--block")
-        const canPan =
-          (blockSec && blockSec.scrollWidth > blockSec.clientWidth + 2) ||
-          !!e.target.closest(".katex-display")
+        const scroller = e.target.closest(
+          ".md-typeset__scrollwrap, .katex-display, .xhs-sec--block"
+        )
+        const canPan = !!scroller && scroller.scrollWidth > scroller.clientWidth + 2
         state.drag = { x: startX, t: Date.now(), target: e.target, canPan }
       },
       { passive: true }
