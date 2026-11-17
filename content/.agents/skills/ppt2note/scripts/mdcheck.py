@@ -8,7 +8,7 @@
 检查项（全部为 0 才算通过）：
     TABLE-NOBLANK   表格首行前面没有空行 → 会被上一条引用块/段落吞掉
     IMG-NOBLANK     图片行前面没有空行 → 同上
-    QUOTE-SWALLOW   `> **人话**` 后面紧跟非空行 → 后续表格/图片被当成引用续行
+    QUOTE-SWALLOW   引用块/callout（`> [!tip] 人话` 等）后面紧跟正文行 → 被当成引用续行
     DISPLAY-NOBLANK $$ 块的首行/末行外侧没有空行 → 公式被并进段落
     DISPLAY-INLINE  单行 `$$…$$` 紧贴正文 → 会退化成行内公式
 """
@@ -39,8 +39,14 @@ def check_file(path):
                 bad.append((i + 1, "TABLE-NOBLANK", line[:60]))
             if line.startswith("![") and prev:
                 bad.append((i + 1, "IMG-NOBLANK", line[:60]))
-            if s.startswith("> **人话**") and nxt:
-                bad.append((i + 1, "QUOTE-SWALLOW", line[:60]))
+            if s.startswith(">") and nxt and not nxt.startswith(">") \
+                    and not nxt.startswith(("|", "![", "$$", "#")):
+                j = i
+                while j > 0 and lines[j - 1].strip().startswith(">"):
+                    j -= 1
+                first = lines[j].strip()
+                if first.startswith("> [!") or first.startswith("> **人话**"):
+                    bad.append((i + 1, "QUOTE-SWALLOW", line[:60]))
 
         if s == "$$":
             if not inside:  # 开块
