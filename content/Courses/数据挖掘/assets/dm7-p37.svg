@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="360" viewBox="0 0 760 360" font-family="Noto Sans CJK SC, Source Han Sans SC, Microsoft YaHei, sans-serif">
+<rect x="0" y="0" width="760" height="360" fill="#ffffff"/>
+<defs><marker id="m" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#333"/></marker></defs>
+<line x1="60" y1="300" x2="340" y2="300" stroke="#333" stroke-width="1.4" marker-end="url(#m)"/>
+<line x1="60" y1="300" x2="60" y2="60" stroke="#333" stroke-width="1.4" marker-end="url(#m)"/>
+<text x="340" y="316" font-size="13" fill="#333">x</text>
+<text x="48" y="62" font-size="13" fill="#333">y</text>
+<line x1="60" y1="190.0" x2="340" y2="190.0" stroke="#333"/>
+<text x="68" y="184.0" font-size="13" fill="#333">ȳ</text>
+<rect x="211.6" y="138.0" width="44" height="52.0" fill="#f5a3a3" stroke="#d33" opacity="0.55"/>
+<rect x="221.6" y="170.0" width="24" height="20" fill="#e85050" stroke="#b22" opacity="0.7"/>
+<circle cx="233.6" cy="138.0" r="3.2" fill="#111"/>
+<rect x="133.2" y="190.0" width="44" height="42.0" fill="#f5a3a3" stroke="#d33" opacity="0.55"/>
+<rect x="143.2" y="190.0" width="24" height="20" fill="#e85050" stroke="#b22" opacity="0.7"/>
+<circle cx="155.2" cy="232.0" r="3.2" fill="#111"/>
+<line x1="420" y1="300" x2="700" y2="300" stroke="#333" stroke-width="1.4" marker-end="url(#m)"/>
+<line x1="420" y1="300" x2="420" y2="60" stroke="#333" stroke-width="1.4" marker-end="url(#m)"/>
+<text x="700" y="316" font-size="13" fill="#333">x</text>
+<text x="408" y="62" font-size="13" fill="#333">y</text>
+<line x1="462.0" y1="256.8" x2="644.0" y2="120.0" stroke="#333" stroke-width="1.4"/>
+<text x="546.0" y="199.2" font-size="13" font-style="italic" fill="#333">f</text>
+<rect x="587.6" y="151.8830769230769" width="30" height="30" fill="#5a5ae0" stroke="#22306f" opacity="0.75"/>
+<circle cx="583.6" cy="171.8830769230769" r="3.2" fill="#111"/>
+<rect x="531.6" y="222.0" width="30" height="30" fill="#5a5ae0" stroke="#22306f" opacity="0.75"/>
+<circle cx="531.6" cy="236.0" r="3.2" fill="#111"/>
+</svg>

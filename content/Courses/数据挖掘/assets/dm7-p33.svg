@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="370" viewBox="0 0 760 370" font-family="Noto Sans CJK SC, Source Han Sans SC, Microsoft YaHei, sans-serif">
+<rect x="0" y="0" width="760" height="370" fill="#ffffff"/>
+<line x1="90" y1="300" x2="700" y2="300" stroke="#333" stroke-width="1.2"/>
+<line x1="90" y1="300" x2="90" y2="50" stroke="#333" stroke-width="1.2"/>
+<text x="702" y="314" font-size="12" fill="#333">x</text>
+<text x="78" y="48" font-size="12" fill="#333">y</text>
+<text x="235.2" y="316" text-anchor="middle" font-size="11" fill="#333">0.5</text>
+<text x="380.5" y="316" text-anchor="middle" font-size="11" fill="#333">1.0</text>
+<text x="525.7" y="316" text-anchor="middle" font-size="11" fill="#333">1.5</text>
+<text x="671.0" y="316" text-anchor="middle" font-size="11" fill="#333">2.0</text>
+<text x="83" y="303.0" text-anchor="end" font-size="11" fill="#333">0.0</text>
+<text x="83" y="224.9" text-anchor="end" font-size="11" fill="#333">0.5</text>
+<text x="83" y="146.8" text-anchor="end" font-size="11" fill="#333">1.0</text>
+<text x="83" y="68.6" text-anchor="end" font-size="11" fill="#333">1.5</text>
+<circle cx="174.3" cy="300.0" r="3" fill="none" stroke="#222"/>
+<circle cx="245.5" cy="300.0" r="3" fill="none" stroke="#222"/>
+<circle cx="205.0" cy="300.0" r="3" fill="none" stroke="#222"/>
+<circle cx="259.4" cy="300.0" r="3" fill="none" stroke="#222"/>
+<circle cx="264.5" cy="300.0" r="3" fill="none" stroke="#222"/>
+<circle cx="134.3" cy="300.0" r="3" fill="none" stroke="#222"/>
+<circle cx="122.1" cy="300.0" r="3" fill="none" stroke="#222"/>
+<circle cx="313.7" cy="300.0" r="3" fill="none" stroke="#222"/>
+<circle cx="179.3" cy="300.0" r="3" fill="none" stroke="#222"/>
+<circle cx="173.5" cy="300.0" r="3" fill="none" stroke="#222"/>
+<circle cx="350.4" cy="300.0" r="3" fill="none" stroke="#222"/>
+<circle cx="228.3" cy="300.0" r="3" fill="none" stroke="#222"/>
+<circle cx="313.4" cy="300.0" r="3" fill="none" stroke="#222"/>
+<circle cx="229.7" cy="300.0" r="3" fill="none" stroke="#222"/>
+<circle cx="267.6" cy="300.0" r="3" fill="none" stroke="#222"/>
+<circle cx="154.0" cy="300.0" r="3" fill="none" stroke="#222"/>
+<circle cx="266.6" cy="300.0" r="3" fill="none" stroke="#222"/>
+<circle cx="320.8" cy="300.0" r="3" fill="none" stroke="#222"/>
+<circle cx="240.6" cy="300.0" r="3" fill="none" stroke="#222"/>
+<circle cx="291.3" cy="300.0" r="3" fill="none" stroke="#222"/>
+<circle cx="275.1" cy="300.0" r="3" fill="none" stroke="#222"/>
+<circle cx="133.9" cy="300.0" r="3" fill="none" stroke="#222"/>
+<circle cx="295.2" cy="300.0" r="3" fill="none" stroke="#222"/>
+<circle cx="256.4" cy="300.0" r="3" fill="none" stroke="#222"/>
+<circle cx="235.2" cy="300.0" r="3" fill="none" stroke="#222"/>
+<circle cx="293.3" cy="300.0" r="3" fill="none" stroke="#222"/>
+<circle cx="351.4" cy="300.0" r="3" fill="none" stroke="#222"/>
+<circle cx="398.0" cy="143.8" r="3" fill="none" stroke="#222"/>
+<circle cx="382.3" cy="143.8" r="3" fill="none" stroke="#222"/>
+<circle cx="430.8" cy="143.8" r="3" fill="none" stroke="#222"/>
+<circle cx="407.9" cy="143.8" r="3" fill="none" stroke="#222"/>
+<circle cx="409.5" cy="143.8" r="3" fill="none" stroke="#222"/>
+<circle cx="453.1" cy="143.8" r="3" fill="none" stroke="#222"/>
+<circle cx="525.7" cy="143.8" r="3" fill="none" stroke="#222"/>
+<circle cx="540.2" cy="143.8" r="3" fill="none" stroke="#222"/>
+<circle cx="641.9" cy="143.8" r="3" fill="none" stroke="#222"/>
+<circle cx="656.4" cy="143.8" r="3" fill="none" stroke="#222"/>
+<circle cx="671.0" cy="143.8" r="3" fill="none" stroke="#222"/>
+<circle cx="685.5" cy="143.8" r="3" fill="none" stroke="#222"/>
+</svg>

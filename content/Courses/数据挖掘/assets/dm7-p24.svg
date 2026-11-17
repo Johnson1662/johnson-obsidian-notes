@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="620" height="480" viewBox="0 0 620 480" font-family="Noto Sans CJK SC, Source Han Sans SC, Microsoft YaHei, sans-serif">
+<rect x="0" y="0" width="620" height="480" fill="#ffffff"/>
+<line x1="80" y1="420" x2="590" y2="420" stroke="#333" stroke-width="1.2"/>
+<line x1="80" y1="420" x2="80" y2="70" stroke="#333" stroke-width="1.2"/>
+<text x="592" y="434" font-size="12" fill="#333">x</text>
+<text x="66" y="67" font-size="12" fill="#333">y</text>
+<text x="80.0" y="436" text-anchor="middle" font-size="9" fill="#333">-1</text>
+<text x="131.0" y="436" text-anchor="middle" font-size="9" fill="#333">-0.8</text>
+<text x="182.0" y="436" text-anchor="middle" font-size="9" fill="#333">-0.6</text>
+<text x="233.0" y="436" text-anchor="middle" font-size="9" fill="#333">-0.4</text>
+<text x="284.0" y="436" text-anchor="middle" font-size="9" fill="#333">-0.2</text>
+<text x="335.0" y="436" text-anchor="middle" font-size="9" fill="#333">0</text>
+<text x="386.0" y="436" text-anchor="middle" font-size="9" fill="#333">0.2</text>
+<text x="437.0" y="436" text-anchor="middle" font-size="9" fill="#333">0.4</text>
+<text x="488.0" y="436" text-anchor="middle" font-size="9" fill="#333">0.6</text>
+<text x="539.0" y="436" text-anchor="middle" font-size="9" fill="#333">0.8</text>
+<text x="590.0" y="436" text-anchor="middle" font-size="9" fill="#333">1</text>
+<text x="73" y="423.0" text-anchor="end" font-size="9" fill="#333">-1</text>
+<text x="73" y="388.0" text-anchor="end" font-size="9" fill="#333">0</text>
+<text x="73" y="353.0" text-anchor="end" font-size="9" fill="#333">1</text>
+<text x="73" y="318.0" text-anchor="end" font-size="9" fill="#333">2</text>
+<text x="73" y="283.0" text-anchor="end" font-size="9" fill="#333">3</text>
+<text x="73" y="248.0" text-anchor="end" font-size="9" fill="#333">4</text>
+<text x="73" y="213.0" text-anchor="end" font-size="9" fill="#333">5</text>
+<text x="73" y="178.0" text-anchor="end" font-size="9" fill="#333">6</text>
+<text x="73" y="143.0" text-anchor="end" font-size="9" fill="#333">7</text>
+<text x="73" y="108.0" text-anchor="end" font-size="9" fill="#333">8</text>
+<text x="73" y="73.0" text-anchor="end" font-size="9" fill="#333">9</text>
+<text x="50" y="245.0" transform="rotate(-90 50 245.0)" text-anchor="middle" font-size="12" fill="#333">y(x)</text>
+<text x="330" y="40" text-anchor="middle" font-size="13" fill="#333">Scatter Plot</text>
+<line x1="80.0" y1="245.0" x2="590.0" y2="150.5" stroke="#c0392b" stroke-width="1.8"/>
+<polyline points="80.0,385.0 88.5,369.4 97.0,354.2 105.5,339.5 114.0,325.3 122.5,311.5 131.0,298.2 139.5,285.4 148.0,273.0 156.5,261.1 165.0,249.7 173.5,238.7 182.0,228.2 190.5,218.2 199.0,208.6 207.5,199.5 216.0,190.9 224.5,182.7 233.0,175.0 241.5,167.8 250.0,161.0 258.5,154.7 267.0,148.9 275.5,143.5 284.0,138.6 292.5,134.2 301.0,130.2 309.5,126.7 318.0,123.7 326.5,121.1 335.0,119.0 343.5,117.4 352.0,116.2 360.5,115.5 369.0,115.3 377.5,115.5 386.0,116.2 394.5,117.4 403.0,119.0 411.5,121.1 420.0,123.7 428.5,126.7 437.0,130.2 445.5,134.2 454.0,138.6 462.5,143.5 471.0,148.9 479.5,154.7 488.0,161.0 496.5,167.8 505.0,175.0 513.5,182.7 522.0,190.9 530.5,199.5 539.0,208.6 547.5,218.2 556.0,228.2 564.5,238.7 573.0,249.7 581.5,261.1 590.0,273.0" fill="none" stroke="#1f35c4" stroke-width="1.8"/>
+<line x1="80.0" y1="397.2" x2="80.0" y2="372.8" stroke="#333" stroke-width="0.8"/>
+<circle cx="80.0" cy="385.0" r="3" fill="none" stroke="#333"/>
+<line x1="131.0" y1="310.5" x2="131.0" y2="286.0" stroke="#333" stroke-width="0.8"/>
+<circle cx="131.0" cy="298.2" r="3" fill="none" stroke="#333"/>
+<line x1="182.0" y1="240.4" x2="182.0" y2="216.0" stroke="#333" stroke-width="0.8"/>
+<circle cx="182.0" cy="228.2" r="3" fill="none" stroke="#333"/>
+<line x1="233.0" y1="187.3" x2="233.0" y2="162.8" stroke="#333" stroke-width="0.8"/>
+<circle cx="233.0" cy="175.0" r="3" fill="none" stroke="#333"/>
+<line x1="284.0" y1="150.8" x2="284.0" y2="126.3" stroke="#333" stroke-width="0.8"/>
+<circle cx="284.0" cy="138.6" r="3" fill="none" stroke="#333"/>
+<line x1="335.0" y1="131.2" x2="335.0" y2="106.8" stroke="#333" stroke-width="0.8"/>
+<circle cx="335.0" cy="119.0" r="3" fill="none" stroke="#333"/>
+<line x1="386.0" y1="128.4" x2="386.0" y2="104.0" stroke="#333" stroke-width="0.8"/>
+<circle cx="386.0" cy="116.2" r="3" fill="none" stroke="#333"/>
+<line x1="437.0" y1="142.4" x2="437.0" y2="118.0" stroke="#333" stroke-width="0.8"/>
+<circle cx="437.0" cy="130.2" r="3" fill="none" stroke="#333"/>
+<line x1="488.0" y1="173.2" x2="488.0" y2="148.8" stroke="#333" stroke-width="0.8"/>
+<circle cx="488.0" cy="161.0" r="3" fill="none" stroke="#333"/>
+<line x1="539.0" y1="220.9" x2="539.0" y2="196.4" stroke="#333" stroke-width="0.8"/>
+<circle cx="539.0" cy="208.6" r="3" fill="none" stroke="#333"/>
+<line x1="590.0" y1="285.2" x2="590.0" y2="260.8" stroke="#333" stroke-width="0.8"/>
+<circle cx="590.0" cy="273.0" r="3" fill="none" stroke="#333"/>
+<rect x="470" y="80" width="110" height="36" fill="#fff" stroke="#333"/>
+<line x1="476" y1="92" x2="500" y2="92" stroke="#c0392b" stroke-width="2"/><text x="505" y="96" font-size="10" fill="#333">1st Order</text>
+<line x1="476" y1="106" x2="500" y2="106" stroke="#1f35c4" stroke-width="2"/><text x="505" y="110" font-size="10" fill="#333">Quadratic</text>
+</svg>
