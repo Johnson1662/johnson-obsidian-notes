@@ -1,17 +1,27 @@
-# Quartz v4
+# johnson-obsidian-notes
 
-> “[One] who works with the door open gets all kinds of interruptions, but [they] also occasionally gets clues as to what the world is and what might be important.” — Richard Hamming
+Obsidian 笔记库（`content/`）经 MkDocs Material 构建，发布到 GitHub Pages：
+<https://johnson1662.github.io/johnson-obsidian-notes/>
 
-Quartz is a set of tools that helps you publish your [digital garden](https://jzhao.xyz/posts/networked-thought) and notes as a website for free.
+## 结构
 
-🔗 Read the documentation and get started: https://quartz.jzhao.xyz/
+| 路径 | 说明 |
+| --- | --- |
+| `content/` | Obsidian vault，唯一内容源 |
+| `mkdocs.yml` | 站点与 Markdown 扩展配置 |
+| `hooks/obsidian.py` | 把 `[[wikilink]]`、`![[embed]]`、`%%注释%%` 转成标准 Markdown |
+| `hooks/site-assets/` | 站点样式、KaTeX 渲染脚本、随包的 mermaid |
+| `overrides/` | Material 模板覆盖（仅在含图的页面加载 mermaid） |
+| `requirements.txt` | Python 依赖 |
 
-[Join the Discord Community](https://discord.gg/cRFFHYye7t)
+## 本地构建
 
-## Sponsors
+```bash
+python3 -m venv .venv
+.venv/bin/pip install -r requirements.txt
+.venv/bin/mkdocs serve
+```
 
-<p align="center">
-  <a href="https://github.com/sponsors/jackyzha0">
-    <img src="https://cdn.jsdelivr.net/gh/jackyzha0/jackyzha0/sponsorkit/sponsors.svg" />
-  </a>
-</p>
+## 发布
+
+推送到 `main` 后由 `.github/workflows/deploy.yml` 构建并部署 `site/`。

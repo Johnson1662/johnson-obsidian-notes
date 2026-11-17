@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+
+{% block extrahead %}
+  {% if page and 'class="mermaid"' in page.content %}
+    <script defer src="{{ 'mermaid.min.js' | url }}"></script>
+  {% endif %}
+{% endblock %}

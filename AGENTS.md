@@ -1,80 +1,30 @@
-# Agent Notes for Quartz v4
+# Agent Notes
 
-## Environment
+站点：Obsidian vault（`content/`）→ MkDocs Material → GitHub Pages。
 
-- **Node.js**: >=22, **npm**: >=10.9.2 (enforced in `engines` and CI)
-- **Module system**: ESM (`"type": "module"`)
-- **JSX**: Preact (`jsxImportSource: "preact"`), not React
+## 环境
 
-## Developer Commands
+- Python 3.12，依赖在 `requirements.txt`（`mkdocs-material==9.8.1`、`mkdocs-callouts==1.17.1`）
+- 本地环境：`.venv/`（已 gitignore）
+
+## 命令
 
 ```bash
-# Install dependencies
-npm ci
-
-# Type-check + format check (CI gate)
-npm run check        # tsc --noEmit && prettier --check
-
-# Auto-format
-npm run format       # prettier --write
-
-# Run all tests (Node built-in test runner via tsx)
-npm test             # tsx --test
-
-# Run a single test file
-tsx --test quartz/util/path.test.ts
-
-# Build the docs site (used in CI for smoke test)
-npx quartz build --bundleInfo -d docs
-
-# Dev server for local content
-npx quartz build --serve
-
-# Dev server for docs
-npm run docs         # npx quartz build --serve -d docs
+.venv/bin/pip install -r requirements.txt
+.venv/bin/mkdocs serve        # 本地预览
+.venv/bin/mkdocs build        # 产出 site/
 ```
 
-## Build System
+## 结构
 
-- `npm run quartz` delegates to `./quartz/bootstrap-cli.mjs`
-- The CLI is a thin yargs wrapper; `build` is the main command
-- **Self-transpiling**: `handleBuild` uses `esbuild` to bundle `quartz/build.ts` (and all deps) into `quartz/.quartz-cache/transpiled-build.mjs` before executing it
-- Source changes during `--serve` trigger a **hard rebuild** (re-transpile + re-run)
-- Output directory defaults to `public/`, content to `content/`
+- `content/` 是 Obsidian vault，**唯一内容源**；站点专用文件不要写进这里
+- `hooks/obsidian.py`：`on_page_markdown` 转换 `[[wikilink]]`、`![[图片]]`、`%%注释%%`，并去掉空 YAML 头；`on_files` 注入 `hooks/site-assets` 下的 extra.css/extra.js/mermaid.min.js
+- `overrides/main.html`：只在页面含 `class="mermaid"` 时加载 mermaid
+- `hooks/site-assets/extra.js`：KaTeX 渲染（跟随 Material 的 `document$`）；**不要**再处理 mermaid，Material 内置集成负责渲染（它在 closed shadow root 里画图，DOM 查询看不到 svg 属正常）
 
-## Code Style
+## 已知约束
 
-- **Prettier**: no semicolons, 2-space indent, 100 print width, trailing commas
-- **TypeScript**: strict, `noUnusedLocals`, `noUnusedParameters`
-- Match existing code; do not add semicolons
-
-## Architecture
-
-- `quartz/plugins/` — transformer/filter/emitter pipeline
-  - `transformers/` — markdown plugins (OFM, GFM, LaTeX, etc.)
-  - `filters/` — content filters (drafts, explicit publish)
-  - `emitters/` — output generators (pages, assets, index, OG images)
-- `quartz/components/` — Preact UI components
-- `quartz/processors/` — parse → filter → emit orchestration
-- `quartz/styles/` — SCSS, compiled by esbuild `sassPlugin`
-- `quartz/static/` — static assets copied to output
-- `docs/` — documentation content, also used as CI smoke-test input
-
-## Testing
-
-- Uses Node.js **built-in** `node:test` + `node:assert`
-- `tsx` is required to run TypeScript tests
-- Tests live next to source: `*.test.ts`
-
-## CI / Deploy
-
-- **CI** (`v4` branch): `check` → `test` → `quartz build --bundleInfo -d docs`
-- **Deploy** (`main` branch): builds to `public/` and uploads to GitHub Pages
-- `fetch-depth: 0` is required in CI because git-history plugins depend on full history
-
-## Common Gotchas
-
-- Do not import React; use Preact imports (`preact`, `preact-render-to-string`)
-- `quartz.config.ts` is the single source of truth for site config and plugin pipeline
-- Generated cache lives in `.quartz-cache/` (ignored by Prettier but not by git by default)
-- If adding a new plugin, register it in `quartz.config.ts` and ensure it is exported from `quartz/plugins/index.ts`
+- 公式走 KaTeX（CDN），callout 由 `mkdocs-callouts` 把 `> [!note]-` 转 admonition；`check`/`faq`/`summary`/`important` 会被别名成 success/question/abstract/tip
+- 标题锚点用 `pymdownx.slugs.slugify(case: lower)`，中文 id 保留
+- 图片/PDF 等附件随 `content/` 原样复制；构建产物约 210 MB
+- 部署 workflow：`.github/workflows/deploy.yml`（Python + upload-pages-artifact）
