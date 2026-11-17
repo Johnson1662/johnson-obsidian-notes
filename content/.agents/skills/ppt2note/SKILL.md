@@ -1,12 +1,14 @@
 ---
 name: ppt2note
-description: 课件 PPT/PDF → 本仓库的课程笔记（课程级 0 复习总览 + 每章 0 读这一章之前/人话/重画 SVG 图/例题，KaTeX + 渲染验证门；表格只用于真对比、其余分点）。用户说"整理第N章 / PPT转笔记 / 课件整理 / 按语音课那样整理 / ppt2note"时用。
+description: 课件 PPT/PDF → 课程复习笔记（课程级 0 复习总览 + 每章 0 读这一章之前/人话/裁切或手绘的图/例题，KaTeX + 渲染验证门；表格只用于真对比、其余分点；图只截真正要用的部分、不整页丢）。用户说"整理第N章 / PPT转笔记 / 课件整理 / 按语音课那样整理 / ppt2note"时用。
 ---
 
 # PPT2Note
 
 `raw/ppt/N 章名.pdf` → `N 章名.md`，全课再加一份 `0 复习总览.md`。
 按序执行；每一阶段都有可检查的产出，不靠"看起来对"。
+
+**环境依赖**：`mineru-open-api`（抽取）、poppler 的 `pdftocairo/pdftoppm/pdfinfo/pdftext`、`google-chrome`（渲染 SVG 核对）、`python3`+Pillow、`node`（kcheck），以及站点构建工具（本仓库用 MkDocs Material）。本 skill 自带的 `scripts/` 随包提供，不依赖任何其它 skill。
 
 ## 脚本
 
@@ -20,9 +22,9 @@ description: 课件 PPT/PDF → 本仓库的课程笔记（课程级 0 复习总
 ## 0 变量
 
 ```bash
-cd /home/johnson/quartz-repo/content/Courses/数据挖掘   # 课程目录
+cd <课程目录>            # 例：<笔记库>/Courses/数据挖掘
 CH=5; NAME="章名"; PDF="raw/ppt/$CH $NAME.pdf"; NOTE="$CH $NAME.md"
-SK=/home/johnson/quartz-repo/content/.agents/skills/ppt2note
+SK=<本 skill 目录>       # 本 skill 自带的 scripts/ 在这里
 ```
 
 ## 1 预检 + 抽取
@@ -58,36 +60,25 @@ pdftoppm -r 100 -png "$PDF" /tmp/ch$CH/p      # 读 /tmp/ch$CH/p-023.png
 笔记里每个数字都要有来源（mineru 或页面图）；能算的独立复算。
 `pdftotext` 裸文本会串行（`I1,13,14` 实为 `I1,I3,I4`），只能用来定位页码，不能作数据源。
 
-## 4 图：读图后手绘成干净 SVG
+## 4 图：只截真正要用的那块（默认裁 PDF 区域，必要时手绘 SVG）
 
-**原则**：笔记里的图必须"能替代一段解释"。纯文字/纯公式、内容已被正文覆盖的页 → **不留图**（删掉）。
+**原则**：笔记里的图要"能替代一段解释"，而且**只放图本身**——不能把整页 PPT 丢进去（蓝页眉、页码、与正文重复的要点文字都要去掉）。
 
 1. 定位候选页：`pdftotext -f P -l P -layout` 逐页 grep 关键词（盒图 / Apriori / 支持向量 / 缺失值…）。
 2. **一次看完**：候选页按 80dpi 渲染，PIL 拼 4×2 contact sheet，只读一次图，勾出真正承担解释的 2~4 张/章。
-3. **留图判定**：有独立图形（散点/箱线/直方图/树/流程/网格/示意）才留；只是把要点文字或公式又抄一遍的页，删图不转。
-4. **重画成 SVG（不是截图、不是裁剪、不是把位图套壳）**：
-   - 读原图，记下坐标轴范围/刻度、数据点的大致位置、曲线形状、标注文字。
-   - 写干净 SVG：白底，去掉 PPT 蓝色页眉与页码、去掉与正文重复的要点文字，只保留图形本体 + 必要的轴标签/图例/数值标注。
-   - 存 `assets/ch<CH>-p<NN>.svg`，题注 `![PPT 第N页：说明](assets/chN-pNN.svg)`，紧贴对应小节标题下。
-5. **渲染核对**（这是硬门，别只信"看起来对"）：
-   ```bash
-   google-chrome --headless=new --disable-gpu --hide-scrollbars \
-     --force-device-scale-factor=1 --window-size=W,H \
-     --screenshot=/tmp/x.png "file://$PWD/assets/ch${CH}-p${NN}.svg"
-   ```
-   读该 PNG：无文字重叠、无越界、无空白/报错。
-6. **和原图并排比对**：PIL 把 [原图 | 重画] 拼一张逐张看，结构/标签/数据/刻度必须一致；不一致就改到一致。
-7. 删旧图：`assets/*.webp` 移走并在 git 删除；把 md 里 `assets/*.webp` → `*.svg`；`grep -rn '\.webp' *.md` 必须为 0。
+3. **留图判定**：纯文字/纯公式、内容已被正文覆盖的页 → **删图不留**（别转）。有独立图示（散点/箱线/直方图/树/流程/网格/示意/数据表）才留。
+4. **出图（两种，默认 A）**：
+   - **A. 裁 PDF 区域（省事，默认）**：用 `pdftocairo` 从源页裁出图形区域，去掉页眉/页码/相邻正文。
+     ```bash
+     pdftocairo -png -r 72 -f P -l P "$PDF" /tmp/full          # 1px=1pt，先看图形在页面点坐标里的位置
+     pdftocairo -svg -f P -l P -x X -y Y -W W -H H "$PDF" assets/ch${CH}-p${NN}.svg   # 按点坐标裁
+     ```
+     `-x/-y/-W/-H` 单位随 `-r` 缩放：定位用 `-r 72`；换更高 dpi 时坐标要 ×(dpi/72)。存 `.svg`（文字矢量、图形位图、体积小）或高 dpi `.png`。
+   - **B. 手绘 SVG（要干净统一/纯矢量时）**：读原图后自己写 SVG（python 拼字符串），去掉页眉与重复文字；坐标/曲线/标注照原图还原。
+5. **核对（硬门）**：把成图渲染/读出，确认图形完整在框内、无页眉与正文残留、文字不重叠；能跟原页并排对照就对照，结构/标签/数据一致。
+6. 引用 `![PPT 第N页：说明](assets/chN-pNN.svg)`，紧贴对应小节标题下；删掉旧 `.webp`，`grep -rn '\.webp' *.md` 必须为 0。
 
-**重要事实**：源 PDF 里的图多是**位图**（`<image>` 嵌入），`pdftocairo -svg` 或裁切只是把同一张位图包一层 `<svg>`，不会变矢量。所以必须读图后**手绘**。SVG 写作坑：
-
-- 文本里的 `<` `>` 必须转义成 `&lt;` `&gt;`（如 `b &lt; 0`），否则整页 XML 解析失败、Obsidian 显示空白。
-- 不要用 HTML 的 `<sub>/<sup>`（SVG 不认）→ 用 Unicode 下标 `₁₂₃` 或 `tspan baseline-shift`。
-- 中文字体：`font-family="Noto Sans CJK SC, Source Han Sans SC, sans-serif"`。
-- 用 `viewBox` 固定画布、坐标自行换算；散点/柱高按原图近似即可，但轴刻度、区间端点和标注要还原。
-- 全量校验 XML：`python3 -c "import glob,xml.etree.ElementTree as ET;[ET.parse(f) for f in glob.glob('assets/*.svg')]"`。
-
-需要时参考技能 `redraw-course-figures-as-svg`（同一套流程与坑）。
+**事实**：这些图在 PDF 里多是位图（`<image>`）。裁 PDF 区域只是去掉页眉/重复文字，图形本身仍是位图；要真矢量只有手绘（route B）。手绘 SVG 的坑：文本里 `<`/`>` 必须写 `&lt;`/`&gt;`；不用 `<sub>/<sup>`（用 `₁₂₃`）；中文字体 `Noto Sans CJK SC, …`。全量 XML 校验：`python3 -c "import glob,xml.etree.ElementTree as ET;[ET.parse(f) for f in glob.glob('assets/*.svg')]"`。
 
 ## 5 格式纪律：表格只在"真对比"时用
 
@@ -101,7 +92,7 @@ pdftoppm -r 100 -png "$PDF" /tmp/ch$CH/p      # 读 /tmp/ch$CH/p-023.png
 - 相互独立的枚举（四大挑战、方法罗列、例题答案表）→ 列表
 - 单列表格、两列「术语—说明」表 → 列表
 
-校验：确认剩下的表都是对比表，列数一致（脚本枚举表格，`|` 计数应一致）。参考技能 `declutter-markdown-tables`。
+校验：确认剩下的表都是对比表，且每行列数一致（枚举每个表头分隔行，统计后续行 `|` 数应与表头相同）。
 
 ## 6 骨架
 
@@ -201,12 +192,12 @@ pdftoppm -r 100 -png "$PDF" /tmp/ch$CH/p      # 读 /tmp/ch$CH/p-023.png
 
 ## 10 验证门（全过才算完）
 
-仓库已从 Quartz 迁到 **MkDocs Material**（`content/` 是 docs_dir）。构建与预览：
+用**你仓库自己的构建命令**（本仓库是 MkDocs Material，示例如下）：
 
 ```bash
-cd /home/johnson/quartz-repo
-.venv/bin/mkdocs build                          # 无 ERROR 即成功
-.venv/bin/mkdocs serve -a 127.0.0.1:8099        # 本地预览（后台跑，完成后 kill）
+cd <仓库根>
+mkdocs build                       # 无 ERROR 即成功
+mkdocs serve -a 127.0.0.1:8099     # 本地预览（后台跑，完成后 kill）
 ```
 
 ```bash
@@ -220,7 +211,7 @@ python3 /tmp/verify_ch$CH.py                    # 例题断言，必须 FAIL 0
 
 ```js
 const t = await browser.open({
-  url: "http://127.0.0.1:8099/Courses/数据挖掘/4 关联规则/",
+  url: "http://127.0.0.1:8099/<站点前缀>/<课程>/<章>/",   // 例：/Courses/数据挖掘/4 关联规则/（目录式 URL，中文保留）
   app: { relay: false, tern: false },
   headed: false,
   viewport: { width: 1400, height: 1000 },
@@ -240,7 +231,7 @@ await browser.close({ all: true })
 ```
 
 必须：`over` 空、`katexErr` 0、`brokenImgs` 0、`webp` 0；表格数与该章对比表数一致。
-MkDocs 用目录式 URL（中文保留），如 `/Courses/数据挖掘/4 关联规则/`。
+URL 用你的站点路由格式；MkDocs 为目录式、中文保留。
 
 ## 11 收尾
 
