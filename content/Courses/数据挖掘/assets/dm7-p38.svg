@@ -2,7 +2,7 @@
 <rect x="0" y="0" width="640" height="470" fill="#ffffff"/>
 <line x1="70" y1="400" x2="600" y2="400" stroke="#333" stroke-width="1.2"/>
 <line x1="70" y1="400" x2="70" y2="70" stroke="#333" stroke-width="1.2"/>
-<text x="602" y="414" font-size="12" fill="#333">x</text>
+<text x="620" y="414" font-size="12" fill="#333">x</text>
 <text x="42" y="86" font-size="12" fill="#333">y</text>
 <text x="70.0" y="415" text-anchor="middle" font-size="10" fill="#333">0</text>
 <text x="176.0" y="415" text-anchor="middle" font-size="10" fill="#333">1</text>
