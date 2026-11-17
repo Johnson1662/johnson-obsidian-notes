@@ -22,7 +22,7 @@ from pymdownx.slugs import slugify as _slugify
 HERE = Path(__file__).resolve().parent
 _SLUG = _slugify(case="lower")
 SITE_ASSETS = HERE / "site-assets"
-SITE_ASSET_NAMES = ("extra.css", "extra.js", "mermaid.min.js")
+SITE_ASSET_NAMES = ("extra.css", "extra.js", "reader.js", "mermaid.min.js")
 
 IMAGE_EXT = {".png", ".jpg", ".jpeg", ".gif", ".webp", ".svg", ".bmp", ".avif"}
 MEDIA_EXT = IMAGE_EXT | {".pdf", ".mp3", ".ogg", ".wav", ".m4a", ".mp4", ".webm"}

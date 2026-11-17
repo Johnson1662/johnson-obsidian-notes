@@ -5,3 +5,10 @@
     <script defer src="{{ 'mermaid.min.js' | url }}"></script>
   {% endif %}
 {% endblock %}
+
+{% block content %}
+  {% if page and page.parent and page.parent.title and not page.is_homepage %}
+    <div class="xhs-kicker">{{ page.parent.title }}</div>
+  {% endif %}
+  {{ super() }}
+{% endblock %}
