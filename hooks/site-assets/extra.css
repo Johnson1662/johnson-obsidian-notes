@@ -38,6 +38,19 @@
   border-bottom: 1px solid rgba(0, 0, 0, 0.09);
 }
 
+.md-search__form {
+  background-color: #eeeeef;
+}
+
+.md-search__input {
+  color: #111827;
+}
+
+.md-search__input::placeholder,
+.md-search__icon {
+  color: #5c5c5c;
+}
+
 .md-typeset {
   font-size: 17px;
   line-height: 1.75;
