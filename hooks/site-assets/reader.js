@@ -1,5 +1,7 @@
-// 移动端整屏翻页（小说阅读器式）：正文用 CSS 多栏切成整屏页，拖动跟手、松手吸附；
-// 页边点击翻页，点中间显示/隐藏底部工具条。桌面端完全不启用。
+// 移动端整屏翻页（小说阅读器式）：正文用 CSS 多栏按屏切页；
+// 表格这类不能拆的块单独占一页，避免在多栏里被挤变形。
+// 拖动跟手、松手吸附；左右三分之一点击翻页，点中间显示/隐藏底部条。
+// 桌面端完全不启用。
 ;(function () {
   const MOBILE = window.matchMedia("(max-width: 768px)")
   const HOST_SEL = ".md-content__inner"
@@ -7,13 +9,15 @@
     host: null,
     origin: null,
     reader: null,
-    flow: null,
+    track: null,
+    viewport: null,
     bar: null,
+    sheet: null,
+    sections: [],
     pages: 1,
     index: 0,
     colW: 0,
     drag: null,
-    attempts: 0,
   }
 
   const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v))
@@ -33,19 +37,58 @@
       const act = e.target.closest("[data-act]")?.dataset.act
       if (act === "prev") go(state.index - 1)
       else if (act === "next") go(state.index + 1)
-      else if (act === "toc") toggle("__drawer")
+      else if (act === "toc") openSheet()
     })
     parent.appendChild(bar)
     state.bar = bar
     return bar
   }
 
-  // 直接翻 Material 的开关，不依赖被隐藏的 label
-  function toggle(id) {
-    const box = document.getElementById(id)
-    if (!box) return
-    box.checked = !box.checked
-    box.dispatchEvent(new Event("change", { bubbles: true }))
+  function buildSheet(parent) {
+    const sheet = document.createElement("div")
+    sheet.className = "xhs-sheet"
+    sheet.innerHTML =
+      '<div class="xhs-sheet__backdrop" data-sheet="close"></div>' +
+      '<div class="xhs-sheet__panel" role="dialog" aria-label="目录">' +
+      '<div class="xhs-sheet__grip"></div>' +
+      '<div class="xhs-sheet__head"><span>目录</span>' +
+      '<button type="button" class="xhs-sheet__close" data-sheet="close">关闭</button></div>' +
+      '<div class="xhs-sheet__list"></div>' +
+      "</div>"
+    sheet.addEventListener("click", (e) => {
+      e.preventDefault()
+      e.stopPropagation()
+      const item = e.target.closest("[data-page]")
+      if (item) {
+        go(Number(item.dataset.page), false)
+        closeSheet()
+        return
+      }
+      if (e.target.closest('[data-sheet="close"]')) closeSheet()
+    })
+    const panel = sheet.querySelector(".xhs-sheet__panel")
+    let y0 = null
+    panel.addEventListener(
+      "touchstart",
+      (e) => {
+        if (!e.target.closest(".xhs-sheet__grip, .xhs-sheet__head")) return
+        y0 = e.touches[0].clientY
+      },
+      { passive: true }
+    )
+    panel.addEventListener(
+      "touchend",
+      (e) => {
+        if (y0 === null) return
+        const dy = e.changedTouches[0].clientY - y0
+        y0 = null
+        if (dy > 50) closeSheet()
+      },
+      { passive: true }
+    )
+    parent.appendChild(sheet)
+    state.sheet = sheet
+    return sheet
   }
 
   function setUI(open) {
@@ -56,26 +99,43 @@
     if (state.host && state.origin) state.host.replaceChildren(...state.origin)
     if (state.reader) state.reader.remove()
     if (state.bar) state.bar.remove()
+    if (state.sheet) state.sheet.remove()
     document.documentElement.classList.remove("xhs-on", "xhs-ui")
     state.host = null
     state.origin = null
     state.reader = null
-    state.flow = null
+    state.track = null
+    state.viewport = null
     state.bar = null
+    state.sheet = null
+    state.sections = []
     state.pages = 1
     state.index = 0
   }
 
   function translate(px, animate) {
-    if (!state.flow) return
-    state.flow.style.transition = animate ? "transform .22s cubic-bezier(.25,.8,.3,1)" : "none"
-    state.flow.style.transform = "translateX(" + px + "px)"
+    if (!state.track) return
+    state.track.style.transition = animate ? "transform .22s cubic-bezier(.25,.8,.3,1)" : "none"
+    state.track.style.transform = "translateX(" + px + "px)"
+  }
+
+  function pageOrigin(page) {
+    let start = 0
+    for (const sec of state.sections) {
+      if (page < start + sec.pages) {
+        return { offset: sec.offset, local: page - start }
+      }
+      start += sec.pages
+    }
+    const last = state.sections[state.sections.length - 1]
+    return last ? { offset: last.offset, local: last.pages - 1 } : { offset: 0, local: 0 }
   }
 
   function go(i, animate = true) {
-    if (!state.flow) return
+    if (!state.sections.length) return
     state.index = clamp(i, 0, state.pages - 1)
-    translate(-state.index * state.colW, animate)
+    const pos = pageOrigin(state.index)
+    translate(-(pos.offset + pos.local * state.colW), animate)
     if (state.bar) {
       state.bar.querySelector(".xhs-bar__count").textContent = state.index + 1 + " / " + state.pages
       state.bar.querySelector('[data-act="prev"]').disabled = state.index === 0
@@ -83,40 +143,31 @@
     }
     const chip = document.querySelector(".xhs-count")
     if (chip) chip.textContent = state.index + 1 + " / " + state.pages
+    markCurrent()
   }
 
-  function measure() {
-    const flow = state.flow
-    const width = flow.clientWidth
-    if (!width) return
-    flow.style.columnWidth = width + "px"
-    flow.style.setProperty("--xhs-col", width + "px")
-    state.colW = width
-
-    // 超宽的公式块按栏宽等比缩小，避免被剪掉
-    flow.querySelectorAll(".katex-display").forEach((d) => {
+  // 公式适配：正文里的轻微超宽按 0.8 兜底缩放；
+  // 独占一页的长公式按栏宽整幅缩放，保证一屏看全
+  function fitMath() {
+    state.track.querySelectorAll(".katex-display").forEach((d) => {
       d.style.fontSize = ""
-      for (let i = 0; i < 2 && d.scrollWidth > d.clientWidth + 1; i += 1) {
-        const k = d.clientWidth / d.scrollWidth
-        const base = parseFloat(getComputedStyle(d).fontSize) * 0.96
-        d.style.fontSize = Math.max(9, base * k).toFixed(1) + "px"
-      }
+      const base = parseFloat(getComputedStyle(d).fontSize)
+      const avail = d.clientWidth - 4
+      if (!avail) return
+      // scrollWidth 反映被容器裁掉前的真实宽度
+      const need = d.scrollWidth
+      if (need <= avail + 1) return
+      const blockPage = !!d.closest(".xhs-sec--block")
+      const floor = blockPage ? 0.5 : 0.85
+      const k = Math.max(floor, avail / need)
+      if (k < 0.995) d.style.fontSize = (base * k).toFixed(1) + "px"
     })
-
-    const range = document.createRange()
-    range.selectNodeContents(flow)
-    const rect = range.getBoundingClientRect()
-    const flowRect = flow.getBoundingClientRect()
-    const used = rect.width + (rect.left - flowRect.left)
-    state.pages = Math.max(1, Math.ceil((used - 1) / width))
   }
 
-  function jumpToHash() {
-    const id = decodeURIComponent(location.hash.replace(/^#/, ""))
-    if (!id) return
-    const target = document.getElementById(id)
-    if (!target || !target.offsetParent) return
-    go(Math.round(target.offsetLeft / state.colW), false)
+  const isFixedBlock = (el) => {
+    if (el.tagName === "TABLE" || el.querySelector("table")) return true
+    const math = el.querySelector(".katex-display")
+    return !!math && el.textContent.trim().length > 250
   }
 
   function build() {
@@ -140,46 +191,142 @@
     reader.className = "xhs-reader"
     const viewport = document.createElement("div")
     viewport.className = "xhs-viewport"
-    const flow = document.createElement("div")
-    flow.className = "xhs-flow"
-    viewport.appendChild(flow)
+    const track = document.createElement("div")
+    track.className = "xhs-track"
+    viewport.appendChild(track)
     reader.appendChild(viewport)
     document.body.appendChild(reader)
-
-    blocks.forEach((b) => flow.appendChild(b))
-    flow.querySelectorAll("table").forEach((t) => {
-      const box = document.createElement("div")
-      box.className = "xhs-tablewrap"
-      t.replaceWith(box)
-      box.appendChild(t)
-    })
 
     const count = document.createElement("div")
     count.className = "xhs-count"
     reader.appendChild(count)
     buildBar(reader)
+    buildSheet(reader)
 
     document.documentElement.classList.add("xhs-on")
-
     state.reader = reader
-    state.flow = flow
+    state.track = track
+    state.viewport = viewport
 
-    measure()
+    // 先量栏宽：viewport 的可用内容宽度（要扣掉左右内边距）
+    const probe = document.createElement("div")
+    probe.style.height = "0"
+    viewport.appendChild(probe)
+    const colW = Math.max(200, probe.clientWidth)
+    probe.remove()
+    state.colW = colW
+
+    // 把块分成「可流式正文段」与「整块表格段」
+    const groups = []
+    let flow = null
+    for (const block of blocks) {
+      if (isFixedBlock(block)) {
+        groups.push({ type: "block", nodes: [block] })
+        flow = null
+      } else {
+        if (!flow) {
+          flow = { type: "flow", nodes: [] }
+          groups.push(flow)
+        }
+        flow.nodes.push(block)
+      }
+    }
+
+    state.sections = []
+    let offset = 0
+    let start = 0
+
+    groups.forEach((group) => {
+      const sec = document.createElement("section")
+      sec.className = group.type === "flow" ? "xhs-sec xhs-sec--flow md-typeset" : "xhs-sec xhs-sec--block md-typeset"
+      sec.style.width = colW + "px"
+      if (group.type === "flow") sec.style.columnWidth = colW + "px"
+      group.nodes.forEach((n) => sec.appendChild(n))
+      track.appendChild(sec)
+
+      let pages = 1
+      if (group.type === "flow") {
+        const range = document.createRange()
+        range.selectNodeContents(sec)
+        const rect = range.getBoundingClientRect()
+        const secRect = sec.getBoundingClientRect()
+        const used = rect.width + (rect.left - secRect.left)
+        pages = Math.max(1, Math.ceil((used - 1) / colW))
+        sec.style.width = pages * colW + "px"
+      }
+
+      state.sections.push({ el: sec, type: group.type, pages, offset, start })
+      offset += pages * colW
+      start += pages
+    })
+
+    state.pages = Math.max(1, start)
+    fitMath()
+
+    // 表格段若比一屏还高，允许页内纵向滚动（样式在 CSS 里）
     go(clamp(keep, 0, state.pages - 1), false)
     if (location.hash) jumpToHash()
-
     bindGestures(viewport)
+  }
 
-    // 字体、图片、公式晚到会改变栏宽与页数：重排并保留页码
-    const settled = () => {
-      if (!state.flow) return
-      measure()
-      go(clamp(state.index, 0, state.pages - 1), false)
+  function jumpToHash() {
+    const id = decodeURIComponent(location.hash.replace(/^#/, ""))
+    if (!id) return
+    const target = document.getElementById(id)
+    if (!target) return
+    for (const sec of state.sections) {
+      if (!sec.el.contains(target)) continue
+      const local = Math.floor(Math.max(0, target.offsetLeft) / state.colW)
+      go(sec.start + Math.min(local, sec.pages - 1), false)
+      return
     }
-    if (state.attempts < 3) {
-      state.attempts += 1
-      setTimeout(settled, 300)
+  }
+
+  function markCurrent() {
+    if (!state.sheet) return
+    state.sheet.querySelectorAll("[data-page]").forEach((el) => {
+      el.classList.toggle("is-current", Number(el.dataset.page) === state.index)
+    })
+  }
+
+  function fillSheet() {
+    if (!state.sheet) return
+    const list = state.sheet.querySelector(".xhs-sheet__list")
+    const items = []
+    state.sections.forEach((sec) => {
+      if (sec.type !== "flow") return
+      sec.el.querySelectorAll("h1, h2, h3").forEach((h) => {
+        if (h.tagName === "H1" && sec.start !== 0) return
+        const local = Math.floor(Math.max(0, h.offsetLeft) / state.colW)
+        const item = document.createElement("button")
+        item.type = "button"
+        item.className =
+          "xhs-sheet__item" +
+          (h.tagName === "H3" ? " xhs-sheet__item--h3" : "") +
+          (h.tagName === "H1" ? " xhs-sheet__item--h1" : "")
+        item.dataset.page = String(sec.start + Math.min(local, sec.pages - 1))
+        item.textContent = h.textContent.replace(/¶/g, "").trim()
+        items.push(item)
+      })
+    })
+    list.replaceChildren(...items)
+    if (!items.length) {
+      const empty = document.createElement("p")
+      empty.className = "xhs-sheet__empty"
+      empty.textContent = "本文没有小节标题"
+      list.appendChild(empty)
     }
+    markCurrent()
+  }
+
+  function openSheet() {
+    fillSheet()
+    setUI(false)
+    state.sheet?.classList.add("is-open")
+  }
+
+  function closeSheet() {
+    state.sheet?.classList.remove("is-open")
   }
 
   function bindGestures(viewport) {
@@ -196,7 +343,11 @@
         startY = e.touches[0].clientY
         moved = false
         horizontal = null
-        state.drag = { x: startX, t: Date.now(), target: e.target }
+        const blockSec = e.target.closest(".xhs-sec--block")
+        const canPan =
+          (blockSec && blockSec.scrollWidth > blockSec.clientWidth + 2) ||
+          !!e.target.closest(".katex-display")
+        state.drag = { x: startX, t: Date.now(), target: e.target, canPan }
       },
       { passive: true }
     )
@@ -213,11 +364,15 @@
         if (!horizontal) return
         e.preventDefault()
         moved = true
+        const pos = pageOrigin(state.index)
         let offset = dx
-        if ((state.index === 0 && dx > 0) || (state.index === state.pages - 1 && dx < 0)) {
+        if (
+          (state.index === 0 && dx > 0) ||
+          (state.index === state.pages - 1 && dx < 0)
+        ) {
           offset = dx * 0.35
         }
-        translate(-state.index * state.colW + offset, false)
+        translate(-(pos.offset + pos.local * state.colW) + offset, false)
       },
       { passive: false }
     )
@@ -228,17 +383,18 @@
       const dy = e.changedTouches[0].clientY - startY
       const dt = Math.max(1, Date.now() - state.drag.t)
       const tapTarget = state.drag.target
+      const canPan = state.drag.canPan
       state.drag = null
+
+      if (canPan) return
 
       if (moved && horizontal) {
         const velocity = Math.abs(dx) / dt
         const flip = Math.abs(dx) > state.colW * 0.18 || velocity > 0.4
-        if (flip) go(state.index + (dx < 0 ? 1 : -1))
-        else go(state.index)
+        go(state.index + (flip ? (dx < 0 ? 1 : -1) : 0))
         return
       }
 
-      // 点在链接或控件上：交给它们自己处理，不翻页
       if (tapTarget && tapTarget.closest("a, button, summary, label, input")) return
 
       if (Math.abs(dx) < 8 && Math.abs(dy) < 8) {
@@ -251,9 +407,21 @@
   }
 
   let timer
+  let settled = 0
   function schedule() {
     clearTimeout(timer)
-    timer = setTimeout(build, 180)
+    timer = setTimeout(() => {
+      build()
+      if (settled < 3) {
+        settled += 1
+        clearTimeout(timer)
+        timer = setTimeout(() => {
+          if (!state.reader) return
+          build()
+          go(clamp(state.index, 0, state.pages - 1), false)
+        }, 400)
+      }
+    }, 180)
   }
 
   function onKey(e) {
@@ -264,14 +432,7 @@
 
   document.addEventListener("keydown", onKey)
   MOBILE.addEventListener("change", schedule)
-  window.addEventListener("resize", () => {
-    clearTimeout(timer)
-    timer = setTimeout(() => {
-      if (!state.flow) return build()
-      measure()
-      go(clamp(state.index, 0, state.pages - 1), false)
-    }, 180)
-  })
+  window.addEventListener("resize", schedule)
   window.addEventListener("load", schedule)
   if (document.fonts) document.fonts.ready.then(schedule)
   if (typeof window.document$ !== "undefined" && typeof document$.subscribe === "function") {
