@@ -1,0 +1,28 @@
+{#-
+  目录：Material 默认只渲染第一个 H1 的子节点，本 vault 的笔记用多个 H1 当小节，
+  这里改成渲染除页标题以外的全部标题，保证目录完整。
+-#}
+{% if page and page.toc %}
+  {% set title = lang.t("toc") %}
+  {% if config.mdx_configs.toc and config.mdx_configs.toc.title %}
+    {% set title = config.mdx_configs.toc.title %}
+  {% endif %}
+  {% set toc = page.toc.items %}
+  {% set first = toc | first %}
+  {% if first and first.level == 1 %}
+    {% set toc = toc[1:] %}
+  {% endif %}
+  {% if toc %}
+    <nav class="md-nav md-nav--secondary" aria-label="{{ title | e }}">
+      <label class="md-nav__title" for="__toc">
+        <span class="md-nav__icon md-icon"></span>
+        {{ title }}
+      </label>
+      <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+        {% for toc_item in toc %}
+          {% include "partials/toc-item.html" %}
+        {% endfor %}
+      </ul>
+    </nav>
+  {% endif %}
+{% endif %}
