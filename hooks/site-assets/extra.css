@@ -192,7 +192,7 @@
   }
 
   /* 页头：眉标 + 衬线大标题 */
-  .md-content__inner > .xhs-kicker {
+  .xhs-kicker {
     display: block;
     font-size: 11px;
     letter-spacing: 0.14em;
