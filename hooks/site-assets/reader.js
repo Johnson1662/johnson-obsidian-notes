@@ -18,26 +18,34 @@
 
   const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v))
 
-  function buildBar() {
+  function buildBar(parent) {
     const bar = document.createElement("nav")
     bar.className = "xhs-bar"
     bar.id = "xhs-bar"
     bar.innerHTML =
       '<button type="button" class="xhs-bar__btn" data-act="toc">目录</button>' +
-      '<button type="button" class="xhs-bar__btn" data-act="search">搜索</button>' +
       '<button type="button" class="xhs-bar__btn" data-act="prev">上一页</button>' +
       '<span class="xhs-bar__count" aria-live="polite"></span>' +
       '<button type="button" class="xhs-bar__btn" data-act="next">下一页</button>'
     bar.addEventListener("click", (e) => {
+      e.preventDefault()
+      e.stopPropagation()
       const act = e.target.closest("[data-act]")?.dataset.act
       if (act === "prev") go(state.index - 1)
       else if (act === "next") go(state.index + 1)
-      else if (act === "toc") document.querySelector('[for="__drawer"]')?.click()
-      else if (act === "search") document.querySelector('[for="__search"]')?.click()
+      else if (act === "toc") toggle("__drawer")
     })
-    document.body.appendChild(bar)
+    parent.appendChild(bar)
     state.bar = bar
     return bar
+  }
+
+  // 直接翻 Material 的开关，不依赖被隐藏的 label
+  function toggle(id) {
+    const box = document.getElementById(id)
+    if (!box) return
+    box.checked = !box.checked
+    box.dispatchEvent(new Event("change", { bubbles: true }))
   }
 
   function setUI(open) {
@@ -149,7 +157,7 @@
     const count = document.createElement("div")
     count.className = "xhs-count"
     reader.appendChild(count)
-    buildBar()
+    buildBar(reader)
 
     document.documentElement.classList.add("xhs-on")
 

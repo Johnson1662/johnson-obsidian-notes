@@ -185,8 +185,8 @@
   }
 
   .md-typeset {
-    font-size: 16px;
-    line-height: 1.7;
+    font-size: 18px;
+    line-height: 1.85;
     letter-spacing: 0.01em;
     color: var(--xhs-body);
   }
@@ -202,8 +202,8 @@
 
   .md-typeset h1 {
     font-family: var(--xhs-serif);
-    font-size: 30px;
-    line-height: 1.2;
+    font-size: 32px;
+    line-height: 1.22;
     font-weight: 700;
     letter-spacing: 0;
     color: var(--xhs-ink);
@@ -214,8 +214,8 @@
 
   .md-typeset h2 {
     font-family: var(--xhs-serif);
-    font-size: 21px;
-    line-height: 1.35;
+    font-size: 23px;
+    line-height: 1.4;
     font-weight: 700;
     color: var(--xhs-ink);
     margin: 26px 0 10px;
@@ -234,8 +234,8 @@
   }
 
   .md-typeset h3 {
-    font-size: 17px;
-    line-height: 1.4;
+    font-size: 19px;
+    line-height: 1.45;
     color: var(--xhs-ink);
     margin: 20px 0 8px;
   }
@@ -300,6 +300,16 @@
     display: none;
   }
 
+  /* 点屏幕中间时把顶栏（含搜索、菜单）浮出来 */
+  html.xhs-ui .md-header {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 40;
+  }
+
   .xhs-reader {
     position: fixed;
     inset: 0;
@@ -311,10 +321,10 @@
     position: absolute;
     inset: 0;
     overflow: hidden;
-    padding: calc(env(safe-area-inset-top, 0px) + 16px) 22px
-      calc(env(safe-area-inset-bottom, 0px) + 34px);
+    padding: calc(env(safe-area-inset-top, 0px) + 20px) 24px
+      calc(env(safe-area-inset-bottom, 0px) + 42px);
     touch-action: pan-y;
-    clip-path: inset(0 22px);
+    clip-path: inset(0 24px);
   }
 
   .xhs-flow {
@@ -403,9 +413,10 @@
     align-items: center;
     gap: 4px;
     padding: 0 12px env(safe-area-inset-bottom, 0px);
-    height: calc(52px + env(safe-area-inset-bottom, 0px));
+    height: calc(56px + env(safe-area-inset-bottom, 0px));
     background: var(--xhs-paper);
     border-top: 1px solid var(--xhs-line-soft);
+    touch-action: manipulation;
     transform: translateY(110%);
     transition: transform 0.2s ease;
   }
@@ -418,9 +429,10 @@
     appearance: none;
     background: none;
     border: 0;
-    padding: 10px 6px;
+    min-height: 44px;
+    padding: 10px 8px;
     font: inherit;
-    font-size: 13px;
+    font-size: 14px;
     color: var(--xhs-muted);
     cursor: pointer;
   }
