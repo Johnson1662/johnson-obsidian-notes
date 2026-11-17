@@ -344,6 +344,46 @@
     -webkit-overflow-scrolling: touch;
   }
 
+  /* 独占页里的代码块：按原样横向滚动，不折行 */
+  .xhs-sec--block .highlight,
+  .xhs-sec--block pre {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 0 12px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .xhs-sec--block pre > code {
+    font-size: 12.5px;
+    line-height: 1.7;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .xhs-sec--flow pre > code {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  /* 表格页：表头随滚动吸顶 */
+  .xhs-sec--block thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: var(--xhs-paper-2);
+    box-shadow: inset 0 -1px 0 var(--xhs-line-soft);
+  }
+
+  /* 正文里的短代码块也允许横向滚动，不撑破栏宽 */
+  .xhs-sec--flow pre {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
   /* 整块表格页：宽表在页内横向滚动，不压缩字号 */
   .xhs-sec--block table:not([class]) {
     min-width: 540px;
@@ -519,6 +559,50 @@
   .xhs-sheet__tab.is-active {
     color: var(--xhs-ink);
     border-bottom-color: var(--xhs-accent);
+  }
+
+  .xhs-tree__row {
+    display: flex;
+    align-items: center;
+  }
+
+  .xhs-tree__caret {
+    flex: 0 0 26px;
+    width: 26px;
+    height: 40px;
+    appearance: none;
+    background: none;
+    border: 0;
+    padding: 0;
+    font-size: 15px;
+    line-height: 1;
+    color: var(--xhs-muted);
+    transition: transform 0.18s ease;
+  }
+
+  .xhs-tree__caret[aria-expanded="true"] {
+    transform: rotate(90deg);
+  }
+
+  .xhs-tree__gap {
+    flex: 0 0 26px;
+  }
+
+  .xhs-tree__label {
+    flex: 1;
+    appearance: none;
+    background: none;
+    border: 0;
+    padding: 12px 8px 12px 0;
+    font: inherit;
+    font-size: 15px;
+    line-height: 1.4;
+    text-align: left;
+    color: var(--xhs-ink);
+  }
+
+  .xhs-tree__label.is-current {
+    color: var(--xhs-accent);
   }
 
   .xhs-sheet__section {

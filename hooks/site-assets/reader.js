@@ -77,6 +77,14 @@
         closeSheet()
         return
       }
+      const toggle = e.target.closest("[data-toggle]")
+      if (toggle) {
+        const key = toggle.dataset.toggle
+        if (state.open.has(key)) state.open.delete(key)
+        else state.open.add(key)
+        fillSheet()
+        return
+      }
       const link = e.target.closest("[data-href]")
       if (link) {
         location.href = link.dataset.href
@@ -126,6 +134,8 @@
     state.viewport = null
     state.bar = null
     state.sheet = null
+    state.open = new Set()
+    state.siteTree = null
     state.sections = []
     state.pages = 1
     state.index = 0
@@ -184,6 +194,7 @@
 
   const isFixedBlock = (el) => {
     if (el.tagName === "TABLE" || el.querySelector("table")) return true
+    if (el.tagName === "PRE" || el.querySelector("pre")) return true
     const math = el.querySelector(".katex-display")
     return !!math && el.textContent.trim().length > 250
   }
@@ -281,8 +292,9 @@
     state.pages = Math.max(1, start)
     fitMath()
     state.sections.forEach((sec) => {
-      const box = sec.el.querySelector(".md-typeset__scrollwrap") || sec.el
-      if (box.scrollWidth > box.clientWidth + 2) sec.el.classList.add("is-wide")
+      const boxes = sec.el.querySelectorAll(".md-typeset__scrollwrap, .highlight, pre")
+      const wide = Array.from(boxes).some((b) => b.scrollWidth > b.clientWidth + 2)
+      if (wide || sec.el.scrollWidth > sec.el.clientWidth + 2) sec.el.classList.add("is-wide")
     })
 
     // 表格段若比一屏还高，允许页内纵向滚动（样式在 CSS 里）
@@ -311,60 +323,113 @@
     })
   }
 
-  function siteEntries() {
+  // 站点目录树：整棵解析出来，只在展开的分支里渲染
+  function siteTree() {
     const root = document.querySelector(".md-nav--primary")
     if (!root) return []
-    const current = decodeURI(location.pathname).replace(/index\.html$/, "").replace(/\/$/, "")
-    const out = []
-    const seen = new Set()
-    root.querySelectorAll(".md-nav__link").forEach((el) => {
-      if (el.closest(".md-nav--secondary")) return // 右栏本文目录不重复列
-      const text = el.textContent.trim()
-      if (!text) return
-      const href = el.getAttribute("href")
-      // 该链接所在的嵌套层级
-      let depth = 0
-      let node = el.parentElement
-      while (node && node !== root) {
-        if (node.tagName === "NAV" && node.classList.contains("md-nav") && !node.classList.contains("md-nav--secondary")) depth += 1
-        node = node.parentElement
+    const top = root.querySelector("ul")
+    if (!top) return []
+    const current = decodeURI(location.pathname)
+      .replace(/index\.html$/, "")
+      .replace(/\/$/, "")
+
+    const walk = (ul, path) =>
+      Array.from(ul.children)
+        .map((li, i) => {
+          if (li.tagName !== "LI") return null
+          let own = null
+          for (const child of li.children) {
+            if (child.classList.contains("md-nav__link")) {
+              own = child
+              break
+            }
+            if (child.classList.contains("md-nav__container")) {
+              own = child.querySelector(".md-nav__link")
+              break
+            }
+          }
+          if (!own) return null
+          const text = own.textContent.trim()
+          if (!text) return null
+          const href = own.getAttribute("href")
+          const nav = Array.from(li.children).find(
+            (c) => c.tagName === "NAV" && !c.classList.contains("md-nav--secondary")
+          )
+          const subUl = nav ? nav.querySelector("ul") : null
+          const key = path.concat(i).join(".")
+          const node = {
+            key,
+            text,
+            href,
+            children: subUl ? walk(subUl, path.concat(i)) : [],
+            current:
+              !!href &&
+              decodeURI(new URL(href, location.href).pathname).replace(/\/$/, "") === current,
+          }
+          return node
+        })
+        .filter(Boolean)
+
+    return walk(top, [])
+  }
+
+  function openAncestors(nodes) {
+    let hit = false
+    nodes.forEach((n) => {
+      const childHit = n.children.length ? openAncestors(n.children) : false
+      if (n.current || childHit) {
+        state.open.add(n.key)
+        hit = true
       }
-      if (!href) {
-        if (el.tagName === "LABEL" || el.tagName === "SPAN") out.push({ text, depth, section: true })
-        return
-      }
-      const key = decodeURI(href)
-      if (seen.has(key)) return
-      seen.add(key)
-      out.push({
-        href,
-        text,
-        depth,
-        current: decodeURI(href).replace(/\/$/, "") === current,
-      })
     })
-    return out
+    return hit
+  }
+
+  function renderTree(nodes, list, depth) {
+    nodes.forEach((node) => {
+      const row = document.createElement("div")
+      row.className = "xhs-tree__row"
+      row.style.paddingLeft = 8 + depth * 14 + "px"
+
+      if (node.children.length) {
+        const caret = document.createElement("button")
+        caret.type = "button"
+        caret.className = "xhs-tree__caret"
+        caret.dataset.toggle = node.key
+        caret.setAttribute("aria-expanded", state.open.has(node.key) ? "true" : "false")
+        caret.textContent = "›"
+        row.appendChild(caret)
+      } else {
+        const gap = document.createElement("span")
+        gap.className = "xhs-tree__gap"
+        row.appendChild(gap)
+      }
+
+      const label = document.createElement("button")
+      label.type = "button"
+      label.className = "xhs-tree__label" + (node.current ? " is-current" : "")
+      label.textContent = node.text
+      if (node.href) label.dataset.href = node.href
+      else label.dataset.toggle = node.key
+      row.appendChild(label)
+
+      list.appendChild(row)
+      if (node.children.length && state.open.has(node.key)) {
+        renderTree(node.children, list, depth + 1)
+      }
+    })
   }
 
   function fillSheet() {
     if (!state.sheet) return
     const list = state.sheet.querySelector(".xhs-sheet__list")
     if (state.sheetTab === "site") {
-      const rows = siteEntries().map((e) => {
-        const el = document.createElement(e.section ? "p" : "button")
-        if (e.section) {
-          el.className = "xhs-sheet__section"
-          el.style.paddingLeft = 20 + e.depth * 14 + "px"
-        } else {
-          el.type = "button"
-          el.className = "xhs-sheet__item xhs-sheet__item--site" + (e.current ? " is-current" : "")
-          el.style.paddingLeft = 20 + e.depth * 14 + "px"
-          el.dataset.href = e.href
-        }
-        el.textContent = e.text
-        return el
-      })
-      list.replaceChildren(...rows)
+      if (!state.siteTree) {
+        state.siteTree = siteTree()
+        openAncestors(state.siteTree)
+      }
+      list.replaceChildren()
+      renderTree(state.siteTree, list, 0)
       return
     }
 
@@ -426,7 +491,7 @@
         moved = false
         horizontal = null
         const scroller = e.target.closest(
-          ".md-typeset__scrollwrap, .katex-display, .xhs-sec--block"
+          ".md-typeset__scrollwrap, .katex-display, pre, .highlight, .xhs-sec--block"
         )
         const canPan = !!scroller && scroller.scrollWidth > scroller.clientWidth + 2
         state.drag = { x: startX, t: Date.now(), target: e.target, canPan }
@@ -468,9 +533,8 @@
       const canPan = state.drag.canPan
       state.drag = null
 
-      if (canPan) return
-
       if (moved && horizontal) {
+        if (canPan) return
         const velocity = Math.abs(dx) / dt
         const flip = Math.abs(dx) > state.colW * 0.18 || velocity > 0.4
         go(state.index + (flip ? (dx < 0 ? 1 : -1) : 0))
