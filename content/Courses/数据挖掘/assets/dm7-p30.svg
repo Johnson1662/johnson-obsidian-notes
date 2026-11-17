@@ -54,7 +54,7 @@
 <text x="146.7" y="254" text-anchor="middle" font-size="10" fill="#333">1</text>
 <text x="223.3" y="254" text-anchor="middle" font-size="10" fill="#333">2</text>
 <text x="300.0" y="254" text-anchor="middle" font-size="10" fill="#333">3</text>
-<text x="185.0" y="270" text-anchor="middle" font-size="14" fill="#222">b > 0</text>
+<text x="185.0" y="270" text-anchor="middle" font-size="14" fill="#222">b &gt; 0</text>
 <rect x="386" y="30" width="254" height="230" fill="#fff" stroke="#333"/>
 <line x1="400" y1="240" x2="630" y2="240" stroke="#333"/>
 <line x1="400" y1="240" x2="400" y2="40" stroke="#333"/>
@@ -109,5 +109,5 @@
 <text x="476.7" y="254" text-anchor="middle" font-size="10" fill="#333">1</text>
 <text x="553.3" y="254" text-anchor="middle" font-size="10" fill="#333">2</text>
 <text x="630.0" y="254" text-anchor="middle" font-size="10" fill="#333">3</text>
-<text x="515.0" y="270" text-anchor="middle" font-size="14" fill="#222">b < 0</text>
+<text x="515.0" y="270" text-anchor="middle" font-size="14" fill="#222">b &lt; 0</text>
 </svg>
