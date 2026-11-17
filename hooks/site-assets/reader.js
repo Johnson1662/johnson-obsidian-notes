@@ -337,17 +337,12 @@
       Array.from(ul.children)
         .map((li, i) => {
           if (li.tagName !== "LI") return null
-          let own = null
-          for (const child of li.children) {
-            if (child.classList.contains("md-nav__link")) {
-              own = child
-              break
-            }
-            if (child.classList.contains("md-nav__container")) {
-              own = child.querySelector(".md-nav__link")
-              break
-            }
-          }
+          // 有链接优先用链接（页面自身带子目录时 label 只是折叠按钮）
+          let own =
+            li.querySelector(":scope > a.md-nav__link") ||
+            li.querySelector(":scope > .md-nav__container > a.md-nav__link") ||
+            li.querySelector(":scope > label.md-nav__link") ||
+            li.querySelector(":scope > .md-nav__container .md-nav__link")
           if (!own) return null
           const text = own.textContent.trim()
           if (!text) return null
