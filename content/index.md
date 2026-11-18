@@ -25,10 +25,6 @@ Johnson 的 Obsidian 笔记库：课程复习笔记、研究记录与知识整�
 - [Knowledge 索引](Knowledge/README.md)
 - [Personal Agent 架构拆解（Grok Bot）](Knowledge/Personal%20Agent%20架构拆解（Grok%20Bot）.md)
 
-## 学习方法
-
-- [用 ICAP 学习](用%20ICAP%20学习.md)
-
 ## 使用说明
 
 - 左侧目录树按文件夹展开；右上角搜索框输入后回车出结果
