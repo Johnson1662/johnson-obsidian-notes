@@ -76,10 +76,10 @@ markdown_extensions:
 
 extra_css:
   - https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css
-  - extra.css
+  - style.20261118.css
 
 extra_javascript:
   - https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js
   - https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js
   - extra.js
-  - reader.js
+  - reader.20261118.js
