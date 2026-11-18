@@ -10,6 +10,20 @@ description: 课件 PPT/PDF → 课程复习笔记（课程级 0 复习总览 + 
 
 **环境依赖**：`mineru-open-api`（抽取）、poppler 的 `pdftocairo/pdftoppm/pdfinfo/pdftext`、`google-chrome`（渲染 SVG 核对）、`python3`+Pillow、`node`（kcheck），以及站点构建工具（本仓库用 MkDocs Material）。本 skill 自带的 `scripts/` 随包提供，不依赖任何其它 skill。
 
+## 0 先转换：非 md → md（mineru extract，必做）
+
+拿到课件（PPT/PDF）**第一步**就用 mineru 解析成 md，再基于这份 md 整理。不要只用 `pdftotext` 或截图，会漏正文细节和图片。
+
+```bash
+mineru-open-api extract "<课件>.pdf" --model pipeline -f md -o <输出目录>
+# 页数 >200 或报 -60006 时按页分段：
+mineru-open-api extract "<课件>.pdf" --model pipeline -f md --pages 1-125 -o <输出目录>/part1
+```
+
+- `--model pipeline`：不编造文本（课件数字多，别用 vlm）。
+- 产物：`<输出目录>/<课件>.md` + `images/`（正文、表格、公式、插图都在里面）；**以这份 md 为唯一内容源**，再进入后面的表格还原 / 裁图 / 整理。
+- 大文件分段后，把 `part1/images`、`part2/images` 合并到同一级，再 `cat` 两份 md。
+
 ## 脚本
 
 | 脚本                             | 作用                                                                            |
@@ -27,16 +41,13 @@ CH=5; NAME="章名"; PDF="raw/ppt/$CH $NAME.pdf"; NOTE="$CH $NAME.md"
 SK=<本 skill 目录>       # 本 skill 自带的 scripts/ 在这里
 ```
 
-## 1 预检 + 抽取
+## 1 预检
 
 ```bash
-pdfinfo "$PDF" | grep Pages; ls -l "$PDF"     # >20 页或 >10MB 用 extract，小文件可 flash-extract
-mkdir -p /tmp/ch$CH/mineru
-mineru-open-api extract "$PDF" --model pipeline -f md -o /tmp/ch$CH/mineru > /tmp/ch$CH/log 2>&1 &
+pdfinfo "$PDF" | grep Pages; ls -l "$PDF"     # 记录页数/大小，决定是否分段
 ```
 
-`--model pipeline` = 不编造文本（课件数字多，别用 vlm）。后台跑，同时做 2、3。
-超过 200 页会报 `-60006`，分段 `--pages 1-125` / `--pages 126-250` 抽取后合并 `images/` 再 `cat`。
+按 §0 用 mineru 抽成 md（后台跑，同时做 2、3）；>200 页或报 `-60006` 时按页分段再合并 `images/`。
 
 ## 2 表格还原（`read` 会把 >768 字符的行截断，必须用脚本）
 
