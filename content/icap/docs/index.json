@@ -6,11 +6,6 @@
 			"size": 8837708,
 			"mtime": 1791908433934
 		},
-		"Courses/语音信息处理/语音信息处理-期末复习题库.pdf": {
-			"hash": "822874645896ac24a3b772318127a151e65d2e4163254fe9ebec70c79135d98c",
-			"size": 419764,
-			"mtime": 1793864755571
-		},
 		"Courses/语音信息处理/raw/slides/xmind/6.声纹识别.pdf": {
 			"hash": "eab8244adf663bc4265defb2197d0f181c1bd395db242fead50e58df72f3c180",
 			"size": 2402085,
@@ -42,34 +37,34 @@
 			"mtime": 1792446888000
 		},
 		"Courses/语音信息处理/raw/slides/2026/6 声纹识别 - 2026（复习）.pdf": {
-			"hash": "1cc0de424e2a654dac7a837f7c791dc0041143e8eacc67240d9e47e7f8233798",
-			"size": 3681696,
-			"mtime": 1793800453744
+			"hash": "75ef3872fe8717024f6dab07a94c7d4457a1491cdffd5f9472dff7a27e58199e",
+			"size": 1597077,
+			"mtime": 1794295955114
 		},
 		"Courses/语音信息处理/raw/slides/2026/5 语音增强 - 2026（复习）.pdf": {
-			"hash": "99590d4ad44d39317d1d3ed28ff108253e7f1c66eb364380e3788ba8f40aa4fb",
-			"size": 4096701,
-			"mtime": 1793598141585
+			"hash": "f7a1204da0fc4db4173a4c289715f1fc260855b4c09beeacd39e9e9f94124d19",
+			"size": 1210074,
+			"mtime": 1794295955064
 		},
 		"Courses/语音信息处理/raw/slides/2026/4 语音合成-2026（复习）.pdf": {
-			"hash": "596ba376809fcf3fcd1c0ab6374f7ee90828856cc09d7d61627e622b2d19743f",
-			"size": 5909022,
-			"mtime": 1793800453739
+			"hash": "bd9484eede9efa08e76383ecef83d894a99db2e17c91cf824bbf5b63f9f4a7a0",
+			"size": 1764635,
+			"mtime": 1794295954988
 		},
 		"Courses/语音信息处理/raw/slides/2026/3. 语音识别 - 2026（复习）.pdf": {
-			"hash": "dc89de35c4caaacfd72c4559b74fda0622e347bf9ec8b1d6645b8b10c3d37c91",
-			"size": 3854657,
-			"mtime": 1793800453731
+			"hash": "0932ef4df4c0a7eb6b8072a5a93b497793c8eb5c566db3bf5b0dfa1f96498420",
+			"size": 1849198,
+			"mtime": 1794295954895
 		},
 		"Courses/语音信息处理/raw/slides/2026/2 语音信号处理的基础-2026（复习）.pdf": {
-			"hash": "a3563a6f93bee3efdf829fd9fba6a0eedaccf19a4450712ff84aab715cbe8c50",
-			"size": 3104073,
-			"mtime": 1793800453724
+			"hash": "78208409829d46a3bcf07a49fb438ced2b9fa8b809430c00ad3e7309af3455ba",
+			"size": 2972895,
+			"mtime": 1794295954746
 		},
 		"Courses/语音信息处理/raw/slides/2026/1 语音产生与感知机理-2026（复习）.pdf": {
-			"hash": "c0a573ffe4fe903bbd5acf89bcb90f6fbc5f758a917c838d717cb29ea737867d",
-			"size": 3130599,
-			"mtime": 1793800453719
+			"hash": "69272cb625aee6399a38e7670e838cd409586502a82f30979096649ed0cc3e48",
+			"size": 1688473,
+			"mtime": 1794295954657
 		},
 		"Courses/计算机网络/raw/exam/25262计网期末回忆版.pdf": {
 			"hash": "15a5662ed08c139a98e423f258e2e15ec95677470e657110de48bee5742a2869",
@@ -190,6 +185,11 @@
 			"hash": "e344cb8791cfd848bc61a4c63ac5cec397f7ac49c65fcd411ef83b01005f1b8e",
 			"size": 445468,
 			"mtime": 1789190239000
+		},
+		"Courses/数据挖掘/raw/ppt/7 回归.pdf": {
+			"hash": "658f2051cf058e88c893295c7ac301ea6cc941b2ba90b0066bf85f00b4c5d10f",
+			"size": 2677804,
+			"mtime": 1794402741532
 		}
 	}
 }
