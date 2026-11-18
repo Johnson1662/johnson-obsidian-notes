@@ -1,9 +1,9 @@
 // 移动端整屏翻页（小说阅读器式）：正文用 CSS 多栏按屏切页；
 // 表格这类不能拆的块单独占一页，避免在多栏里被挤变形。
 // 拖动跟手、松手吸附；左右三分之一点击翻页，点中间显示/隐藏底部条。
-// 桌面端完全不启用。
+// 当前全尺寸都不启用，保留代码以便随时恢复。
 ;(function () {
-  const MOBILE = window.matchMedia("(max-width: 768px)")
+  const MOBILE = window.matchMedia("(max-width: 0px)") // 整屏翻页已停用：窄屏改用桌面同款长页滚动
   const HOST_SEL = ".md-content__inner"
   const state = {
     host: null,
