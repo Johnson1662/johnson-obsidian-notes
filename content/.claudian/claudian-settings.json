@@ -1,20 +1,19 @@
 {
   "userName": "",
-  "permissionMode": "normal",
+  "permissionMode": "yolo",
   "model": "pi:commandcode/deepseek/deepseek-v4.1-flash",
-  "thinkingBudget": "off",
-  "effortLevel": "medium",
+  "effortLevel": "high",
   "serviceTier": "default",
   "enableAutoTitleGeneration": true,
+  "titleGenerationLocale": "",
   "titleGenerationModel": "",
+  "showTabTitlesByDefault": true,
+  "chatFontScale": 100,
   "excludedTags": [],
   "mediaFolder": "",
   "systemPrompt": "",
-  "persistentExternalContextPaths": [],
   "sharedEnvironmentVariables": "",
   "envSnippets": [],
-  "customContextLimits": {},
-  "customModelAliases": {},
   "keyboardNavigation": {
     "scrollUpKey": "w",
     "scrollDownKey": "s",
@@ -35,22 +34,40 @@
       "customModels": "",
       "lastModel": "sonnet",
       "environmentVariables": "",
-      "environmentHash": ""
+      "environmentHash": "",
+      "installationMethodsByHost": {},
+      "wslDistroOverridesByHost": {},
+      "enabled": false,
+      "outputStyle": null,
+      "promptSuggestions": false,
+      "discoveredOutputStyles": [],
+      "modelAliases": {},
+      "visibleModels": [
+        "haiku",
+        "sonnet",
+        "opus",
+        "fable"
+      ],
+      "selectedModels": []
     },
     "codex": {
       "enabled": false,
       "safeMode": "workspace-write",
       "cliPath": "",
       "cliPathsByHost": {},
-      "customModels": "",
       "reasoningSummary": "detailed",
       "environmentVariables": "",
       "environmentHash": "",
       "installationMethodsByHost": {
-        "device:86e4c867-3556-40de-a81d-07e04daa8867": "native-windows",
-        "device:c378e22e-e269-46a4-af13-0d49b515f3c6": "native-windows"
+        "device:86e4c867-3556-40de-a81d-07e04daa8867": "native-windows"
       },
-      "wslDistroOverridesByHost": {}
+      "wslDistroOverridesByHost": {},
+      "modelAliases": {},
+      "visibleModels": [],
+      "enableUltraEffort": false,
+      "responseStyle": "pragmatic",
+      "responseVerbosity": "default",
+      "selectedModels": []
     },
     "opencode": {
       "cliPath": "",
@@ -60,1180 +77,45 @@
       "environmentVariables": "",
       "modelAliases": {},
       "preferredThinkingByModel": {},
-      "selectedMode": "claudian-yolo",
       "thinkingOptionsByModel": {},
       "visibleModels": [
         "opencode/big-pickle"
-      ]
+      ],
+      "installationMethodsByHost": {},
+      "wslDistroOverridesByHost": {},
+      "selectedModels": []
     },
     "pi": {
+      "installationMethodsByHost": {},
+      "wslDistroOverridesByHost": {},
       "cliPath": "",
       "cliPathsByHost": {},
-      "discoveredModels": [
-        {
-          "api": "openai-completions",
-          "contextWindow": 200000,
-          "encodedId": "pi:opencode/big-pickle",
-          "id": "big-pickle",
-          "input": [
-            "text"
-          ],
-          "label": "Big Pickle",
-          "maxTokens": 32000,
-          "provider": "opencode",
-          "reasoning": true,
-          "thinkingLevels": [
-            "off",
-            "minimal",
-            "low",
-            "medium",
-            "high"
-          ]
-        },
-        {
-          "api": "anthropic-messages",
-          "contextWindow": 200000,
-          "encodedId": "pi:opencode/claude-haiku-4-5",
-          "id": "claude-haiku-4-5",
-          "input": [
-            "text",
-            "image"
-          ],
-          "label": "Claude Haiku 4.5",
-          "maxTokens": 64000,
-          "provider": "opencode",
-          "reasoning": true,
-          "thinkingLevels": [
-            "off",
-            "minimal",
-            "low",
-            "medium",
-            "high"
-          ]
-        },
-        {
-          "api": "anthropic-messages",
-          "contextWindow": 200000,
-          "encodedId": "pi:opencode/claude-opus-4-1",
-          "id": "claude-opus-4-1",
-          "input": [
-            "text",
-            "image"
-          ],
-          "label": "Claude Opus 4.1",
-          "maxTokens": 32000,
-          "provider": "opencode",
-          "reasoning": true,
-          "thinkingLevels": [
-            "off",
-            "minimal",
-            "low",
-            "medium",
-            "high"
-          ]
-        },
-        {
-          "api": "anthropic-messages",
-          "contextWindow": 200000,
-          "encodedId": "pi:opencode/claude-opus-4-5",
-          "id": "claude-opus-4-5",
-          "input": [
-            "text",
-            "image"
-          ],
-          "label": "Claude Opus 4.5",
-          "maxTokens": 64000,
-          "provider": "opencode",
-          "reasoning": true,
-          "thinkingLevels": [
-            "off",
-            "minimal",
-            "low",
-            "medium",
-            "high"
-          ]
-        },
-        {
-          "api": "anthropic-messages",
-          "contextWindow": 1000000,
-          "encodedId": "pi:opencode/claude-opus-4-6",
-          "id": "claude-opus-4-6",
-          "input": [
-            "text",
-            "image"
-          ],
-          "label": "Claude Opus 4.6",
-          "maxTokens": 128000,
-          "provider": "opencode",
-          "reasoning": true,
-          "thinkingLevels": [
-            "off",
-            "minimal",
-            "low",
-            "medium",
-            "high",
-            "xhigh"
-          ]
-        },
-        {
-          "api": "anthropic-messages",
-          "contextWindow": 1000000,
-          "encodedId": "pi:opencode/claude-opus-4-7",
-          "id": "claude-opus-4-7",
-          "input": [
-            "text",
-            "image"
-          ],
-          "label": "Claude Opus 4.7",
-          "maxTokens": 128000,
-          "provider": "opencode",
-          "reasoning": true,
-          "thinkingLevels": [
-            "off",
-            "minimal",
-            "low",
-            "medium",
-            "high",
-            "xhigh"
-          ]
-        },
-        {
-          "api": "anthropic-messages",
-          "contextWindow": 1000000,
-          "encodedId": "pi:opencode/claude-opus-4-8",
-          "id": "claude-opus-4-8",
-          "input": [
-            "text",
-            "image"
-          ],
-          "label": "Claude Opus 4.8",
-          "maxTokens": 128000,
-          "provider": "opencode",
-          "reasoning": true,
-          "thinkingLevels": [
-            "off",
-            "minimal",
-            "low",
-            "medium",
-            "high",
-            "xhigh"
-          ]
-        },
-        {
-          "api": "anthropic-messages",
-          "contextWindow": 200000,
-          "encodedId": "pi:opencode/claude-sonnet-4",
-          "id": "claude-sonnet-4",
-          "input": [
-            "text",
-            "image"
-          ],
-          "label": "Claude Sonnet 4",
-          "maxTokens": 64000,
-          "provider": "opencode",
-          "reasoning": true,
-          "thinkingLevels": [
-            "off",
-            "minimal",
-            "low",
-            "medium",
-            "high"
-          ]
-        },
-        {
-          "api": "anthropic-messages",
-          "contextWindow": 200000,
-          "encodedId": "pi:opencode/claude-sonnet-4-5",
-          "id": "claude-sonnet-4-5",
-          "input": [
-            "text",
-            "image"
-          ],
-          "label": "Claude Sonnet 4.5",
-          "maxTokens": 64000,
-          "provider": "opencode",
-          "reasoning": true,
-          "thinkingLevels": [
-            "off",
-            "minimal",
-            "low",
-            "medium",
-            "high"
-          ]
-        },
-        {
-          "api": "anthropic-messages",
-          "contextWindow": 1000000,
-          "encodedId": "pi:opencode/claude-sonnet-4-6",
-          "id": "claude-sonnet-4-6",
-          "input": [
-            "text",
-            "image"
-          ],
-          "label": "Claude Sonnet 4.6",
-          "maxTokens": 64000,
-          "provider": "opencode",
-          "reasoning": true,
-          "thinkingLevels": [
-            "off",
-            "minimal",
-            "low",
-            "medium",
-            "high"
-          ]
-        },
-        {
-          "api": "openai-completions",
-          "contextWindow": 1000000,
-          "encodedId": "pi:opencode/deepseek-v4-flash",
-          "id": "deepseek-v4-flash",
-          "input": [
-            "text"
-          ],
-          "label": "DeepSeek V4 Flash",
-          "maxTokens": 384000,
-          "provider": "opencode",
-          "reasoning": true,
-          "thinkingLevels": [
-            "off",
-            "high",
-            "xhigh"
-          ]
-        },
-        {
-          "api": "openai-completions",
-          "contextWindow": 200000,
-          "encodedId": "pi:opencode/deepseek-v4-flash-free",
-          "id": "deepseek-v4-flash-free",
-          "input": [
-            "text"
-          ],
-          "label": "DeepSeek V4 Flash Free",
-          "maxTokens": 128000,
-          "provider": "opencode",
-          "reasoning": true,
-          "thinkingLevels": [
-            "off",
-            "high",
-            "xhigh"
-          ]
-        },
-        {
-          "api": "openai-completions",
-          "contextWindow": 1000000,
-          "encodedId": "pi:opencode/deepseek-v4-pro",
-          "id": "deepseek-v4-pro",
-          "input": [
-            "text"
-          ],
-          "label": "DeepSeek V4 Pro",
-          "maxTokens": 384000,
-          "provider": "opencode",
-          "reasoning": true,
-          "thinkingLevels": [
-            "off",
-            "high",
-            "xhigh"
-          ]
-        },
-        {
-          "api": "google-generative-ai",
-          "contextWindow": 1048576,
-          "encodedId": "pi:opencode/gemini-3-flash",
-          "id": "gemini-3-flash",
-          "input": [
-            "text",
-            "image"
-          ],
-          "label": "Gemini 3 Flash",
-          "maxTokens": 65536,
-          "provider": "opencode",
-          "reasoning": true,
-          "thinkingLevels": [
-            "minimal",
-            "low",
-            "medium",
-            "high"
-          ]
-        },
-        {
-          "api": "google-generative-ai",
-          "contextWindow": 1048576,
-          "encodedId": "pi:opencode/gemini-3.1-pro",
-          "id": "gemini-3.1-pro",
-          "input": [
-            "text",
-            "image"
-          ],
-          "label": "Gemini 3.1 Pro Preview",
-          "maxTokens": 65536,
-          "provider": "opencode",
-          "reasoning": true,
-          "thinkingLevels": [
-            "low",
-            "high"
-          ]
-        },
-        {
-          "api": "google-generative-ai",
-          "contextWindow": 1048576,
-          "encodedId": "pi:opencode/gemini-3.5-flash",
-          "id": "gemini-3.5-flash",
-          "input": [
-            "text",
-            "image"
-          ],
-          "label": "Gemini 3.5 Flash",
-          "maxTokens": 65536,
-          "provider": "opencode",
-          "reasoning": true,
-          "thinkingLevels": [
-            "minimal",
-            "low",
-            "medium",
-            "high"
-          ]
-        },
-        {
-          "api": "openai-completions",
-          "contextWindow": 204800,
-          "encodedId": "pi:opencode/glm-5",
-          "id": "glm-5",
-          "input": [
-            "text"
-          ],
-          "label": "GLM-5",
-          "maxTokens": 131072,
-          "provider": "opencode",
-          "reasoning": true,
-          "thinkingLevels": [
-            "off",
-            "minimal",
-            "low",
-            "medium",
-            "high"
-          ]
-        },
-        {
-          "api": "openai-completions",
-          "contextWindow": 204800,
-          "encodedId": "pi:opencode/glm-5.1",
-          "id": "glm-5.1",
-          "input": [
-            "text"
-          ],
-          "label": "GLM-5.1",
-          "maxTokens": 131072,
-          "provider": "opencode",
-          "reasoning": true,
-          "thinkingLevels": [
-            "off",
-            "minimal",
-            "low",
-            "medium",
-            "high"
-          ]
-        },
-        {
-          "api": "openai-responses",
-          "contextWindow": 400000,
-          "encodedId": "pi:opencode/gpt-5",
-          "id": "gpt-5",
-          "input": [
-            "text",
-            "image"
-          ],
-          "label": "GPT-5",
-          "maxTokens": 128000,
-          "provider": "opencode",
-          "reasoning": true,
-          "thinkingLevels": [
-            "minimal",
-            "low",
-            "medium",
-            "high"
-          ]
-        },
-        {
-          "api": "openai-responses",
-          "contextWindow": 400000,
-          "encodedId": "pi:opencode/gpt-5-codex",
-          "id": "gpt-5-codex",
-          "input": [
-            "text",
-            "image"
-          ],
-          "label": "GPT-5 Codex",
-          "maxTokens": 128000,
-          "provider": "opencode",
-          "reasoning": true,
-          "thinkingLevels": [
-            "minimal",
-            "low",
-            "medium",
-            "high"
-          ]
-        },
-        {
-          "api": "openai-responses",
-          "contextWindow": 400000,
-          "encodedId": "pi:opencode/gpt-5-nano",
-          "id": "gpt-5-nano",
-          "input": [
-            "text",
-            "image"
-          ],
-          "label": "GPT-5 Nano",
-          "maxTokens": 128000,
-          "provider": "opencode",
-          "reasoning": true,
-          "thinkingLevels": [
-            "minimal",
-            "low",
-            "medium",
-            "high"
-          ]
-        },
-        {
-          "api": "openai-responses",
-          "contextWindow": 400000,
-          "encodedId": "pi:opencode/gpt-5.1",
-          "id": "gpt-5.1",
-          "input": [
-            "text",
-            "image"
-          ],
-          "label": "GPT-5.1",
-          "maxTokens": 128000,
-          "provider": "opencode",
-          "reasoning": true,
-          "thinkingLevels": [
-            "minimal",
-            "low",
-            "medium",
-            "high"
-          ]
-        },
-        {
-          "api": "openai-responses",
-          "contextWindow": 400000,
-          "encodedId": "pi:opencode/gpt-5.1-codex",
-          "id": "gpt-5.1-codex",
-          "input": [
-            "text",
-            "image"
-          ],
-          "label": "GPT-5.1 Codex",
-          "maxTokens": 128000,
-          "provider": "opencode",
-          "reasoning": true,
-          "thinkingLevels": [
-            "minimal",
-            "low",
-            "medium",
-            "high"
-          ]
-        },
-        {
-          "api": "openai-responses",
-          "contextWindow": 400000,
-          "encodedId": "pi:opencode/gpt-5.1-codex-max",
-          "id": "gpt-5.1-codex-max",
-          "input": [
-            "text",
-            "image"
-          ],
-          "label": "GPT-5.1 Codex Max",
-          "maxTokens": 128000,
-          "provider": "opencode",
-          "reasoning": true,
-          "thinkingLevels": [
-            "minimal",
-            "low",
-            "medium",
-            "high"
-          ]
-        },
-        {
-          "api": "openai-responses",
-          "contextWindow": 400000,
-          "encodedId": "pi:opencode/gpt-5.1-codex-mini",
-          "id": "gpt-5.1-codex-mini",
-          "input": [
-            "text",
-            "image"
-          ],
-          "label": "GPT-5.1 Codex Mini",
-          "maxTokens": 128000,
-          "provider": "opencode",
-          "reasoning": true,
-          "thinkingLevels": [
-            "minimal",
-            "low",
-            "medium",
-            "high"
-          ]
-        },
-        {
-          "api": "openai-responses",
-          "contextWindow": 400000,
-          "encodedId": "pi:opencode/gpt-5.2",
-          "id": "gpt-5.2",
-          "input": [
-            "text",
-            "image"
-          ],
-          "label": "GPT-5.2",
-          "maxTokens": 128000,
-          "provider": "opencode",
-          "reasoning": true,
-          "thinkingLevels": [
-            "minimal",
-            "low",
-            "medium",
-            "high",
-            "xhigh"
-          ]
-        },
-        {
-          "api": "openai-responses",
-          "contextWindow": 400000,
-          "encodedId": "pi:opencode/gpt-5.2-codex",
-          "id": "gpt-5.2-codex",
-          "input": [
-            "text",
-            "image"
-          ],
-          "label": "GPT-5.2 Codex",
-          "maxTokens": 128000,
-          "provider": "opencode",
-          "reasoning": true,
-          "thinkingLevels": [
-            "minimal",
-            "low",
-            "medium",
-            "high",
-            "xhigh"
-          ]
-        },
-        {
-          "api": "openai-responses",
-          "contextWindow": 400000,
-          "encodedId": "pi:opencode/gpt-5.3-codex",
-          "id": "gpt-5.3-codex",
-          "input": [
-            "text",
-            "image"
-          ],
-          "label": "GPT-5.3 Codex",
-          "maxTokens": 128000,
-          "provider": "opencode",
-          "reasoning": true,
-          "thinkingLevels": [
-            "minimal",
-            "low",
-            "medium",
-            "high",
-            "xhigh"
-          ]
-        },
-        {
-          "api": "openai-responses",
-          "contextWindow": 272000,
-          "encodedId": "pi:opencode/gpt-5.4",
-          "id": "gpt-5.4",
-          "input": [
-            "text",
-            "image"
-          ],
-          "label": "GPT-5.4",
-          "maxTokens": 128000,
-          "provider": "opencode",
-          "reasoning": true,
-          "thinkingLevels": [
-            "minimal",
-            "low",
-            "medium",
-            "high",
-            "xhigh"
-          ]
-        },
-        {
-          "api": "openai-responses",
-          "contextWindow": 400000,
-          "encodedId": "pi:opencode/gpt-5.4-mini",
-          "id": "gpt-5.4-mini",
-          "input": [
-            "text",
-            "image"
-          ],
-          "label": "GPT-5.4 Mini",
-          "maxTokens": 128000,
-          "provider": "opencode",
-          "reasoning": true,
-          "thinkingLevels": [
-            "minimal",
-            "low",
-            "medium",
-            "high",
-            "xhigh"
-          ]
-        },
-        {
-          "api": "openai-responses",
-          "contextWindow": 400000,
-          "encodedId": "pi:opencode/gpt-5.4-nano",
-          "id": "gpt-5.4-nano",
-          "input": [
-            "text",
-            "image"
-          ],
-          "label": "GPT-5.4 Nano",
-          "maxTokens": 128000,
-          "provider": "opencode",
-          "reasoning": true,
-          "thinkingLevels": [
-            "minimal",
-            "low",
-            "medium",
-            "high",
-            "xhigh"
-          ]
-        },
-        {
-          "api": "openai-responses",
-          "contextWindow": 1050000,
-          "encodedId": "pi:opencode/gpt-5.4-pro",
-          "id": "gpt-5.4-pro",
-          "input": [
-            "text",
-            "image"
-          ],
-          "label": "GPT-5.4 Pro",
-          "maxTokens": 128000,
-          "provider": "opencode",
-          "reasoning": true,
-          "thinkingLevels": [
-            "minimal",
-            "low",
-            "medium",
-            "high",
-            "xhigh"
-          ]
-        },
-        {
-          "api": "openai-responses",
-          "contextWindow": 1050000,
-          "encodedId": "pi:opencode/gpt-5.5",
-          "id": "gpt-5.5",
-          "input": [
-            "text",
-            "image"
-          ],
-          "label": "GPT-5.5",
-          "maxTokens": 128000,
-          "provider": "opencode",
-          "reasoning": true,
-          "thinkingLevels": [
-            "minimal",
-            "low",
-            "medium",
-            "high",
-            "xhigh"
-          ]
-        },
-        {
-          "api": "openai-responses",
-          "contextWindow": 1050000,
-          "encodedId": "pi:opencode/gpt-5.5-pro",
-          "id": "gpt-5.5-pro",
-          "input": [
-            "text",
-            "image"
-          ],
-          "label": "GPT-5.5 Pro",
-          "maxTokens": 128000,
-          "provider": "opencode",
-          "reasoning": true,
-          "thinkingLevels": [
-            "medium",
-            "high",
-            "xhigh"
-          ]
-        },
-        {
-          "api": "openai-completions",
-          "contextWindow": 256000,
-          "encodedId": "pi:opencode/grok-build-0.1",
-          "id": "grok-build-0.1",
-          "input": [
-            "text",
-            "image"
-          ],
-          "label": "Grok Build 0.1",
-          "maxTokens": 256000,
-          "provider": "opencode",
-          "reasoning": true,
-          "thinkingLevels": [
-            "high"
-          ]
-        },
-        {
-          "api": "openai-completions",
-          "contextWindow": 262144,
-          "encodedId": "pi:opencode/kimi-k2.5",
-          "id": "kimi-k2.5",
-          "input": [
-            "text",
-            "image"
-          ],
-          "label": "Kimi K2.5",
-          "maxTokens": 65536,
-          "provider": "opencode",
-          "reasoning": true,
-          "thinkingLevels": [
-            "off",
-            "minimal",
-            "low",
-            "medium",
-            "high"
-          ]
-        },
-        {
-          "api": "openai-completions",
-          "contextWindow": 262144,
-          "encodedId": "pi:opencode/kimi-k2.6",
-          "id": "kimi-k2.6",
-          "input": [
-            "text",
-            "image"
-          ],
-          "label": "Kimi K2.6",
-          "maxTokens": 65536,
-          "provider": "opencode",
-          "reasoning": true,
-          "thinkingLevels": [
-            "off",
-            "minimal",
-            "low",
-            "medium",
-            "high"
-          ]
-        },
-        {
-          "api": "openai-completions",
-          "contextWindow": 200000,
-          "encodedId": "pi:opencode/mimo-v2.5-free",
-          "id": "mimo-v2.5-free",
-          "input": [
-            "text",
-            "image"
-          ],
-          "label": "MiMo V2.5 Free",
-          "maxTokens": 32000,
-          "provider": "opencode",
-          "reasoning": true,
-          "thinkingLevels": [
-            "off",
-            "minimal",
-            "low",
-            "medium",
-            "high"
-          ]
-        },
-        {
-          "api": "openai-completions",
-          "contextWindow": 204800,
-          "encodedId": "pi:opencode/minimax-m2.5",
-          "id": "minimax-m2.5",
-          "input": [
-            "text"
-          ],
-          "label": "MiniMax M2.5",
-          "maxTokens": 131072,
-          "provider": "opencode",
-          "reasoning": true,
-          "thinkingLevels": [
-            "off",
-            "minimal",
-            "low",
-            "medium",
-            "high"
-          ]
-        },
-        {
-          "api": "openai-completions",
-          "contextWindow": 204800,
-          "encodedId": "pi:opencode/minimax-m2.7",
-          "id": "minimax-m2.7",
-          "input": [
-            "text"
-          ],
-          "label": "MiniMax M2.7",
-          "maxTokens": 131072,
-          "provider": "opencode",
-          "reasoning": true,
-          "thinkingLevels": [
-            "off",
-            "minimal",
-            "low",
-            "medium",
-            "high"
-          ]
-        },
-        {
-          "api": "openai-completions",
-          "contextWindow": 1000000,
-          "encodedId": "pi:opencode/nemotron-3-ultra-free",
-          "id": "nemotron-3-ultra-free",
-          "input": [
-            "text"
-          ],
-          "label": "Nemotron 3 Ultra Free",
-          "maxTokens": 128000,
-          "provider": "opencode",
-          "reasoning": true,
-          "thinkingLevels": [
-            "off",
-            "minimal",
-            "low",
-            "medium",
-            "high"
-          ]
-        },
-        {
-          "api": "openai-completions",
-          "contextWindow": 256000,
-          "encodedId": "pi:opencode/north-mini-code-free",
-          "id": "north-mini-code-free",
-          "input": [
-            "text"
-          ],
-          "label": "North Mini Code Free",
-          "maxTokens": 64000,
-          "provider": "opencode",
-          "reasoning": true,
-          "thinkingLevels": [
-            "off",
-            "minimal",
-            "low",
-            "medium",
-            "high"
-          ]
-        },
-        {
-          "api": "anthropic-messages",
-          "contextWindow": 262144,
-          "encodedId": "pi:opencode/qwen3.5-plus",
-          "id": "qwen3.5-plus",
-          "input": [
-            "text",
-            "image"
-          ],
-          "label": "Qwen3.5 Plus",
-          "maxTokens": 65536,
-          "provider": "opencode",
-          "reasoning": true,
-          "thinkingLevels": [
-            "off",
-            "minimal",
-            "low",
-            "medium",
-            "high"
-          ]
-        },
-        {
-          "api": "anthropic-messages",
-          "contextWindow": 262144,
-          "encodedId": "pi:opencode/qwen3.6-plus",
-          "id": "qwen3.6-plus",
-          "input": [
-            "text",
-            "image"
-          ],
-          "label": "Qwen3.6 Plus",
-          "maxTokens": 65536,
-          "provider": "opencode",
-          "reasoning": true,
-          "thinkingLevels": [
-            "off",
-            "minimal",
-            "low",
-            "medium",
-            "high"
-          ]
-        },
-        {
-          "api": "openai-completions",
-          "contextWindow": 1000000,
-          "encodedId": "pi:opencode-go/deepseek-v4-flash",
-          "id": "deepseek-v4-flash",
-          "input": [
-            "text"
-          ],
-          "label": "DeepSeek V4 Flash",
-          "maxTokens": 384000,
-          "provider": "opencode-go",
-          "reasoning": true,
-          "thinkingLevels": [
-            "off",
-            "high",
-            "xhigh"
-          ]
-        },
-        {
-          "api": "openai-completions",
-          "contextWindow": 1000000,
-          "encodedId": "pi:opencode-go/deepseek-v4-pro",
-          "id": "deepseek-v4-pro",
-          "input": [
-            "text"
-          ],
-          "label": "DeepSeek V4 Pro",
-          "maxTokens": 384000,
-          "provider": "opencode-go",
-          "reasoning": true,
-          "thinkingLevels": [
-            "off",
-            "high",
-            "xhigh"
-          ]
-        },
-        {
-          "api": "openai-completions",
-          "contextWindow": 202752,
-          "encodedId": "pi:opencode-go/glm-5",
-          "id": "glm-5",
-          "input": [
-            "text"
-          ],
-          "label": "GLM-5",
-          "maxTokens": 32768,
-          "provider": "opencode-go",
-          "reasoning": true,
-          "thinkingLevels": [
-            "off",
-            "minimal",
-            "low",
-            "medium",
-            "high"
-          ]
-        },
-        {
-          "api": "openai-completions",
-          "contextWindow": 202752,
-          "encodedId": "pi:opencode-go/glm-5.1",
-          "id": "glm-5.1",
-          "input": [
-            "text"
-          ],
-          "label": "GLM-5.1",
-          "maxTokens": 32768,
-          "provider": "opencode-go",
-          "reasoning": true,
-          "thinkingLevels": [
-            "off",
-            "minimal",
-            "low",
-            "medium",
-            "high"
-          ]
-        },
-        {
-          "api": "openai-completions",
-          "contextWindow": 262144,
-          "encodedId": "pi:opencode-go/kimi-k2.6",
-          "id": "kimi-k2.6",
-          "input": [
-            "text",
-            "image"
-          ],
-          "label": "Kimi K2.6",
-          "maxTokens": 65536,
-          "provider": "opencode-go",
-          "reasoning": true,
-          "thinkingLevels": [
-            "off",
-            "high"
-          ]
-        },
-        {
-          "api": "openai-completions",
-          "contextWindow": 262144,
-          "encodedId": "pi:opencode-go/kimi-k2.7-code",
-          "id": "kimi-k2.7-code",
-          "input": [
-            "text",
-            "image"
-          ],
-          "label": "Kimi K2.7 Code",
-          "maxTokens": 262144,
-          "provider": "opencode-go",
-          "reasoning": true,
-          "thinkingLevels": [
-            "off",
-            "minimal",
-            "low",
-            "medium",
-            "high"
-          ]
-        },
-        {
-          "api": "openai-completions",
-          "contextWindow": 1000000,
-          "encodedId": "pi:opencode-go/mimo-v2.5",
-          "id": "mimo-v2.5",
-          "input": [
-            "text",
-            "image"
-          ],
-          "label": "MiMo V2.5",
-          "maxTokens": 128000,
-          "provider": "opencode-go",
-          "reasoning": true,
-          "thinkingLevels": [
-            "off",
-            "minimal",
-            "low",
-            "medium",
-            "high"
-          ]
-        },
-        {
-          "api": "openai-completions",
-          "contextWindow": 1048576,
-          "encodedId": "pi:opencode-go/mimo-v2.5-pro",
-          "id": "mimo-v2.5-pro",
-          "input": [
-            "text"
-          ],
-          "label": "MiMo V2.5 Pro",
-          "maxTokens": 128000,
-          "provider": "opencode-go",
-          "reasoning": true,
-          "thinkingLevels": [
-            "off",
-            "minimal",
-            "low",
-            "medium",
-            "high"
-          ]
-        },
-        {
-          "api": "openai-completions",
-          "contextWindow": 204800,
-          "encodedId": "pi:opencode-go/minimax-m2.7",
-          "id": "minimax-m2.7",
-          "input": [
-            "text"
-          ],
-          "label": "MiniMax M2.7",
-          "maxTokens": 131072,
-          "provider": "opencode-go",
-          "reasoning": true,
-          "thinkingLevels": [
-            "off",
-            "minimal",
-            "low",
-            "medium",
-            "high"
-          ]
-        },
-        {
-          "api": "anthropic-messages",
-          "contextWindow": 512000,
-          "encodedId": "pi:opencode-go/minimax-m3",
-          "id": "minimax-m3",
-          "input": [
-            "text",
-            "image"
-          ],
-          "label": "MiniMax M3 (3x usage)",
-          "maxTokens": 131072,
-          "provider": "opencode-go",
-          "reasoning": true,
-          "thinkingLevels": [
-            "off",
-            "minimal",
-            "low",
-            "medium",
-            "high"
-          ]
-        },
-        {
-          "api": "openai-completions",
-          "contextWindow": 1000000,
-          "encodedId": "pi:opencode-go/qwen3.6-plus",
-          "id": "qwen3.6-plus",
-          "input": [
-            "text",
-            "image"
-          ],
-          "label": "Qwen3.6 Plus",
-          "maxTokens": 65536,
-          "provider": "opencode-go",
-          "reasoning": true,
-          "thinkingLevels": [
-            "off",
-            "minimal",
-            "low",
-            "medium",
-            "high"
-          ]
-        },
-        {
-          "api": "anthropic-messages",
-          "contextWindow": 1000000,
-          "encodedId": "pi:opencode-go/qwen3.7-max",
-          "id": "qwen3.7-max",
-          "input": [
-            "text"
-          ],
-          "label": "Qwen3.7 Max",
-          "maxTokens": 65536,
-          "provider": "opencode-go",
-          "reasoning": true,
-          "thinkingLevels": [
-            "off",
-            "minimal",
-            "low",
-            "medium",
-            "high"
-          ]
-        },
-        {
-          "api": "anthropic-messages",
-          "contextWindow": 1000000,
-          "encodedId": "pi:opencode-go/qwen3.7-plus",
-          "id": "qwen3.7-plus",
-          "input": [
-            "text",
-            "image"
-          ],
-          "label": "Qwen3.7 Plus",
-          "maxTokens": 65536,
-          "provider": "opencode-go",
-          "reasoning": true,
-          "thinkingLevels": [
-            "off",
-            "minimal",
-            "low",
-            "medium",
-            "high"
-          ]
-        }
-      ],
       "enabled": true,
       "environmentHash": "",
       "environmentVariables": "",
       "modelAliases": {},
-      "preferredThinkingByModel": {
-        "pi:opencode/deepseek-v4-flash-free": "xhigh"
-      },
-      "toolMode": "all",
+      "preferredThinkingByModel": {},
       "visibleModels": [
-        "pi:opencode/big-pickle",
-        "pi:opencode/deepseek-v4-flash-free"
+        "pi:commandcode/deepseek/deepseek-v4.1-flash"
+      ],
+      "selectedModels": [
+        {
+          "api": "openai-completions",
+          "contextWindow": 1000000,
+          "encodedId": "pi:commandcode/deepseek/deepseek-v4.1-flash",
+          "id": "deepseek/deepseek-v4.1-flash",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "DeepSeek V4.1 Flash",
+          "maxTokens": 32768,
+          "provider": "commandcode",
+          "reasoning": false,
+          "thinkingLevels": [
+            "off"
+          ]
+        }
       ]
     },
     "omp": {
@@ -3886,30 +2768,99 @@
       "visibleModels": [
         "pi:commandcode/deepseek/deepseek-v4.1-flash"
       ]
+    },
+    "antigravity": {
+      "cliPath": "",
+      "cliPathsByHost": {},
+      "enabled": true,
+      "environmentHash": "",
+      "environmentVariables": "",
+      "installationMethodsByHost": {},
+      "modelAliases": {},
+      "preferredReasoningByModel": {},
+      "visibleModels": [
+        "gemini-4-hydrogen"
+      ],
+      "wslDistroOverridesByHost": {},
+      "selectedModelsByHost": {
+        "device-f1354125e51eb870d7606a1719477c4c0de3cf911113fd847721e0574a7f025f": {
+          "defaultModelId": null,
+          "models": [
+            {
+              "displayName": "Gemini 4 Hydrogen",
+              "rawId": "gemini-4-hydrogen",
+              "reasoningEfforts": [
+                {
+                  "label": "Low",
+                  "value": "low"
+                },
+                {
+                  "label": "Medium",
+                  "value": "medium"
+                },
+                {
+                  "label": "High",
+                  "value": "high"
+                },
+                {
+                  "label": "xHigh",
+                  "value": "xhigh"
+                }
+              ]
+            }
+          ],
+          "refreshedAt": 1795432571370
+        }
+      }
+    },
+    "deepseek": {
+      "installationMethodsByHost": {},
+      "wslDistroOverridesByHost": {},
+      "enabled": false,
+      "codeMode": false,
+      "presetPlugins": "",
+      "cliPath": "",
+      "cliPathsByHost": {},
+      "environmentVariables": "",
+      "environmentHash": "",
+      "visibleModels": [],
+      "modelAliases": {},
+      "preferredReasoningByModel": {},
+      "selectedModels": []
+    },
+    "grok": {
+      "installationMethodsByHost": {},
+      "wslDistroOverridesByHost": {},
+      "cliPath": "",
+      "cliPathsByHost": {},
+      "enabled": false,
+      "environmentHash": "",
+      "environmentVariables": "",
+      "modelAliases": {},
+      "preferredReasoningByModel": {},
+      "visibleModels": [],
+      "selectedModelsByHost": {}
     }
   },
-  "settingsProvider": "omp",
+  "settingsProvider": "pi",
+  "lastSelectedChatModel": {
+    "providerId": "pi",
+    "model": "pi:commandcode/deepseek/deepseek-v4.1-flash"
+  },
+  "inlineEditModel": null,
   "savedProviderModel": {
     "claude": "sonnet",
     "opencode": "opencode:opencode/big-pickle",
-    "codex": "gpt-5.5",
-    "pi": "pi:commandcode/deepseek/deepseek-v4.1-flash",
-    "omp": "pi:commandcode/deepseek/deepseek-v4.1-flash"
+    "omp": "pi:commandcode/deepseek/deepseek-v4.1-flash",
+    "pi": "pi:commandcode/deepseek/deepseek-v4.1-flash"
   },
   "savedProviderEffort": {
     "claude": "high",
     "opencode": "default",
-    "codex": "medium",
-    "pi": "medium",
-    "omp": "medium"
+    "omp": "medium",
+    "pi": "high"
   },
-  "savedProviderServiceTier": {
-    "codex": "default"
-  },
-  "savedProviderThinkingBudget": {
-    "opencode": "default",
-    "codex": "low"
-  },
+  "savedProviderServiceTier": {},
   "savedProviderPermissionMode": {
     "claude": "yolo",
     "opencode": "yolo",
@@ -3917,12 +2868,29 @@
     "pi": "yolo",
     "omp": "normal"
   },
-  "lastCustomModel": "",
-  "maxTabs": 3,
   "enableAutoScroll": true,
   "deferMathRenderingDuringStreaming": true,
+  "pluginRenderedFenceLanguages": [],
   "expandFileEditsByDefault": false,
   "chatViewPlacement": "right-sidebar",
-  "hiddenProviderCommands": {},
+  "enableZenMode": true,
+  "zenModePosition": null,
+  "enableDualPane": true,
+  "dualPaneSide": "right",
+  "restoreTabsOnStartup": true,
+  "skillsSynced": false,
+  "sessionManagerOrganization": "list",
+  "sessionManagerSort": "last-updated",
+  "sessionAutoArchiveAfter": "off",
+  "pinnedLinkedContentPaths": [],
+  "hiddenCommands": [],
+  "thinkingBudget": "off",
+  "customModelAliases": {},
+  "savedProviderThinkingBudget": {
+    "opencode": "default",
+    "codex": "low"
+  },
+  "lastCustomModel": "",
+  "maxTabs": 3,
   "tabBarPosition": "input"
 }
