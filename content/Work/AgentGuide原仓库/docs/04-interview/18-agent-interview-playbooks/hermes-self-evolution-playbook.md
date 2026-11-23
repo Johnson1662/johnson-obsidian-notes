@@ -345,15 +345,15 @@ OpenClaw 用绝对阈值（固定 token 数触发压缩），Hermes 用**比例�
 
 **14 类错误分类与自愈**：不再笼统处理"Error"，而是精细分类：
 
-| 错误类型 | 含义 | 自动恢复策略 |
-|---------|------|------------|
-| auth | 认证失败 | 提示用户重新配置 |
-| rate_limit | 被限流 | 指数退避重试 |
-| timeout | 请求超时 | 重试 + 降级 |
-| context_overflow | 上下文溢出 | 触发压缩 |
-| server_error | 5xx | 切换 fallback provider |
-| billing | 额度用完 | 提示用户充值 |
-| ... | ... | ... |
+| 错误类型             | 含义    | 自动恢复策略               |
+| ---------------- | ----- | -------------------- |
+| auth             | 认证失败  | 提示用户重新配置             |
+| rate_limit       | 被限流   | 指数退避重试               |
+| timeout          | 请求超时  | 重试 + 降级              |
+| context_overflow | 上下文溢出 | 触发压缩                 |
+| server_error     | 5xx   | 切换 fallback provider |
+| billing          | 额度用完  | 提示用户充值               |
+| ...              | ...   | ...                  |
 
 **受控子 Agent 机制**：子 Agent 不能创建新的子 Agent（防止递归爆炸）、不能向主 Agent 反向询问（单向性）、不能访问主 Agent 完整上下文（安全隔离）。子 Agent 禁用的工具列表包括 skill_manage、memory 写入等权限操作。
 
