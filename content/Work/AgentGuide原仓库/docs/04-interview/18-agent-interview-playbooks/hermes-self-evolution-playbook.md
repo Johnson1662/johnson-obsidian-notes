@@ -226,12 +226,12 @@ Hermes 的做法：
 
 这是 Hermes 最精华的存储架构。**"何时加载"的划分比"存什么"更重要。**
 
-| 层 | 存储位置 | 加载时机 | 尺寸约束 | 对应认知类型 |
-|----|---------|---------|---------|------------|
-| **Prompt Memory** | MEMORY.md / USER.md | 永远加载，进 system prompt | 两文件合计 ≤ 3,575 字符（硬性） | 语义/陈述性记忆 |
-| **Session Search** | SQLite + FTS5 | 按需查询，agent 主动调用 session_search | 无限 | 情景记忆 |
-| **Skills** | ~/.hermes/skills/*/SKILL.md | 索引常驻 + 全文按需（渐进式披露） | 每 skill 独立文件 | 程序性记忆 |
-| **Honcho**（可选） | 独立服务 | 按需查询，被动建模 | 12 identity layers | 关系性记忆/自我模型 |
+| 层                  | 存储位置                        | 加载时机                           | 尺寸约束                 | 对应认知类型     |
+| ------------------ | --------------------------- | ------------------------------ | -------------------- | ---------- |
+| **Prompt Memory**  | MEMORY.md / USER.md         | 永远加载，进 system prompt           | 两文件合计 ≤ 3,575 字符（硬性） | 语义/陈述性记忆   |
+| **Session Search** | SQLite + FTS5               | 按需查询，agent 主动调用 session_search | 无限                   | 情景记忆       |
+| **Skills**         | ~/.hermes/skills/*/SKILL.md | 索引常驻 + 全文按需（渐进式披露）             | 每 skill 独立文件         | 程序性记忆      |
+| **Honcho**（可选）     | 独立服务                        | 按需查询，被动建模                      | 12 identity layers   | 关系性记忆/自我模型 |
 
 ## 关键设计决策
 
