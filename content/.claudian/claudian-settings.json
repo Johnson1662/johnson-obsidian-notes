@@ -2772,7 +2772,7 @@
     "antigravity": {
       "cliPath": "",
       "cliPathsByHost": {},
-      "enabled": true,
+      "enabled": false,
       "environmentHash": "runtime-input:v1:53965a5d5461a45c6b73f390fb2d15c977787ce901c503d5be22692dbea9bfa9",
       "environmentVariables": "",
       "installationMethodsByHost": {},
@@ -2869,7 +2869,7 @@
     "codex": "yolo",
     "pi": "yolo",
     "omp": "normal",
-    "antigravity": "normal"
+    "antigravity": "yolo"
   },
   "enableAutoScroll": true,
   "deferMathRenderingDuringStreaming": true,
