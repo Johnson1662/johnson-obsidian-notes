@@ -46,17 +46,11 @@ MCP 采用一种**客户端-服务器架构**，包含三种不同的角色，�
 
 ### 22.2.1 三角色模型
 
-**MCP Host**
+**MCP Host** 终端用户直接与之交互的 LLM 应用。例如 Claude Desktop、VS Code 扩展、自研聊天机器人或自主 Agent。Host 负责管理整体用户体验，决定连接哪些 MCP server，并执行安全策略。一个 Host 内部包含一个或多个 MCP client。
 
-终端用户直接与之交互的 LLM 应用。例如 Claude Desktop、VS Code 扩展、自研聊天机器人或自主 Agent。Host 负责管理整体用户体验，决定连接哪些 MCP server，并执行安全策略。一个 Host 内部包含一个或多个 MCP client。
+**MCP Client** 嵌入在 Host 应用内部的协议层组件。每个 client 与单个 MCP server 维持一条*有状态的一对一连接*。Client 负责协议协商、消息序列化以及连接的生命周期管理。一个 Host 可同时运行多个 client，每个 client 连接到不同的 server。
 
-**MCP Client**
-
-嵌入在 Host 应用内部的协议层组件。每个 client 与单个 MCP server 维持一条*有状态的一对一连接*。Client 负责协议协商、消息序列化以及连接的生命周期管理。一个 Host 可同时运行多个 client，每个 client 连接到不同的 server。
-
-**MCP Server**
-
-一个轻量级的进程或服务，向 client 暴露能力（tools、resources、prompts）。Server 通常是对既有 API、数据库或系统接口的薄包装。它们被设计得易于实现——协议的复杂性由 client/host 层承担。
+**MCP Server** 一个轻量级的进程或服务，向 client 暴露能力（tools、resources、prompts）。Server 通常是对既有 API、数据库或系统接口的薄包装。它们被设计得易于实现——协议的复杂性由 client/host 层承担。
 
 > [!example] 具体示例：一个编程助手
 > 一位开发者使用一个由 Claude 驱动的 VS Code 扩展（即 **Host**）。该扩展运行三个 **Client**，分别连接到不同的 **Server**：
@@ -71,13 +65,9 @@ MCP 采用一种**客户端-服务器架构**，包含三种不同的角色，�
 
 MCP 在协议层与传输层无关，但定义了两种标准的传输机制：
 
-**stdio（标准输入输出）**
+**stdio（标准输入输出）** Client 将 server 作为子进程启动，通过标准输入/输出流通信。这是本地工具最简单、最常见的传输方式。它提供了较强的隔离性（server 运行在独立的进程中），且无需任何网络配置。非常适合文件系统访问、本地代码执行和开发者工具。
 
-Client 将 server 作为子进程启动，通过标准输入/输出流通信。这是本地工具最简单、最常见的传输方式。它提供了较强的隔离性（server 运行在独立的进程中），且无需任何网络配置。非常适合文件系统访问、本地代码执行和开发者工具。
-
-**Streamable HTTP**
-
-Server 作为 HTTP 服务运行。Client 通过 HTTP POST 发送 JSON-RPC 请求；server 可以返回单个 JSON 响应，也可以升级为 Server-Sent Events (SSE) 流以增量返回结果。这种传输方式支持远程 server，可启用服务端推送通知，并能穿越标准的 Web 基础设施（代理、负载均衡器、防火墙）。适用于云端托管工具与企业部署。（该传输在 2025-03-26 的协议修订版中取代了早先仅 HTTP+SSE 的传输方式。）
+**Streamable HTTP** Server 作为 HTTP 服务运行。Client 通过 HTTP POST 发送 JSON-RPC 请求；server 可以返回单个 JSON 响应，也可以升级为 Server-Sent Events (SSE) 流以增量返回结果。这种传输方式支持远程 server，可启用服务端推送通知，并能穿越标准的 Web 基础设施（代理、负载均衡器、防火墙）。适用于云端托管工具与企业部署。（该传输在 2025-03-26 的协议修订版中取代了早先仅 HTTP+SSE 的传输方式。）
 
 ### 22.2.3 协议生命周期
 
@@ -375,21 +365,13 @@ MCP 运行在多个信任边界之上。理解这些边界对于安全部署至�
 
 ### 22.6.1 信任层级
 
-**Host（最高信任）**
+**Host（最高信任）** Host 应用受用户信任。它执行安全策略，管理用户同意，并控制 client 连接哪些 server。Host 是"何种操作被允许"的最终裁决者。
 
-Host 应用受用户信任。它执行安全策略，管理用户同意，并控制 client 连接哪些 server。Host 是"何种操作被允许"的最终裁决者。
+**Client（由 Host 信任）** Client 忠实地实现协议并执行 Host 的策略。它对 server 响应进行校验，并在把数据交给 LLM 之前进行清洗。
 
-**Client（由 Host 信任）**
+**Server（条件信任）** Server 被信任会诚实地实现其声明的能力，但 Host 不应盲目信任 server 提供的数据。一个被攻破或恶意的 server 可能通过在 resource 内容中嵌入指令来尝试 prompt 注入攻击。
 
-Client 忠实地实现协议并执行 Host 的策略。它对 server 响应进行校验，并在把数据交给 LLM 之前进行清洗。
-
-**Server（条件信任）**
-
-Server 被信任会诚实地实现其声明的能力，但 Host 不应盲目信任 server 提供的数据。一个被攻破或恶意的 server 可能通过在 resource 内容中嵌入指令来尝试 prompt 注入攻击。
-
-**外部服务（不可信）**
-
-从协议视角看，MCP server 所交互的各类服务（Web API、数据库、文件系统）都是不可信的。Server 必须校验并清洗所有外部数据。
+**外部服务（不可信）** 从协议视角看，MCP server 所交互的各类服务（Web API、数据库、文件系统）都是不可信的。Server 必须校验并清洗所有外部数据。
 
 ### 22.6.2 用户同意
 
@@ -708,21 +690,13 @@ async def resilient_tool_call(
 
 MCP 已被多款主流 AI 开发工具采用：
 
-**Claude Desktop**
+**Claude Desktop** Anthropic 的桌面应用是首个主要的 MCP host。用户在一个 JSON 配置文件中配置 server；Claude 随后即可在任意对话中使用所有已连接 server 暴露的 tool。
 
-Anthropic 的桌面应用是首个主要的 MCP host。用户在一个 JSON 配置文件中配置 server；Claude 随后即可在任意对话中使用所有已连接 server 暴露的 tool。
+**Cursor** 这款由 AI 驱动的代码编辑器支持 MCP server，允许开发者将其开发工具（数据库、问题跟踪、文档系统）直接连接到编程助手。
 
-**Cursor**
+**VS Code (GitHub Copilot)** Microsoft 在 VS Code 的 GitHub Copilot 中加入了 MCP 支持，使编程助手能够访问项目特定的工具与数据源。
 
-这款由 AI 驱动的代码编辑器支持 MCP server，允许开发者将其开发工具（数据库、问题跟踪、文档系统）直接连接到编程助手。
-
-**VS Code (GitHub Copilot)**
-
-Microsoft 在 VS Code 的 GitHub Copilot 中加入了 MCP 支持，使编程助手能够访问项目特定的工具与数据源。
-
-**自定义 Agent**
-
-开源社区已为 LangChain、LlamaIndex、AutoGen等框架加入了 MCP 支持，使建立在这些框架上的任何 Agent 都能使用 MCP server。
+**自定义 Agent** 开源社区已为 LangChain、LlamaIndex、AutoGen等框架加入了 MCP 支持，使建立在这些框架上的任何 Agent 都能使用 MCP server。
 
 ### 22.8.3 Server 注册表与发现
 

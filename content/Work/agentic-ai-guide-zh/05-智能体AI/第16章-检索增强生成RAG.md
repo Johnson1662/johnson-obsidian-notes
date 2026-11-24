@@ -59,17 +59,11 @@ $$\begin{aligned}
 
 ### 16.2.2 索引流水线
 
-**文档加载。**
+**文档加载。** 文档以异构格式抵达（PDF、HTML、Markdown、DOCX、代码）。加载器提取干净的文本，并保留元数据（来源 URL、页码、章节标题、时间戳），这些元数据会与 Embedding 一并存储，用于过滤和引用。
 
-文档以异构格式抵达（PDF、HTML、Markdown、DOCX、代码）。加载器提取干净的文本，并保留元数据（来源 URL、页码、章节标题、时间戳），这些元数据会与 Embedding 一并存储，用于过滤和引用。
+**分块（Chunking）。** 长文档必须切分成可放入 Embedding 模型上下文窗口（通常为 512 个 Token）并保持语义连贯的块。分块策略是 RAG 系统设计中影响最大的决策之一（参见 Section 16.4）。
 
-**分块（Chunking）。**
-
-长文档必须切分成可放入 Embedding 模型上下文窗口（通常为 512 个 Token）并保持语义连贯的块。分块策略是 RAG 系统设计中影响最大的决策之一（参见 Section 16.4）。
-
-**Embedding。**
-
-每个块 $c_i$ 通过 Embedding 模型 $f_\phi$ 编码为稠密向量 $\mathbf{e}_i = f_\phi(c_i) \in \mathbb{R}^d$。这些向量与原始文本和元数据一同存储到向量数据库中。
+**Embedding。** 每个块 $c_i$ 通过 Embedding 模型 $f_\phi$ 编码为稠密向量 $\mathbf{e}_i = f_\phi(c_i) \in \mathbb{R}^d$。这些向量与原始文本和元数据一同存储到向量数据库中。
 
 ### 16.2.3 检索
 
@@ -135,9 +129,7 @@ $$
 \text{sim}(q, p) = E_Q(q)^\top E_P(p)
 $$
 
-**使用 Batch 内负样本进行训练。**
-
-给定包含 $B$ 个查询—段落对的 Batch $\{(q_i, p_i^+)\}_{i=1}^B$，对比 Loss 将 Batch 中所有其他段落视为负样本：
+**使用 Batch 内负样本进行训练。** 给定包含 $B$ 个查询—段落对的 Batch $\{(q_i, p_i^+)\}_{i=1}^B$，对比 Loss 将 Batch 中所有其他段落视为负样本：
 
 $$\mathcal{L}_{\text{DPR}} = -\frac{1}{B} \sum_{i=1}^{B}
     \log \frac{\exp\!\left(E_Q(q_i)^\top E_P(p_i^+) / \tau\right)}
@@ -145,9 +137,7 @@ $$\mathcal{L}_{\text{DPR}} = -\frac{1}{B} \sum_{i=1}^{B}
 
 其中 $\tau$ 是温度超参数。硬负样本（词面相似但语义无关的段落）对训练强检索器至关重要。
 
-**近似最近邻搜索。**
-
-在大规模场景下，对数百万个 Embedding 进行穷举搜索不可行。FAISS [171]（Facebook AI Similarity Search）提供了高效的近似最近邻（Approximate Nearest Neighbor, ANN）搜索，所用方法包括：
+**近似最近邻搜索。** 在大规模场景下，对数百万个 Embedding 进行穷举搜索不可行。FAISS [171]（Facebook AI Similarity Search）提供了高效的近似最近邻（Approximate Nearest Neighbor, ANN）搜索，所用方法包括：
 
 -   **IVF（倒排文件索引，Inverted File Index）**：将向量聚类到 Voronoi 单元中；只搜索邻近的单元
 -   **HNSW（分层可导航小世界，Hierarchical Navigable Small World）** [248]：基于图的索引，搜索复杂度 $O(\log N)$
@@ -183,13 +173,9 @@ $$
 > [!tip] 为什么需要 SPLADE？
 > 传统的稀疏检索（BM25）依赖精确的词面匹配——当查询说 \"car\" 而文档说 \"automobile\" 时它就会失败。稠密检索（DPR）能捕捉语义但缺乏可解释性，查询时需要 GPU，且索引体积大。**SPLADE** 兼具二者的优点：稀疏向量（像 BM25 一样支持快速的倒排索引查找）配合可学习的语义扩展（像稠密模型一样处理同义词和相关概念）。
 
-**SPLADE（v1）—— 核心思想。**
+**SPLADE（v1）—— 核心思想。** SPLADE（Sparse Lexical and Expansion Model） [95] 使用预训练的掩码语言模型（如 BERT/DistilBERT），为每个文档或查询生成一个覆盖*整个词汇表*的稀疏向量。关键洞见在于：MLM 头部已经知道文本中每个位置在语义上与哪些词相关——SPLADE 把这种知识重新利用为词项重要性权重。
 
-SPLADE（Sparse Lexical and Expansion Model） [95] 使用预训练的掩码语言模型（如 BERT/DistilBERT），为每个文档或查询生成一个覆盖*整个词汇表*的稀疏向量。关键洞见在于：MLM 头部已经知道文本中每个位置在语义上与哪些词相关——SPLADE 把这种知识重新利用为词项重要性权重。
-
-**架构。**
-
-给定输入文本 $x = [x_1, \ldots, x_n]$：
+**架构。** 给定输入文本 $x = [x_1, \ldots, x_n]$：
 
 1.  通过 Transformer 编码器，并经由 MLM 头部得到上下文表示 $\mathbf{H} \in \mathbb{R}^{n \times |\mathcal{V}|}$
 2.  跨位置聚合，并应用一个饱和激活：
@@ -205,9 +191,7 @@ $$
 -   跨位置的 $\max$ 池化为每个词项从文本任意位置中捕获最强信号
 -   **扩展**：即使是原文中*未出现*的 Token 也可获得非零权重（例如关于 \"neural networks\" 的文档可能为 \"deep learning\"、\"AI\"、\"backpropagation\" 赋权）
 
-**打分。**
-
-查询和文档分别映射为稀疏向量 $\mathbf{w}^q, \mathbf{w}^d \in \mathbb{R}^{|\mathcal{V}|}$。相关性得分就是一个简单的点积：
+**打分。** 查询和文档分别映射为稀疏向量 $\mathbf{w}^q, \mathbf{w}^d \in \mathbb{R}^{|\mathcal{V}|}$。相关性得分就是一个简单的点积：
 
 $$
 s(q, d) = \sum_{t \in \mathcal{V}} w_t^q \cdot w_t^d
@@ -215,9 +199,7 @@ $$
 
 由于两个向量都是稀疏的（在 30K 词汇表中通常只有 20–200 个非零项），这可以使用标准倒排索引（Lucene、Anserini）高效计算——查询时无需 GPU。
 
-**训练。**
-
-SPLADE 通过对比学习（Batch 内负样本 + 硬负样本）进行训练，并附加两个正则项：
+**训练。** SPLADE 通过对比学习（Batch 内负样本 + 硬负样本）进行训练，并附加两个正则项：
 
 $$
 \mathcal{L} = \mathcal{L}_{\text{contrastive}} + \lambda_q \|\mathbf{w}^q\|_1 + \lambda_d \|\mathbf{w}^d\|_1
@@ -225,9 +207,7 @@ $$
 
 查询和文档表示上的 $L_1$ 惩罚鼓励稀疏性——若没有它们，模型将学到稠密表示，从而背离设计初衷。
 
-**SPLADEv2 —— 关键改进。**
-
-SPLADEv2 [94] 引入了若干改进，显著提升了效率与效果：
+**SPLADEv2 —— 关键改进。** SPLADEv2 [94] 引入了若干改进，显著提升了效率与效果：
 
 1.  **从交叉编码器蒸馏**：SPLADEv2 不只用二元相关性标签训练，而是借助交叉编码器教师（如 MonoT5 [269]）提供软相关性得分，从而获得更丰富的训练信号：
 
@@ -276,16 +256,12 @@ $$
 
 这种晚期交互（Late Interaction）机制比单向量双编码器更具表达力，又因为文档 Embedding 可离线预计算而远比交叉编码器更快。
 
-**架构。**
-
-查询编码器 $E_Q$ 和文档编码器 $E_D$ 都是基于 BERT 的模型，产生*逐 Token* 的 Embedding（而不是单个 [CLS] 向量）。每个 Token Embedding 通过一个线性层投影到更低维度（通常为 128）： $$\begin{aligned}
+**架构。** 查询编码器 $E_Q$ 和文档编码器 $E_D$ 都是基于 BERT 的模型，产生*逐 Token* 的 Embedding（而不是单个 [CLS] 向量）。每个 Token Embedding 通过一个线性层投影到更低维度（通常为 128）： $$\begin{aligned}
   \mathbf{q}_i &= \text{Linear}(E_Q(q)_i) \in \mathbb{R}^{128}, \quad i = 1, \ldots, |q| \\
   \mathbf{d}_j &= \text{Linear}(E_D(d)_j) \in \mathbb{R}^{128}, \quad j = 1, \ldots, |d|
 \end{aligned}$$
 
-**训练。**
-
-ColBERT 在正、负段落上以成对的 Softmax 交叉熵 Loss 进行训练。给定查询 $q$、正段落 $d^+$ 和一组负段落 $\{d^-_1, \ldots, d^-_N\}$：
+**训练。** ColBERT 在正、负段落上以成对的 Softmax 交叉熵 Loss 进行训练。给定查询 $q$、正段落 $d^+$ 和一组负段落 $\{d^-_1, \ldots, d^-_N\}$：
 
 $$
 \mathcal{L}_{\text{ColBERT}} = -\log \frac{\exp(s(q, d^+))}{\exp(s(q, d^+)) + \sum_{k=1}^{N} \exp(s(q, d^-_k))}
@@ -297,9 +273,7 @@ $$
 -   **硬负样本**：由 BM25 检索出的、词面相似但语义无关的段落（对质量影响最大）
 -   **蒸馏负样本**（ColBERTv2 [313]）：使用交叉编码器教师挖掘最难的负样本，并将其得分蒸馏到 ColBERT 中
 
-**索引与服务。**
-
-在索引阶段，所有文档 Token 的 Embedding 都被预计算并存储（在 ColBERTv2 中可选地使用残差量化压缩）。在查询阶段，只需实时编码查询 Token，并与已存储的文档 Embedding 计算 MaxSim。这种分离带来：
+**索引与服务。** 在索引阶段，所有文档 Token 的 Embedding 都被预计算并存储（在 ColBERTv2 中可选地使用残差量化压缩）。在查询阶段，只需实时编码查询 Token，并与已存储的文档 Embedding 计算 MaxSim。这种分离带来：
 
 -   **离线文档编码**：编码一次，服务于多次查询
 -   **PLAID 索引** [313]：对文档 Embedding 聚类，用聚类中心进行初步候选检索，然后只在候选集上计算精确的 MaxSim——延迟可降低 5–10$\times$
@@ -418,9 +392,7 @@ retriever.add_documents(documents)
 
 用户的原始查询往往含糊、过短，或与文档语言匹配不佳。查询变换技术在搜索之前改进检索。
 
-**HyDE（假设性文档 Embedding，Hypothetical Document Embeddings） [106]。**
-
-不直接对查询做 Embedding，而是生成一个*假设性回答*并对其做 Embedding：
+**HyDE（假设性文档 Embedding，Hypothetical Document Embeddings） [106]。** 不直接对查询做 Embedding，而是生成一个*假设性回答*并对其做 Embedding：
 
 $$
 \hat{d} = \text{LLM}(q), \quad \mathbf{e}_{\text{query}} = f_\phi(\hat{d})
@@ -428,13 +400,9 @@ $$
 
 直觉在于：假设性回答与真实文档处于相同的语言风格中，从而缩小查询—文档之间的分布差距。
 
-**后退式提示（Step-Back Prompting）。**
+**后退式提示（Step-Back Prompting）。** 对于具体问题，先生成一个更通用的"后退"问题，对两者都进行检索，再合并上下文。例如："乙醇在 2 atm 下的沸点是多少？" $\to$ 后退问题："哪些因素影响液体的沸点？"
 
-对于具体问题，先生成一个更通用的"后退"问题，对两者都进行检索，再合并上下文。例如："乙醇在 2 atm 下的沸点是多少？" $\to$ 后退问题："哪些因素影响液体的沸点？"
-
-**多查询生成。**
-
-生成 $M$ 种多样化的查询改写，对每个改写都进行检索，并对结果取并集：
+**多查询生成。** 生成 $M$ 种多样化的查询改写，对每个改写都进行检索，并对结果取并集：
 
 *Listing 16.5: 多查询检索*
 
@@ -567,17 +535,13 @@ def rag_fusion(query: str, retriever, llm, n_queries: int = 4) -> str:
 
 RAG 的一个实际瓶颈是*解码延迟*：拼接到 LLM 上下文中的检索段落往往很长但相关性稀疏，从而拉高首 Token 时延（Time-to-First-Token, TTFT）和 KV-cache 内存。REFRAG [220] 观察到，由于检索到的段落是独立来源的（通过重排序中的多样性或去重），它们的 Attention 模式呈*块对角*——大多数跨段落 Attention 接近于零。这种稀疏性意味着解码阶段对 RAG 上下文的大部分计算其实是不必要的。
 
-**压缩—感知—展开（Compress–Sense–Expand）框架。**
-
-REFRAG 通过三阶段解码策略利用这种结构：
+**压缩—感知—展开（Compress–Sense–Expand）框架。** REFRAG 通过三阶段解码策略利用这种结构：
 
 1.  **压缩**：用紧凑的摘要（如对每个段落块的 Key/Value 进行均值池化）替换检索段落的完整 KV 表示，大幅降低内存占用。
 2.  **感知**：在每个解码步骤上，对压缩后的表示执行轻量级 Attention，识别哪些段落块与当前 Token 相关。
 3.  **展开**：仅为被选中的块重建完整的 KV 项，对稀疏的活跃集合执行精确 Attention。
 
-**结果。**
-
-在基于 LLaMA 的模型上，REFRAG 实现了最高 $30.85\times$ 的 TTFT 加速（比此前的稀疏 Attention 基线提升 $3.75\times$），且困惑度无损。在固定内存预算下，它还将有效上下文长度扩展了 $16\times$。这些收益在 RAG、多轮对话以及长文档摘要任务中均成立。
+**结果。** 在基于 LLaMA 的模型上，REFRAG 实现了最高 $30.85\times$ 的 TTFT 加速（比此前的稀疏 Attention 基线提升 $3.75\times$），且困惑度无损。在固定内存预算下，它还将有效上下文长度扩展了 $16\times$。这些收益在 RAG、多轮对话以及长文档摘要任务中均成立。
 
 > [!tip] REFRAG 为何对智能体 RAG 至关重要
 > 智能体 RAG（Section 16.7）需要为每个查询进行*多轮*检索，延迟会累积。REFRAG 这类高效解码方法是必备的基础设施：通过确保每一轮的解码代价相对上下文长度是次线性的，它们使迭代式的检索—推理—生成循环在大规模下具备可行性。
@@ -606,9 +570,7 @@ REFRAG 通过三阶段解码策略利用这种结构：
 
 智能体 RAG 系统可以将子查询路由到专门化的知识源。其核心洞见是：不同问题类型需要不同的检索后端——没有任何单一索引能在所有方面都表现出色。
 
-**为什么要路由？**
-
-设想一个金融分析师助手处理四种查询：
+**为什么要路由？** 设想一个金融分析师助手处理四种查询：
 
 -   "我们公司的带薪休假（PTO）政策是什么？" $\rightarrow$ **向量数据库**（内部文档）
 -   "美联储昨天宣布了什么？" $\rightarrow$ **网页搜索**（实时）
@@ -617,9 +579,7 @@ REFRAG 通过三阶段解码策略利用这种结构：
 
 "从单一索引扁平化检索"的做法要么错过答案，要么返回无关段落。路由在检索开始前，为*合适的子问题选择合适的工具*。
 
-**路由策略。**
-
-按复杂度递增的三种主要方法：
+**路由策略。** 按复杂度递增的三种主要方法：
 
 1.  **基于规则的路由。**通过关键词触发（例如，SQL 关键字 $\rightarrow$ 数据库，URL 模式 $\rightarrow$ 网页）。快速且可解释，但对歧义查询非常脆弱。
 2.  **基于分类器的路由。**由一个轻量模型（如微调过的 BERT 分类器，或在查询 Embedding 上的逻辑回归）预测最佳来源。延迟低（$<$10 毫秒），可基于路由日志训练，但需要带标签数据。
@@ -800,13 +760,9 @@ executor = AgentExecutor(agent=agent, tools=tools, verbose=True)
 
 上述智能体 RAG 方法依赖*Prompt 工程*的编排——Agent 的搜索行为由指令控制，而非通过训练学习。**Search-R1** [170] 采取了根本不同的方法：通过强化学习训练 LLM，使其*学会在推理过程中何时、检索什么、检索多少次*。
 
-**核心思想。**
+**核心思想。** Search-R1 扩展了 DeepSeek-R1 [72] 推理框架，将搜索引擎查询视为 RL 训练循环中的**Action**。在思维链（Chain-of-Thought，CoT）生成过程中，模型可以输出特殊 Token `<search>query</search>`，触发对搜索引擎的实时检索。检索结果被注入回推理上下文，模型继续生成。
 
-Search-R1 扩展了 DeepSeek-R1 [72] 推理框架，将搜索引擎查询视为 RL 训练循环中的**Action**。在思维链（Chain-of-Thought，CoT）生成过程中，模型可以输出特殊 Token `<search>query</search>`，触发对搜索引擎的实时检索。检索结果被注入回推理上下文，模型继续生成。
-
-**形式化设定。**
-
-模型生成一个与搜索动作交错的推理轨迹：
+**形式化设定。** 模型生成一个与搜索动作交错的推理轨迹：
 
 $$
 \underbrace{\text{think}_1}_{\text{reasoning}} \to \underbrace{\texttt{<search>}q_1\texttt{</search>}}_{\text{action}} \to \underbrace{[\text{results}_1]}_{\text{observation}} \to \text{think}_2 \to \texttt{<search>}q_2\texttt{</search>} \to \cdots \to \text{answer}
@@ -814,9 +770,7 @@ $$
 
 整条轨迹（推理 + 搜索 + 最终答案）由一个终端 Reward 打分：最终答案相对于真实标签的正确性。
 
-**训练算法。**
-
-Search-R1 使用组相对策略优化（Group Relative Policy Optimization, GRPO）：
+**训练算法。** Search-R1 使用组相对策略优化（Group Relative Policy Optimization, GRPO）：
 
 1.  **每个问题采样 $N$ 条轨迹**，每条可能包含 0–5 次搜索调用
 2.  **实时执行搜索**——环境返回真实的搜索引擎结果
@@ -845,9 +799,7 @@ Search-R1 使用组相对策略优化（Group Relative Policy Optimization, GRPO
 
 *Table 16.4: Search-R1（RL 训练）与基于 Prompt 的智能体 RAG 对比。*
 
-**结果。**
-
-在开放域问答基准（NQ [194]、TriviaQA [173]、HotpotQA [405]）上，使用 7B 模型的 Search-R1 优于：
+**结果。** 在开放域问答基准（NQ [194]、TriviaQA [173]、HotpotQA [405]）上，使用 7B 模型的 Search-R1 优于：
 
 -   标准 RAG（单次检索）准确率高出 15–20%
 -   基于 Prompt 的智能体 RAG（ReAct 风格）准确率高出 8–12%
@@ -907,17 +859,13 @@ $$\text{NDCG@}K = \frac{\text{DCG@}K}{\text{IDCG@}K}, \quad
 
 ### 16.8.2 生成指标
 
-**忠实度（Faithfulness）。**
-
-衡量生成的答案是否*接地*于检索到的上下文——即答案中的每一项主张都能归因到某一篇检索到的文档。由 LLM 判官评估：
+**忠实度（Faithfulness）。** 衡量生成的答案是否*接地*于检索到的上下文——即答案中的每一项主张都能归因到某一篇检索到的文档。由 LLM 判官评估：
 
 $$
 \text{Faithfulness} = \frac{\text{\# claims supported by context}}{\text{\# total claims in answer}}
 $$
 
-**答案相关性（Answer Relevance）。**
-
-衡量答案是否针对问题作答。计算方式是从答案中生成问题，并衡量其与原始查询的相似度：
+**答案相关性（Answer Relevance）。** 衡量答案是否针对问题作答。计算方式是从答案中生成问题，并衡量其与原始查询的相似度：
 
 $$
 \text{AnswerRelevance} = \frac{1}{N} \sum_{i=1}^{N} \cos\!\left(E(q), E(\hat{q}_i)\right)
@@ -1034,9 +982,7 @@ Embedding 模型是 RAG 系统中影响最大的单一组件选择——它决�
 5.  **流式生成**：在检索完成的同时流式输出 LLM 结果
 6.  **量化**：对 Embedding 使用 int8 或二值量化，以降低内存并提升吞吐
 
-**异步并行检索。**
-
-上述技术 (3) 和 (4) 天然可组合：缓存查询 Embedding，然后将检索请求扇出（fan out）到多个后端并发执行。在多源 RAG 系统（Section 16.7）中，用户查询可能需要同时从向量数据库、关键词索引和 Web API 中获取结果。顺序检索会累加延迟；并行检索仅需支付*最慢*来源的代价。Listing 16.13 使用 Python 的 `asyncio` 展示了这一模式——`lru_cache` 装饰器确保重复查询完全跳过 Embedding 模型，而 `asyncio.gather` 同时分派所有来源的查询。
+**异步并行检索。** 上述技术 (3) 和 (4) 天然可组合：缓存查询 Embedding，然后将检索请求扇出（fan out）到多个后端并发执行。在多源 RAG 系统（Section 16.7）中，用户查询可能需要同时从向量数据库、关键词索引和 Web API 中获取结果。顺序检索会累加延迟；并行检索仅需支付*最慢*来源的代价。Listing 16.13 使用 Python 的 `asyncio` 展示了这一模式——`lru_cache` 装饰器确保重复查询完全跳过 Embedding 模型，而 `asyncio.gather` 同时分派所有来源的查询。
 
 *Listing 16.13: 面向低延迟的异步并行检索*
 
@@ -1083,9 +1029,7 @@ async def parallel_retrieve(
 -   **分块边界变化**：更改分块策略会使所有现有块失效。版本元数据让你能识别并选择性地重新索引受影响的文档。
 -   **最终一致性**：在分布式向量数据库中，新 upsert 的向量可能无法立即被检索到。请将流水线设计为可容忍短暂的索引滞后（通常为秒级到分钟级）。
 
-**实现。**
-
-Listing 16.14 展示了一个最小化的 `RAGIndexManager` 类，封装了 upsert 与过期逻辑，适合包装任何支持元数据过滤的向量存储。
+**实现。** Listing 16.14 展示了一个最小化的 `RAGIndexManager` 类，封装了 upsert 与过期逻辑，适合包装任何支持元数据过滤的向量存储。
 
 *Listing 16.14: 带版本管理的增量索引更新*
 

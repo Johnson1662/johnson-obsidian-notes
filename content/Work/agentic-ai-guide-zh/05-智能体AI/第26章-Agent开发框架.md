@@ -13,25 +13,15 @@
 
 研究原型通常假设一个友善的环境：格式良好的输入、可用的 Tool、响应及时的 API，以及一位耐心的人类观察者随时准备在出错时重启流程。生产 Agent 享受不到这些奢侈条件。原型与生产之间的工程鸿沟体现在多个维度：
 
-**可靠性。**
+**可靠性。** 生产级 Agent 必须优雅处理 Tool 失败、从部分状态损坏中恢复，并避免死循环或失控的 API 调用。错误处理必须是系统化的，而不能临时拼凑。
 
-生产级 Agent 必须优雅处理 Tool 失败、从部分状态损坏中恢复，并避免死循环或失控的 API 调用。错误处理必须是系统化的，而不能临时拼凑。
+**可观测性。** 当 Agent 给出错误答案或采取意外行动时，运维人员需要弄清楚*原因*。这要求对每一次 LLM 调用、Tool 调用和状态迁移都进行结构化日志记录，而不仅仅记录最终输出。
 
-**可观测性。**
+**可测试性。** Agent 行为是非确定性且依赖上下文的，传统的单元测试远不足以覆盖。完整的 Agent 测试需要专门的评测框架、黄金轨迹（golden trajectory）对比，以及行为测试套件。
 
-当 Agent 给出错误答案或采取意外行动时，运维人员需要弄清楚*原因*。这要求对每一次 LLM 调用、Tool 调用和状态迁移都进行结构化日志记录，而不仅仅记录最终输出。
+**部署。** Agent 是有状态、长时间运行的进程，单次执行可能跨越数分钟乃至数小时。服务基础设施必须支持异步执行、检查点、故障后续跑（resumption），以及多租户隔离。
 
-**可测试性。**
-
-Agent 行为是非确定性且依赖上下文的，传统的单元测试远不足以覆盖。完整的 Agent 测试需要专门的评测框架、黄金轨迹（golden trajectory）对比，以及行为测试套件。
-
-**部署。**
-
-Agent 是有状态、长时间运行的进程，单次执行可能跨越数分钟乃至数小时。服务基础设施必须支持异步执行、检查点、故障后续跑（resumption），以及多租户隔离。
-
-**迭代。**
-
-随着外部世界变化、API 演进以及用户行为漂移，生产 Agent 的表现会随时间退化。持续改进需要系统化的失败分析、Prompt 版本管理和微调流水线。
+**迭代。** 随着外部世界变化、API 演进以及用户行为漂移，生产 Agent 的表现会随时间退化。持续改进需要系统化的失败分析、Prompt 版本管理和微调流水线。
 
 > [!tip] Agent 开发成熟度模型
 > Agent 开发遵循如下成熟度演进路径：
@@ -106,9 +96,7 @@ LangGraph [154] 由 LangChain Inc. 开发，将 Agent 执行建模为一个*有�
 -   **Checkpointing（检查点）**：内置的图状态持久化，支持暂停／恢复以及人机协同（Human-in-the-Loop）Workflow
 -   **Subgraphs（子图）**：可组合、可嵌套到更大图中的图组件
 
-**状态管理。**
-
-LangGraph 的状态管理是其最强大的特性之一。状态 schema 充当节点之间的契约，使数据流显式且类型安全：
+**状态管理。** LangGraph 的状态管理是其最强大的特性之一。状态 schema 充当节点之间的契约，使数据流显式且类型安全：
 
 *Listing 26.1: LangGraph 状态 schema 定义*
 
@@ -126,9 +114,7 @@ class AgentState(TypedDict):
     error: str | None
 ```
 
-**检查点与人机协同。**
-
-LangGraph 的 checkpointer 在每次节点执行后保存图状态。它支持：
+**检查点与人机协同。** LangGraph 的 checkpointer 在每次节点执行后保存图状态。它支持：
 
 -   **续跑**：长时间运行的 Agent 可以暂停并恢复而不丢失进度
 -   **人工审批**：图可以在指定节点暂停，等待人工输入后再继续
@@ -278,18 +264,14 @@ result = graph.invoke(
 
 AutoGen [385] 由 Microsoft Research 开发，采用了截然不同的思路：它将 Agent 建模为通过结构化消息传递进行通信的*可对话实体（conversable entity）*。AutoGen 不局限于单个 Agent 循环，而是支持多个 Agent 在共享会话中协作以求解复杂任务。
 
-**Conversable Agents。**
-
-每个 AutoGen Agent 都是一个 `ConversableAgent`，具备：
+**Conversable Agents。** 每个 AutoGen Agent 都是一个 `ConversableAgent`，具备：
 
 -   一条 **系统消息**，定义其角色与能力
 -   一种 **人类输入模式**，控制何时征求人工输入（`ALWAYS`、`NEVER`、`TERMINATE`）
 -   一份 **代码执行配置**，指定是否以及如何运行代码
 -   一份可调用 Tool 的 **函数映射表**
 
-**群聊（Group Chat）模式。**
-
-AutoGen 的 `GroupChat` 让多个 Agent 在同一会话中协作。`GroupChatManager` 负责协调发言轮转，可采用轮询（round-robin）、基于 LLM 的发言者选择或自定义路由逻辑。
+**群聊（Group Chat）模式。** AutoGen 的 `GroupChat` 让多个 Agent 在同一会话中协作。`GroupChatManager` 负责协调发言轮转，可采用轮询（round-robin）、基于 LLM 的发言者选择或自定义路由逻辑。
 
 *Listing 26.5: AutoGen 多 Agent 群聊*
 
@@ -347,9 +329,7 @@ user_proxy.initiate_chat(
 )
 ```
 
-**代码执行 Agent。**
-
-代码执行能力是 AutoGen 的一大特色。`UserProxyAgent` 可在沙箱环境（Docker 容器或本地进程）中执行 Python 与 shell 代码，使 Agent 能够迭代地编写、测试和修复代码。
+**代码执行 Agent。** 代码执行能力是 AutoGen 的一大特色。`UserProxyAgent` 可在沙箱环境（Docker 容器或本地进程）中执行 Python 与 shell 代码，使 Agent 能够迭代地编写、测试和修复代码。
 
 > [!warning] AutoGen 安全注意事项
 > 代码执行 Agent 可以运行任意代码。在生产环境中务必使用 Docker 进行隔离。将 `code_execution_config` 配置为 `"use_docker": True` 并限制网络访问。绝不可以高权限运行 AutoGen 的代码执行 Agent。
@@ -437,25 +417,19 @@ crew = Crew(
 result = crew.kickoff(inputs={"topic": "Reinforcement Learning for LLMs"})
 ```
 
-**层级化执行（Hierarchical Process）。**
-
-在层级模式下，CrewAI 会自动创建一个 manager Agent，根据各 worker Agent 的角色与能力把任务分派下去。这种方式贴近真实组织结构，能在无需显式排序的情况下处理复杂且相互依赖的 Workflow。
+**层级化执行（Hierarchical Process）。** 在层级模式下，CrewAI 会自动创建一个 manager Agent，根据各 worker Agent 的角色与能力把任务分派下去。这种方式贴近真实组织结构，能在无需显式排序的情况下处理复杂且相互依赖的 Workflow。
 
 ### 26.3.4 OpenAI Assistants API 与 Agents SDK
 
 OpenAI 为 Agent 开发提供了两套互补产品：**Assistants API**，面向有状态 Agent 的托管基础设施；以及 **Agents SDK** [277]（前身为 Swarm），一个面向多 Agent 编排的轻量 Python 库。
 
-**Assistants API 架构。**
-
-Assistants API 通过三个核心对象在服务端管理 Agent 状态：
+**Assistants API 架构。** Assistants API 通过三个核心对象在服务端管理 Agent 状态：
 
 -   **Assistant**：一个已配置的 Agent，包含模型、指令和 Tool
 -   **Thread**：与用户会话关联的持久化对话历史
 -   **Run**：Assistant 在某 Thread 上的一次执行，具有状态生命周期（`queued` $\to$ `in_progress` $\to$ `requires_action` $\to$ `completed`）
 
-**内置 Tool。**
-
-Assistants API 提供三种无需外部基础设施的托管 Tool：
+**内置 Tool。** Assistants API 提供三种无需外部基础设施的托管 Tool：
 
 -   **Code Interpreter**：在带文件 I/O 的沙箱环境中执行 Python
 -   **File Search**：基于向量库（vector store）的上传文档检索
@@ -518,9 +492,7 @@ elif run.status == "requires_action":
     )
 ```
 
-**OpenAI Agents SDK：Swarm 模式。**
-
-Agents SDK 提供了一个面向多 Agent 交接（handoff）的轻量框架。核心原语是 *handoff*：一个 Agent 可以把控制权连同上下文一起移交给另一个 Agent，从而支持由专门化 Agent 处理特定子任务的模块化架构。
+**OpenAI Agents SDK：Swarm 模式。** Agents SDK 提供了一个面向多 Agent 交接（handoff）的轻量框架。核心原语是 *handoff*：一个 Agent 可以把控制权连同上下文一起移交给另一个 Agent，从而支持由专门化 Agent 处理特定子任务的模块化架构。
 
 *Listing 26.8: OpenAI Agents SDK：handoff 与 guardrail*
 
@@ -584,9 +556,7 @@ result = await Runner.run(
 
 DSPy [183]（Declarative Self-improving Python，声明式自改进 Python）采用了截然不同的 Agent 开发思路：与其手工调 Prompt，DSPy 通过自动化优化*编译*高层程序规约（program specification）为优化后的 Prompt。
 
-**核心理念。**
-
-DSPy 把模块*应做什么*（signature）与*应怎样做*（Prompt）分离开来。然后由优化器搜索最佳 Prompt 与少样本示例，使其在开发集上的某项指标最大化。这让 DSPy 程序对模型更替更鲁棒，并省去了手工 Prompt 调优的麻烦。
+**核心理念。** DSPy 把模块*应做什么*（signature）与*应怎样做*（Prompt）分离开来。然后由优化器搜索最佳 Prompt 与少样本示例，使其在开发集上的某项指标最大化。这让 DSPy 程序对模型更替更鲁棒，并省去了手工 Prompt 调优的麻烦。
 
 *Listing 26.9: DSPy signature 与 module*
 
@@ -637,9 +607,7 @@ class RAGAgent(dspy.Module):
         return prediction
 ```
 
-**优化器（Optimizer）。**
-
-DSPy 的优化器可以自动改进程序性能：
+**优化器（Optimizer）。** DSPy 的优化器可以自动改进程序性能：
 
 *Listing 26.10: 用 MIPRO 进行 DSPy 优化*
 
@@ -675,9 +643,7 @@ compiled_agent.save("optimized_rag_agent.json")
 
 Semantic Kernel [256]（SK）是 Microsoft 面向企业的 Agent 框架，专为与已有软件系统及组织级 Workflow 集成而设计。它提供一种*插件架构（plugin architecture）*，让开发者能把已有业务逻辑暴露为 AI 可调用的函数。
 
-**插件架构。**
-
-插件是 kernel 可调用的函数集合（即「skill」），可通过以下方式定义：
+**插件架构。** 插件是 kernel 可调用的函数集合（即「skill」），可通过以下方式定义：
 
 -   **原生函数**：使用 `@kernel_function` 装饰的普通 Python/C# 方法
 -   **Prompt 函数**：以文件形式存放的参数化 Prompt 模板
@@ -728,13 +694,9 @@ result = await planner.invoke(
 print(str(result))
 ```
 
-**记忆与连接器。**
+**记忆与连接器。** Semantic Kernel 的记忆系统通过统一接口支持多种后端（Azure Cognitive Search、Chroma、Pinecone、Weaviate）。其连接器系统支持与 Microsoft 365、Azure DevOps 以及自定义 REST API 等企业服务的集成。
 
-Semantic Kernel 的记忆系统通过统一接口支持多种后端（Azure Cognitive Search、Chroma、Pinecone、Weaviate）。其连接器系统支持与 Microsoft 365、Azure DevOps 以及自定义 REST API 等企业服务的集成。
-
-**聚焦企业集成。**
-
-SK 特别适合企业部署，原因包括：
+**聚焦企业集成。** SK 特别适合企业部署，原因包括：
 
 -   针对 .NET 生态的原生 C# 支持
 -   与 Azure OpenAI 的集成，支持托管身份（managed identity）认证
@@ -756,9 +718,7 @@ NOOA [102] 是 NVIDIA 的模型无关框架，建立在一个激进的前提之�
 > | LLM 驱动行为 | 方法体 = `...` |
 > | 确定性逻辑 | 方法体 = 普通代码 |
 
-**核心编程模型。**
-
-该框架的核心洞见是：Python 早已具备 Agent 所需的抽象。考虑一个总结论文并维护阅读清单的研究 Agent：
+**核心编程模型。** 该框架的核心洞见是：Python 早已具备 Agent 所需的抽象。考虑一个总结论文并维护阅读清单的研究 Agent：
 
 *Listing 26.12: NOOA Agent：状态、确定性方法与智能体方法*
 
@@ -805,9 +765,7 @@ class ResearchAgent(Agent, llm=llm):
 
 三件事同时发生：(1) `top_papers` 是普通方法——可单元测试、确定性，并且在智能体执行期间也可作为可调用工具提供给 LLM；(2) `summarize` 返回带类型的 `PaperSummary`——框架会依据 Pydantic schema 自动校验 LLM 输出，失败时重试；(3) `literature_review` 可以在内部同时调用 `summarize` 与 `top_papers`，在单一控制流中组合智能体逻辑与确定性逻辑。
 
-**代码即动作。**
-
-当模型执行一个智能体方法时，它不输出 JSON 工具调用。相反，它在 Jupyter 风格的 REPL 中编写 Python 代码，可以访问 `self`、import 与任何辅助方法。这意味着模型的动作空间是整个 Python 语言——它可以循环、分支、捕获异常、组合方法调用，而框架无需把每个可能的动作定义成独立的工具 schema：
+**代码即动作。** 当模型执行一个智能体方法时，它不输出 JSON 工具调用。相反，它在 Jupyter 风格的 REPL 中编写 Python 代码，可以访问 `self`、import 与任何辅助方法。这意味着模型的动作空间是整个 Python 语言——它可以循环、分支、捕获异常、组合方法调用，而框架无需把每个可能的动作定义成独立的工具 schema：
 
 *Listing 26.13: LLM 在智能体方法内部生成的内容*
 
@@ -826,13 +784,9 @@ return review
 
 模型编写的代码会调用 `self.summarize`——它本身也是一个智能体方法。这就产生了嵌套的 Agent 循环：外层 `literature_review` 循环把每篇论文委派给内层 `summarize` 循环，并完整追踪父子 span 层级。
 
-**按引用传递与活对象。**
+**按引用传递与活对象。** 与把工具输入序列化为 JSON 的框架不同，NOOA 按引用传递 Python 对象。当方法收到 `Order` 或 `Database` 对象时，模型可以在沙箱化的 REPL 中调用它的方法、检查它的字段、修改它的状态。这消除了 Agent 对象模型与序列化边界之间的阻抗失配。
 
-与把工具输入序列化为 JSON 的框架不同，NOOA 按引用传递 Python 对象。当方法收到 `Order` 或 `Database` 对象时，模型可以在沙箱化的 REPL 中调用它的方法、检查它的字段、修改它的状态。这消除了 Agent 对象模型与序列化边界之间的阻抗失配。
-
-**多 Agent 组合。**
-
-Agent 通过 Python 的对象模型自然组合——一个 Agent 持有对另一个 Agent 的引用：
+**多 Agent 组合。** Agent 通过 Python 的对象模型自然组合——一个 Agent 持有对另一个 Agent 的引用：
 
 *Listing 26.14: NOOA 通过对象引用做多 Agent 组合*
 
@@ -850,13 +804,9 @@ class PlannerAgent(Agent, llm=llm):
 
 规划者的智能体方法可以直接调用 `self.researcher.summarize(...)` 或 `self.researcher.literature_review(...)`——没有消息总线、没有序列化协议，只是恰好会触发嵌套 LLM 循环的 Python 方法调用。
 
-**追踪与可观测性。**
+**追踪与可观测性。** 默认情况下，每次 LLM 调用、代码执行与方法调用都会被追踪，并保留父子 span 关系。内置的追踪查看器（`nooa start-dev`）为嵌套的智能体执行提供实时可见性，无需外部可观测性基础设施。
 
-默认情况下，每次 LLM 调用、代码执行与方法调用都会被追踪，并保留父子 span 关系。内置的追踪查看器（`nooa start-dev`）为嵌套的智能体执行提供实时可见性，无需外部可观测性基础设施。
-
-**模型无关性。**
-
-NOOA 支持任何通过其 `UnifiedLLM` 层可访问的模型：Anthropic、OpenAI、通过 Ollama 的本地模型，或通过 vLLM 的自托管端点。同一个 Agent 类可以在不同提供商之间原样工作——模型选择是构造参数，而不是架构决策。
+**模型无关性。** NOOA 支持任何通过其 `UnifiedLLM` 层可访问的模型：Anthropic、OpenAI、通过 Ollama 的本地模型，或通过 vLLM 的自托管端点。同一个 Agent 类可以在不同提供商之间原样工作——模型选择是构造参数，而不是架构决策。
 
 > [!tip] 何时选择 NOOA
 > 当你有以下需求时，NOOA 是合适的选择：
@@ -912,9 +862,7 @@ NOOA 支持任何通过其 `UnifiedLLM` 层可访问的模型：Anthropic、Open
 -   **Promptfoo**[^10]：基于 CLI 的 Prompt 评测与红队测试
 -   **AgentBench**[^11]：面向 Agent 能力的标准化基准
 
-**自托管 Agent 运行时。**
-
-**OpenClaw**[^12] 是一个自托管的网关，通过模块化的 *skill* 系统把 LLM 接入真实世界的 Tool。与上文的开发框架不同，OpenClaw 强调的是*部署*层：多渠道集成（Slack、Discord、WhatsApp、Teams）、事件驱动的常驻执行、沙箱化的 Tool 运行，以及面向高影响动作的审批门控。其架构将 *tools*（低层动作，例如 shell 命令或 API 调用）与 *skills*（更高层的能力，用规划逻辑来编排 tools）分离，使得在无需重写核心代码的前提下，扩展 Agent 的能力面变得轻而易举。
+**自托管 Agent 运行时。** **OpenClaw**[^12] 是一个自托管的网关，通过模块化的 *skill* 系统把 LLM 接入真实世界的 Tool。与上文的开发框架不同，OpenClaw 强调的是*部署*层：多渠道集成（Slack、Discord、WhatsApp、Teams）、事件驱动的常驻执行、沙箱化的 Tool 运行，以及面向高影响动作的审批门控。其架构将 *tools*（低层动作，例如 shell 命令或 API 调用）与 *skills*（更高层的能力，用规划逻辑来编排 tools）分离，使得在无需重写核心代码的前提下，扩展 Agent 的能力面变得轻而易举。
 
 ### 26.4.3 互操作标准
 
@@ -924,9 +872,7 @@ Agent 生态正在向若干互操作标准收敛：
 -   **智能体到智能体协议（Agent-to-Agent, A2A）** [113]：Google 提出的 Agent 间通信与任务委派开放标准（详见第 24 章）
 -   **Tool 的 OpenAPI 化**：用 OpenAPI 规范定义 Tool 接口，实现 Tool 的自动发现与集成（见下文）
 
-**OpenAPI 作为 Tool 接口层。**
-
-OpenAPI 规范13（前身为 Swagger）以机器可读形式描述 REST API——端点、参数、请求/响应 schema 以及认证要求。Agent 框架越来越多地把 OpenAPI 规范当作*零代码 Tool 定义*层：不再为每个 API 手写 Tool 包装器，Agent 在运行时解析规范并自动生成可调用 Tool。
+**OpenAPI 作为 Tool 接口层。** OpenAPI 规范13（前身为 Swagger）以机器可读形式描述 REST API——端点、参数、请求/响应 schema 以及认证要求。Agent 框架越来越多地把 OpenAPI 规范当作*零代码 Tool 定义*层：不再为每个 API 手写 Tool 包装器，Agent 在运行时解析规范并自动生成可调用 Tool。
 
 转换流水线工作流程如下：
 

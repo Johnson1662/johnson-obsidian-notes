@@ -47,9 +47,7 @@ $$
 
 ### 18.2.2 Context 分配策略
 
-**固定预算分配。**
-
-为每个组件分配硬性 Token 上限：
+**固定预算分配。** 为每个组件分配硬性 Token 上限：
 
 $$\begin{aligned}
 S &\leq \alpha \cdot C, \quad \alpha \approx 0.10 \\
@@ -61,9 +59,7 @@ R &\leq \epsilon \cdot C, \quad \epsilon \approx 0.10
 
 固定分配简单且可预测，但当某些组件较小时会浪费容量。
 
-**动态分配。**
-
-在每一轮求解一个带约束的优化问题：
+**动态分配。** 在每一轮求解一个带约束的优化问题：
 
 $$
 \max_{S, M, T, H, R} \; \text{Utility}(S, M, T, H, R) \quad \text{s.t.} \quad S + M + T + H + R \leq C
@@ -75,9 +71,7 @@ $$
 
 当 $H$ 超出预算时，harness 必须在不丢失关键信息的前提下压缩历史。
 
-**对旧轮次进行摘要。**
-
-用 LLM 生成的摘要替换最旧的 $k$ 轮 [281]：
+**对旧轮次进行摘要。** 用 LLM 生成的摘要替换最旧的 $k$ 轮 [281]：
 
 $$
 H' = \text{Summarize}(H_{1:k}) \;\|\; H_{k+1:n}
@@ -85,9 +79,7 @@ $$
 
 摘要通常比原文短 5–10$\times$。可以使用一个专用的\"summarizer\"模型（更小更便宜）来执行这一步骤。
 
-**选择性保留。**
-
-根据每条消息与当前查询 $q$ 的相关性打分：
+**选择性保留。** 根据每条消息与当前查询 $q$ 的相关性打分：
 
 $$
 \text{score}(m_i) = \text{sim}(e(m_i),\, e(q)) + \lambda \cdot \text{recency}(i)
@@ -95,9 +87,7 @@ $$
 
 其中 $e(\cdot)$ 是 Embedding 函数，$\text{recency}(i) = i/n$。按分数保留 top-$k$ 条消息。
 
-**重要性加权截断。**
-
-为每一轮分配重要性权重 $w_i$（例如包含工具结果或用户更正的轮次权重更高）。优先截断权重最低的轮次：
+**重要性加权截断。** 为每一轮分配重要性权重 $w_i$（例如包含工具结果或用户更正的轮次权重更高）。优先截断权重最低的轮次：
 
 $$
 \min_{S \subseteq [n]} \sum_{i \notin S} w_i \quad \text{s.t.} \quad \sum_{i \in S} |m_i| \leq B_H
@@ -128,13 +118,9 @@ $$
 >
 > 其中根模型将 Context $C$ 划分为若干块 $\{C_i\}$，构造子查询 $\{q_i\}$，派生递归调用以处理每一块，然后将结果综合为最终答案。任何单次调用都看不到完整 Context——模型在每个递归层级自行决定要查看什么。
 
-**为什么递归有效。**
+**为什么递归有效。** Context rot（上下文腐烂）——即模型准确率随 Context 长度增长而经验性地下降的现象——意味着即便拥有大 context window（128k+）的模型在长输入上的表现也会更差。通过让每次单独调用保持简短和聚焦，递归分解完全规避了这种退化。Zhang 等 [420] 证明，递归的 GPT-5-mini 在困难的长 Context 基准上*超越*了非递归的 GPT-5，同时每次查询成本更低。
 
-Context rot（上下文腐烂）——即模型准确率随 Context 长度增长而经验性地下降的现象——意味着即便拥有大 context window（128k+）的模型在长输入上的表现也会更差。通过让每次单独调用保持简短和聚焦，递归分解完全规避了这种退化。Zhang 等 [420] 证明，递归的 GPT-5-mini 在困难的长 Context 基准上*超越*了非递归的 GPT-5，同时每次查询成本更低。
-
-**实现模式。**
-
-一个实用的 RLM harness 为模型提供一个 REPL 环境，将 Context 作为一个变量暴露其中。模型可以：
+**实现模式。** 一个实用的 RLM harness 为模型提供一个 REPL 环境，将 Context 作为一个变量暴露其中。模型可以：
 
 1.  **以编程方式检查（Inspect）**Context（正则、切片、长度检查）。
 2.  根据结构或相关性将其**划分（Partition）**为可处理的块。
@@ -237,16 +223,12 @@ Prompt 中工具描述的其他最佳实践：
 > [!example] OpenAI 工具定义
 > ZZCODEZZ3ZZENDZZ
 
-**Anthropic Tool Use。**
-
-Anthropic 使用类似的 JSON schema，但用 `input_schema` 键替代 `parameters`，且工具通过顶层 `tools` 数组传入：
+**Anthropic Tool Use。** Anthropic 使用类似的 JSON schema，但用 `input_schema` 键替代 `parameters`，且工具通过顶层 `tools` 数组传入：
 
 > [!example] Anthropic 工具定义
 > ZZCODEZZ4ZZENDZZ
 
-**模型上下文协议（Model Context Protocol, MCP）。**
-
-MCP（见 18.4.5 节）提供了一种标准化协议，用于跨提供商的工具发现与调用，将工具定义与任何单一 API 格式解耦。
+**模型上下文协议（Model Context Protocol, MCP）。** MCP（见 18.4.5 节）提供了一种标准化协议，用于跨提供商的工具发现与调用，将工具定义与任何单一 API 格式解耦。
 
 ### 18.4.2 工具选择与路由
 
@@ -256,9 +238,7 @@ MCP（见 18.4.5 节）提供了一种标准化协议，用于跨提供商的工
 -   **强制工具使用：** harness 通过指定 `tool\_choice: {type: "function", function: {name: "X"}}` 来强制调用特定工具（对结构化抽取很有用）。
 -   **并行工具调用：** 现代 API 允许模型在单一轮次中请求多个工具调用，harness 并发执行。
 
-**扩展到大规模工具库。**
-
-当 Agent 可以访问成百上千的工具时，将所有定义都纳入 Prompt 是不可行的（Token 成本）且适得其反（选择混乱）。有两种关键方法应对这一问题：
+**扩展到大规模工具库。** 当 Agent 可以访问成百上千的工具时，将所有定义都纳入 Prompt 是不可行的（Token 成本）且适得其反（选择混乱）。有两种关键方法应对这一问题：
 
 -   **检索增强的工具选择：** 在每一轮中，仅基于用户查询与工具描述之间的 Embedding 相似度检索 top-$k$ 最相关的工具。这与面向文档的检索增强生成（Retrieval-Augmented Generation, RAG）类似——只有与 Context 相关的工具被注入 Prompt。**Gorilla** [287] 证明，将检索与检索感知训练（retriever-aware training, RAT）结合，可以让 LLM 在数千个相互重叠的 API 中准确选择，并在测试时适应版本变更。
 -   **微调工具选择：** **ToolLLM** [299] 在一个大规模工具使用轨迹语料（16,000+ API）上对模型进行训练，使用基于深度优先搜索的决策树（depth-first search-based decision tree, DFSDT）生成解路径。所得到的模型学习到可泛化的工具选择策略，能迁移到未见过的 API，并显著优于仅基于 Prompt 的方法。
@@ -294,17 +274,13 @@ MCP（见 18.4.5 节）提供了一种标准化协议，用于跨提供商的工
 
 **模型上下文协议（Model Context Protocol, MCP）** [9] 是一个用于连接 LLM 应用与外部工具、数据源的开放标准。它将工具*提供者*与工具*消费者*解耦。我们在第 22 章深入介绍 MCP；此处仅总结与 harness 设计相关的核心思想。
 
-**架构。**
-
-MCP 采用客户端-服务器模型：
+**架构。** MCP 采用客户端-服务器模型：
 
 -   **MCP Server：** 通过标准化协议暴露工具、资源与 Prompt。可以是本地进程或远程服务。
 -   **MCP Client：** agent harness 连接一个或多个 MCP server，发现可用工具，并路由工具调用。
 -   **传输层：** 支持 `stdio`（本地子进程）、HTTP+SSE（远程）以及 WebSocket 传输。
 
-**工具发现。**
-
-启动时，harness 在每个已连接的 MCP server 上调用 `tools/list` 以发现可用工具及其 schema。这使得**动态工具注册**成为可能——新工具无需重新部署 harness 即可启用。
+**工具发现。** 启动时，harness 在每个已连接的 MCP server 上调用 `tools/list` 以发现可用工具及其 schema。这使得**动态工具注册**成为可能——新工具无需重新部署 harness 即可启用。
 
 **调用流程。**
 
@@ -358,25 +334,17 @@ Plan-and-Execute 对长时程任务更高效（LLM 调用更少），但对意�
 
 复杂任务受益于多个专业化 Agent 协同工作。四种典型模式：
 
-**Supervisor（监督者）模式。**
-
-一个中央\"supervisor\" LLM 接收用户请求，将其分解，并将子任务路由到专门的 Agent。结果由 supervisor 聚合。
+**Supervisor（监督者）模式。** 一个中央\"supervisor\" LLM 接收用户请求，将其分解，并将子任务路由到专门的 Agent。结果由 supervisor 聚合。
 
 ![](./images/fig_058_supervisor.png)
 
 *Figure 18.6: Supervisor 模式：一个编排者将任务路由至专门的 Agent。*
 
-**Peer-to-Peer（点对点）。**
+**Peer-to-Peer（点对点）。** Agent 之间直接通信，无中央协调者。每个 Agent 都可以将任何其他 Agent 作为工具调用。灵活但更难调试，且容易出现循环依赖。
 
-Agent 之间直接通信，无中央协调者。每个 Agent 都可以将任何其他 Agent 作为工具调用。灵活但更难调试，且容易出现循环依赖。
+**分层（Tree of Agents）。** 一种树状结构，其中高层 Agent 委派给中层 Agent，中层再委派给叶子 Agent。可实现递归任务分解。AutoGen 的 nested chat 等系统采用此模式。
 
-**分层（Tree of Agents）。**
-
-一种树状结构，其中高层 Agent 委派给中层 Agent，中层再委派给叶子 Agent。可实现递归任务分解。AutoGen 的 nested chat 等系统采用此模式。
-
-**Swarm 模式。**
-
-该模式由 OpenAI 的 Swarm 库 [276] 推广，使用 **handoff（交接）**：一个 Agent 可以将控制权连同完整对话 Context 一起转交给另一个 Agent。核心概念：
+**Swarm 模式。** 该模式由 OpenAI 的 Swarm 库 [276] 推广，使用 **handoff（交接）**：一个 Agent 可以将控制权连同完整对话 Context 一起转交给另一个 Agent。核心概念：
 
 -   **Agent** 拥有指令与工具。
 -   **Handoff** 是用于转移控制权的特殊工具。
