@@ -11,9 +11,7 @@
 GRPO 在下列场景中尤其有效：
 
 -   **推理任务**：具有可验证 reward（数学、代码），二值正确性提供干净信号。
-
 -   **大模型**（70B 及以上）：去掉 critic 带来的显存节省至关重要。
-
 -   **多轮对话（Multi-Turn）与 Agent 场景**：跨工具调用（Tool Calling）的价值估计本就难以处理。
 
 本章涵盖 GRPO 的动机、算法、关键变体（Dr. GRPO、DAPO、2-GRPO、GDPO）以及基于 TRL 的实战实现。
@@ -23,9 +21,7 @@ GRPO 在下列场景中尤其有效：
 PPO 的 value model（critic）在语言任务上存在三大问题：
 
 1.  **显存**：value head 与 policy 共享主干（70B 模型占 140GB）。若分离则显存翻倍。
-
 2.  **精度**：对部分序列预测期望 reward 极其困难。value function 经常出错 $\rightarrow$ advantage 出错 $\rightarrow$ gradient 方向出错。
-
 3.  **训练**：value head 需要大量样本才能收敛。RL 早期它给出嘈杂的预测，破坏 policy 学习的稳定性。
 
 **GRPO 的关键洞见** [323]：与其学习 $V(s)$，不如从一组样本中经验地 *估计* 它。对同一 prompt 生成 $G$ 条响应，计算它们的 reward，并用组统计量作为 baseline。
@@ -33,11 +29,8 @@ PPO 的 value model（critic）在语言任务上存在三大问题：
 ## 7.2 算法
 
 1.  对每个 prompt $x$，采样 $G$ 条 completion：$\{y_1, \ldots, y_G\} \sim \pi_\theta(\cdot|x)$
-
 2.  对每条打分：$r_i = R(x, y_i)$
-
 3.  组内归一化：$\hat{A}_i = \frac{r_i - \mu_G}{\sigma_G}$，其中 $\mu_G = \frac{1}{G}\sum_j r_j$，$\sigma_G = \text{std}(\{r_j\})$
-
 4.  用这些 advantage 应用 PPO 风格的 clipped 更新
 
 $$
@@ -138,11 +131,8 @@ trainer.train()
 > 若没有多样性压力，RL 训练的 LLM 会坍塌到狭窄的高 reward 响应集合上：
 >
 > -   模型对每种题型学到一个"模板"答案
->
 > -   熵急剧下降；模型变得确定性
->
 > -   Reward hacking 变得更容易（狭窄输出更容易被利用）
->
 > -   泛化能力受损：模型记住的是 reward 模式而非推理
 >
 > KL 惩罚 $\beta D_\text{KL}[\pi_\theta \| \pi_\text{ref}]$ 是主要的多样性机制，但单靠它并不够。
@@ -151,13 +141,9 @@ trainer.train()
 > GRPO 对每个 prompt 生成 $N$ 条响应并使用组内排序。组内多样性至关重要：
 >
 > -   **高温度**（$\tau=0.8$–$1.0$）：确保响应多样，便于有意义的比较
->
 > -   **较大的 $N$**（8–16）：样本越多，越可能同时包含好的和差的方案
->
 > -   **DAPO 的"不重复"惩罚**：拒绝组内重复响应，强制探索
->
 > -   若 $N$ 条响应完全相同：advantage 为零，无学习信号
->
 > -   若响应过于多样（随机）：reward 信号嘈杂，学习缓慢
 >
 > **甜点**：温度选取应让方案有差异，同时仍然切题。
@@ -177,9 +163,7 @@ trainer.train()
 > 更多样性并非总是更好：
 >
 > -   过度多样（高熵）= 随机、无用的响应
->
 > -   多样性不足（低熵）= 重复的、被 reward hack 的响应
->
 > -   **监控**：训练中跟踪响应熵、唯一 n-gram 比例和 reward 分布宽度。若三者同时下降，你就遇到了坍塌问题。
 
 #### 7.5.1.1 用于 RL 数据收集的 Verbalized Sampling
@@ -196,13 +180,9 @@ Verbalized Sampling（VS） [422] 是一种无需训练的 prompt 策略，通�
 > 模型会产出如下列表：
 >
 > 1.  笑话 A（概率：0.35）
->
 > 2.  笑话 B（概率：0.25）
->
 > 3.  笑话 C（概率：0.20）
->
 > 4.  笑话 D（概率：0.12)
->
 > 5.  笑话 E（概率：0.08）
 >
 > 然后从这个言语化分布中采样。由于模型显式表征了整个分布（而不仅是 argmax），那些概率较低但富有创意/多样的响应就变得可达。
@@ -234,13 +214,9 @@ def verbalized_sample(model, tokenizer, task, n=5):
 
 > [!tip] 为什么 Verbalized Sampling 有效
 > -   **绕过模式坍塌**：从对齐模型的标准采样高度集中在一两个"安全"响应。VS 强迫模型说出那些它 *知道* 但通常不会浮现出来的替代方案。
->
 > -   **多样性是语义的**：与温度缩放（词法噪声）不同，VS 产出真正不同的方案——模型会就不同选项进行推理。
->
 > -   **随能力扩展**：能力更强的模型产出校准更好的言语化分布——它们从 VS 中受益 *更多*（创意写作上获得 1.6–2.1$\times$ 多样性增益）。
->
 > -   **无需训练**：不需要微调或修改解码；在推理时与任何遵循指令的模型协同工作。
->
 > -   **用于 GRPO**：用 VS 为每个 prompt 生成 $G$ 个响应候选——确保组内包含语义多样的方案，而非仅表层变化。
 
 在深入各种扩展之前，让我们简要回顾前几节建立的基础 GRPO 算法。其核心机制——采样一组 completion、归一化它们的 reward、并应用 clipped policy gradient——简洁优雅。然而，实践者很快发现了一些具体的失败模式：预训练偏差稀释 gradient（Dr. GRPO）、对称 clipping 限制探索（DAPO）、过大的组大小造成浪费（2-GRPO）、以及多目标场景下 reward 尺度失衡（GDPO）。下面各节依次解决这些问题。
@@ -317,11 +293,8 @@ DAPO 会重新采样那些整组 completion 获得相同 reward（全对或全�
 
 > [!abstract] 何时使用 DAPO
 > -   completion 经常触及长度上限的长篇推理任务。
->
 > -   任何观察到 reward 方差在训练中途坍塌的场景。
->
 > -   当基础 GRPO 表现不稳定（loss 尖峰、熵坍塌）时。
->
 > -   在大多数任务上推荐作为基础 GRPO 的 *即插即用改进*。
 
 ### 7.5.3 GSPO —— Group Sequence Policy Optimization
@@ -344,9 +317,7 @@ $$\mathcal{L}_{\text{GSPO}} = -\frac{1}{G}\sum_{i=1}^G
 
 > [!abstract] GSPO 与 GRPO 的 Clipping 对比
 > -   **GRPO**：独立 clip $|o_i|$ 个逐 token ratio。一条序列可以所有 ratio 都在界内、却拥有 $10^{50}$ 的乘积 ratio。
->
 > -   **GSPO**：对每条序列 clip 一次几何平均。保证 *序列级* policy 变化有界。
->
 > -   GSPO 在 off-policy 重要性采样上理论正确；GRPO 只是近似。
 
 > [!example] TRL 中的 GSPO
@@ -373,9 +344,7 @@ $$
 
 > [!abstract] 何时使用 Dr. GRPO
 > -   当训练任务在预训练与 RL 之间词表分布严重不匹配时。
->
 > -   当观察到常见的填充 token 主导 gradient 时。
->
 > -   与接近初始 policy 的参考模型配合良好。
 
 ### 7.5.5 2-GRPO —— 最简的两次 Rollout GRPO
@@ -397,11 +366,8 @@ $$\mathcal{L}_{\text{2-GRPO}} \approx
 
 > [!abstract] 2-GRPO 的算力节省
 > -   $G=2$ vs $G=16$：**生成算力减少 8$\times$**。
->
 > -   生成通常是瓶颈（占 60–80% 的 wall-clock 时间）。
->
 > -   端到端总训练加速：约 4–6$\times$。
->
 > -   在 GSM8K、MATH 和代码基准上无精度损失。
 
 > [!example] TRL 中的 2-GRPO
@@ -431,11 +397,8 @@ $$\boxed{
 
 > [!abstract] SAPO 温度直觉
 > -   $\tau_+ = 1.0$：正 advantage 的中等 gate（允许探索）。
->
 > -   $\tau_- = 1.05$：负 advantage 略软的 gate（避免过度抑制）。
->
 > -   $\tau \to 0$：恢复硬 PPO clipping。
->
 > -   $\tau \to \infty$：恢复未 clip 的 policy gradient。
 
 > [!example] TRL 中的 SAPO
@@ -471,7 +434,6 @@ $$
 TIS 和 MIS 都既可在 token 级、也可在序列级应用：
 
 -   **序列级**：将 ratio 计算为所有 token 的几何平均（如 GSPO 那样）。理论正确但方差更高。
-
 -   **Token 级**：为每个 token 单独计算 ratio。有偏（逐 token 修正的乘积不等于序列修正），但方差更低。
 
 > [!example] TRL 中的 TIS 和 MIS
@@ -479,11 +441,8 @@ TIS 和 MIS 都既可在 token 级、也可在序列级应用：
 
 > [!abstract] 何时使用 TIS/MIS
 > -   使用 vLLM 生成时 **始终** 考虑开启。
->
 > -   当不匹配较小时（同模型、不同精度）首选 TIS。
->
 > -   当不匹配较大或不可预测时首选 MIS。
->
 > -   序列级 IS 在理论上更受推荐；token 级是实用上的折中。
 
 ### 7.5.8 VESPO —— Variational Sequence-Level Soft Policy Optimization
@@ -500,9 +459,7 @@ $$\boxed{
 其中 $W(\tau) = \pi_\theta(\tau)/\pi_{\text{old}}(\tau)$ 是序列级 importance weight，$k$ 控制加权的锐度，$\lambda$ 控制对陈旧（低权重）trajectory 的指数衰减。该核：
 
 -   处处平滑（在 clip 边界没有不连续 gradient）。
-
 -   通过指数项天然地降权陈旧 trajectory（$W \ll 1$）。
-
 -   是非对称的：高权重 trajectory（$W > 1$）与低权重 trajectory 区别对待。
 
 > [!example] TRL 中的 VESPO
@@ -522,11 +479,8 @@ $$\mathcal{L}_{\text{DPPO}} = -\mathbb{E}\!\left[
 其中 $D$ 是所选的散度度量。在实践中，DPPO 用 token 级二值或 top-$k$ mask 来近似：
 
 -   **binary_tv**：mask 掉 $|\pi_\theta - \pi_{\text{old}}| > \delta$ 的 token。
-
 -   **binary_kl**：mask 掉 $\pi_\theta \log(\pi_\theta/\pi_{\text{old}}) > \delta$ 的 token。
-
 -   **topk_tv**：仅保留按 TV 贡献排序的 top-$k$ token。
-
 -   **topk_kl**：仅保留按 KL 贡献排序的 top-$k$ token。
 
 > [!example] DPPO —— 概念性实现
@@ -569,13 +523,9 @@ $$\mathcal{L}_{\text{CISPO}} =
 
 > [!abstract] ScaleRL 关键发现
 > 1.  单独的 batch 级 reward 缩放：改进有限。
->
 > 2.  单独的 token 级 loss：改进有限。
->
 > 3.  两者结合：**协同效应** —— 显著优于单独任一项。
->
 > 4.  batch 越大，从 batch 级缩放中受益越多。
->
 > 5.  CISPO 是大规模 RL 训练的推荐默认方案。
 
 ### 7.5.11 GDPO —— Group Reward-Decoupled Policy Optimization
@@ -594,9 +544,7 @@ $$\boxed{
 
 > [!abstract] GDPO 与标准多 reward GRPO 的对比
 > -   **标准**：$\hat{A}^{(i)} = \frac{\sum_n w_n r_n^{(i)} - \mu_{\text{combined}}}{\sigma_{\text{combined}}}$。高方差 reward 占主导。
->
 > -   **GDPO**：单独归一化每项 reward 后再组合。每项 reward 按其权重 $w_n$ 按比例贡献。
->
 > -   当 reward 量级或方差差异极大时，GDPO 不可或缺。
 
 > [!example] TRL 中的 GDPO
@@ -633,14 +581,10 @@ $$
 **经验性增益**（在不可验证任务上相对 GRPO）：
 
 -   整个优化过程中，reward 曲线（训练和留出集）都位于 GRPO 之上
-
 -   由独立 LLM 评估器判定的胜率在大多数训练 checkpoint 上有所改进
-
 -   收敛显著更快——以更少的 gradient 步数达到 GRPO 的最终质量
-
 -   优势随 reward model 变得更嘈杂或校准更差而扩大
 
 > [!tip] GOPO vs. GRPO 的使用选择
 > -   **使用 GRPO**：当 reward 可验证且精确时（数学正确性、代码测试通过/失败、二值信号）。幅度携带有意义的信息。
->
 > -   **使用 GOPO**：当 reward 来自学习的 reward model、面向主观任务（有用性、风格、安全）时。RM 的相对排序可信，但其绝对分数是任意的。

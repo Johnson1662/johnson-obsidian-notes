@@ -37,13 +37,9 @@ Agent 是有状态、长时间运行的进程，单次执行可能跨越数分�
 > Agent 开发遵循如下成熟度演进路径：
 >
 > 1.  **原型阶段（Prototype）**：单文件脚本、硬编码 Prompt、人工测试
->
 > 2.  **Alpha 阶段**：模块化代码、基本错误处理、人工评测
->
 > 3.  **Beta 阶段**：基于框架、自动化测试、预发布环境
->
 > 4.  **生产阶段（Production）**：完整可观测性、CI/CD、自动扩缩容、服务等级协议（SLA）
->
 > 5.  **成熟阶段（Mature）**：持续学习、A/B 测试、自我改进闭环
 >
 > 大多数团队都低估了从第 2 阶段到第 3 阶段的跨度。
@@ -89,13 +85,9 @@ Agent 测试将在 26.5 节深入介绍。核心原则是*在多个粒度上测�
 迭代阶段闭合「生产行为」与「系统改进」之间的反馈环。它需要：
 
 -   **失败日志**：每一次 Agent 失败都连带完整上下文（输入、轨迹、错误）一起记录
-
 -   **失败分类**：按类型（Tool 错误、推理错误、幻觉、循环）对失败进行分类，以识别系统性问题
-
 -   **Prompt 更新**：Prompt 改动在部署前先通过回归测试套件检验
-
 -   **微调**：当 Prompt 工程触及瓶颈时，在精选轨迹上微调可以提升表现
-
 -   **A/B 测试**：以严谨的统计方法在生产流量上验证新版 Agent
 
 ## 26.3 主流框架深度剖析
@@ -109,13 +101,9 @@ LangGraph [154] 由 LangChain Inc. 开发，将 Agent 执行建模为一个*有�
 **核心概念。**
 
 -   **State（状态）**：一个带类型的字典（使用 Python 的 `TypedDict` 或 Pydantic），它在图中流动，并由每个节点更新
-
 -   **Nodes（节点）**：接收当前状态并返回状态更新的 Python 函数
-
 -   **Edges（边）**：节点之间的迁移，可以是无条件的，也可以是条件的（按状态路由）
-
 -   **Checkpointing（检查点）**：内置的图状态持久化，支持暂停／恢复以及人机协同（Human-in-the-Loop）Workflow
-
 -   **Subgraphs（子图）**：可组合、可嵌套到更大图中的图组件
 
 **状态管理。**
@@ -143,9 +131,7 @@ class AgentState(TypedDict):
 LangGraph 的 checkpointer 在每次节点执行后保存图状态。它支持：
 
 -   **续跑**：长时间运行的 Agent 可以暂停并恢复而不丢失进度
-
 -   **人工审批**：图可以在指定节点暂停，等待人工输入后再继续
-
 -   **时光回溯**：运维人员可以从任意检查点重放执行以进行调试
 
 *Listing 26.2: LangGraph 检查点与人机协同*
@@ -297,11 +283,8 @@ AutoGen [385] 由 Microsoft Research 开发，采用了截然不同的思路：�
 每个 AutoGen Agent 都是一个 `ConversableAgent`，具备：
 
 -   一条 **系统消息**，定义其角色与能力
-
 -   一种 **人类输入模式**，控制何时征求人工输入（`ALWAYS`、`NEVER`、`TERMINATE`）
-
 -   一份 **代码执行配置**，指定是否以及如何运行代码
-
 -   一份可调用 Tool 的 **函数映射表**
 
 **群聊（Group Chat）模式。**
@@ -378,11 +361,8 @@ CrewAI [261] 为多 Agent 系统引入了一种*基于角色（role-based）*的
 **核心抽象。**
 
 -   **Agent**：由 `role`（角色）、`goal`（目标）、`backstory`（背景故事）和可用 `tools`（工具）定义
-
 -   **Task**：一项具体任务，包含 `description`（描述）、`expected_output`（预期输出）以及指定的 `agent`
-
 -   **Crew**：Agent 与任务的集合，附带执行 `process`（顺序或层级）
-
 -   **Process**：执行策略——`sequential`（任务按顺序运行）或 `hierarchical`（由 manager Agent 进行任务分派）
 
 *Listing 26.6: CrewAI 基于角色的 Agent 团队*
@@ -470,9 +450,7 @@ OpenAI 为 Agent 开发提供了两套互补产品：**Assistants API**，面向
 Assistants API 通过三个核心对象在服务端管理 Agent 状态：
 
 -   **Assistant**：一个已配置的 Agent，包含模型、指令和 Tool
-
 -   **Thread**：与用户会话关联的持久化对话历史
-
 -   **Run**：Assistant 在某 Thread 上的一次执行，具有状态生命周期（`queued` $\to$ `in_progress` $\to$ `requires_action` $\to$ `completed`）
 
 **内置 Tool。**
@@ -480,9 +458,7 @@ Assistants API 通过三个核心对象在服务端管理 Agent 状态：
 Assistants API 提供三种无需外部基础设施的托管 Tool：
 
 -   **Code Interpreter**：在带文件 I/O 的沙箱环境中执行 Python
-
 -   **File Search**：基于向量库（vector store）的上传文档检索
-
 -   **Web Search**：实时网页浏览（在部分模型中可用）
 
 *Listing 26.7: OpenAI Assistants API 与 Tool 使用*
@@ -704,9 +680,7 @@ Semantic Kernel [256]（SK）是 Microsoft 面向企业的 Agent 框架，专为
 插件是 kernel 可调用的函数集合（即「skill」），可通过以下方式定义：
 
 -   **原生函数**：使用 `@kernel_function` 装饰的普通 Python/C# 方法
-
 -   **Prompt 函数**：以文件形式存放的参数化 Prompt 模板
-
 -   **OpenAPI 插件**：从 OpenAPI 规范自动生成
 
 *Listing 26.11: Semantic Kernel 插件与 planner*
@@ -763,11 +737,8 @@ Semantic Kernel 的记忆系统通过统一接口支持多种后端（Azure Cogn
 SK 特别适合企业部署，原因包括：
 
 -   针对 .NET 生态的原生 C# 支持
-
 -   与 Azure OpenAI 的集成，支持托管身份（managed identity）认证
-
 -   合规友好的架构，自带审计日志
-
 -   支持本地（on-premises）模型部署
 
 ### 26.3.7 NVIDIA OO Agents（NOOA）
@@ -891,13 +862,9 @@ NOOA 支持任何通过其 `UnifiedLLM` 层可访问的模型：Anthropic、Open
 > 当你有以下需求时，NOOA 是合适的选择：
 >
 > -   极小的抽象开销——懂 Python 就懂这个框架
->
 > -   带自动校验与重试的类型安全 I/O
->
 > -   通过标准 `pytest` 可测试（mock 掉 LLM，正常测试确定性方法）
->
 > -   代码即动作，而非僵硬的工具 schema
->
 > -   无序列化边界的嵌套 Agent 组合
 >
 > 权衡：NOOA 是研究级软件（2026 年 7 月），没有 LangGraph 或 Semantic Kernel 那样的生产加固、托管部署或生态集成。它优先的是编程模型的清晰，而非运维成熟度。
@@ -922,37 +889,27 @@ NOOA 支持任何通过其 `UnifiedLLM` 层可访问的模型：Anthropic、Open
 **Prompt 管理。**
 
 -   **Promptflow**[^1]（Microsoft）：可视化的 Prompt 工程与评测
-
 -   **Guidance**[^2]（Microsoft）：代码与 Prompt 交织的约束生成
-
 -   **LMQL** [26]：类 SQL 的 LLM Prompt 查询语言，支持约束
-
 -   **Outlines** [378]：基于正则与 JSON schema 约束的结构化生成
 
 **Tool 注册表。**
 
 -   **Composio**[^3]：250+ 个预置 Tool 集成，自带 OAuth 管理
-
 -   **Toolhouse**[^4]：带沙箱的托管 Tool 执行
-
 -   **E2B**[^5]：面向 Agent 代码运行的代码执行沙箱
 
 **记忆存储。**
 
 -   **Mem0**[^6]：带自动摘要的自适应记忆层
-
 -   **Zep**[^7]：带时间感知（temporal awareness）的长期记忆
-
 -   **Letta** [281]（原名 MemGPT）：具备自管理记忆层级的 Agent
 
 **评测框架。**
 
 -   **RAGAS**[^8]：面向 RAG 的专用评测指标
-
 -   **DeepEval**[^9]：面向 LLM 输出的单元测试框架
-
 -   **Promptfoo**[^10]：基于 CLI 的 Prompt 评测与红队测试
-
 -   **AgentBench**[^11]：面向 Agent 能力的标准化基准
 
 **自托管 Agent 运行时。**
@@ -964,9 +921,7 @@ NOOA 支持任何通过其 `UnifiedLLM` 层可访问的模型：Anthropic、Open
 Agent 生态正在向若干互操作标准收敛：
 
 -   **模型上下文协议（Model Context Protocol, MCP）** [9]：Anthropic 提出的 Tool 与资源暴露开放标准，使任何 MCP 兼容 Tool 都能与任何 MCP 兼容 Agent 协作（详见第 22 章）
-
 -   **智能体到智能体协议（Agent-to-Agent, A2A）** [113]：Google 提出的 Agent 间通信与任务委派开放标准（详见第 24 章）
-
 -   **Tool 的 OpenAPI 化**：用 OpenAPI 规范定义 Tool 接口，实现 Tool 的自动发现与集成（见下文）
 
 **OpenAPI 作为 Tool 接口层。**
@@ -976,13 +931,9 @@ OpenAPI 规范13（前身为 Swagger）以机器可读形式描述 REST API—�
 转换流水线工作流程如下：
 
 1.  **解析**：读取 OpenAPI 规范（JSON/YAML），并解析 `$ref` 引用。
-
 2.  **发现**：提取每个操作（`GET /pets/{id}`、`POST /orders` 等）。
-
 3.  **生成**：把每个操作转换为函数调用 schema——Tool 名取自 `operationId`，描述取自 `summary`，参数取自规范的 `parameters` 与 `requestBody` 字段。
-
 4.  **执行**：当 LLM 发出 Tool 调用时，根据其提供的参数构造 HTTP 请求（URL、header、查询参数、body）并发送。
-
 5.  **返回**：将 API 响应回灌到 Agent 的上下文中。
 
 *Listing 26.15: 从 OpenAPI 规范自动生成 Agent Tool*
@@ -1235,9 +1186,7 @@ class TestAgentPerformance:
 
 > [!abstract] Agent 可观测性的三大支柱
 > 1.  **Trace（轨迹）**：每一次 LLM 调用、Tool 调用与状态迁移的完整执行记录
->
 > 2.  **Metric（指标）**：成本、延迟、成功率和 Tool 使用情况的聚合统计
->
 > 3.  **Log（日志）**：用于调试与审计的结构化事件日志
 
 ### 26.6.1 追踪 Agent 执行
@@ -1245,13 +1194,9 @@ class TestAgentPerformance:
 现代 Agent 可观测平台提供了针对 LLM 工作负载定制的分布式追踪：
 
 -   **LangSmith**16：与 LangChain/LangGraph 深度集成；在每一步捕获完整的 prompt/response 对、Token 数量与延迟
-
 -   **Arize Phoenix**17：带 LLM 专用指标（幻觉检测、相关性打分）的开源可观测性
-
 -   **Braintrust**18：聚焦评测的平台，支持 A/B 测试与 Prompt 版本管理
-
 -   **Weights & Biases Weave**：将实验追踪扩展到 Agent 轨迹
-
 -   **OpenTelemetry**19：标准化的可观测性插桩协议，对 LLM 的支持日益完善
 
 *Listing 26.21: 基于 OpenTelemetry 的结构化 Agent 追踪*
@@ -1449,23 +1394,16 @@ def submit_task():
 面向多个客户的生产 Agent 系统必须实现严格隔离：
 
 -   **命名空间隔离**：每个租户的状态、记忆和 Tool 配置存储在独立命名空间中
-
 -   **限流**：按租户限定 LLM 调用、Tool 调用与计算时间的速率
-
 -   **资源配额**：为每个租户设置最大并发 Agent 数、Token 预算和存储上限
-
 -   **审计日志**：所有 Agent 动作连同租户 ID 一并记录，用于合规与计费
 
 ### 26.7.3 成本优化策略
 
 -   **模型路由**：在简单子任务（分类、抽取）上使用更小更便宜的模型，把大模型留给复杂推理
-
 -   **Prompt 缓存**：OpenAI 与 Anthropic 都提供对重复系统 Prompt 的缓存，可为高流量 Agent 降低多达 90% 的成本
-
 -   **结果缓存**：在一定时间窗口内对相同输入的 Tool 结果进行缓存
-
 -   **批处理**：在延迟允许时，把多次独立的 LLM 调用合并批处理
-
 -   **提前终止**：检测到 Agent 已掌握足够信息可作答时，及早结束循环
 
 *Listing 26.24: 面向成本优化的模型路由*
@@ -1503,11 +1441,8 @@ class CostOptimizedRouter:
 Agent 工作负载呈现突发且难以预测的特征。有效的自动扩缩容需要：
 
 -   **基于队列深度的扩缩**：根据任务队列深度而非 CPU 利用率来调整 worker 数量
-
 -   **预测式扩缩**：利用历史模式（时段、星期）在需求高峰之前提前扩容
-
 -   **抢占式实例**：长任务可结合检查点使用 spot/可抢占（preemptible）实例以节省成本
-
 -   **优雅停机**：worker 在缩容前完成当前任务，避免状态损坏
 
 ## 26.8 框架对比
@@ -1516,15 +1451,10 @@ Agent 工作负载呈现突发且难以预测的特征。有效的自动扩缩�
 > 「最佳」框架取决于你的具体需求。先问自己几个问题：
 >
 > -   需要对 Agent 流程显式控制？$\to$ **LangGraph**
->
 > -   在构建带代码执行的多 Agent 系统？$\to$ **AutoGen**
->
 > -   希望以最少样板代码实现基于角色的 Agent？$\to$ **CrewAI**
->
 > -   基于 OpenAI 生态进行开发？$\to$ **Agents SDK**
->
 > -   希望自动化优化 Prompt？$\to$ **DSPy**
->
 > -   处于企业级 .NET/Azure 环境？$\to$ **Semantic Kernel**
 
 ## 26.9 完整实现示例：生产级研究型 Agent
@@ -1847,21 +1777,13 @@ hpa_config = {
 > 在将 Agent 部署到生产前，请逐项核对：
 >
 > -   所有 Tool 都具备重试逻辑与错误处理
->
 > -   已强制设定最大迭代次数
->
 > -   敏感数据不会被记录到 trace 中
->
 > -   已按租户配置限流
->
 > -   长任务已启用检查点
->
 > -   行为测试通过（无有害输出）
->
 > -   已校验成本与延迟上限
->
 > -   回滚流程已文档化并经过演练
->
 > -   值班手册（runbook）覆盖常见失败模式
 
 ## 26.10 小结
@@ -1869,15 +1791,10 @@ hpa_config = {
 Agent 开发框架已显著成熟，为构建生产级 AI Agent 的工程挑战提供了结构化解法。本节的关键要点如下：
 
 1.  **框架选型很重要**：不同框架针对不同问题做优化。LangGraph 擅长复杂可控的 Workflow；AutoGen 擅长多 Agent 协作；CrewAI 擅长基于角色的简洁建模；DSPy 擅长自动化优化。
-
 2.  **测试不可妥协**：基于 LLM 的 Agent 具有非确定性，全面的测试（单元、集成、行为、性能）是生产可靠性的必要条件。
-
 3.  **可观测性驱动迭代**：缺少详细的 Agent 执行轨迹，故障诊断与性能改进只能靠猜。要尽早投入可观测性基础设施。
-
 4.  **异步执行是常态**：生产 Agent 是长时间运行的进程，需要基于队列的执行、检查点以及优雅的失败处理。
-
 5.  **成本管理至关重要**：LLM API 成本随使用量线性增长。模型路由、缓存与提前终止可以在不牺牲质量的前提下把成本降低 50–90%。
-
 6.  **生命周期本质上是迭代的**：Agent 开发不是一次性工程。持续的监控、失败分析与改进，是在外部世界不断变化的同时维持性能的关键。
 
 该领域演进迅猛，新的框架、工具与最佳实践层出不穷。但本节涵盖的原则——显式状态管理、全面测试、深度可观测性以及系统化迭代——无论当下流行哪些具体工具，都为之提供了稳固的基础。

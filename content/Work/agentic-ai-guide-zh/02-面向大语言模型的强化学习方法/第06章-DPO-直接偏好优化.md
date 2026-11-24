@@ -30,7 +30,6 @@ $$
 > DPO 在最小化一个交叉熵 loss，其中"标签"是：被选回答的隐式 reward 应高于被拒回答。Margin 由 $\beta$ 控制：
 >
 > -   $\beta$ 较大：需要较大的 margin $\rightarrow$ policy 移动得更激进 $\rightarrow$ 有遗忘风险
->
 > -   $\beta$ 较小：较小的 margin 就够了 $\rightarrow$ policy 更靠近 reference $\rightarrow$ 更保守
 >
 > Reference 模型起到正则化作用：policy 必须用偏好对齐来"证明"自己偏离 reference 的合理性。
@@ -156,23 +155,17 @@ $$
 对一个训练样本 $(x, y_w, y_l)$：
 
 1.  **拼接**：组成两条序列：$[x; y_w]$ 与 $[x; y_l]$。在 batch 内 pad 到相同长度。
-
 2.  **Forward pass（policy $\pi_\theta$）**：把两条序列都喂进模型；在每个回答位置收集 logits。
-
 3.  **提取对数概率**：在回答中每个位置 $t$ 处，取 $\log\text{softmax}(\text{logits}_t)[y_t]$——即实际 token 的对数概率。
-
 4.  **对 token 求和**： $$\begin{aligned}
     \text{logp\_chosen} &= \sum_{t \in \text{response positions}} \log\pi_\theta(y_w^t | x, y_w^{<t}) \\
     \text{logp\_rejected} &= \sum_{t \in \text{response positions}} \log\pi_\theta(y_l^t | x, y_l^{<t})
     \end{aligned}$$
-
 5.  **减去参考**（预计算或来自第二次 forward pass）： $$\begin{aligned}
     \text{ratio\_w} &= \text{logp\_chosen} - \text{ref\_logp\_chosen} \\
     \text{ratio\_l} &= \text{logp\_rejected} - \text{ref\_logp\_rejected}
     \end{aligned}$$
-
 6.  **计算 loss**：$\mathcal{L} = -\log\sigma(\beta \cdot (\text{ratio\_w} - \text{ratio\_l}))$
-
 7.  **Backward pass**：Gradient 沿步骤 5 $\rightarrow$ 4 $\rightarrow$ 3 $\rightarrow$ 2 回传，更新 $\theta$。
 
 ### 6.5.4 Token 级 Gradient 分析
@@ -186,7 +179,6 @@ $$
 **关键洞察**：缩放因子 $\sigma(-\beta \cdot h_\theta)$ 在两条序列的**所有 token 间共享**，相当于一个自适应学习率：
 
 -   当 $h_\theta$ 较小（模型分不清被选与被拒）：缩放 $\approx 0.5$——gradient 强，激进地学。
-
 -   当 $h_\theta$ 较大（模型已经偏好被选）：缩放 $\approx 0$——gradient 可忽略，避免过拟合。
 
 **对被选 token 的影响**：概率被*提升*（对数概率被推高）。
@@ -200,20 +192,15 @@ $$
 **解决方案**：
 
 -   **长度归一化的 DPO**：用 $\frac{1}{|y|}\sum_t \log\pi_\theta(y_t|\cdot)$ 替换 $\log\pi_\theta(y|x)$。一些实现采用此做法（SimPO 即如此）。
-
 -   **标准 DPO**：使用原始求和（不归一化）。这会*隐式*惩罚冗长——模型必须对被选回答中的每个 token 都赋予高概率。
-
 -   **实际影响**：在 benchmark 上，长度归一化的 DPO 能减少长度博弈，但可能损害指令遵循质量。生产中更常用未归一化的标准版本。
 
 ### 6.5.6 标签掩码：哪些 token 会收到 Gradient
 
 > [!abstract] DPO 中哪些 token 收到 Gradient
 > -   **Prompt token**（$x$）：**无 gradient**。Loss 仅在回答位置上计算。Prompt token 提供上下文，但其 logits 不参与 $\log\pi(y|x)$。
->
 > -   **被选回答 token**（$y_w$）：**所有 token 都收到 gradient**。每个 $y_w^t$ 都贡献到求和；gradient 推高它们的概率。
->
 > -   **被拒回答 token**（$y_l$）：**所有 token 都收到 gradient**。每个 $y_l^t$ 都贡献到求和；gradient 压低它们的概率。
->
 > -   **Padding token**：**无 gradient**。通过 attention mask 屏蔽掉。
 
 ### 6.5.7 伪代码：DPO 训练步
@@ -225,13 +212,9 @@ $$
 
 > [!warning] DPO 实现中的陷阱
 > -   **忘记屏蔽 prompt**：如果 prompt token 被纳入对数概率求和，模型就会优化 prompt 的似然（无意义），且有效 $\beta$ 也会出错。
->
 > -   **用均值替代求和**：$\frac{1}{T}\sum_t \log\pi$ 与 $\sum_t \log\pi$ 会带来不同的隐式长度惩罚。$\pi_\theta$ 与 $\pi_{\text{ref}}$ 之间必须保持一致。
->
 > -   **过期的参考模型**：若 $\pi_{\text{ref}}$ 与 $\pi_\theta$ 相距过远（如 base 模型 vs. 微调后的模型），KL 项会占主导，gradient 消失。解决办法：使用 SFT checkpoint（而非 base）作为 reference。
->
 > -   **$\beta$ 过大**：放大对数概率差值 $\rightarrow$ sigmoid 饱和 $\rightarrow$ gradient 归零。从 $\beta = 0.1$ 起步，在 $[0.05, 0.5]$ 区间内调参。
->
 > -   **$\beta$ 过小**：理论上允许 policy 更大程度地偏离 reference（KL 约束更弱），但 gradient $\propto \beta \cdot \sigma(-\beta h)$ 会变得极小 $\rightarrow$ loss 地形平坦 $\rightarrow$ 收敛极慢。模型"被允许"走得很远，却几乎收不到任何告诉它*往哪走*的信号。
 
 ## 6.6 DPO 变体及其各自的失败场景
@@ -270,7 +253,6 @@ $$
 $$
 
 -   $B_{\text{global}} < 32$：隐式 reward 估计中的 gradient 噪声严重 $\rightarrow$ policy 在多个对齐目标之间（如有用 vs 安全）破坏性振荡。
-
 -   $B_{\text{global}} > 128$：收敛速度边际收益递减；分布式算力间通信开销巨大。
 
 ### 6.8.2 数学分解
@@ -282,9 +264,7 @@ $$
 $$
 
 -   $B_{\text{micro}}$：每设备 micro-batch 大小（每次 forward pass 的偏好对数）。
-
 -   $N_{\text{GPUs}}$：并行处理数据的设备数量。
-
 -   $K_{\text{accum}}$：在权重更新前累计 gradient 的步数。
 
 **成对倍数因子**：单个 DPO 数据样本包含 prompt（$x$）、被选（$y_w$）和被拒（$y_l$）。每个 micro-batch 的实际 tensor 负载为：
@@ -319,9 +299,7 @@ $$
 
 > [!abstract] Reference 模型驱逐策略
 > 1.  训练开始前，仅用 $\pi_{\text{ref}}$ 对数据集 $\mathcal{D}$ 执行一次 forward pass。
->
 > 2.  将标量 $\log \pi_{\text{ref}}(y_w|x)$ 和 $\log \pi_{\text{ref}}(y_l|x)$ 缓存到磁盘。
->
 > 3.  **把 $\pi_{\text{ref}}$ 完全从 GPU 显存中驱逐。**
 >
 > **效果**：可用 GPU 显存翻倍 $\rightarrow$ $B_{\text{micro}}$ 可从 1–2 提升到 4–8，从而最大化硬件利用率与训练吞吐。
@@ -357,11 +335,8 @@ $$\mathcal{L}_{f\text{-DPO}} = -\mathbb{E}\!\left[
 
 > [!abstract] TRL 中的 f-Divergence 选项
 > -   **reverse_kl**：$f'(u) = \log u$。即标准 DPO。寻峰。
->
 > -   **forward_kl**：$f'(u) = -1/u$。覆盖式。多样性更好。
->
 > -   **js_divergence**：$f'(u) = \log(2u/(u+1))$。寻峰/覆盖之间的平衡。
->
 > -   **alpha_divergence**：$f'(u) = u^{\alpha-1}$。在前向 KL 与反向 KL 之间插值。
 
 > [!example] TRL 中的 f-DPO
@@ -369,11 +344,8 @@ $$\mathcal{L}_{f\text{-DPO}} = -\mathbb{E}\!\left[
 
 > [!abstract] 何时使用 f-DPO
 > -   当你想在多样性与质量之间取得平衡时，使用 **JS 散度**。
->
 > -   对多样性至关重要的创意任务，使用**前向 KL**。
->
 > -   对有唯一正确答案的任务，使用**反向 KL**（即标准 DPO）。
->
 > -   使用**alpha 散度**可连续插值并精调这一权衡。
 
 ### 6.9.2 Robust DPO
@@ -414,11 +386,8 @@ $$\pi_{\text{ref}}^{(t+1)} \leftarrow
 
 > [!abstract] 何时使用 TR-DPO
 > -   Policy 已偏离初始 reference 较远的长训练任务。
->
 > -   当观察到 DPO loss 因 KL 惩罚主导而过早平台化时。
->
 > -   从当前 policy 收集新偏好数据的迭代 DPO 流水线。
->
 > -   $\alpha$ 接近 1 表示快更新 reference；接近 0 表示慢更新。
 
 ### 6.9.4 EXO——精确优化
@@ -467,9 +436,7 @@ $$\boxed{
 
 > [!abstract] 何时使用 NCA
 > -   当观察到 DPO 训练过程中被选回答的概率在下降时。
->
 > -   对于看重绝对回答质量、而不仅仅是相对排序的任务。
->
 > -   使用较小的 $\beta$（如 0.01）让绝对似然项获得更高权重。
 
 ### 6.9.6 SLiC-HF——序列似然校准
@@ -507,11 +474,8 @@ $$\mathcal{L}_{\text{RPO}} =
 
 > [!abstract] 何时使用 RPO
 > -   模型必须生成逐步解答的推理任务（数学、代码、逻辑）。
->
 > -   当 DPO 训练导致模型流畅度或生成质量下降时。
->
 > -   迭代式流水线：生成 rollout、打标签、用 RPO 训练、再重复。
->
 > -   NLL 项起到正则化作用，防止 policy 崩塌。
 
 ### 6.9.8 SimPO——简化版偏好优化
@@ -541,13 +505,9 @@ $$\boxed{
 
 > [!abstract] SimPO vs DPO vs ORPO
 > -   **DPO**：使用 reference 模型；基于比率的隐式 reward。
->
 > -   **ORPO**：无 reference；在 SFT loss 上加入 odds-ratio 项。
->
 > -   **SimPO**：无 reference；长度归一化的对数概率 reward + margin。
->
 > -   SimPO 比 DPO 简单（无 reference 模型），且比 ORPO 更具理论性。
->
 > -   SimPO 中的长度归一化至关重要：若没有它，模型会偏好长回答。
 
 > [!example] TRL 中的 SimPO

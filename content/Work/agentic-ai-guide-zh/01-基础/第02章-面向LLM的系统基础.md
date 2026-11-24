@@ -14,7 +14,6 @@ GPU 和 CPU 代表了根本不同的硬件设计哲学。理解这种差异能�
 
 > [!tip] CPU 与 GPU——基本设计哲学
 > -   **CPU** 针对*延迟*进行优化——它们以尽可能快的速度执行少量线程，配备大型缓存、分支预测器和乱序执行单元。现代 CPU 拥有 8–96 个核心。
->
 > -   **GPU** 针对*吞吐量*进行优化——它们并行执行数千个线程，每个线程只做简单工作。现代 GPU 拥有数千个"核心"（执行单元），它们被组织成流式多处理器（Streaming Multiprocessor，SM）。
 >
 > 深度学习工作负载以矩阵乘法（在 $O(n^2)$ 数据上执行 $O(n^3)$ 操作）为主，这是天然并行的。70B 模型的单次 transformer 前向传播每个 token 需要约 140 TFLOP 计算量——非常适合 GPU 的吞吐能力。
@@ -52,11 +51,8 @@ NVIDIA 已经发布了一系列 GPU 架构，每一代都为深度学习带来�
 
 > [!warning] 如何选择 GPU？
 > -   **训练 70B+ 模型**：带 NVLink 的 H100/B200 节点（张量并行需要快速互联）。每个实例至少 8$\times$H100。
->
 > -   **推理（延迟敏感）**：H100/H200 适合高带宽场景；MI300X 适合内存密集（Memory-Bound）场景（巨大的键值缓存（KV Cache））。
->
 > -   **微调 7B–13B 模型**：A100-80GB 性价比高。用 LoRA 单卡即可。
->
 > -   **预算紧张**：A100-40GB，甚至用 A10（24GB）在 7B 模型上跑 LoRA。
 
 ### 2.1.4 GPU 内部架构——流式多处理器（SM）
@@ -69,13 +65,9 @@ GPU 由一组**流式多处理器（Streaming Multiprocessor，SM）**阵列组�
 
 > [!abstract] SM 的关键组件
 > -   **CUDA Cores：**用于 FP32/INT32 运算的标量 ALU。A100 上每个 SM 有 64 个。用于逐元素运算、归约和非矩阵运算。
->
 > -   **Tensor Cores：**专用的矩阵乘加（matrix-multiply-accumulate，MMA）单元。每个单元每周期执行一次 $4{\times}4{\times}4$ 融合乘加运算。A100 每个 SM 有 4 个，在支持的精度下提供相对 CUDA cores $16\times$ 的吞吐量。
->
 > -   **寄存器文件：**最快的存储（延迟 1 周期）。所有活动线程共享。溢出到 L1 会显著降速。
->
 > -   **共享内存 / L1：**由程序员显式管理的片上 SRAM。这是 FlashAttention 性能的关键（数据块完全装入共享内存）。
->
 > -   **Warp 调度器：**每个 SM 有 4 个 warp 调度器（A100）。一个 *warp* = 32 个步调一致执行的线程（SIMT 模型）。调度器通过在 warp 之间切换来隐藏内存延迟。
 
 > [!tip] SIMT 执行模型
@@ -158,15 +150,10 @@ NVMe SSD（例如 Samsung 990 Pro）顺序读取可达约 7 GB/s。ZeRO-Infinity
 > **内存流量**（标准实现，非 Flash 版）：
 >
 > -   读取 $Q, K$：$2 \times n \times d \times 2 = 2$ MB
->
 > -   写入注意力分数 $S = QK^T$：$n^2 \times 2 = 33.5$ MB
->
 > -   为 softmax 读取 $S$：$n^2 \times 2 = 33.5$ MB
->
 > -   写入 softmax 输出 $P$：$n^2 \times 2 = 33.5$ MB
->
 > -   为最终矩阵乘读取 $P$ 和 $V$：$n^2 \times 2 + n \times d \times 2 = 34.5$ MB
->
 > -   写入输出 $O$：$n \times d \times 2 = 1$ MB
 >
 > **总内存**：$\approx 138$ MB（由对 $n^2$ 注意力矩阵的 4 次遍历主导）。
@@ -193,7 +180,6 @@ NVMe SSD（例如 Samsung 990 Pro）顺序读取可达约 7 GB/s。ZeRO-Infinity
 > 一个 transformer 块有两个主要组件，它们的算术强度截然不同：
 >
 > -   **Attention：**作用于 $n \times d$ 张量。$QK^T$ 乘积是 $O(n^2 d)$ FLOPs，但注意力分数需要 $O(n^2)$ 内存。在长序列下，内存流量占主导地位——attention 是*内存密集（Memory-Bound）*的。
->
 > -   **FFN（MLP）：**两个大型线性层，权重矩阵形状为 $[d_{\text{model}}, 4d_{\text{model}}]$。这些是高算术强度的大型 GEMM——FFN 是*计算密集（Compute-Bound）*的。
 >
 > 这就是为什么 FlashAttention（内存优化）对 attention 有效但对 FFN 无效，而量化（缩小权重体积）对 FFN 的帮助比对 attention 更大。
@@ -210,11 +196,8 @@ NVMe SSD（例如 Samsung 990 Pro）顺序读取可达约 7 GB/s。ZeRO-Infinity
 > A100 在 108 个 SM 中共有 **432 个 Tensor Cores**（每个 SM 4 个，每个子分区 1 个）。在 BF16 精度下提供 312 TFLOP/s 吞吐——约是 FP32 CUDA cores 吞吐的 $16\times$。
 
 -   **支持的精度：**FP64、TF32、BF16、FP16、INT8、FP8（H100+）。
-
 -   **累加：**内部始终使用 FP32，即使输入为 BF16。这能防止点积过程中的灾难性抵消。
-
 -   **要求：**当矩阵维度是 8（BF16）或 16（FP8）的倍数时，Tensor Cores 效率最高。为此进行填充通常是值得的。
-
 -   **WGMMA（H100）：**Hopper 引入了 warpgroup 级别的 MMA 指令，作用于更大的分块（64$\times$256$\times$16），并可与 TMA（Tensor Memory Accelerator）数据搬运形成流水线。
 
 > [!warning] Tensor Core 陷阱
@@ -236,9 +219,7 @@ NVMe SSD（例如 Samsung 990 Pro）顺序读取可达约 7 GB/s。ZeRO-Infinity
 PCIe 用于：
 
 -   CPU $\leftrightarrow$ GPU 数据传输（模型加载、CPU 卸载）
-
 -   当 NVLink 不可用时的跨节点 GPU 通信（罕见，且非常慢）
-
 -   NVMe 存储访问（经由 CPU）
 
 > [!warning] PCIe 不应用于 GPU 间通信
@@ -269,13 +250,9 @@ NVLink 是同一节点内 GPU 之间的点对点互联。每条链路都是双�
 
 > [!abstract] InfiniBand NDR
 > -   **NDR 400Gb/s** = 每端口 50 GB/s（单向）
->
 > -   **HDR 200Gb/s** = 每端口 25 GB/s（上一代）
->
 > -   **RDMA：**远程直接内存访问（Remote Direct Memory Access）——GPU 可读写远端 GPU 内存而无需远端 CPU 参与
->
 > -   **GPUDirect RDMA：**数据直接经由 HBM $\to$ NIC $\to$ 网络 $\to$ NIC $\to$ HBM，完全绕过 CPU 和系统 DRAM
->
 > -   **延迟：**小消息约 1–2 $\mu$s（对比 TCP/IP 的约 100 $\mu$s）
 
 **胖树拓扑（Fat-Tree Topology）。**
@@ -323,11 +300,8 @@ NVLink 是同一节点内 GPU 之间的点对点互联。每条链路都是双�
 
 > [!tip] 根据带宽选择并行策略
 > -   **张量并行（TP）：**每层都需要 all-reduce——仅在节点内通过 NVLink 使用。TP=8 是 H100 DGX 节点的标准。
->
 > -   **流水线并行（PP）：**阶段之间的点对点通信——可以跨节点，但会引入流水线气泡开销。当模型大到单靠 TP 装不下时使用。
->
 > -   **数据并行（DP）：**梯度的 AllReduce——可以通过 IB 跨节点。在快速 IB 下扩展性良好。
->
 > -   **FSDP/ZeRO：**AllGather + ReduceScatter——类似于 DP 但会分片优化器状态。对于大模型优于 DP。
 
 ## 2.2 vLLM——分页注意力与高吞吐推理
@@ -366,18 +340,14 @@ vLLM [195] 引入了分页注意力（PagedAttention），它借鉴操作系统�
 
 > [!abstract] PagedAttention 核心概念
 > -   **块大小：**通常每块 16 个 token（可调）。每个块存储 $16 \times 2 \times L \times H \times d$ 个元素。
->
 > -   **块表（Block table）：**每条序列一份的映射，把逻辑块索引映射到 GPU 内存池中的物理块索引。
->
 > -   **物理块池：**预先分配好的固定大小块池。分配为 $O(1)$——只需从空闲列表弹出。
->
 > -   **注意力内核：**做了修改，在注意力计算时使用块表从不连续的物理位置 gather KV 块。
 
 > [!example] 块表示例
 > 假设块大小 = 4 个 token，我们有两条序列：
 >
 > -   序列 A（7 个 token）：逻辑块 [0,1] $\to$ 物理块 [3, 7]
->
 > -   序列 B（5 个 token）：逻辑块 [0,1] $\to$ 物理块 [1, 5]
 >
 > 物理块 3 持有序列 A 的 token 0–3。物理块 7 持有序列 A 的 token 4–6（部分填充）。序列 A 的注意力内核按顺序从物理块 3 和 7 读取，并以块表作为间接层。
@@ -400,9 +370,7 @@ vLLM [195] 引入了分页注意力（PagedAttention），它借鉴操作系统�
 > 在一个拥有 1000-token 系统提示、服务 128 位并发用户的聊天机器人中：
 >
 > -   无前缀共享：仅系统提示 KV cache 就需 $128 \times 1000 \times 327{,}680 / 10^9 \approx 42$ GB
->
 > -   有前缀共享：$1 \times 1000 \times 327{,}680 / 10^9 \approx 0.33$ GB
->
 > -   节约：共享前缀部分约 128$\times$
 
 **通过 swap 抢占。**
@@ -417,11 +385,8 @@ vLLM [195] 引入了分页注意力（PagedAttention），它借鉴操作系统�
 > 连续批处理（Continuous Batching，也叫迭代级调度）一次处理一个*解码步*。每一步之后：
 >
 > 1.  检查哪些序列已完成（生成了 EOS token）
->
 > 2.  把已完成的序列从批中移除，释放其 KV 块
->
 > 3.  加入新的等待序列以填补空出的槽位
->
 > 4.  在更新后的批上运行下一解码步
 >
 > 批次组成每一步都在变化——序列动态地加入和离开。这让 GPU 利用率接近 100%，并大幅提升吞吐（相对静态批处理提升 1.5–3$\times$）。PagedAttention 在这里至关重要：在批次中动态添加/移除序列需要动态分配/释放 KV 块，只有在分页内存下才高效。
@@ -433,11 +398,8 @@ vLLM [195] 引入了分页注意力（PagedAttention），它借鉴操作系统�
 vLLM 将投机解码与 PagedAttention 集成：
 
 -   草稿 token 被分配投机性 KV 块
-
 -   拒绝时，投机块被释放（在分页分配下成本极低）
-
 -   接受时，投机块被提升为主序列的一部分
-
 -   块表更新为 $O(k)$——只需更新少量表项
 
 ### 2.2.6 具体显存节约——大规模 70B 模型
@@ -477,21 +439,15 @@ vLLM 将 PagedAttention 封装在一整套服务栈中：连续批处理（Conti
 -   **Scheduler**：vLLM 的大脑。维护三个队列：
 
     -   `waiting`：尚未开始的新请求（等待 prefill）
-
     -   `running`：正在生成 token（decode 阶段）
-
     -   `swapped`：被抢占、KV cache 已卸载到 CPU 的请求
 
     每次迭代，调度器根据可用 GPU 内存块决定运行哪些请求。
 
 -   **Block Manager**：为 KV cache 实现虚拟内存抽象。将逻辑块（按序列）映射到物理块（GPU 内存池中）。负责处理：
-
     -   分配（生成新 token $\rightarrow$ 需要新块）
-
     -   写时复制（Copy-on-Write）（用于 beam search：多 beam 共享前缀块，仅在分叉时复制）
-
     -   Swap（抢占/恢复时在 GPU $\leftrightarrow$ CPU 之间迁移）
-
     -   前缀缓存（Prefix Caching）（当 prompt 共享相同前缀时复用已缓存块）
 
 -   **Model Executor**：执行实际的 LLM 前向传播。管理跨 GPU 的张量并行，调度从分页 KV cache 块读取的注意力内核。
@@ -501,23 +457,14 @@ vLLM 将 PagedAttention 封装在一整套服务栈中：连续批处理（Conti
 ### 2.2.10 请求生命周期（端到端流程）
 
 1.  **到达**：客户端发送 prompt。API server 将其 tokenize，创建一个 `SequenceGroup`，放入 `waiting` 队列。
-
 2.  **调度**：每一步，调度器执行：
-
     1.  检查是否有 `swapped` 序列可以恢复（有足够空闲块）。
-
     2.  检查是否有 `waiting` 序列可以开始 prefill（有足够块容纳完整 prompt）。
-
     3.  在 `running` 序列之间预算剩余块（若当前块已满，每条序列每步需要 1 个新块）。
-
     4.  如果超出预算：**抢占**优先级最低的运行中序列（把 KV 换出到 CPU 或之后重新计算）。
-
 3.  **Prefill**（请求的第一次迭代）：整个 prompt 在一次前向传播中被处理。所有 prompt token 的 KV cache 被计算并存入已分配的块。这是计算密集（Compute-Bound）的（大批 token）。
-
 4.  **Decode**（后续迭代）：每条序列每步生成一个新 token。所有运行中的序列被一起 batch（连续批处理）。这是内存密集（Memory-Bound）的（读取完整 KV cache，生成 1 个 token）。
-
 5.  **块分配**：每个 decode 步后，如果某条序列的最后一个块已满，Block Manager 分配一个新的物理块并将其映射到下一逻辑块。
-
 6.  **完成**：当一条序列遇到 EOS 或达到最大长度时，它会从 `running` 中移除。其物理块立即被释放 $\rightarrow$ 可供其他序列使用。响应被流式回传给客户端。
 
 ### 2.2.11 前缀缓存（自动 Prompt 缓存）
@@ -525,11 +472,8 @@ vLLM 将 PagedAttention 封装在一整套服务栈中：连续批处理（Conti
 当多个请求共享相同前缀（系统 prompt、few-shot 示例）时：
 
 1.  对每个逻辑块的 token 内容计算哈希。
-
 2.  新请求到达时，检查是否有前缀块已在缓存中。
-
 3.  命中时：跳过这些 token 的 prefill，直接复用物理 KV 块。首 token 延迟（Time-to-first-token）大幅下降。
-
 4.  驱逐：LRU 策略。缓存块仅在内存压力需要时才被释放。
 
 **影响**：对于具有长系统提示（2K+ token、所有用户共享）的聊天应用，前缀缓存可降低 TTFT 60–80%。
@@ -588,7 +532,6 @@ response = client.completions.create(
 vLLM 将掩码计算委托给后端引擎：
 
 -   **XGrammar**（自 v0.7 起为默认）：基于下推自动机的引擎，支持 JSON schema、正则和任意 EBNF 语法。得益于高效的 C++ 核心，对复杂 schema 而言最快。
-
 -   **Outlines** [378]：基于 FSM；支持 JSON 和正则。在 XGrammar 不可用时作为回退方案。
 
 掩码在模型前向传播产生 logits *之后*、采样*之前*施加——实际中每步只增加不到 1 ms，因为 FSM/PDA 状态转移和预先计算的索引查找均为 $O(1)$。

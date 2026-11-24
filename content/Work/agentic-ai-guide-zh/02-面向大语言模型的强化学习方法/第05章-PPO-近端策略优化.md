@@ -11,7 +11,6 @@
 **解决方案的演进**：
 
 1.  **TRPO** [317]（2015）：对新旧 policy 之间的 KL 散度施加约束。效果完美，但需要昂贵的二阶优化（Fisher 信息矩阵、共轭梯度）。
-
 2.  **PPO**（2017） [319]：用一个简单的一阶 clipped 目标实现类似的稳定性。实现复杂度低了 10$\times$，效果几乎一样，且能轻松扩展到分布式训练。
 
 ## 5.2 Clipped 目标
@@ -28,7 +27,6 @@ $$
 > $\min$ 算子构造了一个**悲观下界**：
 >
 > -   **好的 action（$\hat{A} > 0$）**：我们希望提升其概率。Surrogate $r\hat{A}$ 会随 $r$ 增大而增大，但 clip 将收益上限锁在 $r = 1 + \epsilon$。*"别因为一个好例子就贪心。"*
->
 > -   **坏的 action（$\hat{A} < 0$）**：我们希望降低其概率。$r\hat{A}$ 会随 $r$ 减小而改善，但 clip 将收益上限锁在 $r = 1 - \epsilon$。*"别因为一个坏例子就遗忘得太激进。"*
 >
 > 净效应：每次更新步中 policy 的变化最多在 $\pm$20% 之内，既能防止灾难性崩溃，也能防止过度自信地走向特化。
@@ -40,7 +38,6 @@ L = L^{\text{CLIP}} - c_1 \underbrace{(V_\theta(s_t) - V^{\text{target}}_t)^2}_{
 $$
 
 -   **Value loss**（$c_1 = 0.1$）：训练 critic 去预测 return；同样被 clip 以保持稳定。
-
 -   **熵奖励**（$c_2 = 0.01$）：防止过早收敛到确定性 policy，对探索至关重要。
 
 ## 5.4 PPO Gradient 与更新规则的推导
@@ -90,9 +87,7 @@ $$
 $L^{\text{CPI}}$ 是一个合法的目标，但若无约束，单次 gradient 步就可能让 $r_t(\theta)$ 远离 1.0，导致：
 
 -   重要性权重变得极端 $\rightarrow$ 方差升高
-
 -   Policy 进入未经检验的区域 $\rightarrow$ reward 模型给出不可靠的分数
-
 -   灾难性崩溃：policy 生成垃圾，且无法恢复
 
 **TRPO 方案**：约束 $D_{\text{KL}}(\pi_{\theta_{\text{old}}} \| \pi_\theta) \leq \delta$。需要二阶方法（成本高）。
@@ -117,11 +112,8 @@ $$\nabla_\theta L_t = \begin{cases}
 展开各条件：
 
 -   **当 $\hat{A}_t > 0$ 且 $r_t < 1+\epsilon$**：Gradient 正常传播——policy 被鼓励提升 $\pi_\theta(a_t|s_t)$。
-
 -   **当 $\hat{A}_t > 0$ 且 $r_t \geq 1+\epsilon$**：Gradient 为**零**——policy 提升已足够，停止继续推。
-
 -   **当 $\hat{A}_t < 0$ 且 $r_t > 1-\epsilon$**：Gradient 正常传播——policy 被鼓励降低 $\pi_\theta(a_t|s_t)$。
-
 -   **当 $\hat{A}_t < 0$ 且 $r_t \leq 1-\epsilon$**：Gradient 为**零**——policy 降低已足够，停止继续推。
 
 ### 5.4.6 第 6 步：完整的 PPO 更新规则
@@ -139,13 +131,9 @@ H[\pi_\theta] &= -\sum_a \pi_\theta(a|s_t)\log\pi_\theta(a|s_t) & &\text{(entrop
 
 > [!tip] 小结：它为何有效
 > 1.  **Policy gradient 定理**给出了改进 policy 的方向。
->
 > 2.  **重要性采样**让我们能在多个 epoch 中复用来自 $\pi_{\theta_{\text{old}}}$ 的数据。
->
 > 3.  **Clipping** 防止重要性权重变得极端，保持更新安全。
->
 > 4.  **$\min$ 算子**保证我们始终在 (clipped, unclipped) 中取更保守的一项——对改进设置悲观下界。
->
 > 5.  **结果**：以概率 1 实现单调改进，且只用一阶 gradient。无需 Hessian、共轭梯度或线搜索。
 
 ## 5.5 Rollout Buffer 与 Rollout
@@ -157,7 +145,6 @@ H[\pi_\theta] &= -\sum_a \pi_\theta(a|s_t)\log\pi_\theta(a|s_t) & &\text{(entrop
 **Rollout**（轨迹）是 Agent 在环境中执行当前 policy 所产生的一段交互序列：
 
 -   **过程**：Agent 观察 state、选择 action、获得 reward，然后转移到下一个 state。重复进行固定步数，或直到 episode 结束。
-
 -   **在大语言模型/RLHF 中**：一次 rollout 即从数据集中取出一条 prompt，让语言模型一个 token 接一个 token 地生成完整序列，直到遇到文本结束标记。每个 token 就是一个"step"。
 
 ### 5.5.2 Rollout Buffer
@@ -169,9 +156,7 @@ $$
 $$
 
 -   $s_t, a_t, r_t$：步 $t$ 的 state、所采取的 action 与 reward。
-
 -   $\log\pi_{\theta_{\text{old}}}(a_t|s_t)$：在生成该 action 的那一个 policy 下取该 action 的对数概率（计算 ratio 时需要）。
-
 -   $V(s_t)$：Value function 给出的基线预测（计算 GAE advantage 时需要）。
 
 ### 5.5.3 Rollout Buffer 的生命周期
@@ -179,9 +164,7 @@ $$
 该 buffer 按严格的三阶段时钟周期运行：
 
 1.  **收集**：当前 policy 与环境交互，用新鲜轨迹填满 buffer（对一个 70B 模型，batch=128，max_tokens=512：单次 rollout 可达 65K 个 token 级 transition）。
-
 2.  **训练**：对各轨迹计算 GAE advantage。使用 clipped 目标在 mini-batch 上跑 $K$ 个 epoch（通常 3–10）的 gradient 下降，更新 policy 权重。
-
 3.  **清空**：整个 buffer 被**彻底清空**。由于 PPO 是 on-policy 的，旧 policy 产生的数据无法安全地复用于下一轮更新——比率 $r_t(\theta)$ 会变得过期，clipping 保证也会失效。
 
 > [!warning] Rollout Buffer 与 Replay Buffer 的区别
@@ -195,11 +178,8 @@ $$
 > 在 RLHF 训练中，vLLM 被用于**生成阶段**（占 wall-clock 时间 60–70%）。Policy 模型生成 rollout，随后由 reward 模型打分。其主要优势：
 >
 > -   **批量生成**：跨多条 prompt 并行生成 256+ 条回答。
->
 > -   **显存效率**：可容纳更多并发生成 $\rightarrow$ 在生成瓶颈期 GPU 利用率更高。
->
 > -   **前缀共享**：当每条 prompt 生成 $N=8$ 条回答时（如 GRPO），prompt 的 KV 只算一次并被 8 条共享——无冗余 prefill。
->
 > -   **集成**：OpenRLHF、TRL 等框架将 vLLM 作为生成后端，把生成 worker（vLLM）与训练 worker（DeepSpeed/FSDP）分离。
 
 ## 5.6 用于 RLHF 的 PPO：完整循环
@@ -227,9 +207,7 @@ $$
 > 在计算逐 token KL 惩罚与 advantage 时，请记住：tokenization 决定了什么算一"步"。单个概念性 action（例如输出"2024"）依据 tokenizer 的不同可能跨越 1–4 个 token。这带来若干微妙问题：
 >
 > -   **KL 记账**：相同的语义内容若被切成不同数量的 token，逐 token KL 加总会得出不同总额（例如，被切成更多子词的稀有词会获得更高的总 KL 惩罚）。
->
 > -   **Credit 分配**：GAE 按 token 位置分配 advantage——但语义"决策"常跨越多个 token。模型其实只在词首 token 真正"决定"；后续子词 token 基本是确定性的。
->
 > -   **Reward 放置**：只在最后一个 token 给 reward 意味着所有先前 token 必须通过 GAE 向后回传 credit——越长的回答信号被稀释得越厉害。
 >
 > **缓解措施**：一些系统按序列长度对 KL 做归一化，使用词级 reward shaping，或在语义边界（而非最末 token）处施加 reward。
@@ -244,7 +222,6 @@ PPO 在内存中维护两份不同的参数状态，它们共享同一神经网�
 
 > [!abstract] 核心架构：两个网络
 > 1.  **Policy 网络（$\pi_\theta$）：**由权重 $\theta$ 参数化的、处于活动状态的实时网络。优化过程中通过反向传播持续更新。
->
 > 2.  **旧 Policy 网络（$\pi_{\theta_{\text{old}}}$）：**由权重 $\theta_{\text{old}}$ 参数化的冻结快照。在单个优化周期内充当静态锚，防止 policy 漂移过快。
 
 ### 5.7.1 阶段 1：Rollout（数据收集）
@@ -252,11 +229,8 @@ PPO 在内存中维护两份不同的参数状态，它们共享同一神经网�
 在数据收集期间，Agent 与环境交互 $T$ 步。在每个时间步 $t$：
 
 1.  环境给出当前 state/观测 $s_t$（对大语言模型而言：prompt + 到目前为止已生成的 token）。
-
 2.  $s_t$ 被送入当前网络快照（$\theta_{\text{old}}$）。
-
 3.  网络输出原始未归一化的值——**logits** $z_{\text{old}}$——一个长度为 $|V|$（词表大小 32K–128K）的向量。
-
 4.  通过 Softmax 计算概率：
 
 $$
@@ -315,9 +289,7 @@ $$
 
 > [!tip] Clipping 的工作方式
 > -   若 $\hat{A}_t > 0$（好 action）：比率被 clip 至 $1+\epsilon$——不会对好 action 过度利用。
->
 > -   若 $\hat{A}_t < 0$（坏 action）：比率被 clip 至 $1-\epsilon$——不会对坏 action 过度惩罚。
->
 > -   $\min(\cdot)$ 保证我们始终取更保守的估计。
 >
 > 结果：在一个信任域内实现单调改进——不会出现灾难性崩溃。
@@ -340,7 +312,6 @@ $$
 对于连续 action 空间（在大语言模型中不常见，但对机器人 RL 很重要），网络输出的是分布参数而非离散 logits：
 
 -   预测的均值向量 $\mu$
-
 -   预测的标准差向量 $\sigma$
 
 对数概率由高斯对数 PDF 计算：
