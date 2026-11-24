@@ -215,12 +215,35 @@ $$
 \text{MaskedAttn}(Q, K, V) = \text{softmax}\!\left(\frac{QK^T}{\sqrt{d_k}} + M\right) V
 $$
 
-```icap-ask
-id: q2h7x4rgpy
-kind: request
----
-向 Agent 的请求
-```
+> [!request] 除以根号d_k的作用是什么
+> **请求:** 除以根号d_k的作用是什么
+>
+> $\sqrt{d_k}$ 的作用是**控制注意力 logits 的方差**，也就是把 softmax 的输入保持在一个"有区分度但不过饱和"的量级。
+>
+> **1. 点积的方差随维度线性增长**
+>
+> 设 $q, k \in \mathbb{R}^{d_k}$，各分量近似独立、均值 0、方差 1，则
+>
+> $$q \cdot k = \sum_{i=1}^{d_k} q_i k_i \quad\Rightarrow\quad \mathrm{Var}(q\cdot k) = d_k, \qquad \mathrm{std} = \sqrt{d_k}$$
+>
+> 维度越大，点积越容易取到绝对值很大的值。除以 $\sqrt{d_k}$ 后方差回到 1，logits 的尺度就与 $d_k$ 无关了。
+>
+> **2. 不缩放会让 softmax 饱和、梯度消失**
+>
+> softmax 对输入尺度很敏感：当 logits 标准差为 $\sqrt{d_k}$（$d_k = 64$ 时约 8）时，$\exp$ 把差距指数放大，输出接近 one-hot。后果有两个：
+>
+> - softmax 的雅可比 $\mathrm{diag}(p) - pp^\top$ 在 $p$ 接近 one-hot 时趋近于 0，注意力对 $QK^\top$ 的梯度几乎消失；
+> - 训练早期 $q, k$ 还是随机初始化，argmax 由噪声决定，注意力分布剧烈跳变。
+>
+> `relu` 打开的门控和 softmax 是同一种病：饱和区没有梯度。
+>
+> **3. 顺带让超参跨维度可复用**
+>
+> 多头注意力里 $d_k = d/H$。缩放后，换不同的头数/隐藏维度，注意力分布的熵大致同量级，同一套初始化、学习率和温度仍然可用。
+>
+> **一个常见误解**：$\sqrt{d_k}$ 不是用来防数值溢出的。softmax 本身平移不变（$e^{x-c}$），防溢出靠减最大值；这里的缩放调的是**分布形状**，不是数值范围。
+>
+> **边界**：$\sqrt{d_k}$ 的前提是"分量单位方差"。若 $q, k$ 已被 QK-Norm 或 LayerNorm 归一化，或者模型需要更尖锐的注意力（更低温度），这个常数就不再最优，实践中会改用可学习温度或别的缩放因子。它保证数值尺度稳定，不保证注意力"该有多尖"。
 
 其中掩码 $M$ 为：
 
