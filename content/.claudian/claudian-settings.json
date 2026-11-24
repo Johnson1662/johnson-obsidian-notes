@@ -2773,7 +2773,7 @@
       "cliPath": "",
       "cliPathsByHost": {},
       "enabled": true,
-      "environmentHash": "",
+      "environmentHash": "runtime-input:v1:53965a5d5461a45c6b73f390fb2d15c977787ce901c503d5be22692dbea9bfa9",
       "environmentVariables": "",
       "installationMethodsByHost": {},
       "modelAliases": {},
@@ -2852,13 +2852,15 @@
     "claude": "sonnet",
     "opencode": "opencode:opencode/big-pickle",
     "omp": "pi:commandcode/deepseek/deepseek-v4.1-flash",
-    "pi": "pi:commandcode/deepseek/deepseek-v4.1-flash"
+    "pi": "pi:commandcode/deepseek/deepseek-v4.1-flash",
+    "antigravity": "antigravity/gemini-4-hydrogen"
   },
   "savedProviderEffort": {
     "claude": "high",
     "opencode": "default",
     "omp": "medium",
-    "pi": "high"
+    "pi": "high",
+    "antigravity": "high"
   },
   "savedProviderServiceTier": {},
   "savedProviderPermissionMode": {
@@ -2866,7 +2868,8 @@
     "opencode": "yolo",
     "codex": "yolo",
     "pi": "yolo",
-    "omp": "normal"
+    "omp": "normal",
+    "antigravity": "normal"
   },
   "enableAutoScroll": true,
   "deferMathRenderingDuringStreaming": true,
