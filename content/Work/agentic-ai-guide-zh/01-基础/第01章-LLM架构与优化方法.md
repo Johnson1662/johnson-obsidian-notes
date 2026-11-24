@@ -215,6 +215,13 @@ $$
 \text{MaskedAttn}(Q, K, V) = \text{softmax}\!\left(\frac{QK^T}{\sqrt{d_k}} + M\right) V
 $$
 
+```icap-ask
+id: q2h7x4rgpy
+kind: request
+---
+向 Agent 的请求
+```
+
 其中掩码 $M$ 为：
 
 $$
@@ -269,13 +276,6 @@ $$
 
 > [!note] 2026 年的一个反例：DeepSeek-V4.1-Flash 的 Causal Encoder-Decoder
 > 上表的「现在较少使用」需要加一个限定。DeepSeek-V4.1-Flash（552B MoE，1M 上下文）把 40 层主干切成 20 层因果编码器 + 20 层解码器：解码器的全局 KV 不再由自己的隐状态算出，而是由编码器末层隐状态 $H_{L/2}$ 逐层投影得到，于是 prefill 每个 Token 只激活约 8B 参数、decode 约 16B。它**不是** T5 式的编码器-解码器：编码器仍是因果的，训练目标仍是下一个 Token 预测，报告里也没有独立的交叉注意力层；动机同样不是「输入/输出结构不同」，而是 agent 负载里 prompt 远大于答案。细节见 [[DeepSeek-V4.1-Flash 的 Causal Encoder-Decoder 架构]]。
-
-```icap-ask
-id: qv7t72qw0d
-kind: request
----
-向 Agent 的请求
-```
 
 ### 1.3.4 嵌入：从离散 Token 到连续空间
 
