@@ -630,3 +630,28 @@ Goodhart 定律指出：*"当一个度量成为目标时，它就不再是好的
 > 4.  是否对所有指标都报告了置信区间？
 > 5.  评估是否可复现（固定随机种子、Prompt 版本化、公开测试集）？
 > 6.  评估是否已与人类判断或外在结果进行过验证？
+
+> [!cite]- 本章引文（23 条）
+> - **[16]** Bai 等, 2022 — *Constitutional AI: Harmlessness from AI Feedback*. arXiv Preprint arXiv:2212.08073. <https://arxiv.org/abs/2212.08073>
+> - **[19]** Banerjee & Lavie, 2005 — *METEOR: An Automatic Metric for MT Evaluation with Improved Correlation with Human Judgments*. Proceedings of the ACL Workshop on Intrinsic and Extrinsic Evaluation Measures for Machine Translation and/or Summarization. <https://aclanthology.org/W05-0909/>
+> - **[29]** Bradley & Terry, 1952 — *Rank Analysis of Incomplete Block Designs: I. The Method of Paired Comparisons*. Biometrika. <https://www.jstor.org/stable/2334029>
+> - **[47]** Chen 等, 2021 — *Evaluating Large Language Models Trained on Code*. arXiv Preprint arXiv:2107.03374. <https://arxiv.org/abs/2107.03374>
+> - **[60]** Cohen, 1960 — *A Coefficient of Agreement for Nominal Scales*. Educational and Psychological Measurement
+> - **[84]** Elo, 1978 — *The Rating of Chess Players, Past and Present*
+> - **[92]** Fleiss, 1971 — *Measuring Nominal Scale Agreement Among Many Raters*. Psychological Bulletin
+> - **[112]** Goodhart, 1984 — *Problems of Monetary Management: The U.K. Experience*. Monetary Theory and Practice
+> - **[124]** Guo 等, 2017 — *On Calibration of Modern Neural Networks*. International Conference on Machine Learning (ICML)
+> - **[137]** Hendrycks 等, 2021 — *Measuring Massive Multitask Language Understanding*. International Conference on Learning Representations (ICLR)
+> - **[138]** Herbrich 等, 2006 — *TrueSkill™: A Bayesian Skill Rating System*. Advances in Neural Information Processing Systems (NeurIPS). <https://proceedings.neurips.cc/paper/2006/hash/f44ee263952e65b3610b8ba51229d1f9-Abstract.html>
+> - **[169]** Jimenez 等, 2024 — *SWE-bench: Can Language Models Resolve Real-World GitHub Issues?*. International Conference on Learning Representations (ICLR). <https://arxiv.org/abs/2310.06770>
+> - **[216]** Lin, 2004 — *ROUGE: A Package for Automatic Evaluation of Summaries*. Text Summarization Branches Out: Proceedings of the ACL-04 Workshop. <https://aclanthology.org/W04-1013/>
+> - **[229]** Liu 等, 2023 — *AgentBench: Evaluating LLMs as Agents*. arXiv Preprint arXiv:2308.03688
+> - **[231]** Liu 等, 2023 — *G-Eval: NLG Evaluation Using GPT-4 with Better Human Alignment*. Proceedings of the 2023 Conference on Empirical Methods in Natural Language Processing (EMNLP). <https://arxiv.org/abs/2303.16634>
+> - **[283]** Papineni 等, 2002 — *BLEU: A Method for Automatic Evaluation of Machine Translation*. Proceedings of the 40th Annual Meeting of the Association for Computational Linguistics (ACL). <https://aclanthology.org/P02-1040/>
+> - **[329]** Shridhar 等, 2021 — *ALFWorld: Aligning Text and Embodied Environments for Interactive Learning*. International Conference on Learning Representations (ICLR)
+> - **[371]** Wang 等, 2022 — *Self-Instruct: Aligning Language Models with Self-Generated Instructions*. arXiv Preprint arXiv:2212.10560. <https://arxiv.org/abs/2212.10560>
+> - **[380]** Wilson, 1927 — *Probable Inference, the Law of Succession, and Statistical Inference*. Journal of the American Statistical Association. <https://www.jstor.org/stable/2276774>
+> - **[398]** Xu 等, 2023 — *WizardLM: Empowering Large Language Models to Follow Complex Instructions*. arXiv Preprint arXiv:2304.12244. <https://arxiv.org/abs/2304.12244>
+> - **[426]** Zhang 等, 2020 — *BERTScore: Evaluating Text Generation with BERT*. International Conference on Learning Representations (ICLR). <https://arxiv.org/abs/1904.09675>
+> - **[433]** Zheng 等, 2023 — *Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena*. Advances in Neural Information Processing Systems (NeurIPS). <https://arxiv.org/abs/2306.05685>
+> - **[440]** Zhou 等, 2024 — *WebArena: A Realistic Web Environment for Building Autonomous Agents*. International Conference on Learning Representations (ICLR). <https://arxiv.org/abs/2307.13854>

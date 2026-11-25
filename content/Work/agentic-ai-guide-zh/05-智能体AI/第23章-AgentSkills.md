@@ -163,3 +163,7 @@ $$
 *Table 23.2: 用于添加能力的 Skill（上下文内）与微调对比。*
 
 在实践中，两种方法是互补的：微调提供*基础能力*（指令跟随、工具使用格式、推理），而 skill 在运行时叠加提供*任务特定的专长*。
+
+> [!cite]- 本章引文（2 条）
+> - **[10]** Anthropic, 2024 — *Building Effective Agents*. <https://www.anthropic.com/research/building-effective-agents>
+> - **[362]** Wang 等, 2023 — *Voyager: An Open-Ended Embodied Agent with Large Language Models*. arXiv Preprint arXiv:2305.16291. <https://arxiv.org/abs/2305.16291>

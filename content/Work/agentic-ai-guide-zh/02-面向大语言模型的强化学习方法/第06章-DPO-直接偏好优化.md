@@ -512,3 +512,13 @@ $$\boxed{
 
 > [!example] TRL 中的 SimPO
 > ZZCODEZZ9ZZENDZZ
+
+> [!cite]- 本章引文（8 条）
+> - **[43]** Chen 等, 2024 — *Noise Contrastive Alignment of Language Models with Explicit Rewards*. arXiv Preprint arXiv:2402.05369. <https://arxiv.org/abs/2402.05369>
+> - **[56]** Chowdhury 等, 2024 — *Provably Robust DPO: Aligning Language Models with Noisy Feedback*. arXiv Preprint arXiv:2403.00409. <https://arxiv.org/abs/2403.00409>
+> - **[116]** Gorbatenko, 2024 — *Online DPO with Synchronised Reference Model Updates*. TRL Documentation
+> - **[163]** Ji 等, 2024 — *Towards Exact Optimization of Language Model Alignment*. arXiv Preprint arXiv:2402.05369. <https://arxiv.org/abs/2402.05369>
+> - **[252]** Meng 等, 2024 — *SimPO: Simple Preference Optimization with a Reference-Free Reward*. Advances in Neural Information Processing Systems (NeurIPS). <https://arxiv.org/abs/2405.14734>
+> - **[302]** Rafailov 等, 2023 — *Direct Preference Optimization: Your Language Model Is Secretly a Reward Model*. Advances in Neural Information Processing Systems (NeurIPS). <https://arxiv.org/abs/2305.18290>
+> - **[363]** Wang 等, 2024 — *Beyond Reverse KL: Generalizing Direct Preference Optimization with Diverse Divergence Constraints*. Proceedings of the 12th International Conference on Learning Representations (ICLR). <https://arxiv.org/abs/2309.16240>
+> - **[432]** Zhao 等, 2023 — *SLiC-HF: Sequence Likelihood Calibration with Human Feedback*. arXiv Preprint arXiv:2305.10425. <https://arxiv.org/abs/2305.10425>

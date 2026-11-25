@@ -1042,3 +1042,24 @@ agent harness 是将语言模型转变为能干、可靠 Agent 的工程基础�
 -   **错误是不可避免的；优雅恢复是一项特性。** 实现重试逻辑、循环检测以及富含信息的失败消息。
 -   **可观测性不是可选项。** 你无法调试看不见的东西。从第一天就对所有事物进行埋点。
 -   **生产环境的关注点会复合。** 延迟、成本、速率限制与评测彼此交互。请系统化地解决它们，而不是事后补救。
+
+> [!cite]- 本章引文（19 条）
+> - **[9]** Anthropic, 2024 — *Model Context Protocol*. <https://modelcontextprotocol.io>
+> - **[41]** Chase, 2022 — *LangChain*. <https://github.com/langchain-ai/langchain>
+> - **[46]** Chen 等, 2023 — *FrugalGPT: How to Use Large Language Models While Reducing Cost and Improving Performance*. arXiv Preprint arXiv:2305.05176. <https://arxiv.org/abs/2305.05176>
+> - **[154]** Inc, 2024 — *LangGraph: Build Stateful Multi-Actor Applications with LLMs*. <https://github.com/langchain-ai/langgraph>
+> - **[223]** Liu 等, 2022 — *What Makes Good in-Context Examples for GPT-3?*. Proceedings of Deep Learning Inside Out (DeeLIO), ACL Workshop. <https://arxiv.org/abs/2101.06804>
+> - **[261]** Moura, 2023 — *CrewAI: Framework for Orchestrating Role-Playing Autonomous AI Agents*. <https://github.com/crewAIInc/crewAI>
+> - **[276]** OpenAI, 2024 — *Swarm: An Educational Framework for Lightweight Multi-Agent Orchestration*. <https://github.com/openai/swarm>
+> - **[281]** Packer 等, 2023 — *MemGPT: Towards LLMs as Operating Systems*. arXiv Preprint arXiv:2310.08560. <https://arxiv.org/abs/2310.08560>
+> - **[287]** Patil 等, 2024 — *Gorilla: Large Language Model Connected with Massive APIs*. Advances in Neural Information Processing Systems (NeurIPS). <https://arxiv.org/abs/2305.15334>
+> - **[299]** Qin 等, 2024 — *ToolLLM: Facilitating Large Language Models to Master 16000+ Real-World APIs*. Proceedings of the 12th International Conference on Learning Representations (ICLR). <https://arxiv.org/abs/2307.16789>
+> - **[315]** Schick 等, 2023 — *Toolformer: Language Models Can Teach Themselves to Use Tools*. Advances in Neural Information Processing Systems
+> - **[326]** Shinn 等, 2023 — *Reflexion: Language Agents with Verbal Reinforcement Learning*. Advances in Neural Information Processing Systems (NeurIPS). <https://arxiv.org/abs/2303.11366>
+> - **[362]** Wang 等, 2023 — *Voyager: An Open-Ended Embodied Agent with Large Language Models*. arXiv Preprint arXiv:2305.16291. <https://arxiv.org/abs/2305.16291>
+> - **[364]** Wang 等, 2023 — *Plan-and-Solve Prompting: Improving Zero-Shot Chain-of-Thought Reasoning by Large Language Models*. Proceedings of the 61st Annual Meeting of the Association for Computational Linguistics (ACL). <https://arxiv.org/abs/2305.04091>
+> - **[374]** Wei 等, 2022 — *Chain-of-Thought Prompting Elicits Reasoning in Large Language Models*. Advances in Neural Information Processing Systems (NeurIPS). <https://arxiv.org/abs/2201.11903>
+> - **[385]** Wu 等, 2023 — *AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation*. arXiv Preprint arXiv:2308.08155
+> - **[408]** Yao 等, 2023 — *ReAct: Synergizing Reasoning and Acting in Language Models*. International Conference on Learning Representations (ICLR). <https://arxiv.org/abs/2210.03629>
+> - **[420]** Zhang 等, 2025 — *Recursive Language Models*. arXiv Preprint arXiv:2512.24601. <https://arxiv.org/abs/2512.24601>
+> - **[433]** Zheng 等, 2023 — *Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena*. Advances in Neural Information Processing Systems (NeurIPS). <https://arxiv.org/abs/2306.05685>

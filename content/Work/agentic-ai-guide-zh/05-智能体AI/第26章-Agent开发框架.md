@@ -1768,3 +1768,17 @@ Agent 开发框架已显著成熟，为构建生产级 AI Agent 的工程挑战�
 [^11]: <https://github.com/THUDM/AgentBench>
 
 [^12]: <https://github.com/open-claw/open-claw>
+
+> [!cite]- 本章引文（12 条）
+> - **[9]** Anthropic, 2024 — *Model Context Protocol*. <https://modelcontextprotocol.io>
+> - **[26]** Beurer-Kellner 等, 2023 — *Prompting Is Programming: A Query Language for Large Language Models*. Proceedings of PLDI
+> - **[102]** Furgale 等, 2026 — *NVIDIA-labs OO Agents: Native Python Object-Oriented Agents*. <https://arxiv.org/abs/2607.20709>
+> - **[113]** Google, 2025 — *Agent2Agent (A2A) Protocol*. <https://developers.google.com/agent2agent>
+> - **[154]** Inc, 2024 — *LangGraph: Build Stateful Multi-Actor Applications with LLMs*. <https://github.com/langchain-ai/langgraph>
+> - **[183]** Khattab 等, 2024 — *DSPy: Compiling Declarative Language Model Calls into Self-Improving Pipelines*. Proceedings of the 12th International Conference on Learning Representations (ICLR). <https://arxiv.org/abs/2310.03714>
+> - **[256]** Microsoft, 2023 — *Semantic Kernel: SDK for Integrating AI Models into Applications*. <https://github.com/microsoft/semantic-kernel>
+> - **[261]** Moura, 2023 — *CrewAI: Framework for Orchestrating Role-Playing Autonomous AI Agents*. <https://github.com/crewAIInc/crewAI>
+> - **[277]** OpenAI, 2025 — *OpenAI Agents SDK*. <https://github.com/openai/openai-agents-python>
+> - **[281]** Packer 等, 2023 — *MemGPT: Towards LLMs as Operating Systems*. arXiv Preprint arXiv:2310.08560. <https://arxiv.org/abs/2310.08560>
+> - **[378]** Willard & Louf, 2023 — *Efficient Guided Generation for Large Language Models*. arXiv Preprint arXiv:2307.09702. <https://arxiv.org/abs/2307.09702>
+> - **[385]** Wu 等, 2023 — *AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation*. arXiv Preprint arXiv:2308.08155

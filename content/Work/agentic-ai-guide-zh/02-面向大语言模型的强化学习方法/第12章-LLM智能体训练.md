@@ -1024,3 +1024,24 @@ MOSAIC 的核心框架引入了一个**计划 $\rightarrow$ 检查 $\rightarrow$
 > -   轨迹级偏好学习优于步骤级安全分类器，因为它能捕捉动作组合产生的涌现性危害。
 
 **在真实 Agent 轨迹上训练。** xAI 的 Grok 4.5（2026 年 7 月） [389] 引入了一种新颖的数据来源：来自 Cursor 的匿名开发者会话轨迹——工程师在真实代码库中工作的实际击键、导航模式与编辑序列。在这些轨迹上做中期训练后，Grok 4.5 在智能体工具使用基准上登顶。这预示着一个"算力 + 轨迹"范式：一旦算力到位，稀缺的输入就变成*目标行为的记录*——类似于 AlphaGo 先以人类棋局自举、再转向自我对弈。这一方法引发了尚未解决的数据权利问题（谁的代码、在何种同意下？），但它证明：来自专家用户的行为示范仍然是智能体能力的有力训练信号。
+
+> [!cite]- 本章引文（19 条）
+> - **[50]** Chen & others, 2026 — *MOSAIC: Safe Agentic Training via Plan-Check-Act-Refuse*
+> - **[72]** DeepSeek-AI 等, 2025 — *DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning*. arXiv Preprint arXiv:2501.12948. <https://arxiv.org/abs/2501.12948>
+> - **[143]** Hosseini 等, 2024 — *V-STaR: Training Verifiers for Self-Taught Reasoners*. arXiv Preprint arXiv:2402.06457
+> - **[200]** Le 等, 2023 — *CodeRL: Mastering Code Generation Through Pretrained Models and Deep Reinforcement Learning*. Advances in Neural Information Processing Systems (NeurIPS)
+> - **[271]** NVIDIA, 2025 — *NeMo Gym: Interactive RL Environments for LLM Agent Training*. <https://developer.nvidia.com/nemo-gym>
+> - **[294]** Putta 等, 2024 — *Agent Q: Advanced Reasoning and Learning for Autonomous AI Agents*. arXiv Preprint arXiv:2408.07199
+> - **[319]** Schulman 等, 2017 — *Proximal Policy Optimization Algorithms*. arXiv Preprint arXiv:1707.06347. <https://arxiv.org/abs/1707.06347>
+> - **[323]** Shao 等, 2024 — *DeepSeekMath: Pushing the Limits of Mathematical Reasoning in Open Language Models*. arXiv Preprint arXiv:2402.03300. <https://arxiv.org/abs/2402.03300>
+> - **[326]** Shinn 等, 2023 — *Reflexion: Language Agents with Verbal Reinforcement Learning*. Advances in Neural Information Processing Systems (NeurIPS). <https://arxiv.org/abs/2303.11366>
+> - **[362]** Wang 等, 2023 — *Voyager: An Open-Ended Embodied Agent with Large Language Models*. arXiv Preprint arXiv:2305.16291. <https://arxiv.org/abs/2305.16291>
+> - **[366]** Wang 等, 2024 — *OpenHands: An Open Platform for AI Software Developers as Generalist Agents*. arXiv Preprint arXiv:2407.16741
+> - **[369]** Wang & others, 2025 — *RLFactory: A Plug-and-Play Framework for Multi-Round Tool-Use RL*
+> - **[389]** xAI, 2026 — *Grok 4.5: Training on Real Developer Session Traces*
+> - **[404]** Yang 等, 2024 — *SWE-agent: Agent-Computer Interfaces Enable Automated Software Engineering*. Advances in Neural Information Processing Systems (NeurIPS). <https://arxiv.org/abs/2405.15793>
+> - **[408]** Yao 等, 2023 — *ReAct: Synergizing Reasoning and Acting in Language Models*. International Conference on Learning Representations (ICLR). <https://arxiv.org/abs/2210.03629>
+> - **[414]** Yu 等, 2026 — *Reinforcement World Model Learning for LLM-Based Agents*. arXiv Preprint arXiv:2602.05842
+> - **[418]** Zelikman 等, 2022 — *STaR: Bootstrapping Reasoning with Reasoning*. Advances in Neural Information Processing Systems (NeurIPS). <https://arxiv.org/abs/2203.14465>
+> - **[419]** Zelikman 等, 2024 — *Quiet-STaR: Language Models Can Teach Themselves to Think Before Speaking*. arXiv Preprint arXiv:2403.09629. <https://arxiv.org/abs/2403.09629>
+> - **[438]** Zhou 等, 2024 — *Language Agent Tree Search Unifies Reasoning Acting and Planning in Language Models*. arXiv Preprint arXiv:2310.04406

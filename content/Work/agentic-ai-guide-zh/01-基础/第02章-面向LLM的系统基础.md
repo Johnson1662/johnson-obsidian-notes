@@ -515,3 +515,8 @@ response = client.completions.create(
 *Table 2.4: vLLM 与其他方案的性能对比（70B 模型，A100 $\times$ 4，TP=4）。*
 
 **Dynamo：数据中心级推理编排。** Dynamo [270] 是 NVIDIA 的开源编排层，位于各推理引擎（SGLang、TensorRT-LLM、vLLM）之*上*，把它们组织成协同的多节点服务系统。关键能力包括：分离式服务（把 prefill 与 decode 阶段拆到专用节点池）、基于 KV 缓存局部性的智能请求路由、多级 KV 缓存（GPU $\to$ CPU $\to$ SSD），以及自动扩缩容。它填补了单 GPU 推理优化（由 vLLM 覆盖）与数据中心级生产服务之间的空白。
+
+> [!cite]- 本章引文（3 条）
+> - **[195]** Kwon 等, 2023 — *Efficient Memory Management for Large Language Model Serving with PagedAttention*. Proceedings of the ACM SIGOPS 29th Symposium on Operating Systems Principles (SOSP). <https://arxiv.org/abs/2309.06180>
+> - **[270]** NVIDIA, 2025 — *Dynamo: A Datacenter-Scale Distributed Inference Serving Framework*. <https://github.com/ai-dynamo/dynamo>
+> - **[378]** Willard & Louf, 2023 — *Efficient Guided Generation for Large Language Models*. arXiv Preprint arXiv:2307.09702. <https://arxiv.org/abs/2307.09702>

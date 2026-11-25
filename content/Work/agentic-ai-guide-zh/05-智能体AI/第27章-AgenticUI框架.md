@@ -978,3 +978,11 @@ Agent 化 UI 框架代表了人机交互的新前沿，要求我们从第一性�
 > Agent 化 UI 设计的北极星是*透明协作者*：一个其操作始终可见、推理始终可访问、错误始终可恢复、能力与局限始终明确的 Agent。每一项 UI 决策都应以此为标准来评估。
 
 本节所描述的框架与模式——Vercel AI SDK、Chainlit、Gradio、Streamlit、LangGraph Studio——提供了构建模块。实践者面临的挑战是依据自身用户的具体需求与所在领域的具体风险，深思熟虑地将它们组合起来。
+
+> [!cite]- 本章引文（6 条）
+> - **[1]** Abid 等, 2019 — *Gradio: Hassle-Free Sharing and Testing of ML Models in the Wild*. <https://arxiv.org/abs/1906.02569>
+> - **[40]** Chainlit, 2024 — *Chainlit: Build Production-Ready Conversational AI Applications*. <https://chainlit.io>
+> - **[155]** Inc, 2024 — *LangGraph Studio: The First Agent IDE*. <https://github.com/langchain-ai/langgraph-studio>
+> - **[156]** Inc, 2024 — *Streamlit: The Fastest Way to Build and Share Data Apps*. <https://streamlit.io>
+> - **[284]** Parasuraman & Riley, 1997 — *Humans and Automation: Use, Misuse, Disuse, Abuse*. Human Factors. <https://doi.org/10.1518/001872097778543886>
+> - **[358]** Vercel, 2024 — *Vercel AI SDK*. <https://sdk.vercel.ai>

@@ -650,3 +650,41 @@ Agent 环境是训练和评估 LLM Agent 的基底。本节的关键要点是：
 **UniClawBench。** UniClawBench [214] 在实时、隔离的 Docker 容器中运行 400 个双语真实世界任务——跨五个功能领域测试 Agent，包括跨平台协调。其标志性特征是多 Agent 反馈回路：一个隐藏的监督者与一个模拟用户注入真实世界的摩擦（含混的请求、不断变化的需求、部分失败），衡量的是*交互韧性*，而非一次性任务完成率。截至 2026 年年中，它是评估生产就绪 Agent 的最严格基准。
 
 **Long-Horizon-Terminal-Bench。** Long-Horizon-Terminal-Bench [386] 覆盖 21 个领域的 46 个复杂任务，测试 Agent 能否驾驭以小时而非分钟计的终端操作。其关键创新是**基于密集奖励的评分**：在每一步给中间进展打分，而不是依赖终点线的二元成功。这暴露了一个残酷的现实：即使是最强的前沿模型，也无法连续执行超过 $\sim$15 条终端命令而不跑偏——揭示长时程顺序执行仍是一个根本性的未解挑战。
+
+> [!cite]- 本章引文（36 条）
+> - **[8]** Andrychowicz 等, 2017 — *Hindsight Experience Replay*. Advances in Neural Information Processing Systems (NeurIPS)
+> - **[27]** Bonatti 等, 2024 — *Windows Agent Arena: Evaluating Multi-Modal OS Agents at Scale*. arXiv Preprint arXiv:2409.08264. <https://arxiv.org/abs/2409.08264>
+> - **[31]** Brockman 等, 2016 — *OpenAI Gym*
+> - **[42]** Chawla 等, 2021 — *CaSiNo: A Corpus of Campsite Negotiation Dialogues for Automatic Negotiation Systems*. Proceedings of NAACL
+> - **[73]** Deng 等, 2023 — *Mind2Web: Towards a Generalist Agent for the Web*. Advances in Neural Information Processing Systems (NeurIPS). <https://arxiv.org/abs/2306.06070>
+> - **[74]** Dennis 等, 2020 — *Emergent Complexity and Zero-Shot Transfer via Unsupervised Environment Design*. Advances in Neural Information Processing Systems (NeurIPS)
+> - **[88]** Face, 2025 — *OpenEnv: An Interface Library for RL Post-Training with Environments*. <https://github.com/huggingface/OpenEnv>
+> - **[142]** Hong 等, 2024 — *MetaGPT: Meta Programming for a Multi-Agent Collaborative Framework*
+> - **[149]** Hu 等, 2025 — *Taming the Long-Tail: Efficient Reasoning RL Training with Adaptive Drafter*. arXiv Preprint arXiv:2511.16665. <https://arxiv.org/abs/2511.16665>
+> - **[151]** Huang 等, 2024 — *MLAgentBench: Evaluating Language Agents on Machine Learning Experimentation*. Proceedings of the 41st International Conference on Machine Learning (ICML). <https://arxiv.org/abs/2310.03302>
+> - **[167]** Jiang 等, 2021 — *Prioritized Level Replay*. Proceedings of the 38th International Conference on Machine Learning (ICML). <https://arxiv.org/abs/2010.03934>
+> - **[169]** Jimenez 等, 2024 — *SWE-bench: Can Language Models Resolve Real-World GitHub Issues?*. International Conference on Learning Representations (ICLR). <https://arxiv.org/abs/2310.06770>
+> - **[188]** Koh 等, 2024 — *VisualWebArena: Evaluating Multimodal Agents on Realistic Visual Web Tasks*. Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics (ACL). <https://arxiv.org/abs/2401.13649>
+> - **[196]** Küttler 等, 2020 — *The NetHack Learning Environment*. Advances in Neural Information Processing Systems (NeurIPS). <https://arxiv.org/abs/2006.13760>
+> - **[201]** Le Sellier De Chezelles 等, 2024 — *The BrowserGym Ecosystem for Web Agent Research*. arXiv Preprint arXiv:2412.05467. <https://arxiv.org/abs/2412.05467>
+> - **[206]** Lewis 等, 2017 — *Deal or No Deal? End-to-End Learning for Negotiation Dialogues*. Proceedings of EMNLP
+> - **[214]** Li & others, 2026 — *UniClawBench: A Bilingual Benchmark for Interactive Agent Evaluation*
+> - **[227]** Liu, 2025 — *Answer Convergence as a Signal for Early Stopping in Reasoning*. Proceedings of EMNLP. <https://aclanthology.org/2025.emnlp-main.904/>
+> - **[230]** Liu, 2025 — *Learning Like Humans: Advancing LLM Reasoning Capabilities via Adaptive Difficulty Curriculum Learning*. arXiv Preprint arXiv:2505.08364. <https://arxiv.org/abs/2505.08364>
+> - **[235]** Liu 等, 2025 — *DLER: Doing Length Penalty Right—Incentivizing More Intelligence Per Token*. arXiv Preprint arXiv:2510.15110. <https://arxiv.org/abs/2510.15110>
+> - **[240]** Lu 等, 2024 — *The AI Scientist: Towards Fully Automated Open-Ended Scientific Discovery*. arXiv Preprint arXiv:2408.06292. <https://arxiv.org/abs/2408.06292>
+> - **[245]** Lála 等, 2023 — *PaperQA: Retrieval-Augmented Generative Agent for Scientific Research*. arXiv Preprint arXiv:2312.07559. <https://arxiv.org/abs/2312.07559>
+> - **[251]** Mei, 2025 — *APRIL: Active Partial Rollouts in Reinforcement Learning to Tame Long-Tail Generation*. arXiv Preprint arXiv:2509.18521. <https://arxiv.org/abs/2509.18521>
+> - **[254]** Mialon 等, 2024 — *GAIA: A Benchmark for General AI Assistants*. International Conference on Learning Representations (ICLR). <https://arxiv.org/abs/2311.12983>
+> - **[261]** Moura, 2023 — *CrewAI: Framework for Orchestrating Role-Playing Autonomous AI Agents*. <https://github.com/crewAIInc/crewAI>
+> - **[348]** Team, 2025 — *TorchForge: PyTorch-Native Post-Training at Scale*. <https://github.com/meta-pytorch/torchforge>
+> - **[355]** Towers 等, 2024 — *Gymnasium: A Standard Interface for Reinforcement Learning Environments*. NeurIPS Datasets and Benchmarks. <https://arxiv.org/abs/2407.17032>
+> - **[362]** Wang 等, 2023 — *Voyager: An Open-Ended Embodied Agent with Large Language Models*. arXiv Preprint arXiv:2305.16291. <https://arxiv.org/abs/2305.16291>
+> - **[370]** Wang, 2025 — *Improving Data Efficiency for LLM Reinforcement Fine-Tuning via Difficulty-Targeted Online Data Selection*. Advances in Neural Information Processing Systems (NeurIPS). <https://arxiv.org/abs/2506.05316>
+> - **[385]** Wu 等, 2023 — *AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation*. arXiv Preprint arXiv:2308.08155
+> - **[386]** Wu & others, 2026 — *Long-Horizon-Terminal-Bench: Dense Reward Grading for Command-Line Agents*
+> - **[390]** Xi 等, 2024 — *AgentGym: Evolving Large Language Model-Based Agents Across Diverse Environments*. arXiv Preprint arXiv:2406.04151. <https://arxiv.org/abs/2406.04151>
+> - **[397]** Xie 等, 2024 — *OSWorld: Benchmarking Multimodal Agents for Open-Ended Tasks in Real Computer Environments*. Advances in Neural Information Processing Systems
+> - **[404]** Yang 等, 2024 — *SWE-agent: Agent-Computer Interfaces Enable Automated Software Engineering*. Advances in Neural Information Processing Systems (NeurIPS). <https://arxiv.org/abs/2405.15793>
+> - **[411]** Yoo & Shin, 2025 — *Adaptive Episode Length Adjustment for Multi-Agent Reinforcement Learning*. Proceedings of the 24th International Conference on Autonomous Agents and Multiagent Systems (AAMAS)
+> - **[440]** Zhou 等, 2024 — *WebArena: A Realistic Web Environment for Building Autonomous Agents*. International Conference on Learning Representations (ICLR). <https://arxiv.org/abs/2307.13854>

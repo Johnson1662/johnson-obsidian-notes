@@ -852,3 +852,27 @@ class SoftwareDevelopmentTeam:
 > 6.  **从简开始**：从集中式 Supervisor 模式起步，衡量其局限，仅在必要时才向更复杂的架构演进。
 
 多 Agent LLM 系统领域正在快速演进。本文所述的模式与技术代表了当前的最先进水平，但新的架构、协调机制与训练算法正在不断涌现。无论具体实现如何演变，这些基础原则——专门化、协调、涌现行为，以及效率与鲁棒性之间的张力——都将持续保持其相关性。
+
+> [!cite]- 本章引文（22 条）
+> - **[28]** Bono, 1985 — *Six Thinking Hats*
+> - **[66]** Das 等, 2019 — *TarMAC: Targeted Multi-Agent Communication*. Proceedings of the 36th International Conference on Machine Learning (ICML). <https://arxiv.org/abs/1810.11187>
+> - **[78]** Du 等, 2023 — *Improving Factuality and Reasoning in Language Models Through Multiagent Debate*. Proceedings of the 41st International Conference on Machine Learning (ICML). <https://arxiv.org/abs/2305.14325>
+> - **[80]** Durfee 等, 1989 — *Trends in Cooperative Distributed Problem Solving*. IEEE Transactions on Knowledge and Data Engineering. <https://doi.org/10.1109/69.43404>
+> - **[93]** Agents, 2002 — *FIPA ACL Message Structure Specification*. <http://www.fipa.org/specs/fipa00061/>
+> - **[117]** Grassé, 1959 — *La Reconstruction Du Nid Et Les Coordinations Interindividuelles Chez Bellicositermes Natalensis Et Cubitermes Sp. La Théorie de La Stigmergie: Essai d’interprétation Du Comportement Des Termites Constructeurs*. Insectes Sociaux
+> - **[135]** Hayes-Roth, 1985 — *A Blackboard Architecture for Control*. Artificial Intelligence. <https://doi.org/10.1016/0004-3702(85)90063-3>
+> - **[158]** Jaderberg 等, 2019 — *Human-Level Performance in 3D Multiplayer Games with Population-Based Reinforcement Learning*. Science. <https://www.science.org/doi/10.1126/science.aau6249>
+> - **[199]** Lazaridou & Baroni, 2020 — *Emergent Multi-Agent Communication in the Deep Learning Era*. arXiv Preprint arXiv:2006.02419. <https://arxiv.org/abs/2006.02419>
+> - **[239]** Lowe 等, 2017 — *Multi-Agent Actor-Critic for Mixed Cooperative-Competitive Environments*. Advances in Neural Information Processing Systems (NeurIPS). <https://arxiv.org/abs/1706.02275>
+> - **[267]** Nisan 等, 2007 — *Algorithmic Game Theory*. <https://www.cs.cmu.edu/~sandholm/cs15-892F13/algorithmic-game-theory.pdf>
+> - **[276]** OpenAI, 2024 — *Swarm: An Educational Framework for Lightweight Multi-Agent Orchestration*. <https://github.com/openai/swarm>
+> - **[306]** Rashid 等, 2018 — *QMIX: Monotonic Value Function Factorisation for Deep Multi-Agent Reinforcement Learning*. Proceedings of the 35th International Conference on Machine Learning (ICML). <https://arxiv.org/abs/1803.11605>
+> - **[324]** Shapley, 1953 — *Stochastic Games*. Proceedings of the National Academy of Sciences. <https://www.pnas.org/doi/10.1073/pnas.39.10.1095>
+> - **[328]** Shoham & Leyton-Brown, 2008 — *Multiagent Systems: Algorithmic, Game-Theoretic, and Logical Foundations*. <http://www.masfoundations.org/>
+> - **[332]** Silver 等, 2017 — *Mastering the Game of Go Without Human Knowledge*. Nature. <https://www.nature.com/articles/nature24270>
+> - **[334]** Smith, 1980 — *The Contract Net Protocol: High-Level Communication and Control in a Distributed Problem Solver*. IEEE Transactions on Computers. <https://doi.org/10.1109/TC.1980.1675516>
+> - **[343]** Sukhbaatar 等, 2016 — *Learning Multiagent Communication with Backpropagation*. Advances in Neural Information Processing Systems (NeurIPS). <https://arxiv.org/abs/1605.07736>
+> - **[375]** Weiss & ed, 1999 — *Multiagent Systems: A Modern Approach to Distributed Artificial Intelligence*
+> - **[381]** Wooldridge, 2009 — *An Introduction to MultiAgent Systems*
+> - **[423]** Zhang 等, 2021 — *Multi-Agent Reinforcement Learning: A Selective Overview of Theories and Algorithms*. Handbook of Reinforcement Learning and Control. <https://arxiv.org/abs/1911.10635>
+> - **[427]** Zhang & others, 2026 — *Self-Evolving Software Agents: Combining BDI Architectures with LLMs*

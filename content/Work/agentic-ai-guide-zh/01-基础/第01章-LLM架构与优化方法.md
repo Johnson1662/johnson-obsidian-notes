@@ -711,12 +711,12 @@ $$
 
 #### 1.3.11.3 其他注意力现象
 
-| **模式**                        | **描述**                                | **影响**                    |
-| :---------------------------- | :------------------------------------ | :------------------------ |
-| **注意力头专门化**                   | 不同头学习不同角色：句法头、共指头、位置头 [361]           | 并非所有头都同等重要；很多可以被剪枝        |
-| **归纳头（Induction heads）**      | 实现 [A][B]\...[A] $\to$ [B] 复制的头 [273] | 对上下文学习至关重要；在 2 层及以上的模型中涌现 |
-| **注意力塌缩（Attention collapse）** | 在深度网络中，注意力分布可能收敛（所有头关注相同位置）           | 损害表达力；通过注意力多样性损失来解决       |
-| **检索头（Retrieval heads）**      | 特定头专门从上下文中检索事实信息 [387]                | 解释了为何剪枝某些头会导致幻觉激增         |
+| **模式** | **描述** | **影响** |
+| :--- | :--- | :--- |
+| **注意力头专门化** | 不同头学习不同角色：句法头、共指头、位置头 [361] | 并非所有头都同等重要；很多可以被剪枝 |
+| **归纳头（Induction heads）** | 实现 [A][B]\...[A] $\to$ [B] 复制的头 [273] | 对上下文学习至关重要；在 2 层及以上的模型中涌现 |
+| **注意力塌缩（Attention collapse）** | 在深度网络中，注意力分布可能收敛（所有头关注相同位置） | 损害表达力；通过注意力多样性损失来解决 |
+| **检索头（Retrieval heads）** | 特定头专门从上下文中检索事实信息 [387] | 解释了为何剪枝某些头会导致幻觉激增 |
 
 *Table 1.8: 在大型 Transformer 中观察到的其他注意力模式。*
 
@@ -2714,3 +2714,150 @@ $$
 [^1]: <https://github.com/noamgat/lm-format-enforcer>
 
 [^2]: <https://github.com/guidance-ai/guidance>
+
+> [!cite]- 本章引文（145 条）
+> - **[2]** Abnar & Zuidema, 2020 — *Quantifying Attention Flow in Transformers*. Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics (ACL). <https://arxiv.org/abs/2005.00928>
+> - **[3]** Aghajanyan 等, 2021 — *Intrinsic Dimensionality Explains the Effectiveness of Language Model Fine-Tuning*. Proceedings of the 59th Annual Meeting of the Association for Computational Linguistics (ACL). <https://arxiv.org/abs/2012.13255>
+> - **[4]** AI, 2025 — *The Llama 4 Herd: The Beginning of a New Era of Natively Multimodal AI*. Meta AI Blog. <https://ai.meta.com/blog/llama-4-multimodal-intelligence/>
+> - **[5]** AI, 2024 — *Mistral Large 2*. Mistral AI Blog. <https://mistral.ai/news/mistral-large-2407/>
+> - **[11]** Anthropic, 2024 — *The Claude 3 Model Family: Opus, Sonnet, Haiku*. Anthropic Technical Report. <https://www.anthropic.com/news/claude-3-family>
+> - **[12]** Anthropic, 2026 — *Natural Language Autoencoders: Interpreting Neural Networks with Natural Language Descriptions*. Anthropic Research Blog. <https://www.anthropic.com/research/natural-language-autoencoders>
+> - **[15]** Ba 等, 2016 — *Layer Normalization*. arXiv Preprint arXiv:1607.06450. <https://arxiv.org/abs/1607.06450>
+> - **[16]** Bai 等, 2022 — *Constitutional AI: Harmlessness from AI Feedback*. arXiv Preprint arXiv:2212.08073. <https://arxiv.org/abs/2212.08073>
+> - **[17]** Bai 等, 2025 — *Kimi K2: Open Agentic Intelligence*. arXiv preprint arXiv:2507.20534. <https://arxiv.org/abs/2507.20534>
+> - **[20]** Barkan 等, 2021 — *Grad-SAM: Explaining Transformers via Gradient Self-Attention Maps*. Proceedings of the 30th ACM International Conference on Information and Knowledge Management (CIKM). <https://arxiv.org/abs/2104.13299>
+> - **[23]** Beltagy 等, 2020 — *Longformer: The Long-Document Transformer*. arXiv Preprint arXiv:2004.05150. <https://arxiv.org/abs/2004.05150>
+> - **[30]** Bricken 等, 2023 — *Towards Monosemanticity: Decomposing Language Models with Dictionary Learning*. Transformer Circuits Thread. <https://transformer-circuits.pub/2023/monosemantic-features/index.html>
+> - **[32]** Brown 等, 2020 — *Language Models Are Few-Shot Learners*. NeurIPS
+> - **[35]** Cai 等, 2024 — *Medusa: Simple LLM Inference Acceleration Framework with Multiple Decoding Heads*. Proceedings of the 41st International Conference on Machine Learning (ICML). <https://arxiv.org/abs/2401.10774>
+> - **[39]** Carlini 等, 2021 — *Extracting Training Data from Large Language Models*. USENIX Security Symposium. <https://arxiv.org/abs/2012.07805>
+> - **[48]** Chen 等, 2023 — *Extending Context Window of Large Language Models via Positional Interpolation*. arXiv Preprint arXiv:2306.15595. <https://arxiv.org/abs/2306.15595>
+> - **[58]** Chuang 等, 2024 — *DoLA: Decoding by Contrasting Layers Improves Factuality in Large Language Models*. Proceedings of the 12th International Conference on Learning Representations (ICLR). <https://arxiv.org/abs/2309.03883>
+> - **[59]** Chung 等, 2024 — *Scaling Instruction-Finetuned Language Models*. Journal of Machine Learning Research. <https://arxiv.org/abs/2210.11416>
+> - **[63]** Cunningham 等, 2024 — *Sparse Autoencoders Find Highly Interpretable Features in Language Models*. Proceedings of the 12th International Conference on Learning Representations (ICLR). <https://arxiv.org/abs/2309.08600>
+> - **[64]** Dao, 2024 — *FlashAttention-2: Faster Attention with Better Parallelism and Work Partitioning*. International Conference on Learning Representations (ICLR). <https://arxiv.org/abs/2307.08691>
+> - **[65]** Dao 等, 2022 — *FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness*. Advances in Neural Information Processing Systems (NeurIPS). <https://arxiv.org/abs/2205.14135>
+> - **[67]** Databricks, 2024 — *DBRX: A New State-of-the-Art Open LLM*. Databricks Blog. <https://www.databricks.com/blog/introducing-dbrx-new-state-art-open-llm>
+> - **[69]** DeepSeek-AI, 2024 — *DeepSeek-V2: A Strong, Economical, and Efficient Mixture-of-Experts Language Model*. arXiv Preprint arXiv:2405.04434. <https://arxiv.org/abs/2405.04434>
+> - **[70]** DeepSeek-AI, 2024 — *DeepSeek-V3 Technical Report*. arXiv Preprint arXiv:2412.19437. <https://arxiv.org/abs/2412.19437>
+> - **[71]** DeepSeek-AI, 2026 — *DeepSeek-V4: Towards Highly Efficient Million-Token Context Intelligence*. arXiv preprint arXiv:2606.19348. <https://arxiv.org/abs/2606.19348>
+> - **[75]** Dettmers 等, 2023 — *QLoRA: Efficient Finetuning of Quantized Language Models*. Advances in Neural Information Processing Systems (NeurIPS). <https://arxiv.org/abs/2305.14314>
+> - **[76]** Devlin 等, 2019 — *BERT: Pre-Training of Deep Bidirectional Transformers for Language Understanding*. Proceedings of NAACL-HLT. <https://arxiv.org/abs/1810.04805>
+> - **[77]** Dong 等, 2024 — *XGrammar: Flexible and Efficient Structured Generation Engine for Large Language Models*. arXiv Preprint arXiv:2411.15100
+> - **[83]** Egiazarian 等, 2024 — *Extreme Compression of Large Language Models via Additive Quantization*. arXiv Preprint arXiv:2401.06118. <https://arxiv.org/abs/2401.06118>
+> - **[86]** Ethayarajh, 2019 — *How Contextual Are Contextualized Word Representations? Comparing the Geometry of BERT, ELMo, and GPT-2 Embeddings*. Proceedings of the 2019 Conference on Empirical Methods in Natural Language Processing (EMNLP). <https://arxiv.org/abs/1909.00512>
+> - **[89]** Fedus 等, 2022 — *Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity*. Journal of Machine Learning Research
+> - **[91]** Firth, 1957 — *A Synopsis of Linguistic Theory, 1930–1955*. Studies in Linguistic Analysis
+> - **[98]** Frantar & Alistarh, 2023 — *SparseGPT: Massive Language Models Can Be Accurately Pruned in One-Shot*. Proceedings of the 40th International Conference on Machine Learning (ICML). <https://arxiv.org/abs/2301.00774>
+> - **[99]** Frantar 等, 2023 — *GPTQ: Accurate Post-Training Quantization for Generative Pre-Trained Transformers*. arXiv Preprint arXiv:2210.17323. <https://arxiv.org/abs/2210.17323>
+> - **[100]** Fu 等, 2024 — *Data Engineering for Scaling Language Models to 128K Context*. arXiv Preprint arXiv:2402.10171. <https://arxiv.org/abs/2402.10171>
+> - **[101]** Fu 等, 2024 — *Break the Sequential Dependency of LLM Inference Using Lookahead Decoding*. arXiv Preprint arXiv:2402.02057. <https://arxiv.org/abs/2402.02057>
+> - **[104]** Gallegos 等, 2024 — *Bias and Fairness in Large Language Models: A Survey*. Computational Linguistics. <https://arxiv.org/abs/2309.00770>
+> - **[108]** Gemini Team, 2024 — *Gemini 1.5: Unlocking Multimodal Understanding Across Millions of Tokens of Context*. arXiv Preprint arXiv:2403.05530. <https://arxiv.org/abs/2403.05530>
+> - **[109]** Gerganov, 2023 — *GGUF: GPT-Generated Unified Format (llama.cpp)*. <https://github.com/ggerganov/llama.cpp>
+> - **[110]** Geva 等, 2021 — *Transformer Feed-Forward Layers Are Key-Value Memories*. Proceedings of the 2021 Conference on Empirical Methods in Natural Language Processing (EMNLP)
+> - **[111]** Gloeckle 等, 2024 — *Better \& Faster Large Language Models via Multi-Token Prediction*. Proceedings of the 41st International Conference on Machine Learning (ICML). <https://arxiv.org/abs/2404.19737>
+> - **[118]** Grattafiori 等, 2024 — *The Llama 3 Herd of Models*. arXiv Preprint arXiv:2407.21783. <https://arxiv.org/abs/2407.21783>
+> - **[122]** Gu & Dao, 2023 — *Mamba: Linear-Time Sequence Modeling with Selective State Spaces*. arXiv Preprint arXiv:2312.00752. <https://arxiv.org/abs/2312.00752>
+> - **[123]** Gu & Dao, 2024 — *Mamba: Linear-Time Sequence Modeling with Selective State Spaces*. Proceedings of the 41st International Conference on Machine Learning (ICML). <https://arxiv.org/abs/2312.00752>
+> - **[125]** Guo 等, 2022 — *LongT5: Efficient Text-to-Text Transformer for Long Sequences*. Findings of the Association for Computational Linguistics: NAACL 2022. <https://arxiv.org/abs/2112.07916>
+> - **[132]** Han & Han, 2024 — *Unsloth: Efficient LLM Fine-Tuning*. <https://github.com/unslothai/unsloth>
+> - **[136]** Hayou 等, 2024 — *LoRA+: Efficient Low Rank Adaptation of Large Models*. arXiv Preprint arXiv:2402.12354. <https://arxiv.org/abs/2402.12354>
+> - **[139]** Hinton 等, 2015 — *Distilling the Knowledge in a Neural Network*. arXiv Preprint arXiv:1503.02531
+> - **[140]** Hoffmann 等, 2022 — *Training Compute-Optimal Large Language Models*. Advances in Neural Information Processing Systems (NeurIPS). <https://arxiv.org/abs/2203.15556>
+> - **[144]** Houlsby 等, 2019 — *Parameter-Efficient Transfer Learning for NLP*. International Conference on Machine Learning (ICML). <https://arxiv.org/abs/1902.00751>
+> - **[145]** Hsu 等, 2024 — *Liger-Kernel: Efficient Triton Kernels for LLM Training*. arXiv Preprint arXiv:2410.10989. <https://arxiv.org/abs/2410.10989>
+> - **[146]** Hu 等, 2022 — *LoRA: Low-Rank Adaptation of Large Language Models*. International Conference on Learning Representations (ICLR). <https://arxiv.org/abs/2106.09685>
+> - **[150]** Hu 等, 2024 — *MiniCPM: Unveiling the Potential of Small Language Models with Scalable Training Strategies*. arXiv Preprint arXiv:2404.06395. <https://arxiv.org/abs/2404.06395>
+> - **[159]** Jain 等, 2024 — *NEFTune: Noisy Embeddings Improve Instruction Finetuning*. International Conference on Learning Representations (ICLR). <https://arxiv.org/abs/2310.05914>
+> - **[160]** Jain & Wallace, 2019 — *Attention Is Not Explanation*. Proceedings of the 2019 Conference of the North American Chapter of the Association for Computational Linguistics (NAACL). <https://arxiv.org/abs/1902.10186>
+> - **[161]** Jang 等, 2017 — *Categorical Reparameterization with Gumbel-Softmax*. International Conference on Learning Representations (ICLR)
+> - **[164]** Ji 等, 2023 — *Survey of Hallucination in Natural Language Generation*. ACM Computing Surveys. <https://arxiv.org/abs/2202.03629>
+> - **[165]** Jiang 等, 2023 — *Mistral 7B*. arXiv Preprint arXiv:2310.06825. <https://arxiv.org/abs/2310.06825>
+> - **[166]** Jiang 等, 2024 — *Mixtral of Experts*. arXiv Preprint arXiv:2401.04088. <https://arxiv.org/abs/2401.04088>
+> - **[175]** Kadavath 等, 2022 — *Language Models (Mostly) Know What They Know*. arXiv Preprint arXiv:2207.05221. <https://arxiv.org/abs/2207.05221>
+> - **[176]** Kalajdzievski, 2023 — *A Rank Stabilization Scaling Factor for Fine-Tuning with LoRA*. arXiv Preprint arXiv:2312.03732. <https://arxiv.org/abs/2312.03732>
+> - **[183]** Khattab 等, 2024 — *DSPy: Compiling Declarative Language Model Calls into Self-Improving Pipelines*. Proceedings of the 12th International Conference on Learning Representations (ICLR). <https://arxiv.org/abs/2310.03714>
+> - **[185]** Kingma & Ba, 2015 — *Adam: A Method for Stochastic Optimization*. International Conference on Learning Representations (ICLR). <https://arxiv.org/abs/1412.6980>
+> - **[189]** Kojima 等, 2022 — *Large Language Models Are Zero-Shot Reasoners*. Advances in Neural Information Processing Systems (NeurIPS). <https://arxiv.org/abs/2205.11916>
+> - **[190]** Kopiczko 等, 2024 — *VeRA: Vector-Based Random Matrix Adaptation*. arXiv Preprint arXiv:2310.11454. <https://arxiv.org/abs/2310.11454>
+> - **[193]** Kuhn 等, 2023 — *Semantic Uncertainty: Linguistic Invariances for Uncertainty Estimation in Natural Language Generation*. International Conference on Learning Representations (ICLR). <https://arxiv.org/abs/2302.09664>
+> - **[203]** Lee 等, 2022 — *Deduplicating Training Data Makes Language Models Better*. Proceedings of the 60th Annual Meeting of the ACL. <https://arxiv.org/abs/2107.06499>
+> - **[204]** Lester 等, 2021 — *The Power of Scale for Parameter-Efficient Prompt Tuning*. Proceedings of the 2021 Conference on EMNLP. <https://arxiv.org/abs/2104.08691>
+> - **[205]** Leviathan 等, 2023 — *Fast Inference from Transformers via Speculative Decoding*. Proceedings of the 40th International Conference on Machine Learning (ICML). <https://arxiv.org/abs/2211.17192>
+> - **[207]** Lewis 等, 2020 — *BART: Denoising Sequence-to-Sequence Pre-Training for Natural Language Generation, Translation, and Comprehension*. Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics (ACL). <https://arxiv.org/abs/1910.13461>
+> - **[208]** Lewis 等, 2020 — *Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks*. Advances in Neural Information Processing Systems (NeurIPS). <https://arxiv.org/abs/2005.11401>
+> - **[210]** Li 等, 2023 — *Contrastive Decoding: Open-Ended Text Generation as Optimization*. ACL
+> - **[211]** Li & Liang, 2021 — *Prefix-Tuning: Optimizing Continuous Prompts for Generation*. Proceedings of the 59th Annual Meeting of the ACL. <https://arxiv.org/abs/2101.00190>
+> - **[212]** Li 等, 2024 — *EAGLE: Speculative Sampling Requires Rethinking Feature Uncertainty*. Proceedings of the 41st International Conference on Machine Learning (ICML). <https://arxiv.org/abs/2401.15077>
+> - **[217]** Lin 等, 2024 — *AWQ: Activation-Aware Weight Quantization for LLM Compression and Acceleration*. Proceedings of Machine Learning and Systems (MLSys). <https://arxiv.org/abs/2306.00978>
+> - **[221]** Liu 等, 2023 — *Ring Attention with Blockwise Transformers for Near-Infinite Context*. Advances in Neural Information Processing Systems (NeurIPS). <https://arxiv.org/abs/2310.01889>
+> - **[222]** Liu 等, 2022 — *Few-Shot Parameter-Efficient Fine-Tuning Is Better and Cheaper Than in-Context Learning*. Advances in Neural Information Processing Systems (NeurIPS). <https://arxiv.org/abs/2205.05638>
+> - **[223]** Liu 等, 2022 — *What Makes Good in-Context Examples for GPT-3?*. Proceedings of Deep Learning Inside Out (DeeLIO), ACL Workshop. <https://arxiv.org/abs/2101.06804>
+> - **[224]** Liu 等, 2025 — *Muon: An Optimizer for Hidden Layers in Neural Networks*. <https://github.com/KellerJordan/Muon>
+> - **[226]** Liu 等, 2024 — *Lost in the Middle: How Language Models Use Long Contexts*. Transactions of the Association for Computational Linguistics. <https://arxiv.org/abs/2307.03172>
+> - **[228]** Liu 等, 2024 — *DoRA: Weight-Decomposed Low-Rank Adaptation*. arXiv Preprint arXiv:2402.09353. <https://arxiv.org/abs/2402.09353>
+> - **[233]** Liu 等, 2019 — *RoBERTa: A Robustly Optimized BERT Pretraining Approach*. arXiv Preprint arXiv:1907.11692. <https://arxiv.org/abs/1907.11692>
+> - **[234]** Liu 等, 2023 — *LLM-QAT: Data-Free Quantization Aware Training for Large Language Models*. arXiv Preprint arXiv:2305.17888. <https://arxiv.org/abs/2305.17888>
+> - **[236]** Liu & others, 2025 — *OctoThinker: Mid-Training Determines RL-Readiness of Base Models*
+> - **[237]** Liu 等, 2024 — *KIVI: A Tuning-Free Asymmetric 2bit Quantization for KV Cache*. International Conference on Machine Learning (ICML). <https://arxiv.org/abs/2402.02750>
+> - **[238]** Loshchilov & Hutter, 2019 — *Decoupled Weight Decay Regularization*. arXiv Preprint arXiv:1711.05101. <https://arxiv.org/abs/1711.05101>
+> - **[241]** Lu 等, 2022 — *Fantastically Ordered Prompts and Where to Find Them: Overcoming Few-Shot Prompt Order Sensitivity*. Proceedings of the 60th Annual Meeting of the Association for Computational Linguistics (ACL). <https://arxiv.org/abs/2104.08786>
+> - **[249]** Manakul 等, 2023 — *SelfCheckGPT: Zero-Resource Black-Box Hallucination Detection for Generative Large Language Models*. Proceedings of EMNLP. <https://arxiv.org/abs/2303.08896>
+> - **[257]** Min 等, 2022 — *Rethinking the Role of Demonstrations: What Makes in-Context Learning Work?*. Proceedings of the 2022 Conference on Empirical Methods in Natural Language Processing (EMNLP). <https://arxiv.org/abs/2202.12837>
+> - **[260]** MosaicML, 2023 — *MPT-7B: A New Standard for Open-Source, Commercially Usable LLMs*. MosaicML Blog. <https://www.mosaicml.com/blog/mpt-7b>
+> - **[266]** Nguyen, 2024 — *Min-p Sampling: A Simple Baseline for Better LLM Decoding*. arXiv Preprint arXiv:2310.06022
+> - **[273]** Olsson 等, 2022 — *In-Context Learning and Induction Heads*. Transformer Circuits Thread. <https://transformer-circuits.pub/2022/in-context-learning-and-induction-heads/index.html>
+> - **[274]** OpenAI, 2023 — *GPT-4 Technical Report*. arXiv Preprint arXiv:2303.08774
+> - **[280]** Ouyang 等, 2022 — *Training Language Models to Follow Instructions with Human Feedback*. Advances in Neural Information Processing Systems (NeurIPS). <https://arxiv.org/abs/2203.02155>
+> - **[288]** Peng 等, 2023 — *RWKV: Reinventing RNNs for the Transformer Era*. Findings of the Association for Computational Linguistics: EMNLP 2023. <https://arxiv.org/abs/2305.13048>
+> - **[289]** Peng 等, 2023 — *YaRN: Efficient Context Window Extension of Large Language Models*. arXiv Preprint arXiv:2309.00071
+> - **[290]** Perez 等, 2022 — *Red Teaming Language Models with Language Models*. Proceedings of EMNLP. <https://arxiv.org/abs/2202.03286>
+> - **[292]** Press 等, 2022 — *Train Short, Test Long: Attention with Linear Biases Enables Input Length Generalization*. ICLR
+> - **[301]** Radford 等, 2019 — *Language Models Are Unsupervised Multitask Learners*. OpenAI Blog. <https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf>
+> - **[303]** Raffel 等, 2020 — *Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer*. Journal of Machine Learning Research. <https://arxiv.org/abs/1910.10683>
+> - **[308]** Robbins & Monro, 1951 — *A Stochastic Approximation Method*. The Annals of Mathematical Statistics
+> - **[310]** Rumelhart 等, 1986 — *Learning Representations by Back-Propagating Errors*. Nature. <https://doi.org/10.1038/323533a0>
+> - **[312]** Sanh 等, 2019 — *DistilBERT, a Distilled Version of BERT: Smaller, Faster, Cheaper and Lighter*. arXiv Preprint arXiv:1910.01108
+> - **[320]** Sennrich 等, 2016 — *Neural Machine Translation of Rare Words with Subword Units*. Proceedings of the 54th Annual Meeting of the ACL. <https://arxiv.org/abs/1508.07909>
+> - **[322]** Shah 等, 2024 — *FlashAttention-3: Fast and Accurate Attention with Asynchrony and Low-Precision*. arXiv Preprint arXiv:2407.08691. <https://arxiv.org/abs/2407.08691>
+> - **[325]** Shazeer 等, 2017 — *Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer*. International Conference on Learning Representations (ICLR). <https://arxiv.org/abs/1701.06538>
+> - **[340]** Su 等, 2021 — *Whitening Sentence Representations for Better Semantics and Faster Retrieval*. arXiv Preprint arXiv:2103.15316. <https://arxiv.org/abs/2103.15316>
+> - **[341]** Su 等, 2024 — *RoFormer: Enhanced Transformer with Rotary Position Embedding*. Neurocomputing
+> - **[345]** Sun 等, 2024 — *A Simple and Effective Pruning Approach for Large Language Models*. International Conference on Learning Representations (ICLR). <https://arxiv.org/abs/2306.11695>
+> - **[349]** Team, 2024 — *Torchtune: PyTorch Native Post-Training Library*. <https://github.com/pytorch/torchtune>
+> - **[350]** Team, 2024 — *Qwen2.5: A Party of Foundation Models*. arXiv Preprint arXiv:2412.15115. <https://arxiv.org/abs/2412.15115>
+> - **[353]** Templeton 等, 2024 — *Scaling Monosemanticity: Extracting Interpretable Features from Claude 3 Sonnet*. Transformer Circuits Thread. <https://transformer-circuits.pub/2024/scaling-monosemanticity/index.html>
+> - **[354]** Todd 等, 2024 — *Function Vectors in Large Language Models*. Proceedings of the 12th International Conference on Learning Representations (ICLR). <https://arxiv.org/abs/2310.15213>
+> - **[357]** Vaswani 等, 2017 — *Attention Is All You Need*. Advances in Neural Information Processing Systems (NeurIPS). <https://arxiv.org/abs/1706.03762>
+> - **[359]** Vig, 2019 — *A Multiscale Visualization of Attention in the Transformer Model*. Proceedings of the 57th ACL: System Demonstrations. <https://arxiv.org/abs/1906.05714>
+> - **[360]** Vijayakumar 等, 2018 — *Diverse Beam Search: Decoding Diverse Solutions from Neural Sequence Models*. AAAI
+> - **[361]** Voita 等, 2019 — *Analyzing Multi-Head Self-Attention: Specialized Heads Do the Heavy Lifting, the Rest Can Be Pruned*. Proceedings of the 57th Annual Meeting of the Association for Computational Linguistics (ACL). <https://arxiv.org/abs/1905.09418>
+> - **[364]** Wang 等, 2023 — *Plan-and-Solve Prompting: Improving Zero-Shot Chain-of-Thought Reasoning by Large Language Models*. Proceedings of the 61st Annual Meeting of the Association for Computational Linguistics (ACL). <https://arxiv.org/abs/2305.04091>
+> - **[367]** Wang 等, 2023 — *Self-Consistency Improves Chain of Thought Reasoning in Language Models*. Proceedings of the 11th International Conference on Learning Representations (ICLR). <https://arxiv.org/abs/2203.11171>
+> - **[372]** Wang & others, 2024 — *Auxiliary-Loss-Free Load Balancing Strategy for Mixture-of-Experts*
+> - **[374]** Wei 等, 2022 — *Chain-of-Thought Prompting Elicits Reasoning in Large Language Models*. Advances in Neural Information Processing Systems (NeurIPS). <https://arxiv.org/abs/2201.11903>
+> - **[378]** Willard & Louf, 2023 — *Efficient Guided Generation for Large Language Models*. arXiv Preprint arXiv:2307.09702. <https://arxiv.org/abs/2307.09702>
+> - **[383]** Workshop, 2023 — *BLOOM: A 176B-Parameter Open-Access Multilingual Language Model*. arXiv Preprint arXiv:2211.05100. <https://arxiv.org/abs/2211.05100>
+> - **[387]** Wu 等, 2024 — *Retrieval Head Mechanistically Explains Long-Context Factuality*. arXiv Preprint arXiv:2404.15574. <https://arxiv.org/abs/2404.15574>
+> - **[392]** Xiao 等, 2023 — *SmoothQuant: Accurate and Efficient Post-Training Quantization for Large Language Models*. Proceedings of the 40th International Conference on Machine Learning (ICML). <https://arxiv.org/abs/2211.10438>
+> - **[393]** Xiao 等, 2024 — *Efficient Streaming Language Models with Attention Sinks*. Proceedings of the 12th International Conference on Learning Representations (ICLR). <https://arxiv.org/abs/2309.17453>
+> - **[394]** Xiao 等, 2024 — *Efficient Streaming Language Models with Attention Sinks*. International Conference on Learning Representations (ICLR). <https://arxiv.org/abs/2309.17453>
+> - **[396]** Xie 等, 2022 — *An Explanation of in-Context Learning as Implicit Bayesian Inference*. Proceedings of the 10th International Conference on Learning Representations (ICLR). <https://arxiv.org/abs/2111.02080>
+> - **[402]** Yang 等, 2024 — *Large Language Models as Optimizers*. Proceedings of the 12th International Conference on Learning Representations (ICLR). <https://arxiv.org/abs/2309.03409>
+> - **[403]** Yang 等, 2025 — *ARQ: Attentive Reasoning Queries for Multi-Hop Question Answering over Long Contexts*. arXiv Preprint arXiv:2501.08290. <https://arxiv.org/abs/2501.08290>
+> - **[406]** Yang 等, 2019 — *XLNet: Generalized Autoregressive Pretraining for Language Understanding*. Advances in Neural Information Processing Systems (NeurIPS)
+> - **[407]** Yao 等, 2023 — *Tree of Thoughts: Deliberate Problem Solving with Large Language Models*. Advances in Neural Information Processing Systems (NeurIPS). <https://arxiv.org/abs/2305.10601>
+> - **[408]** Yao 等, 2023 — *ReAct: Synergizing Reasoning and Acting in Language Models*. International Conference on Learning Representations (ICLR). <https://arxiv.org/abs/2210.03629>
+> - **[415]** Zadouri 等, 2026 — *FlashAttention-4: Hardware-Efficient Attention on Blackwell GPUs with Minimal Software Design*. arXiv Preprint arXiv:2603.05451. <https://arxiv.org/abs/2603.05451>
+> - **[416]** Zaheer 等, 2020 — *Big Bird: Transformers for Longer Sequences*. Advances in Neural Information Processing Systems (NeurIPS). <https://arxiv.org/abs/2007.14062>
+> - **[417]** Zaken 等, 2022 — *BitFit: Simple Parameter-Efficient Fine-Tuning for Transformer-Based Masked Language-Models*. Proceedings of the 60th Annual Meeting of the ACL. <https://arxiv.org/abs/2106.10199>
+> - **[421]** Zhang & Sennrich, 2019 — *Root Mean Square Layer Normalization*. Advances in Neural Information Processing Systems (NeurIPS). <https://arxiv.org/abs/1910.07467>
+> - **[422]** Zhang 等, 2025 — *Verbalized Sampling: How to Mitigate Mode Collapse and Unlock LLM Diversity*. arXiv Preprint arXiv:2510.01171. <https://arxiv.org/abs/2510.01171>
+> - **[424]** Zhang 等, 2023 — *AdaLoRA: Adaptive Budget Allocation for Parameter-Efficient Fine-Tuning*. arXiv Preprint arXiv:2303.10512. <https://arxiv.org/abs/2303.10512>
+> - **[429]** Zhang 等, 2023 — *H2O: Heavy-Hitter Oracle for Efficient Generative Inference of Large Language Models*. Advances in Neural Information Processing Systems (NeurIPS). <https://arxiv.org/abs/2306.14048>
+> - **[434]** AI, 2025 — *GLM-4.5: Agentic, Reasoning, and Coding (ARC) Foundation Models*. arXiv preprint arXiv:2508.06471. <https://arxiv.org/abs/2508.06471>
+> - **[435]** AI, 2026 — *GLM-5: From Vibe Coding to Agentic Engineering*. arXiv preprint arXiv:2602.15763. <https://arxiv.org/abs/2602.15763>
+> - **[439]** Zhou 等, 2023 — *LIMA: Less Is More for Alignment*. Advances in Neural Information Processing Systems (NeurIPS). <https://arxiv.org/abs/2305.11206>
+> - **[441]** Zhou 等, 2023 — *Large Language Models Are Human-Level Prompt Engineers*. Proceedings of the 11th International Conference on Learning Representations (ICLR). <https://arxiv.org/abs/2211.01910>
+> - **[443]** Zou 等, 2023 — *Universal and Transferable Adversarial Attacks on Aligned Language Models*. arXiv Preprint arXiv:2307.15043. <https://arxiv.org/abs/2307.15043>

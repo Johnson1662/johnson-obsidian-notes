@@ -922,3 +922,7 @@ def trajectory_to_sft_example(traj: Trajectory) -> dict:
 > | 与 RL 的关联 | 标准化动作空间 + 轨迹记录 |
 > | 官方 SDK | Python、TypeScript（Node.js） |
 > | 许可 | 开放标准（MIT） |
+
+> [!cite]- 本章引文（2 条）
+> - **[9]** Anthropic, 2024 — *Model Context Protocol*. <https://modelcontextprotocol.io>
+> - **[121]** Group, 2010 — *JSON-RPC 2.0 Specification*. <https://www.jsonrpc.org/specification>

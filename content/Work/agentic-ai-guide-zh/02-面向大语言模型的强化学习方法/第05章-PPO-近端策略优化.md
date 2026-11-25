@@ -386,3 +386,8 @@ for batch in ppo_trainer.dataloader:
 | `learning_rate` | $1{-}5 \times 10^{-6}$ | 过高：灾难性遗忘（Catastrophic Forgetting）。 |
 | `batch_size` | 64–256 | 越大：梯度更平滑，但生成算力更多。 |
 | `temperature` | 0.7–1.0 | 越低：探索越少。越高：advantage 越嘈杂。 |
+
+> [!cite]- 本章引文（3 条）
+> - **[317]** Schulman 等, 2015 — *Trust Region Policy Optimization*. Proceedings of the 32nd International Conference on Machine Learning (ICML). <https://arxiv.org/abs/1502.05477>
+> - **[319]** Schulman 等, 2017 — *Proximal Policy Optimization Algorithms*. arXiv Preprint arXiv:1707.06347. <https://arxiv.org/abs/1707.06347>
+> - **[376]** Werra 等, 2022 — *TRL: Transformer Reinforcement Learning*. <https://github.com/huggingface/trl>

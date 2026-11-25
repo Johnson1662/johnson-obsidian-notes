@@ -588,3 +588,19 @@ $$
 > [!tip] GOPO vs. GRPO 的使用选择
 > -   **使用 GRPO**：当 reward 可验证且精确时（数学正确性、代码测试通过/失败、二值信号）。幅度携带有意义的信息。
 > -   **使用 GOPO**：当 reward 来自学习的 reward model、面向主观任务（有用性、风格、安全）时。RM 的相对排序可信，但其绝对分数是任意的。
+
+> [!cite]- 本章引文（14 条）
+> - **[7]** An 等, 2025 — *DPPO: Direct Divergence-Based Policy Optimization for Language Model Alignment*. arXiv Preprint arXiv:2503.14532. <https://arxiv.org/abs/2503.14532>
+> - **[51]** Chen 等, 2025 — *GSPO: Sequence-Level Policy Optimization for Language Model Alignment*. arXiv Preprint arXiv:2502.12459. <https://arxiv.org/abs/2502.12459>
+> - **[54]** Choi 等, 2025 — *GOPO: Group Ordinal Policy Optimization for LLM Alignment with Non-Verifiable Rewards*. arXiv Preprint arXiv:2505.12948. <https://arxiv.org/abs/2505.12948>
+> - **[72]** DeepSeek-AI 等, 2025 — *DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning*. arXiv Preprint arXiv:2501.12948. <https://arxiv.org/abs/2501.12948>
+> - **[131]** Han 等, 2025 — *SAPO: Soft Adaptive Policy Optimization for Efficient LLM Alignment*. arXiv Preprint arXiv:2503.01739. <https://arxiv.org/abs/2503.01739>
+> - **[232]** Liu 等, 2025 — *Understanding and Mitigating the Pretraining Distribution Bias in GRPO*. arXiv Preprint arXiv:2505.07888. <https://arxiv.org/abs/2505.07888>
+> - **[242]** Luo 等, 2025 — *ScaleRL: Scaling Reinforcement Learning for LLM Reasoning*. arXiv Preprint arXiv:2505.16356. <https://arxiv.org/abs/2505.16356>
+> - **[243]** Luo 等, 2025 — *VESPO: Variational Sequence-Level Soft Policy Optimization for LLM Alignment*. arXiv Preprint arXiv:2505.07508. <https://arxiv.org/abs/2505.07508>
+> - **[323]** Shao 等, 2024 — *DeepSeekMath: Pushing the Limits of Mathematical Reasoning in Open Language Models*. arXiv Preprint arXiv:2402.03300. <https://arxiv.org/abs/2402.03300>
+> - **[399]** Xu 等, 2025 — *It Takes Two: Pairwise Preference Optimization with Two Rollouts*. arXiv Preprint arXiv:2505.07856. <https://arxiv.org/abs/2505.07856>
+> - **[413]** Yu 等, 2025 — *DAPO: An Open-Source LLM Reinforcement Learning System*. arXiv Preprint arXiv:2503.14476. <https://arxiv.org/abs/2503.14476>
+> - **[422]** Zhang 等, 2025 — *Verbalized Sampling: How to Mitigate Mode Collapse and Unlock LLM Diversity*. arXiv Preprint arXiv:2510.01171. <https://arxiv.org/abs/2510.01171>
+> - **[436]** Zhong 等, 2025 — *Importance Sampling Corrections for Large Language Model Alignment with Asynchronous Generation*. arXiv Preprint arXiv:2503.09057. <https://arxiv.org/abs/2503.09057>
+> - **[437]** Zhong 等, 2025 — *GDPO: Learning to Directly Align Language Models with Group-Decoupled Reward*. arXiv Preprint arXiv:2501.17888. <https://arxiv.org/abs/2501.17888>

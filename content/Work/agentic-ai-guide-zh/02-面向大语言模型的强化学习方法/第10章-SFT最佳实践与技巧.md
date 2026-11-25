@@ -239,3 +239,7 @@ $$
 > 6.  在开始 RL 前评估 pass@k，以确保 SFT 模型是可行的起点。
 > 7.  不要过度训练：指令微调通常 1–3 个 Epoch 就足够。
 > 8.  监控多样性指标（熵、n-gram 多样性）以检测 mode collapse。
+
+> [!cite]- 本章引文（2 条）
+> - **[186]** Kirkpatrick 等, 2017 — *Overcoming Catastrophic Forgetting in Neural Networks*. Proceedings of the National Academy of Sciences
+> - **[280]** Ouyang 等, 2022 — *Training Language Models to Follow Instructions with Human Feedback*. Advances in Neural Information Processing Systems (NeurIPS). <https://arxiv.org/abs/2203.02155>

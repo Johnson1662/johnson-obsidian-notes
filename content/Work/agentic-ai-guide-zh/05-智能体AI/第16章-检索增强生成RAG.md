@@ -1133,3 +1133,39 @@ $$\nabla_\theta \mathcal{L} = \nabla_\theta \left[
 > -   **积极缓存**：文档只 Embedding 一次；缓存频繁查询的 Embedding
 > -   **带重叠地分块**：10–15% 的重叠可防止在边界处丢失信息
 > -   **存储丰富的元数据**：来源、日期、章节和文档类型能支持强大的预过滤，显著提升精度
+
+> [!cite]- 本章引文（34 条）
+> - **[13]** Asai 等, 2023 — *Self-RAG: Learning to Retrieve, Generate, and Critique Through Self-Reflection*. arXiv Preprint arXiv:2310.11511. <https://arxiv.org/abs/2310.11511>
+> - **[18]** Bajaj 等, 2016 — *MS MARCO: A Human Generated MAchine Reading COmprehension Dataset*. arXiv Preprint arXiv:1611.09268
+> - **[45]** Chen 等, 2024 — *BGE M3-Embedding: Multi-Lingual, Multi-Functionality, Multi-Granularity Text Embeddings Through Self-Knowledge Distillation*. arXiv Preprint arXiv:2402.03216
+> - **[62]** Cormack 等, 2009 — *Reciprocal Rank Fusion Outperforms Condorcet and Individual Rank Learning Methods*. Proceedings of the 32nd International ACM SIGIR Conference
+> - **[72]** DeepSeek-AI 等, 2025 — *DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning*. arXiv Preprint arXiv:2501.12948. <https://arxiv.org/abs/2501.12948>
+> - **[82]** Edge 等, 2024 — *From Local to Global: A Graph RAG Approach to Query-Focused Summarization*. arXiv Preprint arXiv:2404.16130. <https://arxiv.org/abs/2404.16130>
+> - **[85]** Es 等, 2023 — *RAGAs: Automated Evaluation of Retrieval Augmented Generation*. arXiv Preprint arXiv:2309.15217. <https://arxiv.org/abs/2309.15217>
+> - **[94]** Formal 等, 2021 — *SPLADE v2: Sparse Lexical and Expansion Model for Information Retrieval*. arXiv Preprint arXiv:2109.10086
+> - **[95]** Formal 等, 2021 — *SPLADE: Sparse Lexical and Expansion Model for First Stage Ranking*. Proceedings of the 44th International ACM SIGIR Conference on Research and Development in Information Retrieval
+> - **[106]** Gao 等, 2023 — *Precise Zero-Shot Dense Retrieval Without Relevance Labels*. Proceedings of the 61st Annual Meeting of the Association for Computational Linguistics (ACL). <https://arxiv.org/abs/2212.10496>
+> - **[128]** Guu 等, 2020 — *REALM: Retrieval-Augmented Language Model Pre-Training*. Proceedings of the 37th International Conference on Machine Learning (ICML). <https://arxiv.org/abs/2002.08909>
+> - **[162]** Jeong 等, 2024 — *Adaptive-RAG: Learning to Adapt Retrieval-Augmented Large Language Models Through Question Complexity*. arXiv Preprint arXiv:2403.14403. <https://arxiv.org/abs/2403.14403>
+> - **[170]** Jin 等, 2025 — *Search-R1: Training LLMs to Reason and Leverage Search Engines with Reinforcement Learning*. arXiv Preprint arXiv:2503.09516
+> - **[171]** Johnson 等, 2021 — *Billion-Scale Similarity Search with GPUs*. IEEE Transactions on Big Data
+> - **[173]** Joshi 等, 2017 — *TriviaQA: A Large Scale Distantly Supervised Challenge Dataset for Reading Comprehension*. Proceedings of ACL
+> - **[180]** Karpukhin 等, 2020 — *Dense Passage Retrieval for Open-Domain Question Answering*. Proceedings of the 2020 Conference on Empirical Methods in Natural Language Processing (EMNLP). <https://arxiv.org/abs/2004.04906>
+> - **[182]** Khattab & Zaharia, 2020 — *ColBERT: Efficient and Effective Passage Search via Contextualized Late Interaction over BERT*. Proceedings of the 43rd International ACM SIGIR Conference. <https://arxiv.org/abs/2004.12832>
+> - **[194]** Kwiatkowski 等, 2019 — *Natural Questions: A Benchmark for Question Answering Research*. Transactions of the Association for Computational Linguistics
+> - **[202]** Lee 等, 2024 — *NV-Embed: Improved Techniques for Training LLMs as Generalist Embedding Models*. arXiv Preprint arXiv:2405.17428
+> - **[208]** Lewis 等, 2020 — *Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks*. Advances in Neural Information Processing Systems (NeurIPS). <https://arxiv.org/abs/2005.11401>
+> - **[213]** Li 等, 2023 — *Towards General Text Embeddings with Multi-Stage Contrastive Learning*. arXiv Preprint arXiv:2308.03281
+> - **[220]** Lin 等, 2025 — *REFRAG: Rethinking RAG Based Decoding*. arXiv Preprint arXiv:2509.01092
+> - **[225]** Liu 等, 2024 — *Lost in the Middle: How Language Models Use Long Contexts*. Transactions of the Association for Computational Linguistics. <https://arxiv.org/abs/2307.03172>
+> - **[248]** Malkov & Yashunin, 2020 — *Efficient and Robust Approximate Nearest Neighbor Search Using Hierarchical Navigable Small World Graphs*. IEEE Transactions on Pattern Analysis and Machine Intelligence
+> - **[268]** Nogueira & Cho, 2019 — *Passage Re-Ranking with BERT*. arXiv Preprint arXiv:1901.04085
+> - **[269]** Nogueira 等, 2020 — *Document Ranking with a Pretrained Sequence-to-Sequence Model*. Findings of EMNLP
+> - **[300]** Rackauckas, 2024 — *RAG-Fusion: A New Take on Retrieval-Augmented Generation*
+> - **[309]** Robertson & Zaragoza, 2009 — *The Probabilistic Relevance Framework: BM25 and Beyond*. Foundations and Trends in Information Retrieval
+> - **[313]** Santhanam 等, 2022 — *ColBERTv2: Effective and Efficient Retrieval via Lightweight Late Interaction*. Proceedings of the 2022 Conference of the North American Chapter of the Association for Computational Linguistics (NAACL)
+> - **[336]** Sparck Jones, 1972 — *A Statistical Interpretation of Term Specificity and Its Application in Retrieval*. Journal of Documentation
+> - **[395]** Xiao 等, 2023 — *C-Pack: Packaged Resources to Advance General Chinese Embedding*. arXiv Preprint arXiv:2309.07597
+> - **[401]** Yan 等, 2024 — *Corrective Retrieval Augmented Generation*. arXiv Preprint arXiv:2401.15884. <https://arxiv.org/abs/2401.15884>
+> - **[405]** Yang 等, 2018 — *HotpotQA: A Dataset for Diverse, Explainable Multi-Hop Question Answering*. Proceedings of EMNLP
+> - **[425]** Zhang 等, 2024 — *RAFT: Adapting Language Model to Domain Specific RAG*. arXiv Preprint arXiv:2403.10131. <https://arxiv.org/abs/2403.10131>

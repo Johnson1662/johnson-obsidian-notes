@@ -469,3 +469,19 @@ def should_compact(state: LoopState) -> bool:
 
 > [!tip] 构建循环——但保持工程师身份
 > 杠杆点已经从写提示转向设计循环。但设计一个能够收敛的循环，需要把问题理解得足够深，才能定义"完成"意味着什么、什么构成进展、何时停止。循环工程让人类的判断*更加*重要，而不是更不重要——因为糟糕判断的后果现在会以机器速度复利增长。
+
+> [!cite]- 本章引文（14 条）
+> - **[10]** Anthropic, 2024 — *Building Effective Agents*. <https://www.anthropic.com/research/building-effective-agents>
+> - **[21]** Barto & Mahadevan, 2003 — *Recent Advances in Hierarchical Reinforcement Learning*. Discrete Event Dynamic Systems
+> - **[52]** Cherny, 2026 — *Loops Are the Next Step from Agents*
+> - **[178]** Karpathy, 2025 — *Context Engineering for AI Agents*
+> - **[179]** Karpathy, 2026 — *AutoResearch: Automated ML Experimentation via Agent Loops*. <https://github.com/karpathy/autoresearch>
+> - **[226]** Liu 等, 2024 — *Lost in the Middle: How Language Models Use Long Contexts*. Transactions of the Association for Computational Linguistics. <https://arxiv.org/abs/2307.03172>
+> - **[244]** L\"utke, 2025 — *Context Engineering*
+> - **[246]** Madaan 等, 2023 — *Self-Refine: Iterative Refinement with Self-Feedback*. Advances in Neural Information Processing Systems (NeurIPS)
+> - **[279]** Osmani, 2026 — *Loop Engineering*. <https://addyosmani.com/blog/loop-engineering/>
+> - **[319]** Schulman 等, 2017 — *Proximal Policy Optimization Algorithms*. arXiv Preprint arXiv:1707.06347. <https://arxiv.org/abs/1707.06347>
+> - **[326]** Shinn 等, 2023 — *Reflexion: Language Agents with Verbal Reinforcement Learning*. Advances in Neural Information Processing Systems (NeurIPS). <https://arxiv.org/abs/2303.11366>
+> - **[330]** Gravitas, 2023 — *AutoGPT: An Autonomous GPT-4 Experiment*. <https://github.com/Significant-Gravitas/AutoGPT>
+> - **[338]** Steinberger, 2026 — *OpenClaw: An Always-On Agent Orchestrator*. <https://github.com/openclaw>
+> - **[408]** Yao 等, 2023 — *ReAct: Synergizing Reasoning and Acting in Language Models*. International Conference on Learning Representations (ICLR). <https://arxiv.org/abs/2210.03629>

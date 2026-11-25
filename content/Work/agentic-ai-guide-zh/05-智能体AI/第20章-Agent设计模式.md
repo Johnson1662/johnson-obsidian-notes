@@ -176,3 +176,13 @@ Agent 调用工具的方式显著影响其可靠性、延迟和成本。已涌�
 *Table 20.3: 各 Agent 设计模式的适用场景*
 
 这些模式是可组合的：一个规划型 Agent 可以在各步骤内使用 Prompt 链，在评审阶段使用 Evaluator-optimizer，并使用路由将子任务分派给专家。艺术在于知道何时停止增加层次。
+
+> [!cite]- 本章引文（8 条）
+> - **[10]** Anthropic, 2024 — *Building Effective Agents*. <https://www.anthropic.com/research/building-effective-agents>
+> - **[246]** Madaan 等, 2023 — *Self-Refine: Iterative Refinement with Self-Feedback*. Advances in Neural Information Processing Systems (NeurIPS)
+> - **[276]** OpenAI, 2024 — *Swarm: An Educational Framework for Lightweight Multi-Agent Orchestration*. <https://github.com/openai/swarm>
+> - **[315]** Schick 等, 2023 — *Toolformer: Language Models Can Teach Themselves to Use Tools*. Advances in Neural Information Processing Systems
+> - **[326]** Shinn 等, 2023 — *Reflexion: Language Agents with Verbal Reinforcement Learning*. Advances in Neural Information Processing Systems (NeurIPS). <https://arxiv.org/abs/2303.11366>
+> - **[364]** Wang 等, 2023 — *Plan-and-Solve Prompting: Improving Zero-Shot Chain-of-Thought Reasoning by Large Language Models*. Proceedings of the 61st Annual Meeting of the Association for Computational Linguistics (ACL). <https://arxiv.org/abs/2305.04091>
+> - **[368]** Wang 等, 2023 — *Self-Consistency Improves Chain of Thought Reasoning in Language Models*. International Conference on Learning Representations (ICLR). <https://arxiv.org/abs/2203.11171>
+> - **[408]** Yao 等, 2023 — *ReAct: Synergizing Reasoning and Acting in Language Models*. International Conference on Learning Representations (ICLR). <https://arxiv.org/abs/2210.03629>

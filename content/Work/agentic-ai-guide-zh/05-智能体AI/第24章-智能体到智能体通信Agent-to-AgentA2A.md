@@ -962,3 +962,15 @@ if __name__ == "__main__":
 > -   如何防范*Prompt 注入攻击*——即恶意 Agent 通过在消息中嵌入对抗性指令来操纵下游 Agent？
 > -   上下文传递的合理*隐私边界*在哪里——子 Agent 应该看到多少对话历史，又如何在技术上强制执行这些边界？
 > -   当 Agent 网络扩展到成百上千个 Agent 时，如何在不形成瓶颈或破坏一致性的前提下维持*连贯的全局状态*？
+
+> [!cite]- 本章引文（10 条）
+> - **[9]** Anthropic, 2024 — *Model Context Protocol*. <https://modelcontextprotocol.io>
+> - **[36]** Campbell 等, 2020 — *OAuth 2.0 Mutual-TLS Client Authentication and Certificate-Bound Access Tokens*. <https://datatracker.ietf.org/doc/html/rfc8705>
+> - **[61]** Consortium, 2022 — *Decentralized Identifiers (DIDs) v1.0*. <https://www.w3.org/TR/did-core/>
+> - **[113]** Google, 2025 — *Agent2Agent (A2A) Protocol*. <https://developers.google.com/agent2agent>
+> - **[133]** Hardt, 2012 — *The OAuth 2.0 Authorization Framework*. <https://datatracker.ietf.org/doc/html/rfc6749>
+> - **[135]** Hayes-Roth, 1985 — *A Blackboard Architecture for Control*. Artificial Intelligence. <https://doi.org/10.1016/0004-3702(85)90063-3>
+> - **[172]** Jones 等, 2015 — *JSON Web Token (JWT)*. <https://datatracker.ietf.org/doc/html/rfc7519>
+> - **[293]** Preston-Werner, 2024 — *Semantic Versioning 2.0.0*. <https://semver.org/>
+> - **[307]** Rescorla, 2018 — *The Transport Layer Security (TLS) Protocol Version 1.3*. <https://datatracker.ietf.org/doc/html/rfc8446>
+> - **[334]** Smith, 1980 — *The Contract Net Protocol: High-Level Communication and Control in a Distributed Problem Solver*. IEEE Transactions on Computers. <https://doi.org/10.1109/TC.1980.1675516>
