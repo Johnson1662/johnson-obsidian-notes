@@ -1056,8 +1056,7 @@ AdamW [238] 修正了权重衰减与自适应优化器交互时一个细微但�
 > $v_t$ 较大（梯度方差大）的参数受到的正则化反而*更弱*。这并不是我们想要的——权重衰减本应是均匀的。
 
 > [!abstract] AdamW – 解耦权重衰减
-> AdamW（Loshchilov & Hutter, 2017）将权重衰减*直接*作用于参数本身，置于自适应缩放之外： $$\theta_{t+1} = \theta_t - \eta \cdot \frac{\hat{m}_t}{\sqrt{\hat{v}_t} + \epsilon}
->   - \eta \lambda \theta_t$$
+> AdamW（Loshchilov & Hutter, 2017）将权重衰减*直接*作用于参数本身，置于自适应缩放之外： $$\theta_{t+1} = \theta_t - \eta \cdot \frac{\hat{m}_t}{\sqrt{\hat{v}_t} + \epsilon} - \eta \lambda \theta_t$$
 >
 > 权重衰减项 $\eta \lambda \theta_t$ 不再被 $\sqrt{\hat{v}_t}$ 缩放。这样无论参数的梯度历史如何，所有参数都能获得均匀的正则化。
 >
