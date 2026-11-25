@@ -46,7 +46,51 @@ Manager 的职责包括：
 -   **错误处理**：检测 Worker 故障并重新路由或重试
 
 > [!example] LangGraph 中的 Supervisor 模式
-> ZZCODEZZ0ZZENDZZ
+> ```python
+> from langgraph.graph import StateGraph, START, END
+> from typing import TypedDict, Literal
+>
+> class TeamState(TypedDict):
+>     task: str
+>     plan: str
+>     code: str
+>     tests: str
+>     review: str
+>     next_agent: str
+>     final_output: str
+>
+> def supervisor_node(state: TeamState) -> TeamState:
+>     # 中央 orchestrator：决定下一步应调用哪个 agent。
+>     """Central orchestrator: decides which agent to invoke next."""
+>     messages = [
+>         {"role": "system", "content": SUPERVISOR_PROMPT},
+>         {"role": "user",   "content": f"Task: {state['task']}\n"
+>                                       f"Plan: {state.get('plan','')}\n"
+>                                       f"Code: {state.get('code','')}\n"
+>                                       f"Tests: {state.get('tests','')}\n"
+>                                       "Which agent should act next? "
+>                                       "Options: planner, coder, tester, reviewer, FINISH"}
+>     ]
+>     response = llm.invoke(messages)
+>     return {**state, "next_agent": response.content.strip()}
+>
+> def route(state: TeamState) -> Literal["planner","coder","tester","reviewer","__end__"]:
+>     return state["next_agent"] if state["next_agent"] != "FINISH" else END
+>
+> builder = StateGraph(TeamState)
+> builder.add_node("supervisor", supervisor_node)
+> builder.add_node("planner",    planner_node)
+> builder.add_node("coder",      coder_node)
+> builder.add_node("tester",     tester_node)
+> builder.add_node("reviewer",   reviewer_node)
+>
+> builder.add_edge(START, "supervisor")
+> builder.add_conditional_edges("supervisor", route)
+> for agent in ["planner", "coder", "tester", "reviewer"]:
+>     builder.add_edge(agent, "supervisor")   # 始终回到 supervisor
+>
+> graph = builder.compile()
+> ```
 
 > [!warning] 集中式架构的权衡
 > **优点：**控制流简单；责任清晰；易于调试（所有决策集中在一处）；实现直接。
@@ -98,7 +142,51 @@ OpenAI 的 **Swarm** 框架 [276]（现已被 OpenAI Agents SDK 取代，但其�
 -   **Handoffs（移交）**：一个 Agent 将控制权（以及相关上下文）转交给另一个 Agent
 
 > [!example] OpenAI Swarm：Routines 与 Handoffs
-> ZZCODEZZ1ZZENDZZ
+> ```python
+> from swarm import Swarm, Agent
+>
+> client = Swarm()
+>
+> def transfer_to_billing():
+>     # Handoff：将控制权移交给计费专员。
+>     """Handoff: transfer control to the billing specialist."""
+>     return billing_agent
+>
+> def transfer_to_technical():
+>     # Handoff：将控制权移交给技术支持 agent。
+>     """Handoff: transfer control to the technical support agent."""
+>     return technical_agent
+>
+> triage_agent = Agent(
+>     name="Triage Agent",
+>     instructions="""You are a customer service triage agent.
+>     Determine the nature of the customer's issue:
+>     - For billing questions, transfer to billing.
+>     - For technical issues, transfer to technical support.
+>     - For general questions, answer directly.""",
+>     functions=[transfer_to_billing, transfer_to_technical],
+> )
+>
+> billing_agent = Agent(
+>     name="Billing Specialist",
+>     instructions="You handle billing inquiries. "
+>                  "Access account data and resolve payment issues.",
+>     functions=[lookup_account, process_refund],
+> )
+>
+> technical_agent = Agent(
+>     name="Technical Support",
+>     instructions="You resolve technical issues. "
+>                  "Diagnose problems and provide step-by-step solutions.",
+>     functions=[run_diagnostics, escalate_to_engineering],
+> )
+>
+> # 无全局状态——每个 agent 仅在其局部上下文中运行
+> response = client.run(
+>     agent=triage_agent,
+>     messages=[{"role": "user", "content": "My invoice is wrong"}]
+> )
+> ```
 
 > [!abstract] Swarm 的性质
 > -   **无全局状态**：每个 Agent 只维护自己的局部上下文窗口
@@ -491,7 +579,23 @@ $$
 一个对抗性 Agent（red team）主动尝试在其他 Agent 的输出中寻找弱点、错误或安全违规。Red team Agent 被 Prompt 引导以尽可能挑剔与富有创造性的方式发起攻击。该模式对安全关键应用至关重要。
 
 > [!example] Red Team Agent 的 Prompt
-> ZZCODEZZ7ZZENDZZ
+> ```python
+> RED_TEAM_PROMPT = """You are a red team agent. Your job is to find
+> flaws, errors, biases, safety violations, and failure modes in the
+> following output. Be adversarial, creative, and thorough.
+>
+> Consider:
+> 1. Factual errors or hallucinations
+> 2. Logical inconsistencies
+> 3. Safety and ethical concerns
+> 4. Edge cases the solution doesn't handle
+> 5. Ways a malicious user could exploit this output
+> 6. Unintended consequences
+>
+> Output: {agent_output}
+>
+> Provide a detailed critique with specific examples of each flaw found."""
+> ```
 
 ## 25.7 用强化学习训练多智能体系统
 

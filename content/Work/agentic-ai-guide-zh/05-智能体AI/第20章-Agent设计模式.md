@@ -105,7 +105,25 @@ Agent 在执行前生成显式计划，并可在执行过程中修订计划 [364
 >
 > **步骤 1 — 计划生成**（单次 LLM 调用）：
 >
-> ZZCODEZZ0ZZENDZZ
+> ```python
+> plan = [
+>     {"id": 1, "task": "Search for recent transformer-based "
+>                       "time-series models (2023-2025)",
+>      "tool": "search_web", "deps": []},
+>     {"id": 2, "task": "Read top 5 papers, extract key methods",
+>      "tool": "read_papers", "deps": [1]},
+>     {"id": 3, "task": "Build comparison table (architecture, "
+>                       "dataset, metrics)",
+>      "tool": "none", "deps": [2]},
+>     {"id": 4, "task": "Write introduction + methodology section",
+>      "tool": "none", "deps": [2]},
+>     {"id": 5, "task": "Write results + conclusion",
+>      "tool": "none", "deps": [3, 4]},
+>     {"id": 6, "task": "Review and polish final report",
+>      "tool": "none", "deps": [5]},
+> ]
+> ```
+
 >
 > **步骤 2 — 带自适应再规划的执行**：Agent 按依赖顺序执行各步骤。第 1 步后，搜索仅返回 3 篇相关论文。Agent 进行*再规划*：新增一个子步骤，将搜索范围扩展到相邻领域（如 PatchTST、iTransformer）。修订后的计划基于扩充后的语料从第 2 步继续。
 >

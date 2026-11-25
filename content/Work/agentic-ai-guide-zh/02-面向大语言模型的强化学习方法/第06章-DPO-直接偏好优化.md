@@ -206,7 +206,43 @@ $$
 ### 6.5.7 伪代码：DPO 训练步
 
 > [!example] DPO Forward + Backward（PyTorch 风格）
-> ZZCODEZZ1ZZENDZZ
+> ```python
+> def dpo_loss(model, ref_model, batch, beta=0.1):
+>     """一个 DPO 训练步。"""
+>     # batch 包含：input_ids_chosen、input_ids_rejected、
+>     #            labels_chosen、labels_rejected（prompt 被掩为 -100）
+>
+>     # 1. Forward pass：得到逐 token 对数概率
+>     logps_chosen = get_sequence_logprob(model, batch["chosen"])
+>     logps_rejected = get_sequence_logprob(model, batch["rejected"])
+>
+>     # 2. 参考模型对数概率（预计算或在此处计算）
+>     with torch.no_grad():
+>         ref_logps_chosen = get_sequence_logprob(ref_model, batch["chosen"])
+>         ref_logps_rejected = get_sequence_logprob(ref_model, batch["rejected"])
+>
+>     # 3. 计算隐式 reward margin
+>     chosen_rewards = beta * (logps_chosen - ref_logps_chosen)
+>     rejected_rewards = beta * (logps_rejected - ref_logps_rejected)
+>
+>     # 4. DPO loss = -log(sigmoid(被选 reward - 被拒 reward))
+>     loss = -F.logsigmoid(chosen_rewards - rejected_rewards).mean()
+>     return loss
+>
+> def get_sequence_logprob(model, sequences):
+>     """仅在回答 token 上求和的对数概率。"""
+>     outputs = model(sequences["input_ids"], attention_mask=sequences["mask"])
+>     logits = outputs.logits[:, :-1, :]  # 为 next-token 预测做位移
+>
+>     # 收集实际 token 的对数概率
+>     labels = sequences["labels"][:, 1:]  # 位移后的标签
+>     log_probs = F.log_softmax(logits, dim=-1)
+>     token_logps = log_probs.gather(-1, labels.unsqueeze(-1)).squeeze(-1)
+>
+>     # 掩码：只对回答 token 求和（labels != -100）
+>     mask = (labels != -100).float()
+>     return (token_logps * mask).sum(dim=-1)  # 形状：[batch_size]
+> ```
 
 ### 6.5.8 常见陷阱
 
@@ -340,7 +376,29 @@ $$\mathcal{L}_{f\text{-DPO}} = -\mathbb{E}\!\left[
 > -   **alpha_divergence**：$f'(u) = u^{\alpha-1}$。在前向 KL 与反向 KL 之间插值。
 
 > [!example] TRL 中的 f-DPO
-> ZZCODEZZ2ZZENDZZ
+> ```python
+> from trl import DPOConfig, DPOTrainer
+>
+> # Jensen-Shannon 散度（平衡）
+> config = DPOConfig(
+>     f_divergence_type="js_divergence",
+>     beta=0.1,
+> )
+>
+> # Alpha 散度（alpha=0：前向 KL；alpha=1：反向 KL）
+> config_alpha = DPOConfig(
+>     f_divergence_type="alpha_divergence",
+>     f_alpha_divergence_coef=0.5,   # alpha 参数
+>     beta=0.1,
+> )
+>
+> trainer = DPOTrainer(
+>     model=model,
+>     ref_model=ref_model,
+>     args=config,
+>     train_dataset=dataset,
+> )
+> ```
 
 > [!abstract] 何时使用 f-DPO
 > -   当你想在多样性与质量之间取得平衡时，使用 **JS 散度**。
@@ -367,7 +425,22 @@ $$\boxed{
 > 该公式是一个线性组合，把翻转标签的贡献"减掉"。当 $\epsilon=0$ 时，它退化为标准 DPO；当 $\epsilon=0.5$ 时，分母趋于零——标签纯属噪声，无法学习。实际中，$\epsilon \in [0.05, 0.2]$ 覆盖了大多数真实标注噪声水平。
 
 > [!example] TRL 中的 Robust DPO
-> ZZCODEZZ3ZZENDZZ
+> ```python
+> from trl import DPOConfig, DPOTrainer
+>
+> config = DPOConfig(
+>     loss_type="robust",
+>     label_smoothing=0.1,   # 对应 epsilon = 0.1
+>     beta=0.1,
+> )
+>
+> trainer = DPOTrainer(
+>     model=model,
+>     ref_model=ref_model,
+>     args=config,
+>     train_dataset=dataset,
+> )
+> ```
 
 ### 6.9.3 TR-DPO——信任域 DPO
 
@@ -382,7 +455,24 @@ $$\pi_{\text{ref}}^{(t+1)} \leftarrow
 其中 $\alpha \in (0,1)$ 是混合系数。每 $T_{\text{sync}}$ 个 gradient 步执行一次。
 
 > [!example] TRL 中的 TR-DPO
-> ZZCODEZZ4ZZENDZZ
+> ```python
+> from trl import DPOConfig, DPOTrainer
+>
+> config = DPOConfig(
+>     loss_type="sigmoid",        # 标准 DPO loss
+>     sync_ref_model=True,        # 启用 TR-DPO
+>     ref_model_mixup_alpha=0.6,  # alpha：混入当前 policy 的比例
+>     ref_model_sync_steps=512,   # T_sync：每 512 步同步一次
+>     beta=0.1,
+> )
+>
+> trainer = DPOTrainer(
+>     model=model,
+>     ref_model=ref_model,
+>     args=config,
+>     train_dataset=dataset,
+> )
+> ```
 
 > [!abstract] 何时使用 TR-DPO
 > -   Policy 已偏离初始 reference 较远的长训练任务。
@@ -413,7 +503,21 @@ $$\mathcal{L}_{\text{EXO}} \approx -\mathbb{E}\!\left[
 注意：相对于 DPO，$\pi_\theta$ 与 $\pi_{\text{ref}}$ 的角色被*对调*了。
 
 > [!example] TRL 中的 EXO
-> ZZCODEZZ5ZZENDZZ
+> ```python
+> from trl import DPOConfig, DPOTrainer
+>
+> config = DPOConfig(
+>     loss_type="exo_pair",
+>     beta=0.1,
+> )
+>
+> trainer = DPOTrainer(
+>     model=model,
+>     ref_model=ref_model,
+>     args=config,
+>     train_dataset=dataset,
+> )
+> ```
 
 ### 6.9.5 NCA——噪声对比对齐
 
@@ -432,7 +536,21 @@ $$\boxed{
 其中 $r_y = \beta \log(\pi_\theta(y|q)/\pi_{\text{ref}}(y|q))$ 是隐式 reward。第一项鼓励 $y_w$ 获得高 reward；第二、三项则同时惩罚 $y_w$ 与 $y_l$ 上的高 reward（防止崩塌）。
 
 > [!example] TRL 中的 NCA
-> ZZCODEZZ6ZZENDZZ
+> ```python
+> from trl import DPOConfig, DPOTrainer
+>
+> config = DPOConfig(
+>     loss_type="nca_pair",
+>     beta=0.01,   # beta 较小：绝对似然项占主导
+> )
+>
+> trainer = DPOTrainer(
+>     model=model,
+>     ref_model=ref_model,
+>     args=config,
+>     train_dataset=dataset,
+> )
+> ```
 
 > [!abstract] 何时使用 NCA
 > -   当观察到 DPO 训练过程中被选回答的概率在下降时。
@@ -454,7 +572,21 @@ $$\mathcal{L}_{\text{SLiC}} = \max\!\left(0,\;
 其中 $\delta$ 是 margin 阈值。当模型在被选与被拒回答之间已经赋予 $\delta$ 大小的 margin 时，loss 为零。
 
 > [!example] TRL 中的 SLiC-HF
-> ZZCODEZZ7ZZENDZZ
+> ```python
+> from trl import DPOConfig, DPOTrainer
+>
+> config = DPOConfig(
+>     loss_type="hinge",
+>     beta=0.1,
+> )
+>
+> trainer = DPOTrainer(
+>     model=model,
+>     ref_model=ref_model,
+>     args=config,
+>     train_dataset=dataset,
+> )
+> ```
 
 ### 6.9.7 Iterative RPO——推理偏好优化
 
@@ -470,7 +602,22 @@ $$\mathcal{L}_{\text{RPO}} =
 其中 $\mathcal{L}_{\text{NLL}}(y_w) = -\log \pi_\theta(y_w|q)$ 是作用于被选回答的标准语言建模 loss。
 
 > [!example] TRL 中的 Iterative RPO
-> ZZCODEZZ8ZZENDZZ
+> ```python
+> from trl import DPOConfig, DPOTrainer
+>
+> config = DPOConfig(
+>     loss_type="sigmoid",            # 标准 DPO loss
+>     rpo_alpha=1.0,                  # NLL 正则权重（RPO）
+>     beta=0.1,
+> )
+>
+> trainer = DPOTrainer(
+>     model=model,
+>     ref_model=ref_model,
+>     args=config,
+>     train_dataset=dataset,
+> )
+> ```
 
 > [!abstract] 何时使用 RPO
 > -   模型必须生成逐步解答的推理任务（数学、代码、逻辑）。
@@ -511,7 +658,23 @@ $$\boxed{
 > -   SimPO 中的长度归一化至关重要：若没有它，模型会偏好长回答。
 
 > [!example] TRL 中的 SimPO
-> ZZCODEZZ9ZZENDZZ
+> ```python
+> from trl import DPOConfig, DPOTrainer
+>
+> config = DPOConfig(
+>     loss_type="simpo",
+>     simpo_gamma=0.5,   # 目标 reward margin gamma
+>     beta=2.5,          # 长度归一化系数
+>     # 无需 ref_model！
+> )
+>
+> trainer = DPOTrainer(
+>     model=model,
+>     ref_model=None,    # SimPO 是无 reference 的
+>     args=config,
+>     train_dataset=dataset,
+> )
+> ```
 
 > [!cite]- 本章引文（8 条）
 > - **[43]** Chen 等, 2024 — *Noise Contrastive Alignment of Language Models with Explicit Rewards*. arXiv Preprint arXiv:2402.05369. <https://arxiv.org/abs/2402.05369>

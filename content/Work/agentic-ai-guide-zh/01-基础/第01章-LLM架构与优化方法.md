@@ -1056,7 +1056,8 @@ AdamW [238] 修正了权重衰减与自适应优化器交互时一个细微但�
 > $v_t$ 较大（梯度方差大）的参数受到的正则化反而*更弱*。这并不是我们想要的——权重衰减本应是均匀的。
 
 > [!abstract] AdamW – 解耦权重衰减
-> AdamW（Loshchilov & Hutter, 2017）将权重衰减*直接*作用于参数本身，置于自适应缩放之外： $$\theta_{t+1} = \theta_t - \eta \cdot \frac{\hat{m}_t}{\sqrt{\hat{v}_t} + \epsilon} - \eta \lambda \theta_t$$
+> AdamW（Loshchilov & Hutter, 2017）将权重衰减*直接*作用于参数本身，置于自适应缩放之外： $$\theta_{t+1} = \theta_t - \eta \cdot \frac{\hat{m}_t}{\sqrt{\hat{v}_t} + \epsilon}
+>   - \eta \lambda \theta_t$$
 >
 > 权重衰减项 $\eta \lambda \theta_t$ 不再被 $\sqrt{\hat{v}_t}$ 缩放。这样无论参数的梯度历史如何，所有参数都能获得均匀的正则化。
 >
@@ -1368,7 +1369,39 @@ for batch in train_dataloader:
 > *以上均使用：$\beta_1{=}0.9$、$\beta_2{=}0.95$、$\epsilon{=}10^{-8}$、`max_grad_norm`=1.0、BF16。RL 相关设置参见 §11.15。*
 
 > [!example] 诊断训练不稳定
-> ZZCODEZZ5ZZENDZZ
+> ```python
+> # 监控以下指标以诊断优化器问题：
+> # 1. 梯度范数 —— 大多数时候应 < max_grad_norm
+> # 2. 损失缩放因子（FP16）—— 应稳定，不应持续减小
+> # 3. 参数更新范数 —— 应远小于参数自身的范数
+>
+> import torch
+>
+> def log_optimizer_stats(model, optimizer, step):
+>     # 梯度范数（裁剪前）
+>     total_norm = 0.0
+>     for p in model.parameters():
+>         if p.grad is not None:
+>             total_norm += p.grad.data.norm(2).item() ** 2
+>     total_norm = total_norm ** 0.5
+>
+>     # Adam 二阶矩统计（自适应学习率的代理指标）
+>     v_norms = []
+>     for group in optimizer.param_groups:
+>         for p in group['params']:
+>             state = optimizer.state[p]
+>             if 'exp_avg_sq' in state:
+>                 v_norms.append(state['exp_avg_sq'].mean().item())
+>
+>     print(f"Step {step}: grad_norm={total_norm:.3f}, "
+>           f"mean_v={sum(v_norms)/len(v_norms):.6f}")
+>
+> # 红色警报：
+> # grad_norm 反复 >> 1.0 —— 降低学习率或加长预热
+> # grad_norm == 0.0 —— 梯度消失或 loss 写错
+> # loss_scale 持续下降 —— FP16 溢出，改用 BF16
+> # v 非常小 —— Adam 还没预热完，加长预热
+> ```
 
 > [!tip] 学习率是最重要的超参数
 > 实践中，把学习率调对比任何其他超参数都重要。LLM 微调的经验法则：
@@ -2180,7 +2213,14 @@ Prompt 工程是一门设计 LLM 输入的学科，目标是在不修改模型�
 零样本提示*不*提供任何示例，只有任务描述或指令。模型必须完全依靠预训练知识与指令微调来生成正确的格式与内容。
 
 > [!example] 零样本分类
-> ZZCODEZZ9ZZENDZZ
+> ```python
+> Classify the following movie review as POSITIVE or NEGATIVE.
+>
+> Review: "The cinematography was breathtaking but the plot
+> felt rushed and predictable."
+>
+> Sentiment:
+> ```
 
 **零样本何时奏效：**
 
@@ -2195,7 +2235,18 @@ Prompt 工程是一门设计 LLM 输入的学科，目标是在不修改模型�
 少样本提示 [32] 在实际查询之前提供 $k$ 个输入-输出示例（即 "shots"）。它是上下文学习最常见的形式，也仍然是最有效的提示策略之一。
 
 > [!example] 少样本命名实体识别
-> ZZCODEZZ10ZZENDZZ
+> ```python
+> Extract named entities from the text. Format: [ENTITY](TYPE)
+>
+> Text: "Apple released the iPhone 15 in Cupertino."
+> Entities: [Apple](ORG), [iPhone 15](PRODUCT), [Cupertino](LOC)
+>
+> Text: "Elon Musk announced Tesla's new factory in Berlin."
+> Entities: [Elon Musk](PER), [Tesla](ORG), [Berlin](LOC)
+>
+> Text: "OpenAI partnered with Microsoft to deploy GPT-4."
+> Entities:
+> ```
 
 **少样本示例的关键设计原则：**
 
@@ -2220,7 +2271,20 @@ Prompt 工程是一门设计 LLM 输入的学科，目标是在不修改模型�
 > 6.  **输入**：实际待处理的数据
 
 > [!example] 带约束的指令型 Prompt
-> ZZCODEZZ11ZZENDZZ
+> ```python
+> Role: You are a medical literature reviewer.
+>
+> Task: Summarize the following research abstract for a
+> general audience.
+>
+> Constraints:
+> - Maximum 3 sentences
+> - No jargon (explain any technical terms)
+> - Include the key finding and its clinical implication
+> - Do NOT speculate beyond what the abstract states
+>
+> Abstract: [...]
+> ```
 
 **System Prompt 与 User Prompt 的对比。** 现代聊天 API 将*系统* Prompt（持久指令、角色定义）与*用户*消息（每轮输入）分离。多数模型对 system prompt 赋予更高的 attention 优先级，是放置角色定义、约束和输出格式说明的天然位置 [274]。
 
@@ -2229,7 +2293,20 @@ Prompt 工程是一门设计 LLM 输入的学科，目标是在不修改模型�
 对于程序化用途，最关键的提示技术是强制结构化输出——尤其是 JSON。
 
 > [!example] JSON 输出 Prompt
-> ZZCODEZZ12ZZENDZZ
+> ```python
+> Extract the following information from the customer email.
+> Respond ONLY with valid JSON, no other text.
+>
+> Schema:
+> {
+>   "intent": "refund|complaint|question|praise",
+>   "urgency": "low|medium|high",
+>   "product_mentioned": "string or null",
+>   "summary": "one sentence summary"
+> }
+>
+> Email: [...]
+> ```
 
 **获得可靠结构化输出的技巧：**
 
@@ -2247,7 +2324,31 @@ Prompt 工程是一门设计 LLM 输入的学科，目标是在不修改模型�
 **JSON Prompting：结构化输入本身。** 一种独立但互补的技术是 *JSON prompting*——将 Prompt *本身*格式化为 JSON 而非自然语言。这利用了模型在结构化数据（API、配置、代码）上的大量预训练，从而提升指令遵循度、降低歧义，并使多字段请求能被确定性地解析。
 
 > [!example] 结合 System Prompt 的 JSON Prompting
-> ZZCODEZZ13ZZENDZZ
+> ```python
+> === SYSTEM ===
+> You are a senior code reviewer. Analyze code for bugs,
+> security issues, and style violations. Always respond
+> in the JSON schema provided.
+>
+> === USER (JSON prompt) ===
+> {
+>   "task": "code_review",
+>   "language": "python",
+>   "severity_filter": "high",
+>   "code": "def login(user, pw):\n    query = ...",
+>   "output_schema": {
+>     "issues": [{
+>       "line": "int",
+>       "severity": "critical|high|medium|low",
+>       "category": "security|bug|style|performance",
+>       "description": "string",
+>       "fix": "string"
+>     }],
+>     "overall_risk": "critical|high|medium|low"
+>   }
+> }
+> ```
+
 >
 > **为何 JSON prompting 有效：**
 >
@@ -2277,7 +2378,18 @@ Prompt 工程是一门设计 LLM 输入的学科，目标是在不修改模型�
 > | ReAct [408] | 交替进行 Reasoning 与 Acting（工具调用） |
 
 > [!example] 零样本思维链
-> ZZCODEZZ14ZZENDZZ
+> ```python
+> Q: A store has 45 apples. They sell 3/5 of them in the
+> morning and 1/3 of the remaining in the afternoon.
+> How many apples are left?
+>
+> Let's think step by step.
+>
+> A: Morning sales: 45 * 3/5 = 27 apples sold.
+> Remaining after morning: 45 - 27 = 18.
+> Afternoon sales: 18 * 1/3 = 6 apples sold.
+> Remaining: 18 - 6 = 12 apples.
+> ```
 
 **自一致性（Self-Consistency）。** Wang 等人 [367] 表明，采样多条思维链推理路径并对最终答案做多数投票，能显著优于单路径 CoT。直觉是：正确的推理路径往往收敛于同一答案，而错误通常各有不同。这是用算力（生成 $N$ 个样本）换取准确率——在延迟不如正确性重要时非常实用。
 

@@ -25,7 +25,27 @@
 > -   注意事项：需谨慎设计 attention masking 以避免交叉污染。
 
 > [!example] TRL 中的序列打包
-> ZZCODEZZ0ZZENDZZ
+> ```python
+> from trl import SFTConfig, SFTTrainer
+>
+> config = SFTConfig(
+>     max_seq_length=4096,
+>     packing=True,           # 启用序列打包
+>     output_dir="sft_model",
+>     per_device_train_batch_size=4,
+>     gradient_accumulation_steps=4,
+>     learning_rate=2e-5,
+>     num_train_epochs=3,
+> )
+>
+> trainer = SFTTrainer(
+>     model=model,
+>     args=config,
+>     train_dataset=dataset,
+>     # dataset_text_field="text",  # 或使用 formatting_func
+> )
+> trainer.train()
+> ```
 
 ## 10.2 Chat 模板与格式化
 
@@ -59,7 +79,38 @@ template = """<|begin_of_text|><|start_header_id|>system<|end_header_id|>
 ```
 
 > [!example] 在 TRL 中应用 Chat 模板
-> ZZCODEZZ3ZZENDZZ
+> ```python
+> from transformers import AutoTokenizer
+> from trl import SFTConfig, SFTTrainer
+>
+> tokenizer = AutoTokenizer.from_pretrained("meta-llama/Llama-3.1-8B-Instruct")
+>
+> def formatting_func(example):
+>     """对数据集样本应用 chat 模板。"""
+>     messages = [
+>         {"role": "system", "content": "You are a helpful assistant."},
+>         {"role": "user", "content": example["instruction"]},
+>         {"role": "assistant", "content": example["response"]},
+>     ]
+>     return tokenizer.apply_chat_template(
+>         messages,
+>         tokenize=False,
+>         add_generation_prompt=False,
+>     )
+>
+> config = SFTConfig(
+>     max_seq_length=2048,
+>     output_dir="sft_model",
+> )
+>
+> trainer = SFTTrainer(
+>     model=model,
+>     tokenizer=tokenizer,
+>     args=config,
+>     train_dataset=dataset,
+>     formatting_func=formatting_func,
+> )
+> ```
 
 ## 10.3 仅对补全部分进行 mask
 
@@ -67,7 +118,33 @@ template = """<|begin_of_text|><|start_header_id|>system<|end_header_id|>
 > 在指令微调中，模型应该学习生成 assistant 的回应，而非预测用户的问题或 system prompt。在 prompt Token 上计算 Loss 会浪费 Gradient 信号，并可能导致模型"记忆"prompt 而非学会回应它们。Completion-only masking 将所有非 assistant Token 的 Loss 置零。
 
 > [!example] TRL 中的 Completion-Only Masking
-> ZZCODEZZ4ZZENDZZ
+> ```python
+> from trl import SFTConfig, SFTTrainer, DataCollatorForCompletionOnlyLM
+> from transformers import AutoTokenizer
+>
+> tokenizer = AutoTokenizer.from_pretrained("meta-llama/Llama-3.1-8B-Instruct")
+>
+> # 定义响应模板(此 Token 之后开始计算 Loss)
+> response_template = "<|start_header_id|>assistant<|end_header_id|>"
+> collator = DataCollatorForCompletionOnlyLM(
+>     response_template=response_template,
+>     tokenizer=tokenizer,
+> )
+>
+> config = SFTConfig(
+>     max_seq_length=2048,
+>     output_dir="sft_model",
+> )
+>
+> trainer = SFTTrainer(
+>     model=model,
+>     tokenizer=tokenizer,
+>     args=config,
+>     train_dataset=dataset,
+>     data_collator=collator,   # 仅对 completion 部分计算 Loss
+>     formatting_func=formatting_func,
+> )
+> ```
 
 > [!warning] Completion Masking 陷阱
 > -   响应模板必须与 token 化后的形式精确匹配。token 化中的 off-by-one 错误会导致 mask 应用错误。
@@ -110,7 +187,30 @@ $$
 其中 $q_k$ 是数据集 $k$ 的质量分数。
 
 > [!example] TRL 中的数据混合
-> ZZCODEZZ5ZZENDZZ
+> ```python
+> from datasets import concatenate_datasets, interleave_datasets
+>
+> # 比例混合(默认)
+> mixed_dataset = concatenate_datasets([
+>     dataset_math,
+>     dataset_code,
+>     dataset_general,
+> ]).shuffle(seed=42)
+>
+> # 温度混合(T=2:对小数据集过采样)
+> mixed_dataset = interleave_datasets(
+>     [dataset_math, dataset_code, dataset_general],
+>     probabilities=[0.4, 0.4, 0.2],   # 经温度缩放后手动设定
+>     seed=42,
+> )
+>
+> config = SFTConfig(output_dir="sft_model")
+> trainer = SFTTrainer(
+>     model=model,
+>     args=config,
+>     train_dataset=mixed_dataset,
+> )
+> ```
 
 ## 10.5 当 SFT 反而有害 —— 灾难性遗忘与对齐税
 
@@ -228,7 +328,50 @@ $$
 4.  **Warm-up**：即使 base 模型已经过指令微调，在 RL 之前也可考虑在特定任务数据上进行简短的 SFT warm-up。
 
 > [!example] 在 RL 之前检查 SFT 质量
-> ZZCODEZZ6ZZENDZZ
+> ```python
+> import numpy as np
+> from tqdm import tqdm
+>
+> def estimate_pass_at_k(model, tokenizer, dataset, k=8, n_samples=100):
+>     """
+>     估计 SFT 模型的 pass@k。
+>     若 pass@1 < 5%,RL 大概率会失败。
+>     若 pass@k < 20%,RL 会很吃力。
+>     """
+>     pass_at_1_scores = []
+>     pass_at_k_scores = []
+>
+>     for example in tqdm(dataset.select(range(n_samples))):
+>         prompt = example["prompt"]
+>         ground_truth = example["answer"]
+>
+>         # 采样 k 个补全
+>         inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
+>         outputs = model.generate(
+>             **inputs,
+>             max_new_tokens=512,
+>             do_sample=True,
+>             temperature=0.8,
+>             num_return_sequences=k,
+>         )
+>
+>         correct = 0
+>         for output in outputs:
+>             response = tokenizer.decode(output, skip_special_tokens=True)
+>             if ground_truth in response:
+>                 correct += 1
+>
+>         # pass@1:正确样本占比(估计的成功率)
+>         pass_at_1_scores.append(correct / k)
+>         # pass@k:k 个样本中至少一个正确
+>         pass_at_k_scores.append(correct >= 1)
+>
+>     print(f"Pass@1 (estimated): {np.mean(pass_at_1_scores):.2%}")
+>     print(f"Pass@{k}: {np.mean(pass_at_k_scores):.2%}")
+>     print(f"RL viability: {'Good' if np.mean(pass_at_1_scores) > 0.05 else 'Poor'}")
+>
+> estimate_pass_at_k(sft_model, tokenizer, eval_dataset)
+> ```
 
 > [!abstract] SFT 最佳实践总结
 > 1.  使用序列打包（Sequence Packing）以最大化 GPU 利用率。

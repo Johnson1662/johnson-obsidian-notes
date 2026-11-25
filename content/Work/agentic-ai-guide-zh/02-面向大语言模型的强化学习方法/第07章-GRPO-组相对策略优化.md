@@ -289,7 +289,31 @@ $$
 DAPO 会重新采样那些整组 completion 获得相同 reward（全对或全错）的 prompt，因为此类组在归一化后贡献零 gradient。这能在整个训练过程中保持有效 batch size 稳定。
 
 > [!example] TRL 中的 DAPO
-> ZZCODEZZ2ZZENDZZ
+> ```python
+> from trl import GRPOConfig, GRPOTrainer
+>
+> config = GRPOConfig(
+>     # 非对称 clipping
+>     epsilon=0.2,
+>     epsilon_high=0.28,          # Clip-Higher
+>     # Token 级 loss
+>     loss_type="dapo",           # 启用 token 级聚合
+>     # 过长过滤
+>     mask_truncated_completions=True,
+>     # 生成预算
+>     max_completion_length=1024,
+>     num_generations=8,
+>     # 注意：DAPO loss 内部已处理零方差组过滤
+> )
+>
+> trainer = GRPOTrainer(
+>     model=model,
+>     reward_funcs=[reward_fn],
+>     args=config,
+>     train_dataset=dataset,
+> )
+> trainer.train()
+> ```
 
 > [!abstract] 何时使用 DAPO
 > -   completion 经常触及长度上限的长篇推理任务。
@@ -321,7 +345,25 @@ $$\mathcal{L}_{\text{GSPO}} = -\frac{1}{G}\sum_{i=1}^G
 > -   GSPO 在 off-policy 重要性采样上理论正确；GRPO 只是近似。
 
 > [!example] TRL 中的 GSPO
-> ZZCODEZZ3ZZENDZZ
+> ```python
+> from trl import GRPOConfig, GRPOTrainer
+>
+> config = GRPOConfig(
+>     # 序列级重要性采样
+>     importance_sampling_level="sequence",   # GSPO 模式
+>     # Off-policy：每个 batch 复用多次 gradient 步
+>     steps_per_generation=4,
+>     num_generations=8,
+>     epsilon=0.2,
+> )
+>
+> trainer = GRPOTrainer(
+>     model=model,
+>     reward_funcs=[reward_fn],
+>     args=config,
+>     train_dataset=dataset,
+> )
+> ```
 
 > [!warning] 何时使用 GSPO
 > GSPO 在 `steps_per_generation > 1`（off-policy 训练）时最有用。对于纯 on-policy 训练（$\text{steps\_per\_generation}=1$），它与 GRPO 的差异可忽略。Off-policy 训练能极大降低生成成本（最昂贵的步骤），使得 GSPO + off-policy 成为强力的效率选择。
@@ -340,7 +382,23 @@ $$
 其中 $\pi_{\text{ref}}$ 是参考（预训练）模型。这是一种 *token 效率* 形式：gradient 被集中到 policy 真正需要改变的 token 上。
 
 > [!example] TRL 中的 Dr. GRPO
-> ZZCODEZZ4ZZENDZZ
+> ```python
+> from trl import GRPOConfig, GRPOTrainer
+>
+> config = GRPOConfig(
+>     loss_type="dr_grpo",
+>     num_generations=8,
+>     beta=0.04,   # KL 惩罚系数
+> )
+>
+> trainer = GRPOTrainer(
+>     model=model,
+>     ref_model=ref_model,   # token 加权需要参考模型
+>     reward_funcs=[reward_fn],
+>     args=config,
+>     train_dataset=dataset,
+> )
+> ```
 
 > [!abstract] 何时使用 Dr. GRPO
 > -   当训练任务在预训练与 RL 之间词表分布严重不匹配时。
@@ -371,7 +429,24 @@ $$\mathcal{L}_{\text{2-GRPO}} \approx
 > -   在 GSM8K、MATH 和代码基准上无精度损失。
 
 > [!example] TRL 中的 2-GRPO
-> ZZCODEZZ5ZZENDZZ
+> ```python
+> from trl import GRPOConfig, GRPOTrainer
+>
+> config = GRPOConfig(
+>     num_generations=2,      # 关键改动 —— 只做两次 rollout
+>     loss_type="grpo",       # 标准 GRPO loss 即可
+>     epsilon=0.2,
+>     # G=2 时 batch size 至少为 2 * num_prompts_per_step
+>     per_device_train_batch_size=2,
+> )
+>
+> trainer = GRPOTrainer(
+>     model=model,
+>     reward_funcs=[reward_fn],
+>     args=config,
+>     train_dataset=dataset,
+> )
+> ```
 
 > [!warning] 2-GRPO 的注意事项
 > $G=2$ 时 advantage 归一化只对两个值进行，因此归一化后的 advantage 总是 $\{+1, -1\}$（若两 reward 相等则为 $\{0, 0\}$）。这意味着 gradient 幅度与 reward 差距无关。对于 reward 差异的 *幅度* 很重要的任务（例如部分得分），更大的 $G$ 仍然有利。
@@ -402,7 +477,23 @@ $$\boxed{
 > -   $\tau \to \infty$：恢复未 clip 的 policy gradient。
 
 > [!example] TRL 中的 SAPO
-> ZZCODEZZ6ZZENDZZ
+> ```python
+> from trl import GRPOConfig, GRPOTrainer
+>
+> config = GRPOConfig(
+>     loss_type="sapo",
+>     sapo_temperature_pos=1.0,    # 正 advantage 的 tau_+
+>     sapo_temperature_neg=1.05,   # 负 advantage 的 tau_-
+>     num_generations=8,
+> )
+>
+> trainer = GRPOTrainer(
+>     model=model,
+>     reward_funcs=[reward_fn],
+>     args=config,
+>     train_dataset=dataset,
+> )
+> ```
 
 ### 7.5.7 TIS 与 MIS —— Truncated 与 Masked Importance Sampling
 
@@ -437,7 +528,25 @@ TIS 和 MIS 都既可在 token 级、也可在序列级应用：
 -   **Token 级**：为每个 token 单独计算 ratio。有偏（逐 token 修正的乘积不等于序列修正），但方差更低。
 
 > [!example] TRL 中的 TIS 和 MIS
-> ZZCODEZZ7ZZENDZZ
+> ```python
+> from trl import GRPOConfig, GRPOTrainer
+>
+> # 针对 vLLM 概率不匹配的 Truncated IS 修正
+> config_tis = GRPOConfig(
+>     use_vllm=True,
+>     vllm_importance_sampling_correction=True,
+>     vllm_importance_sampling_mode="sequence_truncate",  # TIS
+>     vllm_importance_sampling_cap=5.0,                   # C 阈值
+> )
+>
+> # Masked IS 修正
+> config_mis = GRPOConfig(
+>     use_vllm=True,
+>     vllm_importance_sampling_correction=True,
+>     vllm_importance_sampling_mode="sequence_mask",      # MIS
+>     vllm_importance_sampling_cap=3.0,
+> )
+> ```
 
 > [!abstract] 何时使用 TIS/MIS
 > -   使用 vLLM 生成时 **始终** 考虑开启。
@@ -463,7 +572,24 @@ $$\boxed{
 -   是非对称的：高权重 trajectory（$W > 1$）与低权重 trajectory 区别对待。
 
 > [!example] TRL 中的 VESPO
-> ZZCODEZZ8ZZENDZZ
+> ```python
+> from trl import GRPOConfig, GRPOTrainer
+>
+> config = GRPOConfig(
+>     loss_type="vespo",
+>     vespo_k_pos=2.0,         # 锐度指数（正 advantage）
+>     vespo_lambda_pos=3.0,    # 陈旧性衰减（正 advantage）
+>     num_generations=8,
+>     steps_per_generation=2,  # off-policy；VESPO 处理陈旧性
+> )
+>
+> trainer = GRPOTrainer(
+>     model=model,
+>     reward_funcs=[reward_fn],
+>     args=config,
+>     train_dataset=dataset,
+> )
+> ```
 
 ### 7.5.9 DPPO —— Direct Policy Divergence Policy Optimization
 
@@ -486,7 +612,18 @@ $$\mathcal{L}_{\text{DPPO}} = -\mathbb{E}\!\left[
 > [!example] DPPO —— 概念性实现
 > DPPO 目前尚未作为内置 TRL trainer 提供。一种自定义实现可基于 GRPOTrainer，修改 loss 以基于分布散度（TV 或 KL）而非标准概率 ratio 进行 clip：
 >
-> ZZCODEZZ9ZZENDZZ
+> ```python
+> # 伪代码：DPPO 需要自定义 trainer 子类
+> from trl import GRPOConfig, GRPOTrainer
+>
+> config = GRPOConfig(
+>     num_generations=8,
+>     beta=0.04,
+> )
+> # 重写 loss 计算以使用分布式 clipping：
+> # 当 TV(pi_new || pi_old) > delta 时 clip，而非
+> # 当 pi_new/pi_old 超过 [1-eps, 1+eps] 时
+> ```
 
 > [!warning] DPPO 处于研究阶段
 > DPPO 是较新的研究贡献，尚未集成到主流 RL 库中。它在你观察到标准 ratio clipping 失效时（例如在 token 概率分布高度偏斜的任务上）最有用。
@@ -519,7 +656,25 @@ $$\mathcal{L}_{\text{CISPO}} =
 其中 $m_{i,t}$ 是过长过滤 mask。
 
 > [!example] TRL 中的 CISPO
-> ZZCODEZZ10ZZENDZZ
+> ```python
+> from trl import GRPOConfig, GRPOTrainer
+>
+> config = GRPOConfig(
+>     loss_type="cispo",
+>     scale_rewards="batch",          # batch 级 reward 归一化
+>     mask_truncated_completions=True,
+>     epsilon=0.2,
+>     epsilon_high=5.0,               # CISPO 的 epsilon_max（ScaleRL 论文）
+>     num_generations=8,
+> )
+>
+> trainer = GRPOTrainer(
+>     model=model,
+>     reward_funcs=[reward_fn],
+>     args=config,
+>     train_dataset=dataset,
+> )
+> ```
 
 > [!abstract] ScaleRL 关键发现
 > 1.  单独的 batch 级 reward 缩放：改进有限。
@@ -548,7 +703,28 @@ $$\boxed{
 > -   当 reward 量级或方差差异极大时，GDPO 不可或缺。
 
 > [!example] TRL 中的 GDPO
-> ZZCODEZZ11ZZENDZZ
+> ```python
+> from trl import GRPOConfig, GRPOTrainer
+>
+> config = GRPOConfig(
+>     multi_objective_aggregation="normalize_then_sum",
+>     reward_weights=[1.0, 0.5],   # [正确性, 格式] 的权重
+>     num_generations=8,
+> )
+>
+> def correctness_reward(completions, **kwargs):
+>     return [1.0 if is_correct(c) else 0.0 for c in completions]
+>
+> def format_reward(completions, **kwargs):
+>     return [0.1 if has_good_format(c) else 0.0 for c in completions]
+>
+> trainer = GRPOTrainer(
+>     model=model,
+>     reward_funcs=[correctness_reward, format_reward],
+>     args=config,
+>     train_dataset=dataset,
+> )
+> ```
 
 ### 7.5.12 GOPO —— Group Ordinal Policy Optimization
 

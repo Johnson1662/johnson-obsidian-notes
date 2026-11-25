@@ -161,7 +161,16 @@ Self-Instruct [371] 从一个由人工撰写的种子任务集合自举出指令
 5.  重复直到达到目标任务池规模。
 
 > [!example] Self-Instruct Prompt 模板
-> ZZCODEZZ0ZZENDZZ
+> ```python
+> system_prompt = """
+> Come up with a series of tasks:
+> Task 1: {seed_task_1_instruction}
+> Task 2: {seed_task_2_instruction}
+> ...
+> Task 8: {seed_task_8_instruction}
+> Task 9:"""
+> ```
+
 >
 > 模型补全该 Prompt，生成新的任务指令。随后由另一个 Prompt 为该新任务生成输入–输出对。
 
@@ -382,7 +391,30 @@ $$
 其中 $n$ 是每个问题生成的样本总数，$c$ 是其中通过测试的样本数。该无偏估计量避免了朴素估计量（精确采样 $k$ 个解并检查是否通过）的高方差问题。在实践中通常生成 $n = 200$ 个样本，并报告 pass@1、pass@10、pass@100。
 
 > [!example] Pass@k 计算
-> ZZCODEZZ1ZZENDZZ
+> ```python
+> import numpy as np
+> from scipy.special import comb
+>
+> def pass_at_k(n: int, c: int, k: int) -> float:
+>     """pass@k 的无偏估计量。
+>
+>     Args:
+>         n: 每个问题生成的样本总数
+>         c: 通过全部测试的样本数
+>         k: 考虑的样本数
+>     """
+>     if n - c < k:
+>         return 1.0
+>     return 1.0 - comb(n - c, k, exact=True) / comb(n, k, exact=True)
+>
+> # 示例：200 个样本，15 个通过，计算 pass@1、pass@10、pass@100
+> for k in [1, 10, 100]:
+>     score = pass_at_k(n=200, c=15, k=k)
+>     print(f"pass@{k}: {score:.4f}")
+> # pass@1:   0.0750
+> # pass@10:  0.5391
+> # pass@100: 0.9999
+> ```
 
 ### 14.5.7 精确匹配与 F1
 
@@ -508,12 +540,46 @@ LLM-as-Judge [433] 使用一个能力强的 LLM 来评估其他（或同一个�
 **点评式评分（Pointwise scoring）。** 评判者对单个回答给出绝对分数：
 
 > [!example] Pointwise Judge Prompt
-> ZZCODEZZ2ZZENDZZ
+> ```python
+> POINTWISE_PROMPT = """
+> You are an expert evaluator. Rate the following response on a scale
+> of 1-10 for helpfulness, accuracy, and clarity.
+>
+> [Question]
+> {question}
+>
+> [Response]
+> {response}
+>
+> Provide your evaluation in the following format:
+> Reasoning: <step-by-step analysis>
+> Score: <integer from 1 to 10>
+> """
+> ```
 
 **成对比较（Pairwise comparison）。** 评判者比较两个回答并选出更优者：
 
 > [!example] Pairwise Judge Prompt
-> ZZCODEZZ3ZZENDZZ
+> ```python
+> PAIRWISE_PROMPT = """
+> You are an expert evaluator. Compare the two responses below and
+> determine which is better. Consider helpfulness, accuracy, and
+> depth of explanation.
+>
+> [Question]
+> {question}
+>
+> [Response A]
+> {response_a}
+>
+> [Response B]
+> {response_b}
+>
+> Output exactly one of: [[A]], [[B]], or [[C]] (tie).
+> Reasoning: <your analysis>
+> Verdict: <[[A]], [[B]], or [[C]]>
+> """
+> ```
 
 **参考引导式评分（Reference-guided scoring）。** 向评判者提供参考答案，并据此对回答进行打分。这对评判者本身可能缺乏可靠知识的事实型任务尤其有用。
 

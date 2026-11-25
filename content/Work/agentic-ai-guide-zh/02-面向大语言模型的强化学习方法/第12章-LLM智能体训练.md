@@ -164,7 +164,28 @@ $$
 **收敛动力学**：每次迭代 $k$ 都会提升模型的解题率 $p_k$。若 $p_0 = 0.3$（解出 30% 的问题），经过合理化 + SFT 后 $p_1 \approx 0.5$。通常 3–5 次迭代后收敛至 $p \approx 0.7$–$0.9$。
 
 > [!example] STaR 合理化 Prompt
-> ZZCODEZZ0ZZENDZZ
+> ```python
+> # 标准生成（步骤 1）：
+> PROMPT = """Solve the following problem step by step.
+> Problem: A store has 45 apples. It sells 3/5 of them. How many remain?
+> Let's think step by step:"""
+>
+> # 合理化 Prompt（步骤 3——以正确答案为条件）：
+> PROMPT_RATIONALIZE = """Solve the following problem step by step.
+> The correct answer is 18.
+> Problem: A store has 45 apples. It sells 3/5 of them. How many remain?
+> Let's think step by step to arrive at 18:"""
+>
+> # Agent 变体（带错误条件的代码任务）：
+> PROMPT_AGENT_RATIONALIZE = """The following code task failed with the error below.
+> Generate a correct solution step by step.
+>
+> Task: Implement binary search that handles duplicates.
+> Previous error: IndexError: list index out of range (line 12)
+> Correct behavior: Return leftmost index of target.
+>
+> Let me fix this by reasoning about the boundary conditions:"""
+> ```
 
 > [!tip] 面向 Agent 的 STaR 变体
 > -   **Quiet-STaR** [419]：在每个生成 Token 之间插入"思考 Token"。模型学会在没有显式 CoT 提示的情况下*隐式*推理。训练目标：在包含思考 Token 时更好地预测下一个 Token。
@@ -195,7 +216,27 @@ $$
 **反思示例**：*"在我上一次尝试中，我在验证输入格式之前就调用了搜索 API，导致了 400 错误。下次我应该先验证 JSON Schema，然后再发起 API 调用。"*
 
 > [!example] Reflexion：带记忆注入的 Agent Prompt
-> ZZCODEZZ1ZZENDZZ
+> ```python
+> # === 第 2 次尝试的 PROMPT（首次失败后）===
+>
+> SYSTEM = """You are a coding agent. You can run bash commands and edit files.
+> Complete the task below. Learn from your previous reflections."""
+>
+> USER = """Task: Fix the failing test in auth_service.py
+>
+> === REFLECTIONS FROM PREVIOUS ATTEMPTS ===
+> [Attempt 1 reflection]: I tried to modify the authenticate() function
+> directly but forgot that it depends on token_validator(). The test
+> failed because token_validator() was still returning the old format.
+> I should trace the dependency chain FIRST: check what authenticate()
+> calls, then fix the root cause (token_validator), not the symptom.
+> === END REFLECTIONS ===
+>
+> The repository is in /workspace/. The failing test is:
+>   test_auth.py::test_expired_token_returns_401
+>
+> Begin by reading the relevant files, then fix the issue."""
+> ```
 
 **优势与局限**：
 
@@ -211,12 +252,46 @@ $$
 ReAct [408] 通过在单个生成流中**交错显式推理步骤与环境动作**，确立了工具使用 Agent 的主导 Prompt 范式。
 
 > [!example] ReAct 系统 Prompt（典型）
-> ZZCODEZZ2ZZENDZZ
+> ```python
+> SYSTEM = """You are a research assistant with access to the following tools:
+> - search(query): Search the web for information
+> - lookup(term): Look up a term on the current Wikipedia page
+> - finish(answer): Submit your final answer
+>
+> Solve the user's question by interleaving Thought and Action steps.
+> Format:
+>   Thought: <your reasoning about what to do next>
+>   Action: <tool_name>(arguments)
+>
+> You will receive an Observation after each Action. Use it to plan
+> your next step. Continue until you can provide a final answer.
+>
+> Rules:
+> - Always think before acting
+> - Never guess - verify with tools
+> - Use finish() only when you are confident in your answer"""
+>
+> USER = "Who was the president of the US when the iPhone was released?"
+> ```
 
 **生成格式**：
 
 > [!example] ReAct 轨迹格式
-> ZZCODEZZ3ZZENDZZ
+> ```python
+> Thought: I need to find when the iPhone was released, then determine
+> who was president at that time. Let me search for the release date.
+> Action: search("iPhone original release date")
+> Observation: The original iPhone was released on June 29, 2007.
+> Thought: The iPhone came out June 2007. Now I need to find who was
+> the US president in June 2007.
+> Action: lookup("President of the United States in 2007")
+> Observation: George W. Bush served as the 43rd president from
+> January 20, 2001 to January 20, 2009.
+> Thought: George W. Bush was president from 2001-2009, which covers
+> June 2007 when the iPhone was released. I have my answer.
+> Action: finish("George W. Bush was the US president when the iPhone
+> was released on June 29, 2007.")
+> ```
 
 **形式化定义**：一条 ReAct 轨迹是 $\tau = (t_1, a_1, o_1, t_2, a_2, o_2, \ldots)$，其中：
 
@@ -267,7 +342,36 @@ $$
 **性能**：在 WebShop（网页导航）上，LATS 达到 75% 成功率，而 ReAct 仅为 40%。在 HumanEval（代码）上，借助树搜索 pass@1 从 68% 提升至 94%。代价：每个任务的推理 FLOPs 增加 10–50$\times$。
 
 > [!example] LATS Prompt：价值估计与节点扩展
-> ZZCODEZZ4ZZENDZZ
+> ```python
+> # === 价值估计 PROMPT（用于模拟阶段）===
+> VALUE_PROMPT = """You are evaluating an agent's progress on a task.
+>
+> Task: Book a flight from NYC to London for under \$500, departing Dec 15.
+>
+> Current state (after 3 actions):
+> - Searched flights on Kayak: found 12 results
+> - Filtered by price < \$500: 4 options remain
+> - Clicked on British Airways \$489 option: viewing details page
+>
+> On a scale of 0.0 to 1.0, how likely is the agent to successfully
+> complete the task from this state? Consider:
+> - How close is the agent to the goal?
+> - Are there remaining obstacles (payment, seat selection)?
+> - Has the agent made any errors that need correction?
+>
+> Score: """  # 模型输出，例如 "0.75"
+>
+> # === 节点扩展 PROMPT（生成候选动作）===
+> EXPAND_PROMPT = """You are a web navigation agent. Given the current
+> page state, propose 3 DIFFERENT next actions to try.
+>
+> Current page: British Airways booking - flight details
+>   Price: \$489 | Departure: Dec 15 8:30am | Arrival: Dec 15 8:45pm
+>   [Button: Select] [Button: Back to results] [Link: Fare rules]
+>
+> Generate 3 diverse candidate actions (explore different strategies):
+> Action 1:"""  # 模型生成 3 个选项用于树扩展
+> ```
 
 ### 12.5.5 AgentQ：在 Agent 轨迹上做 DPO（详解）
 
@@ -330,7 +434,37 @@ $$
 **关键洞见**：技能是**可组合的**——复杂行为从组合简单的、已验证的函数中涌现。Agent 永不遗忘（库是持久的）并单调改进（只加入已验证的技能）。
 
 > [!example] Voyager：课程与技能生成 Prompt
-> ZZCODEZZ5ZZENDZZ
+> ```python
+> # === 自动课程 PROMPT ===
+> CURRICULUM_PROMPT = """You are a curriculum designer for an AI agent.
+>
+> Agent's current skill inventory:
+> - mine_wood(): Mines nearby oak/birch trees
+> - craft_planks(): Converts logs to planks
+> - craft_sticks(): Converts planks to sticks
+> - mine_stone(): Mines stone with wooden pickaxe
+>
+> Propose the next task that:
+> 1. Builds on existing skills (reachable from current abilities)
+> 2. Introduces exactly ONE new concept or challenge
+> 3. Is concrete and verifiable (clear success condition)
+>
+> Next task proposal:"""
+> # 输出："Craft a furnace (requires 8 cobblestone blocks arranged
+> #       in a square). You already know mine_stone()."
+>
+> # === 技能生成 PROMPT ===
+> SKILL_GEN_PROMPT = """Write a JavaScript function to accomplish this task
+> in Minecraft. Use the bot API (bot.dig, bot.craft, bot.equip, etc.)
+>
+> Task: Smelt 5 iron ingots using a furnace.
+> Prerequisites available: mine_stone(), craft_furnace(), mine_iron_ore()
+>
+> Error from previous attempt: "Cannot smelt without fuel in furnace"
+>
+> Write the corrected function:
+> async function smeltIronIngots(bot, count=5) {"""
+> ```
 
 ### 12.5.7 RLEF：从执行反馈中做 RL（详解）
 
@@ -372,7 +506,39 @@ OpenHands [366] 和 SWE-Agent [404] 应用 GRPO 训练自主解决 GitHub Issue 
 **SOTA 结果**：SWE-bench Verified：RL 训练后解决率从 30% 提升至 55%（对比仅 SFT 基线）。
 
 > [!example] OpenHands / SWE-Agent：系统 Prompt
-> ZZCODEZZ6ZZENDZZ
+> ```python
+> SYSTEM = """You are an autonomous software engineer. You are given a
+> GitHub issue to resolve. You have access to the full repository in
+> /workspace/ and can execute any bash command.
+>
+> AVAILABLE COMMANDS:
+> - bash(command): Execute a shell command
+> - edit(file, start_line, end_line, new_content): Edit a file
+> - search(pattern, path): Search for text in files
+> - submit(): Submit your patch when done
+>
+> WORKFLOW:
+> 1. Read the issue carefully and understand the expected behavior
+> 2. Explore the codebase to find relevant files
+> 3. Reproduce the bug (write/run a test that fails)
+> 4. Implement the fix
+> 5. Verify the fix (run the test again - must pass)
+> 6. Run the full test suite to check for regressions
+> 7. Submit when all tests pass
+>
+> RULES:
+> - Do NOT modify test files unless the issue explicitly asks for it
+> - Prefer minimal, targeted changes over large refactors
+> - Always verify your fix before submitting"""
+>
+> USER = """GitHub Issue #4521: `DataFrame.merge()` silently drops
+> rows when `on` column contains NaN values.
+>
+> Expected: NaN keys should be preserved (matched with other NaN rows)
+> Actual: Rows with NaN keys are dropped entirely
+>
+> Repository: /workspace/pandas-dev/pandas/"""
+> ```
 
 > [!tip] 未来：RL + Agent
 > 该领域正在汇聚于一种模式：将**带基于执行 reward 的在线 RL**应用于多步 Agent 轨迹。关键趋势：
@@ -444,7 +610,19 @@ $$
 动作空间必须是**结构化的、类型安全的且可组合的**：
 
 > [!example] 生产力副驾动作 Schema
-> ZZCODEZZ7ZZENDZZ
+> ```python
+> {
+>   "action_type": "api_call",
+>   "target_app": "outlook | excel | word | powerpoint | teams | sharepoint",
+>   "operation": "read | write | search | create | delete | modify",
+>   "parameters": {
+>     "endpoint": "/me/messages?$filter=subject eq 'Project X'",
+>     "body": { ... },             // 用于写操作
+>     "options": { "top": 10 }     // 分页、过滤
+>   },
+>   "reasoning": "I need to find relevant emails before summarizing"
+> }
+> ```
 
 **按应用划分的动作分类**：
 
@@ -540,7 +718,38 @@ $$
 ### 12.6.7 模拟环境架构
 
 > [!example] 沙盒环境（简化版）
-> ZZCODEZZ8ZZENDZZ
+> ```python
+> class ProductivityEnvironment:
+>     def __init__(self, user_profile: UserProfile):
+>         self.mailbox = SyntheticMailbox(user_profile.emails)
+>         self.drive = SyntheticOneDrive(user_profile.files)
+>         self.calendar = SyntheticCalendar(user_profile.events)
+>         self.teams = SyntheticTeams(user_profile.channels)
+>         self.step_count = 0
+>         self.max_steps = 50
+>
+>     def step(self, action: dict) -> Tuple[Observation, float, bool]:
+>         """执行动作，返回 (observation, reward, done)。"""
+>         self.step_count += 1
+>
+>         # 路由到对应的应用处理器
+>         handler = self.get_handler(action["target_app"])
+>         try:
+>             result = handler.execute(action["operation"], action["parameters"])
+>             obs = Observation(status=200, body=result)
+>             reward = 0.05  # 成功的 API 调用
+>         except APIError as e:
+>             obs = Observation(status=e.code, body=str(e))
+>             reward = -0.03
+>
+>         # 检查终止条件
+>         done = self.step_count >= self.max_steps
+>         return obs, reward, done
+>
+>     def evaluate(self, task: Task) -> float:
+>         """检查任务目标是否达成（终端 reward）。"""
+>         return task.verification_fn(self)  # 0.0 或 1.0
+> ```
 
 ### 12.6.8 任务课程设计
 

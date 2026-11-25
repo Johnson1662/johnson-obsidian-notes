@@ -111,7 +111,14 @@ $$
 > [!tip] Anthropic 的关键洞见
 > 最有效的 Agent 并不是最复杂的，而是**配有好用工具的简单循环**：
 >
-> ZZCODEZZ2ZZENDZZ
+> ```python
+> while not done:
+>     action = llm.decide(context, tools)
+>     result = execute(action)
+>     context.append(result)
+>     done = llm.should_stop(context)
+> ```
+
 >
 > 智能来自（1）模型自身的能力、（2）工具描述的质量、（3）任务表述的清晰度——而非花哨的编排逻辑。Skill 为（2）和（3）提供了结构。
 
@@ -145,7 +152,28 @@ $$
 > [!example] Skill 清单示例
 > 一份 skill 清单声明了编排器加载并调用一个 skill 所需的一切。目前尚不存在行业标准 schema；下面是一个示意性格式，它涵盖了真实实现（Anthropic MCP、OpenAI 函数规范、LangChain 工具定义）中常见的字段：
 >
-> ZZCODEZZ3ZZENDZZ
+> ```python
+> // 示意性 schema —— 并非任何具体 SDK 的格式
+> {
+>   "name": "code-review",
+>   "description": "Review code changes for bugs, style, and security issues",
+>   "version": "2.1.0",
+>   "requires": {
+>     "tools": ["file_read", "grep", "git_diff"],
+>     "mcp_servers": ["github"],
+>     "models": ["claude-sonnet-4-20250514"]
+>   },
+>   "input_schema": {
+>     "type": "object",
+>     "properties": {
+>       "repo": {"type": "string"},
+>       "pr_number": {"type": "integer"}
+>     }
+>   },
+>   "prompts": ["skills/code-review/system.md"],
+>   "knowledge": ["skills/code-review/style-guide.md"]
+> }
+> ```
 
 ## 23.6 Skill vs. 微调
 

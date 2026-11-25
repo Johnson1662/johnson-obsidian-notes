@@ -170,7 +170,20 @@ def agent_loop(goal: str, max_steps: int = 50, budget: TokenBudget = None):
 最简单也最常见的模式：生成，对照确定性检查验证，失败则重试。
 
 > [!example] 验证循环：修复直到测试通过
-> ZZCODEZZ1ZZENDZZ
+> ```python
+> failure_log = []
+> for attempt in range(MAX_ATTEMPTS):
+>     result = run_tests()
+>     if result.passed:
+>         break  # 成功——退出循环
+>     fix = model.generate(
+>         f"Fix this test failure:\n{result.errors}\n"
+>         f"Previous attempts that failed: {failure_log}"
+>     )
+>     apply_patch(fix)
+>     failure_log.append(result.errors)
+> ```
+
 >
 > **终止条件**：测试通过（成功）或重试预算耗尽（升级）。
 >
@@ -202,7 +215,29 @@ def agent_loop(goal: str, max_steps: int = 50, budget: TokenBudget = None):
 一个元循环生成并监控多个子循环。编排 Agent 把高层目标分解为子任务，把每个子任务指派给运行自己循环的专门化子 Agent，监控它们的进度并综合结果。这对应分层 RL [21]：高层策略选择子目标，低层策略执行它们。
 
 > [!example] 层级循环：通宵仓库维护
-> ZZCODEZZ2ZZENDZZ
+> ```python
+> # 外层循环：通过自动化每晚运行
+> for issue in triage_agent.identify_actionable_issues():
+>     # 内层循环：每个问题一个子智能体，使用隔离工作树
+>     worktree = create_isolated_worktree(issue.branch_name)
+>
+>     result = fix_loop(
+>         goal=issue.description,
+>         worktree=worktree,
+>         verifier=run_tests_and_lint,
+>         max_steps=20
+>     )
+>
+>     if result.success:
+>         review = review_agent.evaluate(result.patch)  # 检查器
+>         if review.approved:
+>             open_pull_request(result.patch, issue)
+>         else:
+>             state_db.log(issue, "fix_rejected", review.feedback)
+>     else:
+>         state_db.log(issue, "fix_failed", result.state)
+> ```
+
 >
 > 外层循环（分类）按计划运行。内层循环（修复）是临时的、任务范围的。审查 Agent 提供制造者—检查者分离。状态跨夜间运行持久化。
 

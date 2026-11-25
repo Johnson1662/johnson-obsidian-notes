@@ -64,7 +64,54 @@ A2A 规范明确提出了五条指导原则（根据官方规范 [113] §1.2 改
 A2A 可发现性的基础是 **Agent Card**——一份托管在固定端点（`/.well-known/agent.json`）上的机器可读 JSON 清单。它声明该 Agent 能做什么、如何认证、把任务发送到何处——类似于 OpenAPI 规范，但面向的是自主 Agent 而非 REST 端点。
 
 > [!example] Agent Card 结构
-> ZZCODEZZ0ZZENDZZ
+> ```python
+> # 托管于 https://agent.example.com/.well-known/agent.json 的 Agent Card
+> agent_card = {
+>     "name": "DataAnalysisAgent",
+>     "description": "Analyzes structured datasets, produces statistical summaries, "
+>                    "generates visualizations, and answers data questions.",
+>     "url": "https://agent.example.com/a2a",
+>     "version": "1.2.0",
+>     "capabilities": {
+>         "streaming": True,
+>         "pushNotifications": True,
+>         "stateTransitionHistory": True
+>     },
+>     "authentication": {
+>         "schemes": ["Bearer", "ApiKey"]
+>     },
+>     "skills": [
+>         {
+>             "id": "statistical-analysis",
+>             "name": "Statistical Analysis",
+>             "description": "Compute descriptive statistics, run hypothesis tests, "
+>                            "fit regression models on tabular data.",
+>             "tags": ["statistics", "data", "analysis", "regression"],
+>             "examples": [
+>                 "What is the correlation between columns A and B?",
+>                 "Run a t-test comparing these two groups.",
+>                 "Fit a linear regression predicting sales from ad spend."
+>             ],
+>             "inputModes": ["text", "data"],
+>             "outputModes": ["text", "data", "file"]
+>         },
+>         {
+>             "id": "visualization",
+>             "name": "Data Visualization",
+>             "description": "Generate charts, plots, and dashboards from data.",
+>             "tags": ["charts", "plots", "visualization", "dashboard"],
+>             "examples": [
+>                 "Create a bar chart of monthly revenue.",
+>                 "Plot the distribution of customer ages."
+>             ],
+>             "inputModes": ["text", "data"],
+>             "outputModes": ["file", "text"]
+>         }
+>     ],
+>     "defaultInputModes": ["text"],
+>     "defaultOutputModes": ["text"]
+> }
+> ```
 
 Agent Card 支持*基于能力的路由*：编排型 Agent 可以从注册中心获取卡片，将子任务在语义上匹配到最合适的 Agent，并据此分派——整个过程无需任何硬编码的路由逻辑。
 
@@ -105,7 +152,48 @@ Agent 拒绝了该任务（例如超出其能力范围或未获授权）。该�
 对于会产生增量输出的任务（例如正在撰写的长报告、正在生成的代码文件），A2A 使用 **服务器发送事件（Server-Sent Events, SSE）**。客户端打开一个持久 HTTP 连接，接收 JSON 事件流：
 
 > [!example] SSE 事件流示例
-> ZZCODEZZ1ZZENDZZ
+> ```python
+> # 每个 SSE 事件携带一个 TaskStatusUpdateEvent 或 TaskArtifactUpdateEvent
+> # 下面是“撰写一份研究报告”任务的事件流示例：
+>
+> # 事件 1：状态更新
+> data: {
+>   "id": "task-abc123",
+>   "status": {"state": "working"},
+>   "final": false
+> }
+>
+> # 事件 2：部分产物（流式文本）
+> data: {
+>   "id": "task-abc123",
+>   "artifact": {
+>     "parts": [{"type": "text", "text": "## Introduction\n\nRecent advances in..."}],
+>     "index": 0,
+>     "append": false,
+>     "lastChunk": false
+>   },
+>   "final": false
+> }
+>
+> # 事件 3：追加更多文本
+> data: {
+>   "id": "task-abc123",
+>   "artifact": {
+>     "parts": [{"type": "text", "text": " reinforcement learning have shown..."}],
+>     "index": 0,
+>     "append": true,   # 追加到已有产物
+>     "lastChunk": false
+>   },
+>   "final": false
+> }
+>
+> # 终止事件：任务完成
+> data: {
+>   "id": "task-abc123",
+>   "status": {"state": "completed"},
+>   "final": true
+> }
+> ```
 
 ### 24.2.5 长时间运行任务的推送通知
 
@@ -329,10 +417,57 @@ A2A 消息的结构是一个 **role**（`user` 或 `agent`）外加一组带类�
 现代 Agent 越来越多地处理非文本模态。A2A 的 `FilePart` 支持任意 MIME 类型，从而可以构建丰富的多模态工作流：
 
 > [!example] 多模态 A2A 消息：数据分析
-> ZZCODEZZ5ZZENDZZ
+> ```python
+> # 一条同时包含文本指令、数据负载和文件的消息
+> message = {
+>     "role": "user",
+>     "parts": [
+>         {
+>             "type": "text",
+>             "text": "Analyze the attached CSV and the schema below. "
+>                     "Identify anomalies and produce a summary report."
+>         },
+>         {
+>             "type": "file",
+>             "mimeType": "text/csv",
+>             "uri": "https://storage.example.com/data/sales_q3.csv"
+>         },
+>         {
+>             "type": "data",
+>             "data": {
+>                 "schema": {
+>                     "columns": ["date", "region", "product", "revenue", "units"],
+>                     "types":   ["date", "string", "string", "float", "int"]
+>                 },
+>                 "expectedRowCount": 15000,
+>                 "anomalyThreshold": 3.0  # z 分数阈值
+>             }
+>         }
+>     ]
+> }
+> ```
 
 > [!example] 多模态 A2A 消息：图像分析
-> ZZCODEZZ6ZZENDZZ
+> ```python
+> # 多模态消息：文本 + 图像 + 结构化数据
+> multimodal_message = {
+>     "role": "user",
+>     "parts": [
+>         {"type": "text",
+>          "text": "Describe what is wrong with this chart and suggest fixes."},
+>         {"type": "file",
+>          "mimeType": "image/png",
+>          "bytes": base64.b64encode(chart_image_bytes).decode()},
+>         {"type": "data",
+>          "data": {
+>              "chartType": "bar",
+>              "dataSource": "Q3 Revenue by Region",
+>              "knownIssues": ["y-axis does not start at zero",
+>                              "missing error bars"]
+>          }}
+>     ]
+> }
+> ```
 
 ### 24.5.3 上下文传递：哪些该共享，哪些应保留
 
@@ -407,7 +542,63 @@ sub_ctx = ctx.child_context()
 4.  **执行与汇报（Execution and Reporting）**：承包者执行任务并将结果汇报给管理者。
 
 > [!example] 合同网协议实现
-> ZZCODEZZ8ZZENDZZ
+> ```python
+> import dataclasses
+>
+> class ContractNetManager:
+>     """为任务分配实现合同网协议（Contract Net Protocol）。"""
+>
+>     async def allocate_task(self, task: Task,
+>                             candidate_agents: list[AgentCard]) -> AgentCard:
+>         # 阶段 1：向所有候选 Agent 宣告任务
+>         announcement = {
+>             "type": "task-announcement",
+>             "task": dataclasses.asdict(task),
+>             "deadline": (datetime.now(timezone.utc) + timedelta(seconds=10)).isoformat(),
+>             "evaluationCriteria": ["confidence", "estimatedTime", "cost"]
+>         }
+>
+>         # 阶段 2：收集竞标
+>         bids = await asyncio.gather(*[
+>             self._request_bid(agent, announcement)
+>             for agent in candidate_agents
+>         ], return_exceptions=True)
+>
+>         valid_bids = [(agent, bid) for agent, bid in zip(candidate_agents, bids)
+>                       if not isinstance(bid, Exception) and bid is not None]
+>
+>         if not valid_bids:
+>             raise RuntimeError(f"No agents bid on task {task.id}")
+>
+>         # 阶段 3：授予最佳竞标方（置信度最高、用时最少）
+>         def score_bid(agent_bid):
+>             _, bid = agent_bid
+>             return bid["confidence"] - 0.1 * bid["estimatedSeconds"]
+>
+>         winner_agent, winning_bid = max(valid_bids, key=score_bid)
+>
+>         # 通知中标方与落标方
+>         await self._award_contract(winner_agent, task)
+>         await asyncio.gather(*[
+>             self._reject_bid(agent, task.id)
+>             for agent, _ in valid_bids if agent != winner_agent
+>         ])
+>
+>         return winner_agent
+>
+>     async def _request_bid(self, agent: AgentCard,
+>                            announcement: dict) -> dict | None:
+>         """请求某个 Agent 对任务进行竞标。"""
+>         try:
+>             result = await self.client.send_task(
+>                 agent_url=agent.url,
+>                 message={"role": "user",
+>                          "parts": [{"type": "data", "data": announcement}]}
+>             )
+>             return result.artifacts[0].parts[0]["data"]
+>         except Exception:
+>             return None
+> ```
 
 ### 24.6.2 黑板系统（Blackboard Systems）
 
